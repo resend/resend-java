@@ -15,5 +15,5 @@ public interface IHttpClient<T> {
      * @param payload The payload or data to send with the request.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> perform(final String path, final HttpMethod method, final String payload);
+    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload);
 }

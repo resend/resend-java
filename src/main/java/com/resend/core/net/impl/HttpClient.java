@@ -24,9 +24,6 @@ public class HttpClient implements IHttpClient<Response> {
     /** The User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + VERSION;
 
-    /** The API key used for authorization in HTTP requests. */
-    private final String apiKey;
-
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;
 
@@ -35,8 +32,7 @@ public class HttpClient implements IHttpClient<Response> {
      *
      * @param apiKey The API key for authorization in HTTP requests.
      */
-    public HttpClient(String apiKey) {
-        this.apiKey = apiKey;
+    public HttpClient() {
         this.httpClient = new OkHttpClient();
     }
 
@@ -49,7 +45,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse perform(final String path, final HttpMethod method, final String payload) {
+    public AbstractHttpResponse perform(final String path, final String apiKey, final HttpMethod method, final String payload) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -60,7 +56,7 @@ public class HttpClient implements IHttpClient<Response> {
                 .url(BASE_API + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
-                .addHeader("Authorization", "Bearer " + this.apiKey)
+                .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody)
                 .build();
 

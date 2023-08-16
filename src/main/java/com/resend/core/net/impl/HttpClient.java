@@ -1,6 +1,5 @@
 package com.resend.core.net.impl;
 
-import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
@@ -30,7 +29,6 @@ public class HttpClient implements IHttpClient<Response> {
     /**
      * Constructs an instance of the HttpClient with the provided API key.
      *
-     * @param apiKey The API key for authorization in HTTP requests.
      */
     public HttpClient() {
         this.httpClient = new OkHttpClient();

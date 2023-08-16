@@ -1,9 +1,7 @@
 package com.resend.core.service;
 
 import com.resend.Resend;
-import com.resend.core.mapper.ResendMapper;
 import com.resend.core.net.AbstractHttpResponse;
-import com.resend.core.net.IHttpClient;
 import com.resend.core.net.HttpMethod;
 
 import com.resend.core.model.Email;
@@ -12,7 +10,7 @@ import com.resend.core.model.SendEmailResponse;
 import com.resend.core.provider.AuthenticationProvider;
 
 /**
- * Implementation class for the {@link Emails} interface, providing methods to interact with email-related operations.
+ * Class providing methods to interact with email-related operations.
  */
 public class EmailService extends Resend {
 

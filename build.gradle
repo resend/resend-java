@@ -1,6 +1,10 @@
 plugins {
     id 'java'
+    id "maven-publish"
 }
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 group 'com'
 version '1.0-SNAPSHOT'
@@ -12,6 +16,9 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation 'org.mockito:mockito-core:5.4.0'
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
@@ -25,4 +32,38 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    description = "Execute tests."
+    group = "verification"
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId = group
+            artifactId = project.name
+            version = System.getenv('GITHUB_REF_NAME') ?: project.version
+
+            pom {
+                name = project.name
+                description = 'The Java SDK for the Resend API'
+                url = 'https://github.com/resendlabs/resend-java'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'MavenCentral'
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+        }
+    }
+}
+

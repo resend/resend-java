@@ -1,0 +1,30 @@
+name: Publish Library
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 'adopt@17'
+
+      - name: Set GITHUB_REF_NAME
+        run: echo "GITHUB_REF_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Publish to Maven Central
+        run: ./gradlew publish
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          GITHUB_REF_NAME: ${{ env.GITHUB_REF_NAME }}

@@ -1,8 +1,8 @@
-package com.resend.core.model;
+package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static com.resend.core.util.ValidationUtil.*;
+import static com.resend.core.util.ValidationUtil.TAG_NAME_NULL;
 import static java.util.Objects.requireNonNull;
 
 /**

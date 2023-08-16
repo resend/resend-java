@@ -1,20 +1,16 @@
-package com.resend.core.service;
+package com.resend.services.emails;
 
-import com.resend.Resend;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
-
-import com.resend.core.model.Email;
-import com.resend.core.model.SendEmailRequest;
-import com.resend.core.model.SendEmailResponse;
 import com.resend.core.provider.AuthenticationProvider;
+import com.resend.core.service.BaseService;
+import com.resend.services.emails.model.Email;
+import com.resend.services.emails.model.SendEmailRequest;
+import com.resend.services.emails.model.SendEmailResponse;
 
-/**
- * Class providing methods to interact with email-related operations.
- */
-public class EmailService extends Resend {
+public class ResendEmails  extends BaseService {
 
-    public EmailService() {
+    public ResendEmails() {
         super();
     }
 
@@ -23,7 +19,7 @@ public class EmailService extends Resend {
      *
      * @param authenticationProvider The provider used for authentication.
      */
-    public EmailService(final AuthenticationProvider authenticationProvider) {
+    public ResendEmails(final AuthenticationProvider authenticationProvider) {
         super(authenticationProvider);
     }
 

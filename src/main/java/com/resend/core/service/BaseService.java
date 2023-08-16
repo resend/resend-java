@@ -1,24 +1,24 @@
-package com.resend;
+package com.resend.core.service;
 
 import com.resend.core.mapper.ResendMapper;
-import com.resend.core.provider.AuthenticationProvider;
-import com.resend.core.provider.impl.AuthenticationProviderDefault;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.impl.HttpClient;
+import com.resend.core.provider.AuthenticationProvider;
+import com.resend.core.provider.impl.AuthenticationProviderDefault;
 
-public class Resend {
+public abstract class BaseService {
 
     private AuthenticationProvider authenticationProvider;
     protected final IHttpClient httpClient;
     protected final ResendMapper resendMapper;
 
-    public Resend() {
+    public BaseService() {
         this.authenticationProvider = new AuthenticationProviderDefault();
         this.httpClient = new HttpClient();
         this.resendMapper = new ResendMapper();
     }
 
-    public Resend(final AuthenticationProvider authenticationProvider) {
+    public BaseService(final AuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
         this.httpClient = new HttpClient();
         this.resendMapper = new ResendMapper();

@@ -11,7 +11,7 @@ To install the Java SDK add the dependency to your project:
 Gradle:
 
 ```
-implementation 'com.resend-java:sdk:1.0.0'
+implementation 'com.resend-java:1.0.0'
 ```
 
 Maven:
@@ -32,10 +32,10 @@ First, you need to get an API key, which is available in the [Resend Dashboard](
 ```java
 package com.resend;
 
-import com.resend.core.model.*;
+import com.resend.services.emails.model.*;
 import com.resend.core.provider.AuthenticationProvider;
 import com.resend.core.provider.impl.AuthenticationProviderStandard;
-import com.resend.core.service.EmailService;
+import com.resend.services.emails.ResendEmails;
 
 public class Main {
     public static void main(String[] args) {

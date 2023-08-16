@@ -6,8 +6,8 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-group 'com'
-version '1.0-SNAPSHOT'
+group = GROUP
+version = VERSION_NAME
 
 repositories {
     mavenCentral()
@@ -37,23 +37,32 @@ test {
     }
 }
 
+jar {
+    manifest {
+        attributes("Implementation-Title": POM_NAME,
+                "Implementation-Version": VERSION_NAME,
+                "Implementation-Vendor": VENDOR_NAME,
+                "Bundle-SymbolicName": POM_ARTIFACT_ID,
+                "Export-Package": "com.resend.*")
+
+        archiveVersion = VERSION_NAME
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-
-            groupId = group
+            groupId = POM_NAME
             artifactId = project.name
-            version = System.getenv('GITHUB_REF_NAME') ?: project.version
-
+            version = System.getenv('GITHUB_REF_NAME') ?: version
             pom {
                 name = project.name
-                description = 'The Java SDK for the Resend API'
-                url = 'https://github.com/resendlabs/resend-java'
+                description = POM_DESCRIPTION
+                url = POM_URL
             }
         }
     }
-
     repositories {
         maven {
             name = 'MavenCentral'

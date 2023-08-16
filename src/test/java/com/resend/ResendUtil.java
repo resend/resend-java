@@ -1,6 +1,6 @@
 package com.resend;
 
-import com.resend.core.model.*;
+import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.provider.AuthenticationProvider;
 import com.resend.core.provider.impl.AuthenticationProviderStandard;

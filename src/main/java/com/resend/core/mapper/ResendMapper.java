@@ -2,8 +2,6 @@ package com.resend.core.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
  * Implementation of the IMapper interface for mapping between JSON representation and Java objects using ObjectMapper.

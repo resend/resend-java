@@ -1,17 +1,11 @@
 package com.resend.core.service;
 import com.resend.ResendUtil;
-import com.resend.core.mapper.ResendMapper;
 import com.resend.core.model.Email;
 import com.resend.core.model.SendEmailRequest;
 import com.resend.core.model.SendEmailResponse;
-import com.resend.core.net.AbstractHttpResponse;
-import com.resend.core.net.HttpMethod;
-import com.resend.core.net.IHttpClient;
-import com.resend.core.provider.AuthenticationProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

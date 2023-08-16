@@ -1,8 +1,5 @@
 package com.resend;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.resend.core.mapper.IMapper;
-import com.resend.core.mapper.ResendMapper;
 import com.resend.core.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.provider.AuthenticationProvider;

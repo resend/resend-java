@@ -22,11 +22,15 @@ public class ResendMapper implements IMapper {
      *
      * @param object The object to be converted to JSON.
      * @return The JSON representation of the object.
-     * @throws JsonProcessingException If an error occurs during JSON serialization.
      */
     @Override
-    public String writeValue(Object object) throws JsonProcessingException {
-        return mapper.writeValueAsString(object);
+    public String writeValue(Object object) {
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -36,10 +40,14 @@ public class ResendMapper implements IMapper {
      * @param clazz The class to convert the JSON value to.
      * @param <T>   The type of the resulting object.
      * @return An instance of the specified class with values from the JSON value.
-     * @throws JsonProcessingException If an error occurs during JSON deserialization.
      */
     @Override
-    public <T> T readValue(String value, Class<T> clazz) throws JsonProcessingException {
-        return mapper.readValue(value, clazz);
+    public <T> T readValue(String value, Class<T> clazz)  {
+        try {
+            return mapper.readValue(value, clazz);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

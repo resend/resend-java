@@ -1,5 +1,7 @@
 package com.resend.core.net;
 
+import com.resend.core.exception.ResendException;
+
 /**
  * An interface representing an HTTP client for performing HTTP requests and receiving responses.
  *

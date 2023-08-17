@@ -12,9 +12,8 @@ public interface IMapper {
      *
      * @param object The object to be converted to JSON.
      * @return The JSON representation of the object.
-     * @throws JsonProcessingException If an error occurs during JSON serialization.
      */
-    String writeValue(Object object) throws JsonProcessingException;
+    String writeValue(Object object);
 
     /**
      * Converts the provided JSON value into an instance of the specified class.
@@ -23,9 +22,8 @@ public interface IMapper {
      * @param clazz The class to convert the JSON value to.
      * @param <T>   The type of the resulting object.
      * @return An instance of the specified class with values from the JSON value.
-     * @throws JsonProcessingException If an error occurs during JSON deserialization.
      */
-    <T> T readValue(String value, Class<T> clazz) throws JsonProcessingException;
+    <T> T readValue(String value, Class<T> clazz);
 
 }
 

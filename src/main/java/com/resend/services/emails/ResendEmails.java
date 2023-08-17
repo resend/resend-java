@@ -1,5 +1,6 @@
 package com.resend.services.emails;
 
+import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.provider.AuthenticationProvider;
@@ -30,23 +31,20 @@ public class ResendEmails  extends BaseService {
      * @return The response indicating the status of the email sending.
      * @throws RuntimeException If an error occurs while sending the email.
      */
-    public SendEmailResponse sendEmail(SendEmailRequest sendEmailRequest) {
-        try {
-            String payload = super.resendMapper.writeValue(sendEmailRequest);
-            AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.getAuthenticationProvider().token(), HttpMethod.POST, payload);
+    public SendEmailResponse sendEmail(SendEmailRequest sendEmailRequest) throws ResendException {
 
-            if (!response.isSuccessful()) {
-                throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
-            }
+        String payload = super.resendMapper.writeValue(sendEmailRequest);
+        AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.getAuthenticationProvider().token(), HttpMethod.POST, payload);
 
-            String responseBody = response.getBody();
-
-            SendEmailResponse sendEmailResponse = resendMapper.readValue(responseBody, SendEmailResponse.class);
-
-            return sendEmailResponse;
-        } catch (Exception e) {
-            throw new RuntimeException("Error sending email: " + e.getMessage(), e);
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
         }
+
+        String responseBody = response.getBody();
+
+        SendEmailResponse sendEmailResponse = resendMapper.readValue(responseBody, SendEmailResponse.class);
+
+        return sendEmailResponse;
     }
 
     /**
@@ -56,7 +54,7 @@ public class ResendEmails  extends BaseService {
      * @return The retrieved email's details.
      * @throws RuntimeException If an error occurs while retrieving the email.
      */
-    public Email retrieveEmail(String emailId) {
+    public Email retrieveEmail(String emailId) throws ResendException {
         try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.getAuthenticationProvider().token(), HttpMethod.GET, null);
 

@@ -42,7 +42,7 @@ public class Main {
         String apiKey = "re_123";
 
         AuthenticationProvider provider = new AuthenticationProviderStandard(apiKey);
-        EmailService emailClient = new EmailService(provider);
+        ResendEmails emailClient = new ResendEmails(provider);
 
         SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
                 .from("Me <me@exemple.io>")

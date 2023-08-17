@@ -46,10 +46,10 @@ public class Main {
 
         SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
                 .from("Me <me@exemple.io>")
-                .to(Arrays.asList("to@example", "you@example.com"))
-                .cc(Arrays.asList("cc@example.com"))
-                .bcc(Arrays.asList("bcc@example.com"))
-                .replyTo(Arrays.asList("reply@example.com", "to@example.com"))
+                .to("to@example", "you@example.com")
+                .cc("carbon@example.com", "copy@example.com")
+                .bcc("blind@example.com", "carbon.copy@example.com")
+                .replyTo("reply@example.com", "to@example.com")
                 .text("Hello, world!")
                 .subject("Hello from Java!")
                 .build();

@@ -199,11 +199,28 @@ public class SendEmailRequest {
         /**
          * Set the list of 'to' email addresses.
          *
-         * @param to The list of recipients' email addresses.
+         * @param recipients The list of recipients' email addresses.
          * @return This builder instance for method chaining.
          */
-        public Builder to(List<String> to) {
-            this.to = to;
+
+        public Builder to(String... recipients) {
+            if (this.to == null) {
+                this.to = new ArrayList<>();
+            }
+            for (String recipient : recipients) {
+                this.to.add(recipient);
+            }
+            return this;
+        }
+
+        /**
+         * Set the list of 'to' email addresses.
+         *
+         * @param recipients The list of recipients' email addresses.
+         * @return This builder instance for method chaining.
+         */
+        public Builder to(List<String> recipients) {
+            this.to = recipients;
             return this;
         }
 
@@ -214,10 +231,10 @@ public class SendEmailRequest {
          * @return This builder instance for method chaining.
          */
         public Builder addTo(String recipient) {
-            if (to == null) {
-                to = new ArrayList<>();
+            if (this.to == null) {
+                this.to = new ArrayList<>();
             }
-            to.add(recipient);
+            this.to.add(recipient);
             return this;
         }
 
@@ -246,6 +263,22 @@ public class SendEmailRequest {
         /**
          * Set the list of 'cc' email addresses.
          *
+         * @param recipients The list of carbon copy (cc) recipients' email addresses.
+         * @return This builder instance for method chaining.
+         */
+        public Builder cc(String... recipients) {
+            if (this.cc == null) {
+                this.cc = new ArrayList<>();
+            }
+            for (String recipient : recipients) {
+                this.cc.add(recipient);
+            }
+            return this;
+        }
+
+        /**
+         * Set the list of 'cc' email addresses.
+         *
          * @param cc The list of carbon copy (cc) recipients' email addresses.
          * @return This builder instance for method chaining.
          */
@@ -261,21 +294,38 @@ public class SendEmailRequest {
          * @return This builder instance for method chaining.
          */
         public Builder addCc(String recipient) {
-            if (cc == null) {
-                cc = new ArrayList<>();
+            if (this.cc == null) {
+                this.cc = new ArrayList<>();
             }
-            cc.add(recipient);
+            this.cc.add(recipient);
             return this;
         }
 
         /**
          * Set the list of 'bcc' email addresses.
          *
-         * @param bcc The list of blind carbon copy (bcc) recipients' email addresses.
+         * @param recipients The list of blind carbon copy (bcc) recipients' email addresses.
          * @return This builder instance for method chaining.
          */
-        public Builder bcc(List<String> bcc) {
-            this.bcc = bcc;
+
+        public Builder bcc(String... recipients) {
+            if (this.bcc == null) {
+                this.bcc = new ArrayList<>();
+            }
+            for (String recipient : recipients) {
+                this.bcc.add(recipient);
+            }
+            return this;
+        }
+
+        /**
+         * Set the list of 'bcc' email addresses.
+         *
+         * @param recipients The list of blind carbon copy (bcc) recipients' email addresses.
+         * @return This builder instance for method chaining.
+         */
+        public Builder bcc(List<String> recipients) {
+            this.bcc = recipients;
             return this;
         }
 
@@ -286,20 +336,36 @@ public class SendEmailRequest {
          * @return This builder instance for method chaining.
          */
         public Builder addBcc(String recipient) {
-            if (bcc == null) {
-                bcc = new ArrayList<>();
+            if (this.bcc == null) {
+                this.bcc = new ArrayList<>();
             }
-            bcc.add(recipient);
+            this.bcc.add(recipient);
             return this;
         }
 
         /**
          * Set the list of 'replyTo' email addresses.
          *
-         * @param replyTo The list of reply-to email addresses.
+         * @param recipients The list of reply-to email addresses.
          * @return This builder instance for method chaining.
          */
-        public Builder replyTo(List<String> replyTo) {
+        public Builder replyTo(String... recipients) {
+            if (this.replyTo == null) {
+                this.replyTo = new ArrayList<>();
+            }
+            for (String recipient : recipients) {
+                this.replyTo.add(recipient);
+            }
+            return this;
+        }
+
+        /**
+         * Set the list of 'replyTo' email addresses.
+         *
+         * @param recipients The list of reply-to email addresses.
+         * @return This builder instance for method chaining.
+         */
+        public Builder replyTo(List<String> recipients) {
             this.replyTo = replyTo;
             return this;
         }
@@ -311,10 +377,10 @@ public class SendEmailRequest {
          * @return This builder instance for method chaining.
          */
         public Builder addReplyTo(String recipient) {
-            if (replyTo == null) {
-                replyTo = new ArrayList<>();
+            if (this.replyTo == null) {
+                this.replyTo = new ArrayList<>();
             }
-            replyTo.add(recipient);
+            this.replyTo.add(recipient);
             return this;
         }
 
@@ -362,6 +428,22 @@ public class SendEmailRequest {
          * @param attachments The list of attachments for the email.
          * @return This builder instance for method chaining.
          */
+        public Builder attachments(Attachment... attachments) {
+            if (this.attachments == null) {
+                this.attachments = new ArrayList<>();
+            }
+            for (Attachment attachment : attachments) {
+                this.attachments.add(attachment);
+            }
+            return this;
+        }
+
+        /**
+         * Set the list of attachments for the email.
+         *
+         * @param attachments The list of attachments for the email.
+         * @return This builder instance for method chaining.
+         */
         public Builder attachments(List<Attachment> attachments) {
             this.attachments = attachments;
             return this;
@@ -378,6 +460,16 @@ public class SendEmailRequest {
                 attachments = new ArrayList<>();
             }
             attachments.add(attachment);
+            return this;
+        }
+
+        public Builder tags(Tag... tags) {
+            if (this.tags == null) {
+                this.tags = new ArrayList<>();
+            }
+            for (Tag tag : tags) {
+                this.tags.add(tag);
+            }
             return this;
         }
 
@@ -399,10 +491,10 @@ public class SendEmailRequest {
          * @return This builder instance for method chaining.
          */
         public Builder addTag(Tag tag) {
-            if (tags == null) {
-                tags = new ArrayList<>();
+            if (this.tags == null) {
+                this.tags = new ArrayList<>();
             }
-            tags.add(tag);
+            this.tags.add(tag);
             return this;
         }
 

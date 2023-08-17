@@ -109,7 +109,7 @@ public class Email {
      * @return The id attribute.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**

@@ -1,8 +1,6 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.resend.core.util.ByteArraySerializer;
 
 /**
  * Represents an attachment associated with an email.
@@ -12,8 +10,7 @@ public class Attachment {
     private final String fileName;
 
     @JsonProperty("content")
-    @JsonSerialize(using = ByteArraySerializer.class)
-    private final byte[] content;
+    private final String content;
 
     @JsonProperty("path")
     private final String path;
@@ -36,7 +33,7 @@ public class Attachment {
      * Get the content of the attachment as a byte array.
      * @return The content.
      */
-    public byte[] getContent() {
+    public String getContent() {
         return content;
     }
 
@@ -61,7 +58,7 @@ public class Attachment {
      */
     public static class Builder {
         private String fileName;
-        private byte[] content;
+        private String content;
         private String path;
 
         /**
@@ -79,7 +76,7 @@ public class Attachment {
          * @param content The content as a byte array.
          * @return The Builder instance.
          */
-        public Builder content(byte[] content) {
+        public Builder content(String content) {
             this.content = content;
             return this;
         }

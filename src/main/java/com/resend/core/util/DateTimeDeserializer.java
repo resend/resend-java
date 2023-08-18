@@ -9,8 +9,19 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.time.format.DateTimeParseException;
 
+/**
+ * A custom JSON deserializer for OffsetDateTime objects.
+ */
 public class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
 
+    /**
+     * Deserializes a JSON string representation of OffsetDateTime into an OffsetDateTime object.
+     *
+     * @param parser   The JSON parser.
+     * @param context  The deserialization context.
+     * @return The deserialized OffsetDateTime object.
+     * @throws IOException If there's an issue reading the JSON input.
+     */
     @Override
     public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context)
             throws IOException {

@@ -1,7 +1,11 @@
 plugins {
-    id 'java'
-    id 'maven-publish'
+    id("java")
+    id("maven-publish")
+    id("signing")
 }
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,29 +41,28 @@ test {
     }
 }
 
-jar {
-    manifest {
-        attributes("Implementation-Title": POM_NAME,
-                "Implementation-Version": VERSION_NAME,
-                "Implementation-Vendor": VENDOR_NAME,
-                "Bundle-SymbolicName": POM_ARTIFACT_ID,
-                "Export-Package": "com.resend.*")
+tasks.withType(Jar) {
+    archiveClassifier.set('sources')
+}
 
-        archiveVersion = VERSION_NAME
-    }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            groupId = POM_NAME
-            artifactId = project.name
+            groupId = GROUP
+            artifactId = POM_ARTIFACT_ID
             version = System.getenv('GITHUB_REF_NAME') ?: version
+            artifact javadocJar
             pom {
                 name = project.name
                 description = POM_DESCRIPTION
                 url = POM_URL
+                packaging = POM_PACKAGING
                 licenses {
                     license {
                         name = POM_LICENCE_NAME
@@ -88,8 +91,22 @@ publishing {
     }
     repositories {
         maven {
-            name = 'MavenCentral'
+            name = 'nexus'
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = USERNAME
+                password = PASSWORD
+            }
         }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if (JavaVersion.current().isJava8Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }

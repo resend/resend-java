@@ -463,6 +463,12 @@ public class SendEmailRequest {
             return this;
         }
 
+        /**
+         * Set the list of tags for the email.
+         *
+         * @param tags The list of tags for the email.
+         * @return This builder instance for method chaining.
+         */
         public Builder tags(Tag... tags) {
             if (this.tags == null) {
                 this.tags = new ArrayList<>();
@@ -498,6 +504,12 @@ public class SendEmailRequest {
             return this;
         }
 
+        /**
+         * Builds and returns a {@code SendEmailRequest} based on the configured properties.
+         *
+         * @return A {@code SendEmailRequest} instance.
+         * @throws NullPointerException If any required properties (from, to, or subject) are null.
+         */
         public SendEmailRequest build() {
             requireNonNull(from, EMAIL_FROM_NULL);
             requireNonNull(to, EMAIL_TO_NULL);
@@ -505,6 +517,7 @@ public class SendEmailRequest {
 
             return new SendEmailRequest(this);
         }
+
     }
 }
 

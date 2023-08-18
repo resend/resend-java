@@ -17,7 +17,7 @@ public class ResendUtil {
     public static Attachment createAttachment() {
         return Attachment.builder()
                 .fileName("invoice.pdf")
-                .content("invoice.pdf".getBytes())
+                .content("invoice.pdf")
                 .build();
     }
 

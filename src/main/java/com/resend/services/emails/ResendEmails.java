@@ -9,8 +9,15 @@ import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
 
-public class ResendEmails  extends BaseService {
 
+/**
+ *  Represents the Resend Emails module.
+ */
+public class ResendEmails extends BaseService {
+
+    /**
+     * Empty constructor of the ResendEmails module.
+     */
     public ResendEmails() {
         super();
     }

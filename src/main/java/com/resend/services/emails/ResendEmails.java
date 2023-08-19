@@ -9,7 +9,6 @@ import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
 
-
 /**
  *  Represents the Resend Emails module.
  */

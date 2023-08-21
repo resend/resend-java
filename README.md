@@ -7,7 +7,7 @@
 
 ## Installation
 
-To install the Java SDK add the dependency to your project:
+To install the Java SDK, add the following dependency to your project:
 
 Gradle:
 
@@ -66,4 +66,4 @@ public class Main {
 
 ```
 
-You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-examples)
+You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-example)

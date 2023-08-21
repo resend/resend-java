@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("java-library")
     id("maven-publish")
     id("signing")
 }
@@ -41,13 +41,9 @@ test {
     }
 }
 
-tasks.withType(Jar) {
-    archiveClassifier.set('sources')
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 publishing {
@@ -57,7 +53,6 @@ publishing {
             groupId = GROUP
             artifactId = POM_ARTIFACT_ID
             version = System.getenv('GITHUB_REF_NAME') ?: version
-            artifact javadocJar
             pom {
                 name = project.name
                 description = POM_DESCRIPTION
@@ -84,7 +79,7 @@ publishing {
                 scm {
                     connection = POM_SCM_CONNECTION
                     developerConnection = POM_SCM_DEV_CONNECTION
-                    url = POM_SCM_URL
+                    url = POM_URL
                 }
             }
         }
@@ -106,7 +101,7 @@ signing {
 }
 
 javadoc {
-    if (JavaVersion.current().isJava8Compatible()) {
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
 }

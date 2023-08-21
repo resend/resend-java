@@ -1,7 +1,5 @@
 package com.resend.core.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 /**
  * An interface for mapping between JSON representation and Java objects using ObjectMapper.
  */

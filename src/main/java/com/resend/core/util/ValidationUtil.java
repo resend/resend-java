@@ -23,5 +23,10 @@ public class ValidationUtil {
      * Error message for a null tag name.
      */
     public static final String TAG_NAME_NULL = "Tag name is mandatory and cannot be null";
+
+    /**
+     * Error message for a null domain name.
+     */
+    public static final String DOMAIN_NAME_NULL = "Domain name is mandatory and cannot be null";
 }
 

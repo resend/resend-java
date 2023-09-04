@@ -1,6 +1,7 @@
 package com.resend.core.net;
 
 import com.resend.core.exception.ResendException;
+import okhttp3.MediaType;
 
 /**
  * An interface representing an HTTP client for performing HTTP requests and receiving responses.
@@ -18,5 +19,5 @@ public interface IHttpClient<T> {
      * @param payload The payload or data to send with the request.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload);
+    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload, final MediaType mediaType);
 }

@@ -8,25 +8,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Record {
 
     @JsonProperty("record")
-    private final String record;
+    private String record;
 
     @JsonProperty("name")
-    private final String name;
+    private String name;
 
     @JsonProperty("type")
-    private final String type;
+    private String type;
 
     @JsonProperty("ttl")
-    private final String ttl;
+    private String ttl;
 
     @JsonProperty("status")
-    private final String status;
+    private String status;
 
     @JsonProperty("value")
-    private final String value;
+    private String value;
 
     @JsonProperty("priority")
-    private final int priority;
+    private int priority;
+
+
+    public Record() {
+    }
 
     /**
      * Constructor to create an immutable Record instance.

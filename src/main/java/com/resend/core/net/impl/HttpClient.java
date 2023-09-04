@@ -43,11 +43,11 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse perform(final String path, final String apiKey, final HttpMethod method, final String payload) {
+    public AbstractHttpResponse perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
 
         RequestBody requestBody = null;
         if(payload != null) {
-            requestBody = RequestBody.create(payload, MediaType.get("application/json"));
+            requestBody = RequestBody.create(payload, mediaType);
         }
 
         Request request = new Request.Builder()

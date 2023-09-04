@@ -1,4 +1,4 @@
-package com.resend;
+package com.resend.services.util;
 
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
@@ -8,7 +8,7 @@ import com.resend.core.provider.impl.AuthenticationProviderStandard;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
-public class ResendUtil {
+public class ResendEmailsUtil {
 
     public static AuthenticationProvider createAuthenticationProvider() {
         String apiKey = "re_";

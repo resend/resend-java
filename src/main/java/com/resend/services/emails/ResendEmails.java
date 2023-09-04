@@ -8,6 +8,7 @@ import com.resend.core.service.BaseService;
 import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
+import okhttp3.MediaType;
 
 /**
  *  Represents the Resend Emails module.
@@ -22,7 +23,7 @@ public class ResendEmails extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code EmailsImpl} class.
+     * Constructs an instance of the {@code ResendEmails} class.
      *
      * @param authenticationProvider The provider used for authentication.
      */
@@ -40,7 +41,7 @@ public class ResendEmails extends BaseService {
     public SendEmailResponse sendEmail(SendEmailRequest sendEmailRequest) throws ResendException {
 
         String payload = super.resendMapper.writeValue(sendEmailRequest);
-        AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.getAuthenticationProvider().token(), HttpMethod.POST, payload);
+        AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.getAuthenticationProvider().token(), HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
@@ -62,7 +63,7 @@ public class ResendEmails extends BaseService {
      */
     public Email retrieveEmail(String emailId) throws ResendException {
         try {
-            AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.getAuthenticationProvider().token(), HttpMethod.GET, null);
+            AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.getAuthenticationProvider().token(), HttpMethod.GET, null, MediaType.get("application/json"));
 
             if (!response.isSuccessful()) {
                 throw new RuntimeException("Failed to retrieve email: " + response.getCode() + " " + response.getBody());

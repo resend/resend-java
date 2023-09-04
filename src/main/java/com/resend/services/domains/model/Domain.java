@@ -3,29 +3,34 @@ package com.resend.services.domains.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 /**
  * Represents a domain object.
  */
-public class Domain {
+public class Domain extends AbstractDomain {
 
+    /**
+     * The object of the domain.
+     */
     @JsonProperty("object")
-    private final String object;
+    private String object;
 
-    @JsonProperty("id")
-    private final String id;
+    /**
+     * The records of the domain.
+     */
+    @JsonProperty("records")
+    private List<Record> records;
 
-    @JsonProperty("name")
-    private final String name;
+    /**
+     * The DNS provider of the domain.
+     */
+    @JsonProperty("dnsProvider")
+    private String dnsProvider;
 
-    @JsonProperty("status")
-    private final String status;
+    public Domain() {
 
-    @JsonProperty("created_at")
-    private final OffsetDateTime createdAt;
-
-    @JsonProperty("region")
-    private final String region;
+    }
 
     /**
      * Constructor to create an immutable Domain instance.
@@ -36,19 +41,20 @@ public class Domain {
      * @param status The status of the domain.
      * @param createdAt The creation timestamp of the domain.
      * @param region The region of the domain.
+     * @param records The list of DNS records associated with the domain.
      */
-    public Domain(final String object,
-                  final String id,
-                  final String name,
-                  final String status,
-                  final OffsetDateTime createdAt,
-                  final String region) {
+    public Domain(String id,
+                  String name,
+                  OffsetDateTime createdAt,
+                  String status,
+                  String region,
+                  String dnsProvider,
+                  String object,
+                  List<Record> records) {
+        super(id, name, createdAt, status, region);
         this.object = object;
-        this.id = id;
-        this.name = name;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.region = region;
+        this.records = records;
+        this.dnsProvider = dnsProvider;
     }
 
     /**
@@ -61,48 +67,21 @@ public class Domain {
     }
 
     /**
-     * Get the ID of the domain.
+     * Get the records of the domain.
      *
-     * @return The ID of the domain.
+     * @return The records of the domain.
      */
-    public String getId() {
-        return id;
+    public List<Record> getRecords() {
+        return records;
     }
 
     /**
-     * Get the name of the domain.
+     * Get the DNS provider of the domain.
      *
-     * @return The name of the domain.
+     * @return The DNS provider.
      */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the status of the domain.
-     *
-     * @return The status of the domain.
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * Get the creation timestamp of the domain.
-     *
-     * @return The creation timestamp of the domain.
-     */
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * Get the region of the domain.
-     *
-     * @return The region of the domain.
-     */
-    public String getRegion() {
-        return region;
+    public String getDnsProvider() {
+        return dnsProvider;
     }
 }
 

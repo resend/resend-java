@@ -2,9 +2,6 @@ package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static com.resend.core.util.ValidationUtil.TAG_NAME_NULL;
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a tag associated with an email.
  */
@@ -81,10 +78,8 @@ public class Tag {
          * Build a new Tag object.
          *
          * @return The constructed Tag object.
-         * @throws NullPointerException If the tag name is null.
          */
         public Tag build() {
-            requireNonNull(name, TAG_NAME_NULL);
             return new Tag(this);
         }
     }

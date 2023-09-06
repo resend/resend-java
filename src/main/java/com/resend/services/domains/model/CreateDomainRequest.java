@@ -2,8 +2,6 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a request to create a domain.
  */
@@ -85,10 +83,8 @@ public class CreateDomainRequest {
          * Build a new CreateDomainRequest object.
          *
          * @return A new CreateDomainRequest object.
-         * @throws IllegalArgumentException if the name is null.
          */
         public CreateDomainRequest build() {
-            requireNonNull(name, "Domain name must not be null");
             return new CreateDomainRequest(this);
         }
     }

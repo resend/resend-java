@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.resend.core.util.ValidationUtil.*;
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a request to send an email.
  */
@@ -508,13 +505,8 @@ public class SendEmailRequest {
          * Builds and returns a {@code SendEmailRequest} based on the configured properties.
          *
          * @return A {@code SendEmailRequest} instance.
-         * @throws NullPointerException If any required properties (from, to, or subject) are null.
          */
         public SendEmailRequest build() {
-            requireNonNull(from, EMAIL_FROM_NULL);
-            requireNonNull(to, EMAIL_TO_NULL);
-            requireNonNull(subject, EMAIL_SUBJECT_NULL);
-
             return new SendEmailRequest(this);
         }
 

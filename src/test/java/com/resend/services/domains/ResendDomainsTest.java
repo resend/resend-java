@@ -28,10 +28,10 @@ public class ResendDomainsTest {
         CreateDomainResponse expectedDomain = ResendDomainsUtil.createDomainResponse();
 
         CreateDomainRequest request = ResendDomainsUtil.createDomainRequest();
-        when(resendDomains.createDomain(request))
+        when(resendDomains.create(request))
                 .thenReturn(expectedDomain);
 
-        CreateDomainResponse response = resendDomains.createDomain(request);
+        CreateDomainResponse response = resendDomains.create(request);
 
         assertNotNull(response);
         assertEquals(expectedDomain.getId(), response.getId());
@@ -41,10 +41,10 @@ public class ResendDomainsTest {
     public void testRetrieveDomain_Success() {
         Domain expectedDomain = ResendDomainsUtil.createDomain();
 
-        when(resendDomains.retrieveDomain(expectedDomain.getId()))
+        when(resendDomains.retrieve(expectedDomain.getId()))
                 .thenReturn(expectedDomain);
 
-        Domain response = resendDomains.retrieveDomain(expectedDomain.getId());
+        Domain response = resendDomains.retrieve(expectedDomain.getId());
 
         assertNotNull(response);
         assertEquals(expectedDomain, response);
@@ -55,10 +55,10 @@ public class ResendDomainsTest {
     public void testVerifyDomain_Success() {
         VerifyDomainResponse expectedResponse = ResendDomainsUtil.verifyDomain();
 
-        when(resendDomains.verifyDomain(expectedResponse.getId()))
+        when(resendDomains.verify(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        VerifyDomainResponse response = resendDomains.verifyDomain(expectedResponse.getId());
+        VerifyDomainResponse response = resendDomains.verify(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);
@@ -69,10 +69,10 @@ public class ResendDomainsTest {
     public void testDeleteDomain_Success() {
         DeleteDomainResponse expectedResponse = ResendDomainsUtil.deleteDomain();
 
-        when(resendDomains.deleteDomain(expectedResponse.getId()))
+        when(resendDomains.delete(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = resendDomains.deleteDomain(expectedResponse.getId());
+        DeleteDomainResponse response = resendDomains.delete(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

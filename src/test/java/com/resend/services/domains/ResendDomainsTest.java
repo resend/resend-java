@@ -41,10 +41,10 @@ public class ResendDomainsTest {
     public void testRetrieveDomain_Success() {
         Domain expectedDomain = ResendDomainsUtil.createDomain();
 
-        when(resendDomains.retrieve(expectedDomain.getId()))
+        when(resendDomains.get(expectedDomain.getId()))
                 .thenReturn(expectedDomain);
 
-        Domain response = resendDomains.retrieve(expectedDomain.getId());
+        Domain response = resendDomains.get(expectedDomain.getId());
 
         assertNotNull(response);
         assertEquals(expectedDomain, response);

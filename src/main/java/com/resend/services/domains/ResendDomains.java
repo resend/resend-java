@@ -59,7 +59,7 @@ public class ResendDomains extends BaseService {
      * @return A Domain object representing the retrieved domain.
      * @throws ResendException If an error occurs during the domain retrieval process.
      */
-    public Domain retrieve(String domainId) throws ResendException {
+    public Domain get(String domainId) throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/domains/" + domainId, super.getAuthenticationProvider().token(), HttpMethod.GET, null, MediaType.get("application/json"));

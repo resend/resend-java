@@ -35,12 +35,13 @@ public class Domain extends AbstractDomain {
     /**
      * Constructor to create an immutable Domain instance.
      *
-     * @param object The type of the object (e.g., "domain").
      * @param id The ID of the domain.
      * @param name The name of the domain.
-     * @param status The status of the domain.
      * @param createdAt The creation timestamp of the domain.
+     * @param status The status of the domain.
      * @param region The region of the domain.
+     * @param dnsProvider The dnsProvider of the domain.
+     * @param object The type of the object (e.g., "domain").
      * @param records The list of DNS records associated with the domain.
      */
     public Domain(String id,

@@ -8,7 +8,7 @@ import com.resend.core.provider.impl.AuthenticationProviderStandard;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
-public class ResendEmailsUtil {
+public class EmailsUtil {
 
     public static AuthenticationProvider createAuthenticationProvider() {
         String apiKey = "re_";

@@ -12,14 +12,14 @@ import okhttp3.MediaType;
 /**
  *  Represents the Resend Emails module.
  */
-public class ResendEmails extends BaseService {
+public final class Emails extends BaseService {
 
     /**
      * Constructs an instance of the {@code ResendEmails} class.
      *
      * @param apiKey The apiKey used for authentication.
      */
-    public ResendEmails(final String apiKey) {
+    public Emails(final String apiKey) {
         super(apiKey);
     }
 

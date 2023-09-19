@@ -1,5 +1,5 @@
 package com.resend.services.emails;
-import com.resend.services.util.ResendEmailsUtil;
+import com.resend.services.util.EmailsUtil;
 import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
@@ -12,38 +12,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-public class ResendEmailsTest {
+public class EmailsTest {
     @Mock
-    private ResendEmails resendEmails;
+    private Emails emails;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        resendEmails = mock(ResendEmails.class);
+        emails = mock(Emails.class);
     }
 
     @Test
     public void testRetrieveEmail_Success() {
-        Email expectedEmail = ResendEmailsUtil.createTestEmail();
+        Email expectedEmail = EmailsUtil.createTestEmail();
 
-        when(resendEmails.retrieveEmail(expectedEmail.getId()))
+        when(emails.retrieveEmail(expectedEmail.getId()))
                 .thenReturn(expectedEmail);
 
-        Email retrievedEmail = resendEmails.retrieveEmail(expectedEmail.getId());
+        Email retrievedEmail = emails.retrieveEmail(expectedEmail.getId());
 
 
         assertEquals(expectedEmail, retrievedEmail);
-        verify(resendEmails, times(1)).retrieveEmail(expectedEmail.getId());
+        verify(emails, times(1)).retrieveEmail(expectedEmail.getId());
     }
 
     @Test
     public void testSendEmail_Success() {
-        SendEmailRequest sendEmailRequest = ResendEmailsUtil.createSendEmailRequest();
-        SendEmailResponse expectedRes = ResendEmailsUtil.createSendEmailResponse();
+        SendEmailRequest sendEmailRequest = EmailsUtil.createSendEmailRequest();
+        SendEmailResponse expectedRes = EmailsUtil.createSendEmailResponse();
 
-        when(resendEmails.sendEmail(sendEmailRequest)).thenReturn(expectedRes);
+        when(emails.sendEmail(sendEmailRequest)).thenReturn(expectedRes);
 
-        SendEmailResponse sendEmailResponse = resendEmails.sendEmail(sendEmailRequest);
+        SendEmailResponse sendEmailResponse = emails.sendEmail(sendEmailRequest);
 
         assertNotNull(sendEmailResponse);
     }

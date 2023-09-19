@@ -7,14 +7,14 @@ import com.resend.core.service.BaseService;
 import com.resend.services.domains.model.*;
 import okhttp3.MediaType;
 
-public class ResendDomains extends BaseService {
+public final class Domains extends BaseService {
 
     /**
      * Constructs an instance of the {@code ResendDomains} class.
      *
      * @param apiKey The apiKey used for authentication.
      */
-    public ResendDomains(final String apiKey) {
+    public Domains(final String apiKey) {
         super(apiKey);
     }
 

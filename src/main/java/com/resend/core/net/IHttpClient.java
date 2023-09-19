@@ -17,6 +17,7 @@ public interface IHttpClient<T> {
      * @param apiKey  The API Key used to authenticate the request.
      * @param method  The HTTP method (GET, POST, PUT, DELETE, etc.).
      * @param payload The payload or data to send with the request.
+     * @param mediaType The media type of the request.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload, final MediaType mediaType);

@@ -28,10 +28,10 @@ public class DomainsTest {
         CreateDomainResponse expectedDomain = DomainsUtil.createDomainResponse();
 
         CreateDomainRequest request = DomainsUtil.createDomainRequest();
-        when(domains.createDomain(request))
+        when(domains.create(request))
                 .thenReturn(expectedDomain);
 
-        CreateDomainResponse response = domains.createDomain(request);
+        CreateDomainResponse response = domains.create(request);
 
         assertNotNull(response);
         assertEquals(expectedDomain.getId(), response.getId());
@@ -41,10 +41,10 @@ public class DomainsTest {
     public void testRetrieveDomain_Success() {
         Domain expectedDomain = DomainsUtil.createDomain();
 
-        when(domains.retrieveDomain(expectedDomain.getId()))
+        when(domains.get(expectedDomain.getId()))
                 .thenReturn(expectedDomain);
 
-        Domain response = domains.retrieveDomain(expectedDomain.getId());
+        Domain response = domains.get(expectedDomain.getId());
 
         assertNotNull(response);
         assertEquals(expectedDomain, response);
@@ -55,10 +55,10 @@ public class DomainsTest {
     public void testVerifyDomain_Success() {
         VerifyDomainResponse expectedResponse = DomainsUtil.verifyDomain();
 
-        when(domains.verifyDomain(expectedResponse.getId()))
+        when(domains.verify(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        VerifyDomainResponse response = domains.verifyDomain(expectedResponse.getId());
+        VerifyDomainResponse response = domains.verify(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);
@@ -69,10 +69,10 @@ public class DomainsTest {
     public void testDeleteDomain_Success() {
         DeleteDomainResponse expectedResponse = DomainsUtil.deleteDomain();
 
-        when(domains.deleteDomain(expectedResponse.getId()))
+        when(domains.delete(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = domains.deleteDomain(expectedResponse.getId());
+        DeleteDomainResponse response = domains.delete(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

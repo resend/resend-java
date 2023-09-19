@@ -10,7 +10,7 @@ import okhttp3.MediaType;
 public final class Domains extends BaseService {
 
     /**
-     * Constructs an instance of the {@code ResendDomains} class.
+     * Constructs an instance of the {@code Domains} class.
      *
      * @param apiKey The apiKey used for authentication.
      */

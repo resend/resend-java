@@ -15,7 +15,7 @@ import okhttp3.MediaType;
 public final class Emails extends BaseService {
 
     /**
-     * Constructs an instance of the {@code ResendEmails} class.
+     * Constructs an instance of the {@code Emails} class.
      *
      * @param apiKey The apiKey used for authentication.
      */

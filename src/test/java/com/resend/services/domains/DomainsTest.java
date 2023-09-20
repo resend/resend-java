@@ -69,10 +69,10 @@ public class DomainsTest {
     public void testDeleteDomain_Success() {
         DeleteDomainResponse expectedResponse = DomainsUtil.deleteDomain();
 
-        when(domains.delete(expectedResponse.getId()))
+        when(domains.remove(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = domains.delete(expectedResponse.getId());
+        DeleteDomainResponse response = domains.remove(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

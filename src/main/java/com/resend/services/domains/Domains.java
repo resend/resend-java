@@ -125,7 +125,7 @@ public final class Domains extends BaseService {
      * @return A DeleteDomainResponse representing the result of the domain deletion operation.
      * @throws ResendException If an error occurs during the domain deletion process.
      */
-    public DeleteDomainResponse delete(String domainId) throws ResendException {
+    public DeleteDomainResponse remove(String domainId) throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);

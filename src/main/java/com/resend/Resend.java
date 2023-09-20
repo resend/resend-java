@@ -4,9 +4,9 @@ import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 
 /**
- * The ResendClient class provides a facade for the Domains and Emails services.
+ * The Resend class provides a facade for the Domains and Emails services.
  */
-public class ResendClient {
+public class Resend {
 
     /**
      * The API key for the Resend service.
@@ -14,11 +14,11 @@ public class ResendClient {
     private final String apiKey;
 
     /**
-     * Constructs a new ResendClient with the specified API key.
+     * Constructs a new Resend with the specified API key.
      *
      * @param apiKey The API key for the ReSend service.
      */
-    public ResendClient(final String apiKey) {
+    public Resend(final String apiKey) {
         this.apiKey = apiKey;
     }
 

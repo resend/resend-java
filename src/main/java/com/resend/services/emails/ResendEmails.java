@@ -38,7 +38,7 @@ public class ResendEmails extends BaseService {
      * @return The response indicating the status of the email sending.
      * @throws RuntimeException If an error occurs while sending the email.
      */
-    public SendEmailResponse sendEmail(SendEmailRequest sendEmailRequest) throws ResendException {
+    public SendEmailResponse send(SendEmailRequest sendEmailRequest) throws ResendException {
 
         String payload = super.resendMapper.writeValue(sendEmailRequest);
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.getAuthenticationProvider().token(), HttpMethod.POST, payload, MediaType.get("application/json"));
@@ -61,7 +61,7 @@ public class ResendEmails extends BaseService {
      * @return The retrieved email's details.
      * @throws RuntimeException If an error occurs while retrieving the email.
      */
-    public Email retrieveEmail(String emailId) throws ResendException {
+    public Email get(String emailId) throws ResendException {
         try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.getAuthenticationProvider().token(), HttpMethod.GET, null, MediaType.get("application/json"));
 

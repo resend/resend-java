@@ -26,14 +26,14 @@ public class ResendEmailsTest {
     public void testRetrieveEmail_Success() {
         Email expectedEmail = ResendEmailsUtil.createTestEmail();
 
-        when(resendEmails.retrieveEmail(expectedEmail.getId()))
+        when(resendEmails.get(expectedEmail.getId()))
                 .thenReturn(expectedEmail);
 
-        Email retrievedEmail = resendEmails.retrieveEmail(expectedEmail.getId());
+        Email retrievedEmail = resendEmails.get(expectedEmail.getId());
 
 
         assertEquals(expectedEmail, retrievedEmail);
-        verify(resendEmails, times(1)).retrieveEmail(expectedEmail.getId());
+        verify(resendEmails, times(1)).get(expectedEmail.getId());
     }
 
     @Test
@@ -41,9 +41,9 @@ public class ResendEmailsTest {
         SendEmailRequest sendEmailRequest = ResendEmailsUtil.createSendEmailRequest();
         SendEmailResponse expectedRes = ResendEmailsUtil.createSendEmailResponse();
 
-        when(resendEmails.sendEmail(sendEmailRequest)).thenReturn(expectedRes);
+        when(resendEmails.send(sendEmailRequest)).thenReturn(expectedRes);
 
-        SendEmailResponse sendEmailResponse = resendEmails.sendEmail(sendEmailRequest);
+        SendEmailResponse sendEmailResponse = resendEmails.send(sendEmailRequest);
 
         assertNotNull(sendEmailResponse);
     }

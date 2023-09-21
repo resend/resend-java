@@ -33,7 +33,7 @@ public class ResendDomains extends BaseService {
      * @return A CreateDomainResponse representing the result of the domain creation operation.
      * @throws ResendException If an error occurs during the domain creation process.
      */
-    public CreateDomainResponse createDomain(CreateDomainRequest createDomainRequest) throws ResendException {
+    public CreateDomainResponse create(CreateDomainRequest createDomainRequest) throws ResendException {
 
         try {
             String payload = super.resendMapper.writeValue(createDomainRequest);
@@ -59,7 +59,7 @@ public class ResendDomains extends BaseService {
      * @return A Domain object representing the retrieved domain.
      * @throws ResendException If an error occurs during the domain retrieval process.
      */
-    public Domain retrieveDomain(String domainId) throws ResendException {
+    public Domain get(String domainId) throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/domains/" + domainId, super.getAuthenticationProvider().token(), HttpMethod.GET, null, MediaType.get("application/json"));
@@ -84,7 +84,7 @@ public class ResendDomains extends BaseService {
      * @return A VerifyDomainResponse representing the result of the domain verification operation.
      * @throws ResendException If an error occurs during the domain verification process.
      */
-    public VerifyDomainResponse verifyDomain(String domainId) throws ResendException {
+    public VerifyDomainResponse verify(String domainId) throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/verify", getAuthenticationProvider().token(), HttpMethod.POST, "", null);
@@ -108,7 +108,7 @@ public class ResendDomains extends BaseService {
      * @return A ListDomainsResponse containing the list of domains.
      * @throws ResendException If an error occurs during the domain list retrieval process.
      */
-    public ListDomainsResponse listDomains() throws ResendException {
+    public ListDomainsResponse list() throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.getAuthenticationProvider().token(), HttpMethod.GET, null, MediaType.get("application/json"));
@@ -133,7 +133,7 @@ public class ResendDomains extends BaseService {
      * @return A DeleteDomainResponse representing the result of the domain deletion operation.
      * @throws ResendException If an error occurs during the domain deletion process.
      */
-    public DeleteDomainResponse deleteDomain(String domainId) throws ResendException {
+    public DeleteDomainResponse delete(String domainId) throws ResendException {
 
         try {
             AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, getAuthenticationProvider().token(), HttpMethod.DELETE, "", null);

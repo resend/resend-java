@@ -3,7 +3,7 @@ package com.resend.core.exception;
 /**
  * Custom exception class for representing errors related to the Resend API.
  */
-public class ResendException extends RuntimeException {
+public class ResendException extends Exception {
 
     /**
      * Constructs a new `ResendException` with the specified error message.

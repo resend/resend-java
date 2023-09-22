@@ -26,22 +26,17 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain creation process.
      */
     public CreateDomainResponse create(CreateDomainRequest createDomainRequest) throws ResendException {
+        String payload = super.resendMapper.writeValue(createDomainRequest);
+        AbstractHttpResponse<String> response = httpClient.perform("/domains", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
-        try {
-            String payload = super.resendMapper.writeValue(createDomainRequest);
-            AbstractHttpResponse<String> response = httpClient.perform("/domains", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-            if (!response.isSuccessful()) {
-                throw new ResendException("Failed to create domain: " + response.getCode() + " " + response.getBody());
-            }
-
-            String responseBody = response.getBody();
-            CreateDomainResponse createDomainResponse = resendMapper.readValue(responseBody, CreateDomainResponse.class);
-
-            return createDomainResponse;
-        } catch (Exception e) {
-            throw new ResendException(e.getMessage());
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to create domain: " + response.getCode() + " " + response.getBody());
         }
+
+        String responseBody = response.getBody();
+        CreateDomainResponse createDomainResponse = resendMapper.readValue(responseBody, CreateDomainResponse.class);
+
+        return createDomainResponse;
     }
 
     /**
@@ -77,21 +72,16 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain verification process.
      */
     public VerifyDomainResponse verify(String domainId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/verify", super.apiKey, HttpMethod.POST, "", null);
 
-        try {
-            AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/verify", super.apiKey, HttpMethod.POST, "", null);
-
-            if (!response.isSuccessful()) {
-                throw new ResendException("Failed to verify domain: " + response.getCode() + " " + response.getBody());
-            }
-
-            String responseBody = response.getBody();
-            VerifyDomainResponse verifyDomainResponse = resendMapper.readValue(responseBody, VerifyDomainResponse.class);
-
-            return verifyDomainResponse;
-        } catch (Exception e) {
-            throw new ResendException(e.getMessage());
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to verify domain: " + response.getCode() + " " + response.getBody());
         }
+
+        String responseBody = response.getBody();
+        VerifyDomainResponse verifyDomainResponse = resendMapper.readValue(responseBody, VerifyDomainResponse.class);
+
+        return verifyDomainResponse;
     }
 
     /**
@@ -101,21 +91,16 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain list retrieval process.
      */
     public ListDomainsResponse list() throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
-        try {
-            AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-            if (!response.isSuccessful()) {
-                throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());
-            }
-
-            String responseBody = response.getBody();
-
-            ListDomainsResponse listDomainsResponse = resendMapper.readValue(responseBody, ListDomainsResponse.class);
-            return listDomainsResponse;
-        } catch (Exception e) {
-            throw new ResendException("Error retrieving domain: " + e.getMessage(), e);
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());
         }
+
+        String responseBody = response.getBody();
+
+        ListDomainsResponse listDomainsResponse = resendMapper.readValue(responseBody, ListDomainsResponse.class);
+        return listDomainsResponse;
     }
 
     /**
@@ -126,20 +111,15 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain deletion process.
      */
     public DeleteDomainResponse remove(String domainId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);
 
-        try {
-            AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);
-
-            if (!response.isSuccessful()) {
-                throw new ResendException("Failed to delete domain: " + response.getCode() + " " + response.getBody());
-            }
-
-            String responseBody = response.getBody();
-            DeleteDomainResponse deleteDomainResponse = resendMapper.readValue(responseBody, DeleteDomainResponse.class);
-
-            return deleteDomainResponse;
-        } catch (Exception e) {
-            throw new ResendException(e.getMessage());
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to delete domain: " + response.getCode() + " " + response.getBody());
         }
+
+        String responseBody = response.getBody();
+        DeleteDomainResponse deleteDomainResponse = resendMapper.readValue(responseBody, DeleteDomainResponse.class);
+
+        return deleteDomainResponse;
     }
 }

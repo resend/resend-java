@@ -2,18 +2,12 @@ package com.resend.services.util;
 
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
-import com.resend.core.provider.AuthenticationProvider;
-import com.resend.core.provider.impl.AuthenticationProviderStandard;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 public class EmailsUtil {
 
-    public static AuthenticationProvider createAuthenticationProvider() {
-        String apiKey = "re_";
-        return new AuthenticationProviderStandard(apiKey);
-    }
     public static Attachment createAttachment() {
         return Attachment.builder()
                 .fileName("invoice.pdf")

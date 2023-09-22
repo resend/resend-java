@@ -20,10 +20,6 @@ log/
 .DS_Store
 Thumbs.db
 
-# Gradle wrapper files
-gradle-wrapper.jar
-gradle-wrapper.properties
-
 # IntelliJ IDEA
 .idea/
 *.iws

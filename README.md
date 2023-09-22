@@ -9,28 +9,25 @@
 
 To install the Java SDK, add the following dependency to your project:
 
-Gradle:
+Gradle
 
-```
-implementation 'com.resend:resend-java:1.0.0'
+```gradle
+implementation 'com.resend:resend-java:2.0.0'
 ```
 
-Maven:
+Maven
 
-```
+```Maven
 <dependency>
     <groupId>com.resend</groupId>
     <artifactId>resend-java</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 
 ```
 ## Setup
 
 First, you need to get an API key, which is available in the [Resend Dashboard](https://resend.com).
-
-Within the AuthenticationProvider, you need to programmatically pass an API Key. If you wish to utilize an environment variable instead, you can simply omit the parameter from the ResendEmails constructor, and it will automatically search for an environment variable called 'RESEND_API_KEY'.
-
 ## Example
 
 ```java
@@ -43,11 +40,8 @@ import com.resend.services.emails.ResendEmails;
 
 public class Main {
     public static void main(String[] args) {
-        String apiKey = "re_123";
-
-        AuthenticationProvider provider = new AuthenticationProviderStandard(apiKey);
-        ResendEmails emailClient = new ResendEmails(provider);
-
+        Resend resend = new Resend("re_123");
+                
         SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
                 .from("Me <me@exemple.io>")
                 .to("to@example", "you@example.com")
@@ -58,7 +52,7 @@ public class Main {
                 .subject("Hello from Java!")
                 .build();
 
-        SendEmailResponse ser = emailClient.sendEmail(sendEmailRequest);
+        SendEmailResponse data = resend.emails().send(sendEmailRequest);
         
     }
 }

@@ -1,7 +1,7 @@
 package com.resend.services.domains;
 
 import com.resend.services.domains.model.*;
-import com.resend.services.util.ResendDomainsUtil;
+import com.resend.services.util.DomainsUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,26 +12,26 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ResendDomainsTest {
+public class DomainsTest {
 
     @Mock
-    private ResendDomains resendDomains;
+    private Domains domains;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        resendDomains = mock(ResendDomains.class);
+        domains = mock(Domains.class);
     }
 
     @Test
     public void testCreateDomain_Success() {
-        CreateDomainResponse expectedDomain = ResendDomainsUtil.createDomainResponse();
+        CreateDomainResponse expectedDomain = DomainsUtil.createDomainResponse();
 
-        CreateDomainRequest request = ResendDomainsUtil.createDomainRequest();
-        when(resendDomains.create(request))
+        CreateDomainRequest request = DomainsUtil.createDomainRequest();
+        when(domains.create(request))
                 .thenReturn(expectedDomain);
 
-        CreateDomainResponse response = resendDomains.create(request);
+        CreateDomainResponse response = domains.create(request);
 
         assertNotNull(response);
         assertEquals(expectedDomain.getId(), response.getId());
@@ -39,12 +39,12 @@ public class ResendDomainsTest {
 
     @Test
     public void testRetrieveDomain_Success() {
-        Domain expectedDomain = ResendDomainsUtil.createDomain();
+        Domain expectedDomain = DomainsUtil.createDomain();
 
-        when(resendDomains.get(expectedDomain.getId()))
+        when(domains.get(expectedDomain.getId()))
                 .thenReturn(expectedDomain);
 
-        Domain response = resendDomains.get(expectedDomain.getId());
+        Domain response = domains.get(expectedDomain.getId());
 
         assertNotNull(response);
         assertEquals(expectedDomain, response);
@@ -53,12 +53,12 @@ public class ResendDomainsTest {
 
     @Test
     public void testVerifyDomain_Success() {
-        VerifyDomainResponse expectedResponse = ResendDomainsUtil.verifyDomain();
+        VerifyDomainResponse expectedResponse = DomainsUtil.verifyDomain();
 
-        when(resendDomains.verify(expectedResponse.getId()))
+        when(domains.verify(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        VerifyDomainResponse response = resendDomains.verify(expectedResponse.getId());
+        VerifyDomainResponse response = domains.verify(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);
@@ -67,12 +67,12 @@ public class ResendDomainsTest {
 
     @Test
     public void testDeleteDomain_Success() {
-        DeleteDomainResponse expectedResponse = ResendDomainsUtil.deleteDomain();
+        DeleteDomainResponse expectedResponse = DomainsUtil.deleteDomain();
 
-        when(resendDomains.delete(expectedResponse.getId()))
+        when(domains.remove(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = resendDomains.delete(expectedResponse.getId());
+        DeleteDomainResponse response = domains.remove(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

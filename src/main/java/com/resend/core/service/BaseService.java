@@ -3,8 +3,6 @@ package com.resend.core.service;
 import com.resend.core.mapper.ResendMapper;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.impl.HttpClient;
-import com.resend.core.provider.AuthenticationProvider;
-import com.resend.core.provider.impl.AuthenticationProviderDefault;
 
 /**
  * An abstract base class for service implementations, providing common functionality such as HTTP client,
@@ -13,9 +11,9 @@ import com.resend.core.provider.impl.AuthenticationProviderDefault;
 public abstract class BaseService {
 
     /**
-     * Authentication provider used for authenticating requests.
+     * Apikey used for authenticating requests.
      */
-    private AuthenticationProvider authenticationProvider;
+    protected final String apiKey;
 
     /**
      * HTTP client for making HTTP requests.
@@ -28,22 +26,12 @@ public abstract class BaseService {
     protected final ResendMapper resendMapper;
 
     /**
-     * Constructs a BaseService instance with default authentication provider, HTTP client, and mapper.
-     * The default authentication provider is an instance of AuthenticationProviderDefault.
-     */
-    public BaseService() {
-        this.authenticationProvider = new AuthenticationProviderDefault();
-        this.httpClient = new HttpClient();
-        this.resendMapper = new ResendMapper();
-    }
-
-    /**
      * Constructs a BaseService instance with the specified authentication provider, default HTTP client, and mapper.
      *
-     * @param authenticationProvider The authentication provider to use.
+     * @param apiKey The apiKey to use.
      */
-    public BaseService(final AuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
+    public BaseService(final String apiKey) {
+        this.apiKey = apiKey;
         this.httpClient = new HttpClient();
         this.resendMapper = new ResendMapper();
     }
@@ -55,14 +43,5 @@ public abstract class BaseService {
      */
     public IHttpClient getHttpClient() {
         return httpClient;
-    }
-
-    /**
-     * Gets the authentication provider associated with this service instance.
-     *
-     * @return The authentication provider.
-     */
-    public AuthenticationProvider getAuthenticationProvider() {
-        return authenticationProvider;
     }
 }

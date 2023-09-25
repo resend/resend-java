@@ -104,13 +104,13 @@ public final class Domains extends BaseService {
     }
 
     /**
-     * Deletes a domain based on the provided domain ID and returns a DeleteDomainResponse.
+     * Deletes a domain based on the provided domain ID and returns a RemoveDomainResponse.
      *
      * @param domainId The unique identifier of the domain to delete.
-     * @return A DeleteDomainResponse representing the result of the domain deletion operation.
+     * @return A RemoveDomainResponse representing the result of the domain deletion operation.
      * @throws ResendException If an error occurs during the domain deletion process.
      */
-    public DeleteDomainResponse remove(String domainId) throws ResendException {
+    public RemoveDomainResponse remove(String domainId) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
@@ -118,8 +118,8 @@ public final class Domains extends BaseService {
         }
 
         String responseBody = response.getBody();
-        DeleteDomainResponse deleteDomainResponse = resendMapper.readValue(responseBody, DeleteDomainResponse.class);
+        RemoveDomainResponse removeDomainResponse = resendMapper.readValue(responseBody, RemoveDomainResponse.class);
 
-        return deleteDomainResponse;
+        return removeDomainResponse;
     }
 }

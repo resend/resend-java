@@ -42,8 +42,8 @@ public class DomainsUtil {
                 "2c64b27c-6237-4626-85d2-a0a8b5832070");
     }
 
-    public static final DeleteDomainResponse deleteDomain() {
-        return new DeleteDomainResponse(
+    public static final RemoveDomainResponse deleteDomain() {
+        return new RemoveDomainResponse(
                 "domain",
                 "2c64b27c-6237-4626-85d2-a0a8b5832070",
                 true);

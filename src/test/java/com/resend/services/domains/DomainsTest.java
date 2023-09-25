@@ -68,12 +68,12 @@ public class DomainsTest {
 
     @Test
     public void testDeleteDomain_Success() throws ResendException {
-        DeleteDomainResponse expectedResponse = DomainsUtil.deleteDomain();
+        RemoveDomainResponse expectedResponse = DomainsUtil.deleteDomain();
 
         when(domains.remove(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = domains.remove(expectedResponse.getId());
+        RemoveDomainResponse response = domains.remove(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

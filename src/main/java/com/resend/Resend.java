@@ -1,5 +1,6 @@
 package com.resend;
 
+import com.resend.services.apikeys.ApiKeys;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 
@@ -38,5 +39,14 @@ public class Resend {
      */
     public Emails emails() {
         return new Emails(apiKey);
+    }
+
+    /**
+     * Returns an ApiKeys object that can be used to interact with the ApiKeys service.
+     *
+     * @return An ApiKeys object.
+     */
+    public ApiKeys apiKeys() {
+        return new ApiKeys(apiKey);
     }
 }

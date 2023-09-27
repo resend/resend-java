@@ -7,6 +7,9 @@ import com.resend.core.service.BaseService;
 import com.resend.services.domains.model.*;
 import okhttp3.MediaType;
 
+/**
+ *  Represents the Resend Emails module.
+ */
 public final class Domains extends BaseService {
 
     /**

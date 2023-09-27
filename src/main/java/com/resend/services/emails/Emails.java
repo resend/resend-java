@@ -28,7 +28,7 @@ public final class Emails extends BaseService {
      *
      * @param sendEmailRequest The request containing email details.
      * @return The response indicating the status of the email sending.
-     * @throws RuntimeException If an error occurs while sending the email.
+     * @throws ResendException If an error occurs while sending the email.
      */
     public SendEmailResponse send(SendEmailRequest sendEmailRequest) throws ResendException {
 
@@ -51,7 +51,7 @@ public final class Emails extends BaseService {
      *
      * @param emailId The unique identifier of the email.
      * @return The retrieved email's details.
-     * @throws RuntimeException If an error occurs while retrieving the email.
+     * @throws ResendException If an error occurs while retrieving the email.
      */
     public Email get(String emailId) throws ResendException {
             AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));

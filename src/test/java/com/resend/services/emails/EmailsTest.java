@@ -1,4 +1,5 @@
 package com.resend.services.emails;
+import com.resend.core.exception.ResendException;
 import com.resend.services.util.EmailsUtil;
 import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
@@ -23,7 +24,7 @@ public class EmailsTest {
     }
 
     @Test
-    public void testRetrieveEmail_Success() {
+    public void testRetrieveEmail_Success() throws ResendException {
         Email expectedEmail = EmailsUtil.createTestEmail();
 
         when(emails.get(expectedEmail.getId()))
@@ -37,7 +38,7 @@ public class EmailsTest {
     }
 
     @Test
-    public void testSendEmail_Success() {
+    public void testSendEmail_Success() throws ResendException {
         SendEmailRequest sendEmailRequest = EmailsUtil.createSendEmailRequest();
         SendEmailResponse expectedRes = EmailsUtil.createSendEmailResponse();
 

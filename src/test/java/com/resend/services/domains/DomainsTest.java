@@ -1,5 +1,6 @@
 package com.resend.services.domains;
 
+import com.resend.core.exception.ResendException;
 import com.resend.services.domains.model.*;
 import com.resend.services.util.DomainsUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ public class DomainsTest {
     }
 
     @Test
-    public void testCreateDomain_Success() {
+    public void testCreateDomain_Success() throws ResendException {
         CreateDomainResponse expectedDomain = DomainsUtil.createDomainResponse();
 
         CreateDomainRequest request = DomainsUtil.createDomainRequest();
@@ -38,7 +39,7 @@ public class DomainsTest {
     }
 
     @Test
-    public void testRetrieveDomain_Success() {
+    public void testRetrieveDomain_Success() throws ResendException {
         Domain expectedDomain = DomainsUtil.createDomain();
 
         when(domains.get(expectedDomain.getId()))
@@ -52,7 +53,7 @@ public class DomainsTest {
     }
 
     @Test
-    public void testVerifyDomain_Success() {
+    public void testVerifyDomain_Success() throws ResendException {
         VerifyDomainResponse expectedResponse = DomainsUtil.verifyDomain();
 
         when(domains.verify(expectedResponse.getId()))
@@ -66,13 +67,13 @@ public class DomainsTest {
     }
 
     @Test
-    public void testDeleteDomain_Success() {
-        DeleteDomainResponse expectedResponse = DomainsUtil.deleteDomain();
+    public void testDeleteDomain_Success() throws ResendException {
+        RemoveDomainResponse expectedResponse = DomainsUtil.deleteDomain();
 
         when(domains.remove(expectedResponse.getId()))
                 .thenReturn(expectedResponse);
 
-        DeleteDomainResponse response = domains.remove(expectedResponse.getId());
+        RemoveDomainResponse response = domains.remove(expectedResponse.getId());
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);

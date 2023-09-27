@@ -18,7 +18,7 @@ public class HttpClient implements IHttpClient<Response> {
     public static final String BASE_API = "https://api.resend.com";
 
     /** The version of the Resend Java SDK. */
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "2.0.1";
 
     /** The User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + VERSION;

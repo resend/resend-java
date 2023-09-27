@@ -54,7 +54,6 @@ public final class Emails extends BaseService {
      * @throws RuntimeException If an error occurs while retrieving the email.
      */
     public Email get(String emailId) throws ResendException {
-        try {
             AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
             if (!response.isSuccessful()) {
@@ -65,8 +64,5 @@ public final class Emails extends BaseService {
 
             Email email = resendMapper.readValue(responseBody, Email.class);
             return email;
-        } catch (Exception e) {
-            throw new RuntimeException("Error retrieving email: " + e.getMessage(), e);
-        }
     }
 }

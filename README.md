@@ -12,7 +12,7 @@ To install the Java SDK, add the following dependency to your project:
 Gradle
 
 ```gradle
-implementation 'com.resend:resend-java:2.0.1'
+implementation 'com.resend:resend-java:2.1.0'
 ```
 
 Maven
@@ -21,7 +21,7 @@ Maven
 <dependency>
     <groupId>com.resend</groupId>
     <artifactId>resend-java</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
 </dependency>
 
 ```

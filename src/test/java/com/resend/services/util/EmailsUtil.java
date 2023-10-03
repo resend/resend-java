@@ -1,10 +1,11 @@
 package com.resend.services.util;
 
+import com.resend.services.batch.model.BatchEmail;
+import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

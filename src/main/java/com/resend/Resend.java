@@ -1,6 +1,7 @@
 package com.resend;
 
 import com.resend.services.apikeys.ApiKeys;
+import com.resend.services.batch.Batch;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 
@@ -48,5 +49,14 @@ public class Resend {
      */
     public ApiKeys apiKeys() {
         return new ApiKeys(apiKey);
+    }
+
+    /**
+     * Returns a Batch object that can be used to interact with the Batch service.
+     *
+     * @return An Batch object.
+     */
+    public Batch batch() {
+        return new Batch(apiKey);
     }
 }

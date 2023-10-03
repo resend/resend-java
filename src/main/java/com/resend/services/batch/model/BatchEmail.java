@@ -1,4 +1,4 @@
-package com.resend.services.emails.model;
+package com.resend.services.batch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

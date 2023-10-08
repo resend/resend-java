@@ -43,4 +43,8 @@ public class Batch extends BaseService {
 
         return createBatchEmailsResponse;
     }
+    
+    public CreateBatchEmailsResponse create(List<SendEmailRequest> emails) throws ResendException {
+        return this.send(emails);
+    }
 }

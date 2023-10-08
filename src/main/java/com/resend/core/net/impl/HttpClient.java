@@ -4,6 +4,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 
+import com.resend.core.util.PropertiesReader;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -17,14 +18,13 @@ public class HttpClient implements IHttpClient<Response> {
     /** The base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
 
-    /** The version of the Resend Java SDK. */
-    public static final String VERSION = System.getProperty("VERSION_NAME");
-
     /** The User-Agent header value for HTTP requests. */
-    public static final String USER_AGENT = "resend-java/" + VERSION;
+    public static final String USER_AGENT = "resend-java/";
 
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;
+
+    private final PropertiesReader propertiesReader;
 
     /**
      * Constructs an instance of the HttpClient with the provided API key.
@@ -32,6 +32,7 @@ public class HttpClient implements IHttpClient<Response> {
      */
     public HttpClient() {
         this.httpClient = new OkHttpClient();
+        this.propertiesReader = new PropertiesReader();
     }
 
     /**
@@ -53,7 +54,7 @@ public class HttpClient implements IHttpClient<Response> {
         Request request = new Request.Builder()
                 .url(BASE_API + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", USER_AGENT + propertiesReader.retrieveProperty("VERSION_NAME"))
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody)
                 .build();

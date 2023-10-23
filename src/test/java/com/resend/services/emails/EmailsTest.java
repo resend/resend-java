@@ -1,5 +1,7 @@
 package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
+import com.resend.services.batch.Batch;
+import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.util.EmailsUtil;
 import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -16,6 +20,10 @@ import static org.mockito.Mockito.*;
 public class EmailsTest {
     @Mock
     private Emails emails;
+
+    @Mock
+    private Batch batch;
+
 
     @BeforeEach
     public void setUp() {
@@ -47,5 +55,18 @@ public class EmailsTest {
         SendEmailResponse sendEmailResponse = emails.send(sendEmailRequest);
 
         assertNotNull(sendEmailResponse);
+    }
+
+    @Test
+    public void testCreateBatchEmails_Success() throws ResendException {
+        List<SendEmailRequest> batchEmailsRequest = EmailsUtil.createBatchEmailsRequest();
+        CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
+
+        when(batch.send(batchEmailsRequest)).thenReturn(expectedRes);
+
+        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest);
+
+        assertNotNull(sendBatchEmailsResponse);
+        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
     }
 }

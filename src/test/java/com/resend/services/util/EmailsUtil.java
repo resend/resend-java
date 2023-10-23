@@ -1,10 +1,13 @@
 package com.resend.services.util;
 
+import com.resend.services.batch.model.BatchEmail;
+import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 public class EmailsUtil {
 
@@ -34,6 +37,14 @@ public class EmailsUtil {
                 .attachments(Arrays.asList(createAttachment()))
                 .tags(Arrays.asList(createTag()))
                 .build();
+    }
+
+    public static List<SendEmailRequest> createBatchEmailsRequest() {
+        return Arrays.asList(createSendEmailRequest(), createSendEmailRequest());
+    }
+
+    public static CreateBatchEmailsResponse createBatchEmailsResponse() {
+        return new CreateBatchEmailsResponse(Arrays.asList(new BatchEmail("123"), new BatchEmail("321")));
     }
 
     public static Email createTestEmail() {

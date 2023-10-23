@@ -4,10 +4,13 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.service.BaseService;
+import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.Email;
 import com.resend.services.emails.model.SendEmailRequest;
 import com.resend.services.emails.model.SendEmailResponse;
 import okhttp3.MediaType;
+
+import java.util.List;
 
 /**
  *  Represents the Resend Emails module.

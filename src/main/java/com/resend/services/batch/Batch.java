@@ -11,6 +11,9 @@ import okhttp3.MediaType;
 
 import java.util.List;
 
+/**
+ *  Represents the Resend Batch module.
+ */
 public class Batch extends BaseService {
     /**
      * Constructsan instance of the {@code Batch} class.
@@ -43,8 +46,16 @@ public class Batch extends BaseService {
 
         return createBatchEmailsResponse;
     }
-    
+
+    /**
+     * Creates and sends a batch of email messages based on the provided list of email requests.
+     *
+     * @param emails A list of {@link SendEmailRequest} objects representing the email messages to be sent.
+     * @return A {@link CreateBatchEmailsResponse} containing information about the created batch of emails.
+     * @throws ResendException if an error occurs during the creation and sending of the emails.
+     */
     public CreateBatchEmailsResponse create(List<SendEmailRequest> emails) throws ResendException {
         return this.send(emails);
     }
+
 }

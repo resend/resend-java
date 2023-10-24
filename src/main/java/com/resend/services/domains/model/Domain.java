@@ -28,6 +28,9 @@ public class Domain extends AbstractDomain {
     @JsonProperty("dnsProvider")
     private String dnsProvider;
 
+    /**
+     * Empty constructor.
+     */
     public Domain() {
 
     }

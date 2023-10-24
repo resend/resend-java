@@ -28,7 +28,9 @@ public class Record {
     @JsonProperty("priority")
     private int priority;
 
-
+    /**
+     * Empty constructor.
+     */
     public Record() {
     }
 

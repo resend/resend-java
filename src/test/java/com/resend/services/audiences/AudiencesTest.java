@@ -4,7 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.audiences.model.CreateAudienceRequestOptions;
 import com.resend.services.audiences.model.CreateAudienceResponseSuccess;
 import com.resend.services.audiences.model.ListAudiencesResponseSuccess;
-import com.resend.services.audiences.model.RemoveAudiencesResponseSuccess;
+import com.resend.services.audiences.model.RemoveAudienceResponseSuccess;
 import com.resend.services.util.AudiencesUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,11 +45,11 @@ public class AudiencesTest {
     @Test
     public void testDeleteAudience_Success() throws ResendException {
         String audienceId = "123";
-        RemoveAudiencesResponseSuccess removed = AudiencesUtil.removeAudiencesResponseSuccess();
+        RemoveAudienceResponseSuccess removed = AudiencesUtil.removeAudiencesResponseSuccess();
         when(audiences.remove(audienceId))
                 .thenReturn(removed);
 
-        RemoveAudiencesResponseSuccess res = audiences.remove(audienceId);
+        RemoveAudienceResponseSuccess res = audiences.remove(audienceId);
 
         assertEquals(removed, res);
     }

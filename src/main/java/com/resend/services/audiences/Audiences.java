@@ -84,7 +84,7 @@ public class Audiences extends BaseService {
      * @return The RemoveAudiencesResponseSuccess with the details of the removed audience.
      * @throws ResendException If an error occurs during the audience deletion process.
      */
-    public RemoveAudiencesResponseSuccess remove(String id) throws ResendException {
+    public RemoveAudienceResponseSuccess remove(String id) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
@@ -93,6 +93,6 @@ public class Audiences extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, RemoveAudiencesResponseSuccess.class);
+        return resendMapper.readValue(responseBody, RemoveAudienceResponseSuccess.class);
     }
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a successful response for removing an audience.
  */
-public class RemoveAudiencesResponseSuccess {
+public class RemoveAudienceResponseSuccess {
 
     @JsonProperty("id")
     private String id;
@@ -16,7 +16,7 @@ public class RemoveAudiencesResponseSuccess {
     private boolean deleted;
 
     // Default constructor
-    public RemoveAudiencesResponseSuccess() {
+    public RemoveAudienceResponseSuccess() {
     }
 
     /**
@@ -26,7 +26,7 @@ public class RemoveAudiencesResponseSuccess {
      * @param object The Object of the removed audience.
      * @param deleted The boolean indicating if the data was deleted.
      */
-    public RemoveAudiencesResponseSuccess(final String id, final String object, final boolean deleted) {
+    public RemoveAudienceResponseSuccess(final String id, final String object, final boolean deleted) {
         this.id = id;
         this.object = object;
         this.deleted = deleted;

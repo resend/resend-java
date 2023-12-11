@@ -1,7 +1,9 @@
 package com.resend;
 
 import com.resend.services.apikeys.ApiKeys;
+import com.resend.services.audiences.Audiences;
 import com.resend.services.batch.Batch;
+import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 
@@ -49,6 +51,24 @@ public class Resend {
      */
     public ApiKeys apiKeys() {
         return new ApiKeys(apiKey);
+    }
+
+    /**
+     * Returns a Contacts object that can be used to interact with the Contacts service.
+     *
+     * @return A Contact object.
+     */
+    public Contacts contacts() {
+        return new Contacts(apiKey);
+    }
+
+    /**
+     * Returns an Audience object that can be used to interact with the Audiences service.
+     *
+     * @return an Audiences object.
+     */
+    public Audiences audiences() {
+        return new Audiences(apiKey);
     }
 
     /**

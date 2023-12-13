@@ -1,10 +1,7 @@
 package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
-import com.resend.services.contacts.model.CreateContactRequestOptions;
-import com.resend.services.contacts.model.CreateContactResponseSuccess;
-import com.resend.services.contacts.model.ListContactsResponseSuccess;
-import com.resend.services.contacts.model.RemoveContactResponseSuccess;
+import com.resend.services.contacts.model.*;
 import com.resend.services.util.ContactsUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,13 +41,16 @@ public class ContactsTest {
 
     @Test
     public void testRemoveContact_Success() throws ResendException {
-        String id = "123";
-        String audienceId = "123";
+        ContactRequestOptions params = ContactRequestOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .build();
+
         RemoveContactResponseSuccess removed = ContactsUtil.removeContactResponseSuccess();
-        when(contacts.remove(id, audienceId))
+        when(contacts.remove(params))
                 .thenReturn(removed);
 
-        RemoveContactResponseSuccess res = contacts.remove(id, audienceId);
+        RemoveContactResponseSuccess res = contacts.remove(params);
 
         assertEquals(removed, res);
     }

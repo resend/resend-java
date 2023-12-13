@@ -61,13 +61,12 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a contact by its unique identifier.
      *
-     * @param id The unique identifier of the contact.
-     * @param audienceId The unique identifier of the audience.
+     * @param params The object with identifier of the contact to delete and its audience id.
      * @return The retrieved contact details.
      * @throws ResendException If an error occurs while retrieving the contact.
      */
-    public GetContactResponseSuccess get(String id, String audienceId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +audienceId+ "/contacts/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+    public GetContactResponseSuccess get(ContactRequestOptions params) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +params.getId(), super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new RuntimeException("Failed to retrieve contact: " + response.getCode() + " " + response.getBody());
@@ -81,13 +80,12 @@ public class Contacts extends BaseService {
     /**
      * Deletes a contact based on the provided contact ID.
      *
-     * @param id The unique identifier of the contact to delete.
-     * @param audienceId The unique identifier of the audience to delete.
+     * @param params The object with identifier of the contact to delete and its audience id.
      * @return The RemoveContactsResponseSuccess with the details of the removed contact.
      * @throws ResendException If an error occurs during the contact deletion process.
      */
-    public RemoveContactResponseSuccess remove(String id, String audienceId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +audienceId+ "/contacts/" +id, super.apiKey, HttpMethod.DELETE, "", null);
+    public RemoveContactResponseSuccess remove(ContactRequestOptions params) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +params.getId(), super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to delete contact: " + response.getCode() + " " + response.getBody());

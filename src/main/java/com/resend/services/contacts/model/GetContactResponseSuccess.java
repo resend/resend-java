@@ -13,7 +13,9 @@ public class GetContactResponseSuccess extends Contact {
     @JsonProperty("object")
     private String object;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public GetContactResponseSuccess() {
 
     }

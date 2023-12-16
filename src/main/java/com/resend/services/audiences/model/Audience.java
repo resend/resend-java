@@ -18,7 +18,9 @@ public class Audience extends BaseAudience {
     @JsonDeserialize(using = DateTimeDeserializer.class)
     private OffsetDateTime createdAt;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public Audience() {
 
     }

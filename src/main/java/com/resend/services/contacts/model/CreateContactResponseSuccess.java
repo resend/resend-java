@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CreateContactResponseSuccess extends BaseContact{
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public CreateContactResponseSuccess() {
     }
 

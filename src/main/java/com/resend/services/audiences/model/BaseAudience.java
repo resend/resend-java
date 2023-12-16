@@ -14,7 +14,9 @@ public abstract class BaseAudience {
     @JsonProperty("name")
     private String name;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public BaseAudience() {
 
     }

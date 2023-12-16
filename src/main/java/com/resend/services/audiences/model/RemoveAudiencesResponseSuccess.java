@@ -15,7 +15,9 @@ public class RemoveAudiencesResponseSuccess {
     @JsonProperty("deleted")
     private boolean deleted;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public RemoveAudiencesResponseSuccess() {
     }
 

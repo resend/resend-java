@@ -15,14 +15,17 @@ public class ListAudiencesResponseSuccess {
     @JsonProperty("object")
     private String object;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public ListAudiencesResponseSuccess() {
     }
 
     /**
      * Constructs a successful response for listing audiences.
      *
-     * @param data The list of audiences.
+     * @param data   The list of audiences.
+     * @param object The object of the audiences.
      */
     public ListAudiencesResponseSuccess(List<Audience> data, String object) {
         this.data = data;

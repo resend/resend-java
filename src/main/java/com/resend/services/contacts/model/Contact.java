@@ -33,7 +33,9 @@ public class Contact {
     @JsonProperty("unsubscribed")
     private boolean unsubscribed;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public Contact() {
 
     }

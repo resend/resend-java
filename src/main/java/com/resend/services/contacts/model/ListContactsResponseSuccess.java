@@ -15,7 +15,9 @@ public class ListContactsResponseSuccess {
     @JsonProperty("data")
     private List<Contact> data;
 
-    //Default constructor
+    /**
+     * Default constructor
+     */
     public ListContactsResponseSuccess() {
     }
 

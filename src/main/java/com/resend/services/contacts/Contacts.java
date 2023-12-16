@@ -43,6 +43,7 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a list of contacts and returns a ListContactsResponseSuccess.
      *
+     * @param audienceId The id of the audience.
      * @return A ListContactsResponseSuccess containing the list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */

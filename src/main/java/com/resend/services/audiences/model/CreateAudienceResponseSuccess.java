@@ -13,7 +13,9 @@ public class CreateAudienceResponseSuccess extends BaseAudience {
     @JsonProperty("object")
     private String object;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public CreateAudienceResponseSuccess() {
 
     }
@@ -23,6 +25,7 @@ public class CreateAudienceResponseSuccess extends BaseAudience {
      *
      * @param id        The ID of the audience.
      * @param name      The name of the audience.
+     * @param object    The object of the audience.
      */
     public CreateAudienceResponseSuccess(String id, String name, String object) {
         super(id, name);

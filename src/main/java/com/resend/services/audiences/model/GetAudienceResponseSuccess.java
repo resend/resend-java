@@ -13,7 +13,9 @@ public class GetAudienceResponseSuccess extends Audience {
     @JsonProperty("object")
     private String object;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public GetAudienceResponseSuccess() {
 
     }

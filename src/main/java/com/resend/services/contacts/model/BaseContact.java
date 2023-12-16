@@ -12,7 +12,9 @@ public abstract class BaseContact {
     @JsonProperty("object")
     private String object;
 
-    // Default constructor
+    /**
+     * Default constructor
+     */
     public BaseContact() {
     }
 

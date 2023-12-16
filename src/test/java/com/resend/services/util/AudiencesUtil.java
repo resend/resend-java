@@ -4,6 +4,7 @@ import com.resend.services.audiences.model.*;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AudiencesUtil {

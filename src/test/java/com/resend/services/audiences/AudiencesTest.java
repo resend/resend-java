@@ -5,6 +5,7 @@ import com.resend.services.audiences.model.CreateAudienceRequestOptions;
 import com.resend.services.audiences.model.CreateAudienceResponseSuccess;
 import com.resend.services.audiences.model.ListAudiencesResponseSuccess;
 import com.resend.services.audiences.model.RemoveAudienceResponseSuccess;
+
 import com.resend.services.util.AudiencesUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -17,8 +17,8 @@ public class AudiencesUtil {
         return new CreateAudienceResponseSuccess("123", "aud", "audience");
     }
 
-    public static RemoveAudiencesResponseSuccess removeAudiencesResponseSuccess() {
-        return new RemoveAudiencesResponseSuccess("123", "audience", true);
+    public static RemoveAudienceResponseSuccess removeAudiencesResponseSuccess() {
+        return new RemoveAudienceResponseSuccess("123", "audience", true);
     }
 
     public static ListAudiencesResponseSuccess createAudiencesListResponse() {

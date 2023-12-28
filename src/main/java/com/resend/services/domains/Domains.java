@@ -22,14 +22,14 @@ public final class Domains extends BaseService {
     }
 
     /**
-     * Creates a domain based on the provided CreateDomainRequest and returns a CreateDomainResponse.
+     * Creates a domain based on the provided CreateDomainOptions and returns a CreateDomainResponse.
      *
-     * @param createDomainRequest The request object containing the domain creation details.
+     * @param createDomainOptions The request object containing the domain creation details.
      * @return A CreateDomainResponse representing the result of the domain creation operation.
      * @throws ResendException If an error occurs during the domain creation process.
      */
-    public CreateDomainResponse create(CreateDomainRequest createDomainRequest) throws ResendException {
-        String payload = super.resendMapper.writeValue(createDomainRequest);
+    public CreateDomainResponse create(CreateDomainOptions createDomainOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(createDomainOptions);
         AbstractHttpResponse<String> response = httpClient.perform("/domains", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {

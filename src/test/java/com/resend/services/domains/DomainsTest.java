@@ -28,7 +28,7 @@ public class DomainsTest {
     public void testCreateDomain_Success() throws ResendException {
         CreateDomainResponse expectedDomain = DomainsUtil.createDomainResponse();
 
-        CreateDomainRequest request = DomainsUtil.createDomainRequest();
+        CreateDomainOptions request = DomainsUtil.createDomainRequest();
         when(domains.create(request))
                 .thenReturn(expectedDomain);
 

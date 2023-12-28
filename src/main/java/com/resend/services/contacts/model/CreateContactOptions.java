@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a request to create a contact.
  */
-public class CreateContactRequestOptions {
+public class CreateContactOptions {
 
     @JsonProperty("audience_id")
     private final String audienceId;
@@ -27,7 +27,7 @@ public class CreateContactRequestOptions {
      *
      * @param builder The builder to construct the Contact.
      */
-    public CreateContactRequestOptions(Builder builder) {
+    public CreateContactOptions(Builder builder) {
         this.audienceId = builder.audienceId;
         this.email = builder.email;
         this.unsubscribed = builder.unsubscribed;
@@ -159,8 +159,8 @@ public class CreateContactRequestOptions {
          *
          * @return A new CreateContactRequest object.
          */
-        public CreateContactRequestOptions build() {
-            return new CreateContactRequestOptions(this);
+        public CreateContactOptions build() {
+            return new CreateContactOptions(this);
         }
     }
 }

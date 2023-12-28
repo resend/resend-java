@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsUtil {
-    public static CreateContactRequestOptions createContactRequest() {
-        return CreateContactRequestOptions.builder()
+    public static CreateContactOptions createContactRequest() {
+        return CreateContactOptions.builder()
                 .email("steve.wozniak@gmail.com")
                 .firstName("Steve")
                 .lastName("Wozniak")
@@ -36,5 +36,17 @@ public class ContactsUtil {
         contacts.add(c3);
 
         return new ListContactsResponseSuccess(contacts, "list");
+    }
+
+    public static UpdateContactOptions createUpdateOptions() {
+        return UpdateContactOptions.builder()
+                .audienceId("123")
+                .id("123")
+                .firstName("frodo")
+                .lastName("baggins").build();
+    }
+
+    public static UpdateContactResponseSuccess updateContactResponseSuccess() {
+        return new UpdateContactResponseSuccess("123", "contact");
     }
 }

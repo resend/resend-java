@@ -41,8 +41,8 @@ import com.resend.services.emails.ResendEmails;
 public class Main {
     public static void main(String[] args) {
         Resend resend = new Resend("re_123");
-                
-        SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
+
+        CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("Me <me@exemple.io>")
                 .to("to@example", "you@example.com")
                 .cc("carbon@example.com", "copy@example.com")
@@ -53,7 +53,7 @@ public class Main {
                 .build();
 
         try {
-            SendEmailResponse data = resend.emails().send(sendEmailRequest);
+            CreateEmailResponse data = resend.emails().send(params);
             System.out.println(data.getId());
         } catch (ResendException e) {
             e.printStackTrace();

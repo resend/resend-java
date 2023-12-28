@@ -6,7 +6,7 @@ import com.resend.core.net.HttpMethod;
 import com.resend.core.service.BaseService;
 
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
-import com.resend.services.emails.model.SendEmailRequest;
+import com.resend.services.emails.model.CreateEmailOptions;
 import okhttp3.MediaType;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class Batch extends BaseService {
      * @return The emails ids.
      * @throws ResendException If an error occurs while sending batch emails.
      */
-    public CreateBatchEmailsResponse send(List<SendEmailRequest> emails) throws ResendException {
+    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails) throws ResendException {
 
         String payload = super.resendMapper.writeValue(emails);
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
@@ -50,11 +50,11 @@ public class Batch extends BaseService {
     /**
      * Creates and sends a batch of email messages based on the provided list of email requests.
      *
-     * @param emails A list of {@link SendEmailRequest} objects representing the email messages to be sent.
+     * @param emails A list of {@link CreateEmailOptions} objects representing the email messages to be sent.
      * @return A {@link CreateBatchEmailsResponse} containing information about the created batch of emails.
      * @throws ResendException if an error occurs during the creation and sending of the emails.
      */
-    public CreateBatchEmailsResponse create(List<SendEmailRequest> emails) throws ResendException {
+    public CreateBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
         return this.send(emails);
     }
 

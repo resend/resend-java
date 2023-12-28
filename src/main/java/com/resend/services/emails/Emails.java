@@ -4,13 +4,10 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.service.BaseService;
-import com.resend.services.batch.model.CreateBatchEmailsResponse;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.CreateEmailResponse;
 import com.resend.services.emails.model.Email;
-import com.resend.services.emails.model.SendEmailRequest;
-import com.resend.services.emails.model.SendEmailResponse;
 import okhttp3.MediaType;
-
-import java.util.List;
 
 /**
  *  Represents the Resend Emails module.
@@ -29,13 +26,13 @@ public final class Emails extends BaseService {
     /**
      * Sends an email based on the provided email request.
      *
-     * @param sendEmailRequest The request containing email details.
+     * @param createEmailOptions The request containing email details.
      * @return The response indicating the status of the email sending.
      * @throws ResendException If an error occurs while sending the email.
      */
-    public SendEmailResponse send(SendEmailRequest sendEmailRequest) throws ResendException {
+    public CreateEmailResponse send(CreateEmailOptions createEmailOptions) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(sendEmailRequest);
+        String payload = super.resendMapper.writeValue(createEmailOptions);
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -44,9 +41,9 @@ public final class Emails extends BaseService {
 
         String responseBody = response.getBody();
 
-        SendEmailResponse sendEmailResponse = resendMapper.readValue(responseBody, SendEmailResponse.class);
+        CreateEmailResponse createEmailResponse = resendMapper.readValue(responseBody, CreateEmailResponse.class);
 
-        return sendEmailResponse;
+        return createEmailResponse;
     }
 
     /**

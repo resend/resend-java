@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Represents a request to send an email.
  */
-public class SendEmailRequest {
+public class CreateEmailOptions {
     @JsonProperty("from")
     private final String from;
 
@@ -44,7 +44,7 @@ public class SendEmailRequest {
     @JsonProperty("tags")
     private final List<Tag> tags;
 
-    private SendEmailRequest(Builder builder) {
+    private CreateEmailOptions(Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
         this.text = builder.text;
@@ -158,7 +158,7 @@ public class SendEmailRequest {
     }
 
     /**
-     * Creates a new builder instance to construct SendEmailRequest.
+     * Creates a new builder instance to construct CreateEmailOptions.
      *
      * @return A new builder instance.
      */
@@ -167,7 +167,7 @@ public class SendEmailRequest {
     }
 
     /**
-     * Builder class for constructing SendEmailRequest instances.
+     * Builder class for constructing CreateEmailOptions instances.
      */
     public static class Builder {
         private String from;
@@ -502,12 +502,12 @@ public class SendEmailRequest {
         }
 
         /**
-         * Builds and returns a {@code SendEmailRequest} based on the configured properties.
+         * Builds and returns a {@code CreateEmailOptions} based on the configured properties.
          *
-         * @return A {@code SendEmailRequest} instance.
+         * @return A {@code CreateEmailOptions} instance.
          */
-        public SendEmailRequest build() {
-            return new SendEmailRequest(this);
+        public CreateEmailOptions build() {
+            return new CreateEmailOptions(this);
         }
 
     }

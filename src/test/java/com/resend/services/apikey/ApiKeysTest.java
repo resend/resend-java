@@ -2,7 +2,7 @@ package com.resend.services.apikey;
 
 import com.resend.core.exception.ResendException;
 import com.resend.services.apikeys.ApiKeys;
-import com.resend.services.apikeys.model.CreateApiKeyRequest;
+import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.ListApiKeysResponse;
 import com.resend.services.util.ApiKeysUtil;
@@ -30,7 +30,7 @@ public class ApiKeysTest {
     @Test
     public void testCreateApiKey_Success() throws ResendException {
         CreateApiKeyResponse expectedApiKey = ApiKeysUtil.createApiKeyResponse();
-        CreateApiKeyRequest param = ApiKeysUtil.createApiKeyRequest();
+        CreateApiKeyOptions param = ApiKeysUtil.createApiKeyRequest();
 
         when(apiKeys.create(param))
                 .thenReturn(expectedApiKey);

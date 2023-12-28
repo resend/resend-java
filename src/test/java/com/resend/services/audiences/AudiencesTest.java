@@ -1,7 +1,7 @@
 package com.resend.services.audiences;
 
 import com.resend.core.exception.ResendException;
-import com.resend.services.audiences.model.CreateAudienceRequestOptions;
+import com.resend.services.audiences.model.CreateAudienceOptions;
 import com.resend.services.audiences.model.CreateAudienceResponseSuccess;
 import com.resend.services.audiences.model.ListAudiencesResponseSuccess;
 import com.resend.services.audiences.model.RemoveAudienceResponseSuccess;
@@ -31,7 +31,7 @@ public class AudiencesTest {
     @Test
     public void testCreateAudience_Success() throws ResendException {
         CreateAudienceResponseSuccess expectedAudience = AudiencesUtil.createAudienceResponse();
-        CreateAudienceRequestOptions param = AudiencesUtil.createAudienceRequest();
+        CreateAudienceOptions param = AudiencesUtil.createAudienceRequest();
 
         when(audiences.create(param))
                 .thenReturn(expectedAudience);

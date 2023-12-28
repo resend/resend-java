@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class DomainsUtil {
 
-    public static final CreateDomainRequest createDomainRequest() {
-        return CreateDomainRequest.builder()
+    public static final CreateDomainOptions createDomainRequest() {
+        return CreateDomainOptions.builder()
                 .name("resend.dev")
                 .build();
     }

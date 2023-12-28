@@ -2,10 +2,10 @@ package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
 import com.resend.services.batch.Batch;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
+import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.util.EmailsUtil;
 import com.resend.services.emails.model.Email;
-import com.resend.services.emails.model.SendEmailRequest;
-import com.resend.services.emails.model.SendEmailResponse;
+import com.resend.services.emails.model.CreateEmailResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -47,19 +47,19 @@ public class EmailsTest {
 
     @Test
     public void testSendEmail_Success() throws ResendException {
-        SendEmailRequest sendEmailRequest = EmailsUtil.createSendEmailRequest();
-        SendEmailResponse expectedRes = EmailsUtil.createSendEmailResponse();
+        CreateEmailOptions createEmailOptions = EmailsUtil.createEmailOptions();
+        CreateEmailResponse expectedRes = EmailsUtil.createSendEmailResponse();
 
-        when(emails.send(sendEmailRequest)).thenReturn(expectedRes);
+        when(emails.send(createEmailOptions)).thenReturn(expectedRes);
 
-        SendEmailResponse sendEmailResponse = emails.send(sendEmailRequest);
+        CreateEmailResponse createEmailResponse = emails.send(createEmailOptions);
 
-        assertNotNull(sendEmailResponse);
+        assertNotNull(createEmailResponse);
     }
 
     @Test
     public void testCreateBatchEmails_Success() throws ResendException {
-        List<SendEmailRequest> batchEmailsRequest = EmailsUtil.createBatchEmailsRequest();
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
         CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
 
         when(batch.send(batchEmailsRequest)).thenReturn(expectedRes);

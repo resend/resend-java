@@ -5,7 +5,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.service.BaseService;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
-import com.resend.services.apikeys.model.CreateApiKeyRequest;
+import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.ListApiKeysResponse;
 import okhttp3.MediaType;
 
@@ -26,12 +26,12 @@ public final class ApiKeys extends BaseService {
     /**
      * Creates an API key.
      *
-     * @param createApiKeyRequest The request the API key details.
+     * @param createApiKeyOptions The request the API key details.
      * @return The response indicating the state of the api key.
      * @throws ResendException If an error occurs during the API key creation process.
      */
-    public CreateApiKeyResponse create(CreateApiKeyRequest createApiKeyRequest) throws ResendException {
-        String payload = super.resendMapper.writeValue(createApiKeyRequest);
+    public CreateApiKeyResponse create(CreateApiKeyOptions createApiKeyOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(createApiKeyOptions);
         AbstractHttpResponse<String> response = httpClient.perform("/api-keys", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {

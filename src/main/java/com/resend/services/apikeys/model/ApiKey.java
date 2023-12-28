@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 /**
  * Represents an API key item.
  */
-public class ApiKeyItem {
+public class ApiKey {
 
     @JsonProperty("id")
     private String id;
@@ -24,19 +24,19 @@ public class ApiKeyItem {
     private OffsetDateTime createdAt;
 
     /**
-     * Default constructor. Creates an instance of ApiKeyItem with default values.
+     * Default constructor. Creates an instance of ApiKey with default values.
      */
-    public ApiKeyItem() {
+    public ApiKey() {
     }
 
     /**
-     * Creates an instance of ApiKeyItem with the specified attributes.
+     * Creates an instance of ApiKey with the specified attributes.
      *
      * @param id        The ID of the API key item.
      * @param name      The name of the API key item.
      * @param createdAt The creation timestamp of the API key item.
      */
-    public ApiKeyItem(String id, String name, OffsetDateTime createdAt) {
+    public ApiKey(String id, String name, OffsetDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;

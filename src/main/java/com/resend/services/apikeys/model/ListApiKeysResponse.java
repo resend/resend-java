@@ -10,7 +10,7 @@ import java.util.List;
 public class ListApiKeysResponse {
 
     @JsonProperty("data")
-    private List<ApiKeyItem> data;
+    private List<ApiKey> data;
 
     /**
      * Default constructor. Creates an instance of ListApiKeysResponse with an empty data list.
@@ -23,7 +23,7 @@ public class ListApiKeysResponse {
      *
      * @param data The list of API key items.
      */
-    public ListApiKeysResponse(List<ApiKeyItem> data) {
+    public ListApiKeysResponse(List<ApiKey> data) {
         this.data = data;
     }
 
@@ -32,7 +32,7 @@ public class ListApiKeysResponse {
      *
      * @return The list of API key items.
      */
-    public List<ApiKeyItem> getData() {
+    public List<ApiKey> getData() {
         return data;
     }
 }

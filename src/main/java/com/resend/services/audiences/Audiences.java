@@ -24,12 +24,12 @@ public class Audiences extends BaseService {
     /**
      * Creates an Audience.
      *
-     * @param createAudienceRequestOptions The Audience details.
+     * @param createAudienceOptions The Audience details.
      * @return The details of the created audience.
      * @throws ResendException If an error occurs during the Audience creation process.
      */
-    public CreateAudienceResponseSuccess create(CreateAudienceRequestOptions createAudienceRequestOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createAudienceRequestOptions);
+    public CreateAudienceResponseSuccess create(CreateAudienceOptions createAudienceOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(createAudienceOptions);
         AbstractHttpResponse<String> response = httpClient.perform("/audiences", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {

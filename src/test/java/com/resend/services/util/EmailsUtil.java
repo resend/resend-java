@@ -25,8 +25,8 @@ public class EmailsUtil {
                 .build();
     }
 
-    public static SendEmailRequest createSendEmailRequest() {
-        return SendEmailRequest.builder()
+    public static CreateEmailOptions createEmailOptions() {
+        return CreateEmailOptions.builder()
                 .from("Acme <onboarding@resend.dev>")
                 .to(Arrays.asList("example@resend.dev"))
                 .cc(Arrays.asList("example@resend.dev"))
@@ -39,8 +39,8 @@ public class EmailsUtil {
                 .build();
     }
 
-    public static List<SendEmailRequest> createBatchEmailsRequest() {
-        return Arrays.asList(createSendEmailRequest(), createSendEmailRequest());
+    public static List<CreateEmailOptions> createBatchEmailOptions() {
+        return Arrays.asList(createEmailOptions(), createEmailOptions());
     }
 
     public static CreateBatchEmailsResponse createBatchEmailsResponse() {
@@ -64,8 +64,8 @@ public class EmailsUtil {
         );
     }
 
-    public static SendEmailResponse createSendEmailResponse() {
-        return new SendEmailResponse("mock_id");
+    public static CreateEmailResponse createSendEmailResponse() {
+        return new CreateEmailResponse("mock_id");
     }
 
     public static AbstractHttpResponse createAbstractHttpResponse() {

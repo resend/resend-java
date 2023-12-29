@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a request to create an api key.
  */
-public class CreateApiKeyRequest {
+public class CreateApiKeyOptions {
 
     @JsonProperty("name")
     private final String name;
@@ -21,7 +21,7 @@ public class CreateApiKeyRequest {
      *
      * @param builder The builder to construct the API Key.
      */
-    public CreateApiKeyRequest(Builder builder) {
+    public CreateApiKeyOptions(Builder builder) {
         this.name = builder.name;
         this.permission = builder.permission;
         this.domainId = builder.domainId;
@@ -109,8 +109,8 @@ public class CreateApiKeyRequest {
          *
          * @return A new CreateApiKeyRequest object.
          */
-        public CreateApiKeyRequest build() {
-            return new CreateApiKeyRequest(this);
+        public CreateApiKeyOptions build() {
+            return new CreateApiKeyOptions(this);
         }
     }
 }

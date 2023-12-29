@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a request to create a domain.
  */
-public class CreateDomainRequest {
+public class CreateDomainOptions {
 
     @JsonProperty("name")
     private final String name;
@@ -14,11 +14,11 @@ public class CreateDomainRequest {
     private final String region;
 
     /**
-     * Constructs a CreateDomainRequest object using the provided builder.
+     * Constructs a CreateDomainOptions object using the provided builder.
      *
-     * @param builder The builder to construct the CreateDomainRequest from.
+     * @param builder The builder to construct the CreateDomainOptions from.
      */
-    public CreateDomainRequest(Builder builder) {
+    public CreateDomainOptions(Builder builder) {
         this.name = builder.name;
         this.region = builder.region;
     }
@@ -42,7 +42,7 @@ public class CreateDomainRequest {
     }
 
     /**
-     * Create a new builder instance for constructing CreateDomainRequest objects.
+     * Create a new builder instance for constructing CreateDomainOptions objects.
      *
      * @return A new builder instance.
      */
@@ -51,7 +51,7 @@ public class CreateDomainRequest {
     }
 
     /**
-     * Builder class for constructing CreateDomainRequest objects.
+     * Builder class for constructing CreateDomainOptions objects.
      */
     public static class Builder {
         private String name;
@@ -80,12 +80,12 @@ public class CreateDomainRequest {
         }
 
         /**
-         * Build a new CreateDomainRequest object.
+         * Build a new CreateDomainOptions object.
          *
-         * @return A new CreateDomainRequest object.
+         * @return A new CreateDomainOptions object.
          */
-        public CreateDomainRequest build() {
-            return new CreateDomainRequest(this);
+        public CreateDomainOptions build() {
+            return new CreateDomainOptions(this);
         }
     }
 }

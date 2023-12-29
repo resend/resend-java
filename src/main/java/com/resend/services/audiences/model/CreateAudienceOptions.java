@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a request to create an audience with options.
  */
-public class CreateAudienceRequestOptions {
+public class CreateAudienceOptions {
 
     @JsonProperty("name")
     private final String name;
@@ -15,7 +15,7 @@ public class CreateAudienceRequestOptions {
      *
      * @param builder The builder to construct the Audience Options.
      */
-    public CreateAudienceRequestOptions(Builder builder) {
+    public CreateAudienceOptions(Builder builder) {
         this.name = builder.name;
     }
 
@@ -29,7 +29,7 @@ public class CreateAudienceRequestOptions {
     }
 
     /**
-     * Create a new builder instance for constructing CreateAudienceRequestOptions objects.
+     * Create a new builder instance for constructing CreateAudienceOptions objects.
      *
      * @return A new builder instance.
      */
@@ -38,7 +38,7 @@ public class CreateAudienceRequestOptions {
     }
 
     /**
-     * Builder class for constructing CreateAudienceRequestOptions objects.
+     * Builder class for constructing CreateAudienceOptions objects.
      */
     public static class Builder {
         private String name;
@@ -55,12 +55,12 @@ public class CreateAudienceRequestOptions {
         }
 
         /**
-         * Build a new CreateAudienceRequestOptions object.
+         * Build a new CreateAudienceOptions object.
          *
-         * @return A new CreateAudienceRequestOptions object.
+         * @return A new CreateAudienceOptions object.
          */
-        public CreateAudienceRequestOptions build() {
-            return new CreateAudienceRequestOptions(this);
+        public CreateAudienceOptions build() {
+            return new CreateAudienceOptions(this);
         }
     }
 }

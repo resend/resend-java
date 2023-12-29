@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a response after sending an email.
  */
-public class SendEmailResponse {
+public class CreateEmailResponse {
 
     /**
      * The unique identifier associated with the email.
@@ -14,17 +14,17 @@ public class SendEmailResponse {
     private String id;
 
     /**
-     * Constructs a new instance of {@code SendEmailResponse}.
+     * Constructs a new instance of {@code CreateEmailResponse}.
      */
-    public SendEmailResponse() {
+    public CreateEmailResponse() {
     }
 
     /**
-     * Constructs a SendEmailResponse with the provided ID.
+     * Constructs a CreateEmailResponse with the provided ID.
      *
      * @param id The ID associated with the sent email.
      */
-    public SendEmailResponse(String id) {
+    public CreateEmailResponse(String id) {
         this.id = id;
     }
 

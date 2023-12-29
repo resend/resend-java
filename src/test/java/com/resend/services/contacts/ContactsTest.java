@@ -27,7 +27,7 @@ public class ContactsTest {
     @Test
     public void testCreateContact_Success() throws ResendException {
         CreateContactResponseSuccess expectedContact = ContactsUtil.createContactResponseSuccess();
-        CreateContactRequestOptions param = ContactsUtil.createContactRequest();
+        CreateContactOptions param = ContactsUtil.createContactRequest();
 
         when(contacts.create(param))
                 .thenReturn(expectedContact);
@@ -41,7 +41,7 @@ public class ContactsTest {
 
     @Test
     public void testRemoveContact_Success() throws ResendException {
-        ContactRequestOptions params = ContactRequestOptions.builder()
+        RemoveContactOptions params = RemoveContactOptions.builder()
                 .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
                 .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
                 .build();
@@ -67,6 +67,21 @@ public class ContactsTest {
 
         assertNotNull(res);
         assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testUpdateContact_Success() throws ResendException {
+        UpdateContactOptions params = ContactsUtil.createUpdateOptions();
+        UpdateContactResponseSuccess expectedResponse = ContactsUtil.updateContactResponseSuccess();
+
+        when(contacts.update(params))
+                .thenReturn(expectedResponse);
+
+        UpdateContactResponseSuccess res = contacts.update(params);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getId(), res.getId());
         assertEquals(expectedResponse.getObject(), res.getObject());
     }
 }

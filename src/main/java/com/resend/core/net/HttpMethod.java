@@ -18,4 +18,9 @@ public enum HttpMethod {
      * HTTP DELETE method.
      */
     DELETE,
+
+    /**
+     * HTTP PATCH method.
+     */
+    PATCH,
 }

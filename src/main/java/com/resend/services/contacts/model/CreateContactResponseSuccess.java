@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a successful response for creating a contact.
  * Extends the Contact class.
  */
-public class CreateContactResponseSuccess extends BaseContact{
+public class CreateContactResponseSuccess extends BaseContact {
 
     /**
      * Default constructor

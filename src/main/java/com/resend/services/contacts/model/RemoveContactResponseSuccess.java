@@ -10,6 +10,9 @@ public class RemoveContactResponseSuccess extends BaseContact {
     @JsonProperty("deleted")
     private boolean deleted;
 
+    @JsonProperty("contact")
+    private String contact;
+
     /**
      * Default constructor
      */
@@ -23,8 +26,9 @@ public class RemoveContactResponseSuccess extends BaseContact {
      * @param id The ID of the removed contact.
      * @param object The object of the removed contact.
      * @param deleted The state of the removed contact.
+     * @param contact The contact of the removed contact.
      */
-    public RemoveContactResponseSuccess(final String id, final String object, final boolean deleted) {
+    public RemoveContactResponseSuccess(final String id, final String object, final boolean deleted, final String contact) {
         super(id, object);
         this.deleted = deleted;
     }
@@ -36,5 +40,14 @@ public class RemoveContactResponseSuccess extends BaseContact {
      */
     public boolean getRemoved() {
         return deleted;
+    }
+
+    /**
+     * Gets the contact of the removed item.
+     *
+     * @return The contact of the removed item.
+     */
+    public String getContact() {
+        return contact;
     }
 }

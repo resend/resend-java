@@ -20,7 +20,7 @@ public class ContactsUtil {
     }
 
     public static RemoveContactResponseSuccess removeContactResponseSuccess() {
-        return new RemoveContactResponseSuccess("123", "contact", true);
+        return new RemoveContactResponseSuccess("123", "contact", true, "contact");
     }
 
     public static ListContactsResponseSuccess createContactsListResponse() {

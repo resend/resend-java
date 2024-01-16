@@ -2,10 +2,7 @@ package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents a request to send an email.
@@ -204,9 +201,7 @@ public class CreateEmailOptions {
             if (this.to == null) {
                 this.to = new ArrayList<>();
             }
-            for (String recipient : recipients) {
-                this.to.add(recipient);
-            }
+            this.to.addAll(Arrays.asList(recipients));
             return this;
         }
 
@@ -267,9 +262,7 @@ public class CreateEmailOptions {
             if (this.cc == null) {
                 this.cc = new ArrayList<>();
             }
-            for (String recipient : recipients) {
-                this.cc.add(recipient);
-            }
+            this.cc.addAll(Arrays.asList(recipients));
             return this;
         }
 
@@ -280,7 +273,10 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder cc(List<String> cc) {
-            this.cc = cc;
+            if (this.cc == null) {
+                this.cc = new ArrayList<>();
+            }
+            this.cc.addAll(cc);
             return this;
         }
 
@@ -309,9 +305,7 @@ public class CreateEmailOptions {
             if (this.bcc == null) {
                 this.bcc = new ArrayList<>();
             }
-            for (String recipient : recipients) {
-                this.bcc.add(recipient);
-            }
+            this.bcc.addAll(Arrays.asList(recipients));
             return this;
         }
 
@@ -322,7 +316,12 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder bcc(List<String> recipients) {
-            this.bcc = recipients;
+            if (this.bcc == null) {
+                this.bcc = new ArrayList<>();
+            }
+
+            this.bcc.addAll(recipients);
+
             return this;
         }
 
@@ -350,9 +349,7 @@ public class CreateEmailOptions {
             if (this.replyTo == null) {
                 this.replyTo = new ArrayList<>();
             }
-            for (String recipient : recipients) {
-                this.replyTo.add(recipient);
-            }
+            this.replyTo.addAll(Arrays.asList(recipients));
             return this;
         }
 
@@ -363,7 +360,12 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder replyTo(List<String> recipients) {
-            this.replyTo = replyTo;
+            if (this.replyTo == null) {
+                this.replyTo = new ArrayList<>();
+            }
+
+            this.replyTo.addAll(recipients);
+
             return this;
         }
 
@@ -429,9 +431,9 @@ public class CreateEmailOptions {
             if (this.attachments == null) {
                 this.attachments = new ArrayList<>();
             }
-            for (Attachment attachment : attachments) {
-                this.attachments.add(attachment);
-            }
+
+            this.attachments.addAll(Arrays.asList(attachments));
+
             return this;
         }
 
@@ -470,9 +472,9 @@ public class CreateEmailOptions {
             if (this.tags == null) {
                 this.tags = new ArrayList<>();
             }
-            for (Tag tag : tags) {
-                this.tags.add(tag);
-            }
+
+            this.tags.addAll(Arrays.asList(tags));
+
             return this;
         }
 

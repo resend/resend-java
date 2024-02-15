@@ -79,4 +79,19 @@ public class DomainsTest {
         assertEquals(expectedResponse, response);
         assertEquals(expectedResponse.getId(), response.getId());
     }
+
+    @Test
+    public void testUpdateDomain_Success() throws ResendException {
+        UpdateDomainResponseSuccess expectedResponse = DomainsUtil.updateDomain();
+        UpdateDomainOptions params = DomainsUtil.updateDomainRequest();
+
+        when(domains.update(params))
+                .thenReturn(expectedResponse);
+
+        UpdateDomainResponseSuccess response = domains.update(params);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse, response);
+        assertEquals(expectedResponse.getId(), response.getId());
+    }
 }

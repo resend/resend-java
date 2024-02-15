@@ -54,7 +54,7 @@ public class UpdateDomainOptions {
     }
 
     /**
-     * Create a new builder instance for constructing CreateDomainOptions objects.
+     * Create a new builder instance for constructing UpdateDomainOptions objects.
      *
      * @return A new builder instance.
      */
@@ -63,7 +63,7 @@ public class UpdateDomainOptions {
     }
 
     /**
-     * Builder class for constructing CreateDomainOptions objects.
+     * Builder class for constructing UpdateDomainOptions objects.
      */
     public static class Builder {
         private String id;

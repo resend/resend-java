@@ -49,4 +49,18 @@ public class DomainsUtil {
                 true);
     }
 
+    public static final UpdateDomainResponseSuccess updateDomain() {
+        return new UpdateDomainResponseSuccess(
+                "2c64b27c-6237-4626-85d2-a0a8b5832070",
+                "domain");
+    }
+
+    public static final UpdateDomainOptions updateDomainRequest() {
+        return UpdateDomainOptions.builder()
+                .openTracking(true)
+                .clickTracking(true)
+                .id("2c64b27c-6237-4626-85d2-a0a8b5832070")
+                .build();
+    }
+
 }

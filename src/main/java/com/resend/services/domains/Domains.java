@@ -37,9 +37,7 @@ public final class Domains extends BaseService {
         }
 
         String responseBody = response.getBody();
-        CreateDomainResponse createDomainResponse = resendMapper.readValue(responseBody, CreateDomainResponse.class);
-
-        return createDomainResponse;
+        return resendMapper.readValue(responseBody, CreateDomainResponse.class);
     }
 
     /**
@@ -60,8 +58,7 @@ public final class Domains extends BaseService {
 
             String responseBody = response.getBody();
 
-            Domain domain = resendMapper.readValue(responseBody, Domain.class);
-            return domain;
+            return resendMapper.readValue(responseBody, Domain.class);
         } catch (Exception e) {
             throw new ResendException("Error retrieving domain: " + e.getMessage(), e);
         }
@@ -82,9 +79,7 @@ public final class Domains extends BaseService {
         }
 
         String responseBody = response.getBody();
-        VerifyDomainResponse verifyDomainResponse = resendMapper.readValue(responseBody, VerifyDomainResponse.class);
-
-        return verifyDomainResponse;
+        return resendMapper.readValue(responseBody, VerifyDomainResponse.class);
     }
 
     /**
@@ -102,8 +97,26 @@ public final class Domains extends BaseService {
 
         String responseBody = response.getBody();
 
-        ListDomainsResponse listDomainsResponse = resendMapper.readValue(responseBody, ListDomainsResponse.class);
-        return listDomainsResponse;
+        return resendMapper.readValue(responseBody, ListDomainsResponse.class);
+    }
+
+    /**
+     * Updates a domain based on the provided domain ID and returns a UpdateDomainResponseSuccess.
+     *
+     * @param updateDomainOptions The object containing the information to be updated.
+     * @return A UpdateDomainResponseSuccess representing the result of the domain update operation.
+     * @throws ResendException If an error occurs during the domain update process.
+     */
+    public UpdateDomainResponseSuccess update(UpdateDomainOptions updateDomainOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(updateDomainOptions);
+        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + updateDomainOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to delete domain: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, UpdateDomainResponseSuccess.class);
     }
 
     /**
@@ -121,8 +134,6 @@ public final class Domains extends BaseService {
         }
 
         String responseBody = response.getBody();
-        RemoveDomainResponse removeDomainResponse = resendMapper.readValue(responseBody, RemoveDomainResponse.class);
-
-        return removeDomainResponse;
+        return resendMapper.readValue(responseBody, RemoveDomainResponse.class);
     }
 }

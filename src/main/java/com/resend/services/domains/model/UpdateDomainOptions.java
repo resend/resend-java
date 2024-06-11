@@ -15,6 +15,8 @@ public class UpdateDomainOptions {
     @JsonProperty("open_tracking")
     private final boolean openTracking;
 
+    @JsonProperty("tls")
+    private final Tls tls;
     /**
      * Constructs a UpdateDomainOptions object using the provided builder.
      *
@@ -24,6 +26,7 @@ public class UpdateDomainOptions {
         this.id = builder.id;
         this.clickTracking = builder.clickTracking;
         this.openTracking = builder.openTracking;
+        this.tls = builder.tls;
     }
 
     /**
@@ -54,6 +57,15 @@ public class UpdateDomainOptions {
     }
 
     /**
+     * Get the TLS setting for the domain.
+     *
+     * @return The TLS setting for the domain.
+     */
+    public Tls getTls() {
+        return tls;
+    }
+
+    /**
      * Create a new builder instance for constructing UpdateDomainOptions objects.
      *
      * @return A new builder instance.
@@ -69,6 +81,7 @@ public class UpdateDomainOptions {
         private String id;
         private boolean clickTracking;
         private boolean openTracking;
+        private Tls tls;
 
         /**
          * Set the id of the domain.
@@ -100,6 +113,17 @@ public class UpdateDomainOptions {
          */
         public Builder openTracking(boolean openTracking) {
             this.openTracking = openTracking;
+            return this;
+        }
+
+        /**
+         * Set the TLS setting for the domain.
+         *
+         * @param tls The TLS setting for the domain.
+         * @return The builder instance.
+         */
+        public Builder tls(Tls tls) {
+            this.tls = tls;
             return this;
         }
 

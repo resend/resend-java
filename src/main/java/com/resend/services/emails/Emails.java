@@ -62,7 +62,7 @@ public final class Emails extends BaseService {
     }
 
     /**
-     * Update the schedule of an email by its unique identifier.
+     * Update the email by its unique identifier.
      *
      * @param emailId The unique identifier of the email.
      * @param updateEmailOptions The new data of the email.
@@ -84,7 +84,7 @@ public final class Emails extends BaseService {
     }
 
     /**
-     * Cancel the schedule of an email by its unique identifier.
+     * Cancels an email by its unique identifier.
      *
      * @param emailId The unique identifier of the email.
      * @return The retrieved email's details.

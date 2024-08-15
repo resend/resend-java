@@ -2,8 +2,6 @@ package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.OffsetDateTime;
-
 /**
  * Represents a successful response for creating an audience.
  * Extends the Audiences class.

@@ -2,7 +2,6 @@ package com.resend.services.util;
 
 import com.resend.services.contacts.model.*;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class ContactsUtil {
     public static ListContactsResponseSuccess createContactsListResponse() {
         List<Contact> contacts = new ArrayList<>();
 
-        Contact c1 = new Contact("1", "frodo.baggins@shire.com", "Frodo", "Baggins", OffsetDateTime.now(), false);
-        Contact c2 = new Contact("2", "aragorn.strider@gondor.com", "Aragorn", "Strider", OffsetDateTime.now(), false);
-        Contact c3 = new Contact("3", "legolas.greenleaf@woodland.com", "Legolas", "Greenleaf", OffsetDateTime.now(), false);
+        Contact c1 = new Contact("1", "frodo.baggins@shire.com", "Frodo", "Baggins", "2023-04-08T00:11:13.110779+00:00", false);
+        Contact c2 = new Contact("2", "aragorn.strider@gondor.com", "Aragorn", "Strider", "2023-04-08T00:11:13.110779+00:00", false);
+        Contact c3 = new Contact("3", "legolas.greenleaf@woodland.com", "Legolas", "Greenleaf", "2023-04-08T00:11:13.110779+00:00", false);
 
 
         contacts.add(c1);

@@ -1,11 +1,6 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.resend.core.util.DateTimeDeserializer;
-import com.resend.core.util.DateTimeSerializer;
-import java.time.OffsetDateTime;
 
 /**
  * Represents an API key item.
@@ -19,9 +14,7 @@ public class ApiKey {
     private String name;
 
     @JsonProperty("created_at")
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime createdAt;
+    private String createdAt;
 
     /**
      * Default constructor. Creates an instance of ApiKey with default values.
@@ -36,7 +29,7 @@ public class ApiKey {
      * @param name      The name of the API key item.
      * @param createdAt The creation timestamp of the API key item.
      */
-    public ApiKey(String id, String name, OffsetDateTime createdAt) {
+    public ApiKey(String id, String name, String createdAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -65,7 +58,7 @@ public class ApiKey {
      *
      * @return The creation timestamp of the API key item.
      */
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 }

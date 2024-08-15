@@ -5,7 +5,6 @@ import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
-import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +35,22 @@ public class EmailsUtil {
                 .subject("Test email with attachments")
                 .attachments(Arrays.asList(createAttachment()))
                 .tags(Arrays.asList(createTag()))
+                .scheduledAt("2024-08-20T11:52:01.858Z")
                 .build();
+    }
+
+    public static UpdateEmailOptions updateEmailOptions() {
+        return UpdateEmailOptions.builder()
+                .scheduledAt("2024-08-20T11:52:01.858Z")
+                .build();
+    }
+
+    public static UpdateEmailResponse updateEmailResponse() {
+        return new UpdateEmailResponse("123", "emails");
+    }
+
+    public static CancelEmailResponse cancelEmailResponse() {
+        return new CancelEmailResponse("123", "emails");
     }
 
     public static List<CreateEmailOptions> createBatchEmailOptions() {
@@ -53,7 +67,7 @@ public class EmailsUtil {
                 "qwert",
                 "sender@example.com",
                 Arrays.asList("recipient@example.com"),
-                OffsetDateTime.now(),
+                "2023-04-08T00:11:13.110779+00:00",
                 "Test Email Subject",
                 "<html><body>This is the HTML content</body></html>",
                 "This is the plain text content",

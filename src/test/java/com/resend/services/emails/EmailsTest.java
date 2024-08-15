@@ -2,10 +2,8 @@ package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
 import com.resend.services.batch.Batch;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
-import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
-import com.resend.services.emails.model.Email;
-import com.resend.services.emails.model.CreateEmailResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -68,5 +66,28 @@ public class EmailsTest {
 
         assertNotNull(sendBatchEmailsResponse);
         assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+    }
+
+    @Test
+    public void testUpdateEmail_Success() throws ResendException {
+        UpdateEmailOptions updateEmailOptions = EmailsUtil.updateEmailOptions();
+        UpdateEmailResponse expectedRes = EmailsUtil.updateEmailResponse();
+
+        when(emails.update("123", updateEmailOptions)).thenReturn(expectedRes);
+
+        UpdateEmailResponse updateEmailResponse = emails.update("123", updateEmailOptions);
+
+        assertNotNull(updateEmailResponse);
+    }
+
+    @Test
+    public void testCancelEmail_Success() throws ResendException {
+        CancelEmailResponse expectedRes = EmailsUtil.cancelEmailResponse();
+
+        when(emails.cancel("123")).thenReturn(expectedRes);
+
+        CancelEmailResponse cancelEmailResponse = emails.cancel("123");
+
+        assertNotNull(cancelEmailResponse);
     }
 }

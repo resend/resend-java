@@ -41,6 +41,9 @@ public class CreateEmailOptions {
     @JsonProperty("tags")
     private final List<Tag> tags;
 
+    @JsonProperty("scheduled_at")
+    private final String scheduledAt;
+
     private CreateEmailOptions(Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
@@ -53,6 +56,7 @@ public class CreateEmailOptions {
         this.tags = builder.tags;
         this.html = builder.html;
         this.headers = builder.headers;
+        this.scheduledAt = builder.scheduledAt;
     }
 
     /**
@@ -155,6 +159,15 @@ public class CreateEmailOptions {
     }
 
     /**
+     * Retrieves the schedule of the email.
+     *
+     * @return The schedule of the email.
+     */
+    public String getScheduledAt() {
+        return scheduledAt;
+    }
+
+    /**
      * Creates a new builder instance to construct CreateEmailOptions.
      *
      * @return A new builder instance.
@@ -178,6 +191,7 @@ public class CreateEmailOptions {
         private List<Attachment> attachments;
         private List<Tag> tags;
         private Map<String, String> headers;
+        private String scheduledAt;
 
         /**
          * Set the 'from' email address.
@@ -500,6 +514,17 @@ public class CreateEmailOptions {
                 this.tags = new ArrayList<>();
             }
             this.tags.add(tag);
+            return this;
+        }
+
+        /**
+         * Set the schedule of the email.
+         *
+         * @param scheduledAt The schedule of the email in ISO 8601 format (e.g., 2024-08-05T11:52:01.858Z).
+         * @return This builder instance for method chaining.
+         */
+        public Builder scheduledAt(String scheduledAt) {
+            this.scheduledAt = scheduledAt;
             return this;
         }
 

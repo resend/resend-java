@@ -4,9 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.service.BaseService;
-import com.resend.services.emails.model.CreateEmailOptions;
-import com.resend.services.emails.model.CreateEmailResponse;
-import com.resend.services.emails.model.Email;
+import com.resend.services.emails.model.*;
 import okhttp3.MediaType;
 
 /**
@@ -41,9 +39,7 @@ public final class Emails extends BaseService {
 
         String responseBody = response.getBody();
 
-        CreateEmailResponse createEmailResponse = resendMapper.readValue(responseBody, CreateEmailResponse.class);
-
-        return createEmailResponse;
+        return resendMapper.readValue(responseBody, CreateEmailResponse.class);
     }
 
     /**
@@ -62,7 +58,48 @@ public final class Emails extends BaseService {
 
             String responseBody = response.getBody();
 
-            Email email = resendMapper.readValue(responseBody, Email.class);
-            return email;
+        return resendMapper.readValue(responseBody, Email.class);
+    }
+
+    /**
+     * Update the schedule of an email by its unique identifier.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param updateEmailOptions The new data of the email.
+     * @return The retrieved email's details.
+     * @throws ResendException If an error occurs while retrieving the email.
+     */
+    public UpdateEmailResponse update(String emailId, UpdateEmailOptions updateEmailOptions) throws ResendException {
+
+        String payload = super.resendMapper.writeValue(updateEmailOptions);
+        AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to update email: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, UpdateEmailResponse.class);
+    }
+
+    /**
+     * Cancel the schedule of an email by its unique identifier.
+     *
+     * @param emailId The unique identifier of the email.
+     * @return The retrieved email's details.
+     * @throws ResendException If an error occurs while retrieving the email.
+     */
+    public CancelEmailResponse cancel(String emailId) throws ResendException {
+
+        AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId + "/cancel", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to cancel email schedule: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, CancelEmailResponse.class);
     }
 }

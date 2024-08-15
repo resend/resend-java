@@ -2,7 +2,6 @@ package com.resend.services.util;
 
 import com.resend.services.audiences.model.*;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +22,9 @@ public class AudiencesUtil {
     public static ListAudiencesResponseSuccess createAudiencesListResponse() {
         List<Audience> audList = new ArrayList<>();
 
-        Audience aud1 = new Audience("1", "test1", OffsetDateTime.now());
-        Audience aud2 = new Audience("2", "test2", OffsetDateTime.now());
-        Audience aud3 = new Audience("3", "test3", OffsetDateTime.now());
+        Audience aud1 = new Audience("1", "test1", "2023-04-08T00:11:13.110779+00:00");
+        Audience aud2 = new Audience("2", "test2", "2023-04-08T00:11:13.110779+00:00");
+        Audience aud3 = new Audience("3", "test3", "2023-04-08T00:11:13.110779+00:00");
 
         audList.add(aud1);
         audList.add(aud2);

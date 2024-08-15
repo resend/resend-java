@@ -1,12 +1,6 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.resend.core.util.DateTimeDeserializer;
-import com.resend.core.util.DateTimeSerializer;
-
-import java.time.OffsetDateTime;
 
 /**
  * Represents a contact item.
@@ -26,9 +20,7 @@ public class Contact {
     private String lastName;
 
     @JsonProperty("created_at")
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime createdAt;
+    private String createdAt;
 
     @JsonProperty("unsubscribed")
     private boolean unsubscribed;
@@ -50,7 +42,7 @@ public class Contact {
      * @param createdAt     The creation timestamp of the contact item.
      * @param unsubscribed  The subscription state contact item.
      */
-    public Contact(final String id, final String email, final String firstName, final String lastName, final OffsetDateTime createdAt, final boolean unsubscribed) {
+    public Contact(final String id, final String email, final String firstName, final String lastName, final String createdAt, final boolean unsubscribed) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -100,7 +92,7 @@ public class Contact {
      *
      * @return The creation timestamp of the contact item.
      */
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 

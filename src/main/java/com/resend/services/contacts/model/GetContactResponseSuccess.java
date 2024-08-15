@@ -2,8 +2,6 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.OffsetDateTime;
-
 /**
  * Represents a successful response for getting a contact.
  * Extends the Contact class.
@@ -31,7 +29,7 @@ public class GetContactResponseSuccess extends Contact {
      * @param createdAt     The creation timestamp of the contact item.
      * @param unsubscribed  The subscription state contact item.
      */
-    public GetContactResponseSuccess(final String object, final String id, final String email, final String firstName, final String lastName, final OffsetDateTime createdAt, final boolean unsubscribed) {
+    public GetContactResponseSuccess(final String object, final String id, final String email, final String firstName, final String lastName, final String createdAt, final boolean unsubscribed) {
         super(id, email, firstName, lastName, createdAt, unsubscribed);
         this.object = object;
     }

@@ -2,7 +2,6 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public class Domain extends AbstractDomain {
      */
     public Domain(String id,
                   String name,
-                  OffsetDateTime createdAt,
+                  String createdAt,
                   String status,
                   String region,
                   String dnsProvider,

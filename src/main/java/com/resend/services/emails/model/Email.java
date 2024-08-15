@@ -1,11 +1,6 @@
 package com.resend.services.emails.model;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.resend.core.util.DateTimeDeserializer;
-import com.resend.core.util.DateTimeSerializer;
 
-import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
@@ -25,9 +20,7 @@ public class Email {
     private List<String> to;
 
     @JsonProperty("created_at")
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime createdAt;
+    private String createdAt;
 
     @JsonProperty("subject")
     private String subject;
@@ -72,7 +65,7 @@ public class Email {
      * @param replyTo    The reply_to attribute value.
      * @param lastEvent  The last_event attribute value.
      */
-    public Email(String object, String id, String from, List<String> to, OffsetDateTime createdAt, String subject,
+    public Email(String object, String id, String from, List<String> to, String createdAt, String subject,
                  String html, String text, List<String> bcc, List<String> cc, List<String> replyTo, String lastEvent) {
         this.object = object;
         this.id = id;
@@ -156,7 +149,7 @@ public class Email {
      * Get the creation timestamp of the email.
      * @return The creation timestamp.
      */
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
@@ -164,7 +157,7 @@ public class Email {
      * Set the creation timestamp of the email.
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(OffsetDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

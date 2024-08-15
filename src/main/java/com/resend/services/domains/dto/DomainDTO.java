@@ -2,8 +2,6 @@ package com.resend.services.domains.dto;
 
 import com.resend.services.domains.model.AbstractDomain;
 
-import java.time.OffsetDateTime;
-
 /**
  * A Data Transfer Object (DTO) representing a domain. This class extends the AbstractDomain class
  * and is used for transferring domain-related data.
@@ -25,7 +23,7 @@ public class DomainDTO extends AbstractDomain {
      * @param status      The status of the domain.
      * @param region      The region of the domain.
      */
-    public DomainDTO(String id, String name, OffsetDateTime createdAt, String status, String region) {
+    public DomainDTO(String id, String name, String createdAt, String status, String region) {
         super(id, name, createdAt, status, region);
     }
 }

@@ -2,8 +2,6 @@ package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.OffsetDateTime;
-
 /**
  * Represents a successful response for retrieving an audience.
  * Extends the Audiences class.
@@ -28,7 +26,7 @@ public class GetAudienceResponseSuccess extends Audience {
      * @param created_at The creation timestamp of the audience.
      * @param object    Additional information about the audience.
      */
-    public GetAudienceResponseSuccess(final String id, final String name, final OffsetDateTime created_at, final String object) {
+    public GetAudienceResponseSuccess(final String id, final String name, final String created_at, final String object) {
         super(id, name, created_at);
         this.object = object;
     }

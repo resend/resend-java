@@ -1,12 +1,6 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.resend.core.util.DateTimeDeserializer;
-import com.resend.core.util.DateTimeSerializer;
-
-import java.time.OffsetDateTime;
 
 /**
  * An abstract class representing a domain entity with common attributes.
@@ -29,9 +23,7 @@ public abstract class AbstractDomain {
      * The creation timestamp of the domain.
      */
     @JsonProperty("created_at")
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime createdAt;
+    private String createdAt;
 
     /**
      * The status of the domain.
@@ -62,7 +54,7 @@ public abstract class AbstractDomain {
      */
     public AbstractDomain(final String id,
                           final String name,
-                          final OffsetDateTime createdAt,
+                          final String createdAt,
                           final String status,
                           final String region) {
         this.id = id;
@@ -95,7 +87,7 @@ public abstract class AbstractDomain {
      *
      * @return The creation timestamp.
      */
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 

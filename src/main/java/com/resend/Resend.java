@@ -3,6 +3,7 @@ package com.resend;
 import com.resend.services.apikeys.ApiKeys;
 import com.resend.services.audiences.Audiences;
 import com.resend.services.batch.Batch;
+import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
@@ -78,5 +79,14 @@ public class Resend {
      */
     public Batch batch() {
         return new Batch(apiKey);
+    }
+
+    /**
+     * Returns a Broadcasts object that can be used to interact with the Broadcasts service.
+     *
+     * @return A Broadcasts object.
+     */
+    public Broadcasts broadcasts() {
+        return new Broadcasts(apiKey);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Batch extends BaseService {
     /**
-     * Constructsan instance of the {@code Batch} class.
+     * Constructs an instance of the {@code Batch} class.
      *
      * @param apiKey The apiKey used for authentication.
      */

@@ -10,6 +10,9 @@ public class UpdateContactOptions {
     @JsonProperty("id")
     private final String id;
 
+    @JsonProperty("email")
+    private final String email;
+
     @JsonProperty("audience_id")
     private final String audienceId;
 
@@ -30,6 +33,7 @@ public class UpdateContactOptions {
     public UpdateContactOptions(Builder builder) {
         this.audienceId = builder.audienceId;
         this.id = builder.id;
+        this.email = builder.email;
         this.unsubscribed = builder.unsubscribed;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -42,6 +46,15 @@ public class UpdateContactOptions {
      */
     public String getAudienceId() {
         return audienceId;
+    }
+
+    /**
+     * Get the email of the contact.
+     *
+     * @return The email of the contact.
+     */
+    public String getEmail() {
+        return email;
     }
 
     /**
@@ -95,6 +108,7 @@ public class UpdateContactOptions {
     public static class Builder {
         private String audienceId;
         private String id;
+        private String email;
         private Boolean unsubscribed;
         private String firstName;
         private String lastName;
@@ -111,13 +125,24 @@ public class UpdateContactOptions {
         }
 
         /**
-         * Set the email of the contact.
+         * Set the id of the contact.
          *
-         * @param id The email of the contact.
+         * @param id The id of the contact.
          * @return The builder instance.
          */
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        /**
+         * Set the email of the contact.
+         *
+         * @param email The email of the contact.
+         * @return The builder instance.
+         */
+        public Builder email(String email) {
+            this.email = email;
             return this;
         }
 

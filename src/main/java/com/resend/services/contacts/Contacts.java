@@ -79,14 +79,21 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Deletes a contact based on the provided contact ID.
+     * Deletes a contact based on the provided contact ID or email.
      *
      * @param params The object with identifier of the contact to delete.
      * @return The RemoveContactsResponseSuccess with the details of the removed contact.
      * @throws ResendException If an error occurs during the contact deletion process.
      */
     public RemoveContactResponseSuccess remove(RemoveContactOptions params) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +params.getId(), super.apiKey, HttpMethod.DELETE, "", null);
+        if ((params.getId() == null && params.getEmail() == null) ||
+                (params.getId() != null && params.getEmail() != null)) {
+            throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
+        }
+
+        String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to delete contact: " + response.getCode() + " " + response.getBody());
@@ -98,15 +105,22 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Updates a contact based on the provided contact ID.
+     * Updates a contact based on the provided contact ID or email.
      *
      * @param params The object with identifier of the contact to patch.
      * @return The UpdateContactResponseSuccess with the details of the patched contact.
      * @throws ResendException If an error occurs during the contact patching process.
      */
     public UpdateContactResponseSuccess update(UpdateContactOptions params) throws ResendException {
+        if ((params.getId() == null && params.getEmail() == null) ||
+                (params.getId() != null && params.getEmail() != null)) {
+            throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
+        }
+
+        String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+
         String payload = super.resendMapper.writeValue(params);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +params.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to patch contact: " + response.getCode() + " " + response.getBody());

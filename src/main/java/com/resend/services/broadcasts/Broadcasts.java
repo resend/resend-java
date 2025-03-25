@@ -116,4 +116,23 @@ public class Broadcasts extends BaseService  {
 
         return resendMapper.readValue(responseBody, ListBroadcastsResponseSuccess.class);
     }
+
+    /**
+     * Updates a Broadcast.
+     *
+     * @param updateBroadcastOptions The Broadcast details.
+     * @return The details of the updated broadcast.
+     * @throws ResendException If an error occurs during the Broadcast patching process.
+     */
+    public UpdateBroadcastResponseSuccess update(UpdateBroadcastOptions updateBroadcastOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(updateBroadcastOptions);
+        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/"+updateBroadcastOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to update Broadcast: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, UpdateBroadcastResponseSuccess.class);
+    }
 }

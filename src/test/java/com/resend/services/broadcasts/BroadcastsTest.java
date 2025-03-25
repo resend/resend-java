@@ -36,6 +36,19 @@ public class BroadcastsTest {
     }
 
     @Test
+    public void testUpdateBroadcast_Success() throws ResendException {
+        UpdateBroadcastResponseSuccess expectedResponse = BroadcastsUtil.updateBroadcastResponse();
+        UpdateBroadcastOptions updateOptions = BroadcastsUtil.updateBroadcastRequest();
+
+        when(broadcasts.update(updateOptions)).thenReturn(expectedResponse);
+
+        UpdateBroadcastResponseSuccess response = broadcasts.update(updateOptions);
+
+        assertEquals(expectedResponse, response);
+        verify(broadcasts, times(1)).update(updateOptions);
+    }
+
+    @Test
     public void testGetBroadcast_Success() throws ResendException {
         String broadcastId = "12345";
         GetBroadcastResponseSuccess expectedResponse = BroadcastsUtil.getBroadcastResponse();

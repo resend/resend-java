@@ -17,8 +17,26 @@ public class BroadcastsUtil {
                 .build();
     }
 
+    public static UpdateBroadcastOptions updateBroadcastRequest() {
+        return UpdateBroadcastOptions.builder()
+                .id("123")
+                .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .from("example@resend.dev")
+                .subject("Sample Subject")
+                .html("<p>This is a test email.</p>")
+                .text("This is a test email.")
+                .name("Sample Broadcast")
+                .build();
+    }
+
     public static CreateBroadcastResponseSuccess createBroadcastResponse() {
         return new CreateBroadcastResponseSuccess(
+                "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794"
+        );
+    }
+
+    public static UpdateBroadcastResponseSuccess updateBroadcastResponse() {
+        return new UpdateBroadcastResponseSuccess(
                 "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794"
         );
     }

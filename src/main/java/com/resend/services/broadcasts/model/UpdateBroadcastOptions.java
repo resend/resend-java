@@ -1,11 +1,16 @@
 package com.resend.services.broadcasts.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Class representing options to update a broadcast.
  */
 public class UpdateBroadcastOptions extends BroadcastOptions {
 
     private final String id;
+
+    @JsonProperty("preview_text")
+    private final String previewText;
 
     /**
      * Constructs an UpdateBroadcastOptions object using the provided builder.
@@ -15,6 +20,7 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
     public UpdateBroadcastOptions(Builder builder) {
         super(builder);
         this.id = builder.id;
+        this.previewText = builder.previewText;
     }
 
     /**
@@ -24,6 +30,15 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
      */
     public String getId() {
         return id;
+    }
+
+    /**
+     * Get the preview text of the broadcast.
+     *
+     * @return The broadcast preview text.
+     */
+    public String getPreviewText() {
+        return previewText;
     }
 
     /**
@@ -42,6 +57,8 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
 
         private String id;
 
+        private String previewText;
+
         /**
          * Set the ID of the broadcast.
          *
@@ -50,6 +67,17 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
          */
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        /**
+         * Set the preview text of the broadcast.
+         *
+         * @param previewText The broadcast preview text.
+         * @return The builder instance.
+         */
+        public Builder previewText(String previewText) {
+            this.previewText = previewText;
             return this;
         }
 

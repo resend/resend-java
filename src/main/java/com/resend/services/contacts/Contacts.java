@@ -67,7 +67,16 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs while retrieving the contact.
      */
     public GetContactResponseSuccess get(GetContactOptions params) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +params.getId(), super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        String id    = params.getId();
+        String email = params.getEmail();
+
+        if ((id == null || id.isEmpty()) && (email == null || email.isEmpty())) {
+            throw new IllegalArgumentException("Either contact id or email must be provided");
+        }
+
+        String contactIdentifier =  (id != null && !id.isEmpty()) ? id : email;
+
+        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new RuntimeException("Failed to retrieve contact: " + response.getCode() + " " + response.getBody());

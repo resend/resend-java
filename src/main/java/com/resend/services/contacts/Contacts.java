@@ -62,7 +62,10 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a contact by its unique identifier.
      *
-     * @param params The object with identifier of the contact to retrieve and.
+     * @param params The object containing:
+     *               – {@code audienceId}: the audience to which the contact belongs
+     *               – Either {@code id}: the contact’s id
+     *                 or {@code email}: the contact’s email address
      * @return The retrieved contact details.
      * @throws ResendException If an error occurs while retrieving the contact.
      */

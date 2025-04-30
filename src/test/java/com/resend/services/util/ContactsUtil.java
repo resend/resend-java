@@ -48,4 +48,16 @@ public class ContactsUtil {
     public static UpdateContactResponseSuccess updateContactResponseSuccess() {
         return new UpdateContactResponseSuccess("123", "contact");
     }
+
+    public static GetContactResponseSuccess getContactResponseSuccess() {
+        return new GetContactResponseSuccess(
+                "contacts",
+                "123",
+                "user@example.com",
+                "test",
+                "test",
+                "2025-04-30T12:00:00Z",
+                false
+        );
+    }
 }

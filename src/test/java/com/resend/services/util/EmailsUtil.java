@@ -6,7 +6,9 @@ import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class EmailsUtil {
 
@@ -37,6 +39,13 @@ public class EmailsUtil {
                 .tags(Arrays.asList(createTag()))
                 .scheduledAt("2024-08-20T11:52:01.858Z")
                 .build();
+    }
+
+    public static Map<String, String> createRequestOptions() {
+        return Collections.singletonMap(
+                "idempotency_key",
+                "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794"
+        );
     }
 
     public static UpdateEmailOptions updateEmailOptions() {

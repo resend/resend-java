@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -54,6 +56,22 @@ public class EmailsTest {
 
         assertNotNull(createEmailResponse);
     }
+
+    @Test
+    public void testSendEmail_WithIdempotencyKey_Success() throws ResendException {
+        CreateEmailResponse expectedResponse = EmailsUtil.createSendEmailResponse();
+        CreateEmailOptions createOptions  = EmailsUtil.createEmailOptions();
+        Map<String, String> requestOptions = EmailsUtil.createRequestOptions();
+
+        when(emails.send(createOptions, requestOptions))
+                .thenReturn(expectedResponse);
+
+        CreateEmailResponse response = emails.send(createOptions, requestOptions);
+
+        assertEquals(expectedResponse, response);
+        verify(emails, times(1)).send(createOptions, requestOptions);
+    }
+
 
     @Test
     public void testCreateBatchEmails_Success() throws ResendException {

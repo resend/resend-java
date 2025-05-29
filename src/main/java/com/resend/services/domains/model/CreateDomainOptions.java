@@ -13,6 +13,9 @@ public class CreateDomainOptions {
     @JsonProperty("region")
     private final String region;
 
+    @JsonProperty("custom_return_path")
+    private final String customReturnPath;
+
     /**
      * Constructs a CreateDomainOptions object using the provided builder.
      *
@@ -21,6 +24,7 @@ public class CreateDomainOptions {
     public CreateDomainOptions(Builder builder) {
         this.name = builder.name;
         this.region = builder.region;
+        this.customReturnPath = builder.customReturnPath;
     }
 
     /**
@@ -42,6 +46,15 @@ public class CreateDomainOptions {
     }
 
     /**
+     * Get the customReturnPath of the domain.
+     *
+     * @return The customReturnPath of the domain.
+     */
+    public String getCustomReturnPath() {
+        return customReturnPath;
+    }
+
+    /**
      * Create a new builder instance for constructing CreateDomainOptions objects.
      *
      * @return A new builder instance.
@@ -56,6 +69,7 @@ public class CreateDomainOptions {
     public static class Builder {
         private String name;
         private String region;
+        private String customReturnPath;
 
         /**
          * Set the name of the domain.
@@ -76,6 +90,17 @@ public class CreateDomainOptions {
          */
         public Builder region(String region) {
             this.region = region;
+            return this;
+        }
+
+        /**
+         * Set the customReturnPath of the domain.
+         *
+         * @param customReturnPath The customReturnPath of the domain.
+         * @return The builder instance.
+         */
+        public Builder customReturnPath(String customReturnPath) {
+            this.customReturnPath = customReturnPath;
             return this;
         }
 

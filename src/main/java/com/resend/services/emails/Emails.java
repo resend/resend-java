@@ -3,6 +3,7 @@ package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.emails.model.*;
 import okhttp3.MediaType;
@@ -52,6 +53,30 @@ public final class Emails extends BaseService {
      * @return The response indicating the status of the email sending.
      * @throws ResendException If an error occurs while sending the email.
      */
+    public CreateEmailResponse send(CreateEmailOptions createEmailOptions, RequestOptions requestOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(createEmailOptions);
+
+        AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, CreateEmailResponse.class);
+    }
+
+    /**
+     * @deprecated Use {@link #send(CreateEmailOptions, RequestOptions)} instead.
+     * Sends an email based on the provided email request.
+     *
+     * @param createEmailOptions The request containing email details.
+     * @param requestOptions The options with additional headers.
+     * @return The response indicating the status of the email sending.
+     * @throws ResendException If an error occurs while sending the email.
+     */
+    @Deprecated
     public CreateEmailResponse send(CreateEmailOptions createEmailOptions, Map<String,String> requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createEmailOptions);
 

@@ -3,6 +3,7 @@ package com.resend.services.batch;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
@@ -10,7 +11,6 @@ import com.resend.services.emails.model.CreateEmailOptions;
 import okhttp3.MediaType;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  *  Represents the Resend Batch module.
@@ -56,7 +56,7 @@ public class Batch extends BaseService {
      * @return The emails ids.
      * @throws ResendException If an error occurs while sending batch emails.
      */
-    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, Map<String,String> requestOptions) throws ResendException {
+    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, RequestOptions requestOptions) throws ResendException {
 
         String payload = super.resendMapper.writeValue(emails);
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);

@@ -87,6 +87,20 @@ public class EmailsTest {
     }
 
     @Test
+    public void testCreateBatchEmailsWithIdempotencyKey_Success() throws ResendException {
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
+        CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
+        Map<String, String> requestOptions = EmailsUtil.createRequestOptions();
+
+        when(batch.send(batchEmailsRequest, requestOptions)).thenReturn(expectedRes);
+
+        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
+
+        assertNotNull(sendBatchEmailsResponse);
+        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+    }
+
+    @Test
     public void testUpdateEmail_Success() throws ResendException {
         UpdateEmailOptions updateEmailOptions = EmailsUtil.updateEmailOptions();
         UpdateEmailResponse expectedRes = EmailsUtil.updateEmailResponse();

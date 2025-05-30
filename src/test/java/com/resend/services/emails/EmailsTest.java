@@ -1,5 +1,6 @@
 package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.Batch;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
@@ -61,7 +62,7 @@ public class EmailsTest {
     public void testSendEmail_WithIdempotencyKey_Success() throws ResendException {
         CreateEmailResponse expectedResponse = EmailsUtil.createSendEmailResponse();
         CreateEmailOptions createOptions  = EmailsUtil.createEmailOptions();
-        Map<String, String> requestOptions = EmailsUtil.createRequestOptions();
+        RequestOptions requestOptions = EmailsUtil.createRequestOptions();
 
         when(emails.send(createOptions, requestOptions))
                 .thenReturn(expectedResponse);
@@ -81,6 +82,20 @@ public class EmailsTest {
         when(batch.send(batchEmailsRequest)).thenReturn(expectedRes);
 
         CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest);
+
+        assertNotNull(sendBatchEmailsResponse);
+        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+    }
+
+    @Test
+    public void testCreateBatchEmailsWithIdempotencyKey_Success() throws ResendException {
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
+        CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
+        RequestOptions requestOptions = EmailsUtil.createRequestOptions();
+
+        when(batch.send(batchEmailsRequest, requestOptions)).thenReturn(expectedRes);
+
+        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
 
         assertNotNull(sendBatchEmailsResponse);
         assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());

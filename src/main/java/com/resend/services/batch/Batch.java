@@ -3,6 +3,7 @@ package com.resend.services.batch;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
@@ -35,6 +36,30 @@ public class Batch extends BaseService {
 
         String payload = super.resendMapper.writeValue(emails);
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to send batch emails: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        CreateBatchEmailsResponse createBatchEmailsResponse = resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
+
+        return createBatchEmailsResponse;
+    }
+
+    /**
+     * Sends up to 100 batch emails.
+     *
+     * @param emails batch emails to send.
+     * @param requestOptions The options with additional headers.
+     * @return The emails ids.
+     * @throws ResendException If an error occurs while sending batch emails.
+     */
+    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, RequestOptions requestOptions) throws ResendException {
+
+        String payload = super.resendMapper.writeValue(emails);
+        AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
 
         if (!response.isSuccessful()) {
             throw new RuntimeException("Failed to send batch emails: " + response.getCode() + " " + response.getBody());

@@ -1,5 +1,6 @@
 package com.resend.services.util;
 
+import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.model.BatchEmail;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
@@ -41,11 +42,9 @@ public class EmailsUtil {
                 .build();
     }
 
-    public static Map<String, String> createRequestOptions() {
-        return Collections.singletonMap(
-                "idempotency_key",
-                "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794"
-        );
+    public static RequestOptions createRequestOptions() {
+        return RequestOptions.builder()
+                .setIdempotencyKey("welcome-user/123456789").build();
     }
 
     public static UpdateEmailOptions updateEmailOptions() {

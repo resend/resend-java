@@ -8,6 +8,7 @@ public class DomainsUtil {
     public static final CreateDomainOptions createDomainRequest() {
         return CreateDomainOptions.builder()
                 .name("resend.dev")
+                .customReturnPath("custom")
                 .build();
     }
 

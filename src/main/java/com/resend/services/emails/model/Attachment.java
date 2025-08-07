@@ -15,10 +15,14 @@ public class Attachment {
     @JsonProperty("path")
     private final String path;
 
+    @JsonProperty("content_id")
+    private final String contentId;
+
     private Attachment(Builder builder) {
         this.fileName = builder.fileName;
         this.content = builder.content;
         this.path = builder.path;
+        this.contentId = builder.contentId;
     }
 
     /**
@@ -46,6 +50,14 @@ public class Attachment {
     }
 
     /**
+     * Get the content ID for inline attachments used in HTML content with cid: references.
+     * @return The content ID for inline attachments.
+     */
+    public String getContentId() {
+        return contentId;
+    }
+
+    /**
      * Create a new Attachment builder.
      * @return A new Builder instance.
      */
@@ -60,6 +72,7 @@ public class Attachment {
         private String fileName;
         private String content;
         private String path;
+        private String contentId;
 
         /**
          * Set the filename of the attachment.
@@ -88,6 +101,16 @@ public class Attachment {
          */
         public Builder path(String path) {
             this.path = path;
+            return this;
+        }
+
+        /**
+         * Set the content ID for inline attachments used in HTML content with cid: references.
+         * @param contentId The content ID for inline attachments.
+         * @return The Builder instance.
+         */
+        public Builder contentId(String contentId) {
+            this.contentId = contentId;
             return this;
         }
 

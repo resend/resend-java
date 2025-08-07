@@ -17,7 +17,7 @@ public class EmailsUtil {
         return Attachment.builder()
                 .fileName("invoice.pdf")
                 .content("invoice.pdf")
-                .inlineContentId("my-image")
+                .contentId("my-image")
                 .build();
     }
 

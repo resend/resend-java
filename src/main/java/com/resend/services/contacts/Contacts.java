@@ -1,8 +1,10 @@
 package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
@@ -49,6 +51,26 @@ public class Contacts extends BaseService {
      */
     public ListContactsResponseSuccess list(String audienceId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +audienceId+ "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve contacts: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListContactsResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of contacts and returns a ListContactsResponseSuccess.
+     *
+     * @param audienceId The id of the audience.
+     * @return A ListContactsResponseSuccess containing the paginated list of contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(String audienceId, ListParams params) throws ResendException {
+        String pathWithQuery = "/audiences/" +audienceId+ "/contacts" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to retrieve contacts: " + response.getCode() + " " + response.getBody());

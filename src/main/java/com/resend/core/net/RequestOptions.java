@@ -1,7 +1,5 @@
 package com.resend.core.net;
 
-import com.resend.services.domains.model.CreateDomainOptions;
-
 /**
  * Represents a request to create a request options.
  */

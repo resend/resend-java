@@ -1,8 +1,10 @@
 package com.resend.services.domains;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.domains.model.*;
 import okhttp3.MediaType;
@@ -90,6 +92,25 @@ public final class Domains extends BaseService {
      */
     public ListDomainsResponse list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListDomainsResponse.class);
+    }
+
+    /**
+     * Retrieves a paginated list of domains and returns a ListDomainsResponse.
+     *
+     * @return A ListDomainsResponse containing the paginated list of domains.
+     * @throws ResendException If an error occurs during the domain list retrieval process.
+     */
+    public ListDomainsResponse list(ListParams params) throws ResendException {
+        String pathWithQuery = "/domains" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());

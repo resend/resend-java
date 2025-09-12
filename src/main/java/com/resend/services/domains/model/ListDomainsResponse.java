@@ -16,6 +16,9 @@ public class ListDomainsResponse {
     @JsonProperty("data")
     public List<DomainDTO> data;
 
+    @JsonProperty("has_more")
+    private Boolean hasMore;
+
     /**
      * Default constructor for creating an empty ListDomainsResponse object.
      */
@@ -27,8 +30,9 @@ public class ListDomainsResponse {
      *
      * @param data The list of DomainDTO objects.
      */
-    public ListDomainsResponse(List<DomainDTO> data) {
+    public ListDomainsResponse(List<DomainDTO> data, Boolean hasMore) {
         this.data = data;
+        this.hasMore = hasMore;
     }
 
     /**
@@ -38,6 +42,15 @@ public class ListDomainsResponse {
      */
     public List<DomainDTO> getData() {
         return data;
+    }
+
+    /**
+     * Gets the indicator whether there are more items available for pagination.
+     *
+     * @return Whether there are more items available for pagination.
+     */
+    public Boolean hasMore() {
+        return hasMore;
     }
 }
 

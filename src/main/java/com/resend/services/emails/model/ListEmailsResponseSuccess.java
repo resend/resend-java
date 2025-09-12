@@ -1,19 +1,18 @@
-package com.resend.services.contacts.model;
+package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 /**
- * Represents a successful response for listing contacts.
+ * Represents a successful response for listing e-mails.
  */
-public class ListContactsResponseSuccess {
+public class ListEmailsResponseSuccess {
 
     @JsonProperty("object")
     private String object;
 
     @JsonProperty("data")
-    private List<Contact> data;
+    private List<Email> data;
 
     @JsonProperty("has_more")
     private Boolean hasMore;
@@ -21,34 +20,35 @@ public class ListContactsResponseSuccess {
     /**
      * Default constructor
      */
-    public ListContactsResponseSuccess() {
+    public ListEmailsResponseSuccess () {
     }
 
     /**
-     * Constructs a successful response for listing contacts.
+     * Constructs a successful response for listing e-mails.
      *
-     * @param data The list of contacts.
-     * @param object The object of the list contacts.
+     * @param data The list of emails.
+     * @param object The object of the list emails.
+     * @param hasMore Whether there are more emails available for pagination.
      */
-    public ListContactsResponseSuccess(final List<Contact> data, final String object) {
+    public ListEmailsResponseSuccess (final List<Email> data, final String object, final Boolean hasMore) {
         this.data = data;
         this.object = object;
         this.hasMore = hasMore;
     }
 
     /**
-     * Gets the list of contacts.
+     * Gets the list of emails.
      *
-     * @return The list of contacts.
+     * @return The list of emails.
      */
-    public List<Contact> getData() {
+    public List<Email> getData() {
         return data;
     }
 
     /**
-     * Gets the list of contacts object.
+     * Gets the list of emails object.
      *
-     * @return The list of contacts object.
+     * @return The list of emails object.
      */
     public String getObject() {
         return object;

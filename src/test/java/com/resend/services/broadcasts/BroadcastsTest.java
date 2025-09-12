@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
 import com.resend.services.broadcasts.model.*;
 import com.resend.services.util.BroadcastsUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,6 +101,22 @@ public class BroadcastsTest {
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());
+        assertEquals(expectedResponse.getObject(), response.getObject());
+        verify(broadcasts, times(1)).list();
+    }
+
+    @Test
+    public void testListBroadcastsWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder()
+                .limit(3).build();
+        ListBroadcastsResponseSuccess expectedResponse = BroadcastsUtil.createBroadcastsListResponse();
+
+        when(broadcasts.list()).thenReturn(expectedResponse);
+
+        ListBroadcastsResponseSuccess response = broadcasts.list(params);
+
+        assertNotNull(response);
+        assertEquals(params.getLimit(), response.getData().size());
         assertEquals(expectedResponse.getObject(), response.getObject());
         verify(broadcasts, times(1)).list();
     }

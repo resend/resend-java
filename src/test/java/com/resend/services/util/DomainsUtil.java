@@ -1,7 +1,9 @@
 package com.resend.services.util;
 
+import com.resend.services.domains.dto.DomainDTO;
 import com.resend.services.domains.model.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DomainsUtil {
 
@@ -12,15 +14,49 @@ public class DomainsUtil {
                 .build();
     }
 
+    public static ListDomainsResponse createDomainListResponse() {
+        List<DomainDTO> data = new ArrayList<>();
+
+        DomainDTO domain1 = new DomainDTO(
+                "id-1",
+                "resend.dev",
+                "2023-04-08T00:11:13.110Z",
+                "Active",
+                "us-east-1"
+        );
+
+        DomainDTO domain2 = new DomainDTO(
+                "id-2",
+                "example.com",
+                "2023-01-01T12:00:00.000Z",
+                "Active",
+                "us-east-2"
+        );
+
+        DomainDTO domain3 = new DomainDTO(
+                "id-3",
+                "another.com",
+                "2023-02-15T08:30:00.000Z",
+                "Inactive",
+                "us-west-1"
+        );
+
+        data.add(domain1);
+        data.add(domain2);
+        data.add(domain3);
+
+        return new ListDomainsResponse(data, true);
+    }
+
     public static final CreateDomainResponse createDomainResponse() {
         return new CreateDomainResponse(
                 "2c64b27c-6237-4626-85d2-a0a8b5832070",
                 "resend.dev",
-                "2023-04-08T00:11:13.110779+00:00", // Replace with the actual creation date/time
-                "Active", // Replace with the desired status
-                "us-east-1", // Replace with the desired region
-                "DNSProviderXYZ", // Replace with the desired DNS provider
-                new ArrayList<>() // An empty list of records or add your records here
+                "2023-04-08T00:11:13.110779+00:00",
+                "Active",
+                "us-east-1",
+                "DNSProviderXYZ",
+                new ArrayList<>()
         );
     }
 

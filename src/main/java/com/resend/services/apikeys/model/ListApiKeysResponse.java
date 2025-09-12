@@ -12,6 +12,9 @@ public class ListApiKeysResponse {
     @JsonProperty("data")
     private List<ApiKey> data;
 
+    @JsonProperty("has_more")
+    private Boolean hasMore;
+
     /**
      * Default constructor. Creates an instance of ListApiKeysResponse with an empty data list.
      */
@@ -23,8 +26,9 @@ public class ListApiKeysResponse {
      *
      * @param data The list of API key items.
      */
-    public ListApiKeysResponse(List<ApiKey> data) {
+    public ListApiKeysResponse(List<ApiKey> data, Boolean hasMore) {
         this.data = data;
+        this.hasMore = hasMore;
     }
 
     /**
@@ -34,6 +38,15 @@ public class ListApiKeysResponse {
      */
     public List<ApiKey> getData() {
         return data;
+    }
+
+    /**
+     * Gets the indicator whether there are more items available for pagination.
+     *
+     * @return Whether there are more items available for pagination.
+     */
+    public Boolean hasMore() {
+        return hasMore;
     }
 }
 

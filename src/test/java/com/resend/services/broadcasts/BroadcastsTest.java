@@ -109,16 +109,19 @@ public class BroadcastsTest {
     public void testListBroadcastsWithPagination_Success() throws ResendException {
         ListParams params = ListParams.builder()
                 .limit(3).build();
+
         ListBroadcastsResponseSuccess expectedResponse = BroadcastsUtil.createBroadcastsListResponse();
 
-        when(broadcasts.list()).thenReturn(expectedResponse);
+        when(broadcasts.list(params)).thenReturn(expectedResponse);
 
         ListBroadcastsResponseSuccess response = broadcasts.list(params);
 
         assertNotNull(response);
         assertEquals(params.getLimit(), response.getData().size());
         assertEquals(expectedResponse.getObject(), response.getObject());
-        verify(broadcasts, times(1)).list();
+
+        verify(broadcasts, times(1)).list(params);
     }
+
 }
 

@@ -1,39 +1,27 @@
 package com.resend.services.batch.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 /**
- * Represents the response for creating batch emails.
+ * Response for batch emails sent in strict mode.
+ * In strict mode, either all emails are sent successfully or the entire batch fails.
  */
-public class CreateBatchEmailsResponse {
-
-    @JsonProperty("data")
-    private List<BatchEmail> data;
+public class CreateBatchEmailsResponse extends AbstractBatchEmailsResponse {
 
     /**
      * Default constructor.
      */
     public CreateBatchEmailsResponse() {
+        super();
     }
 
     /**
-     * Constructor with a list of batch emails.
+     * Constructor with data.
      *
-     * @param data A list of batch emails.
+     * @param data A list of successfully created batch emails.
      */
     public CreateBatchEmailsResponse(final List<BatchEmail> data) {
-        this.data = data;
+        super(data);
     }
 
-    /**
-     * Get the list of batch emails.
-     *
-     * @return A list of batch emails.
-     */
-    public List<BatchEmail> getData() {
-        return data;
-    }
 }
-

@@ -2,7 +2,9 @@ package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.Batch;
+import com.resend.services.batch.model.AbstractBatchEmailsResponse;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
+import com.resend.services.batch.model.PermissiveBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,6 +88,19 @@ public class EmailsTest {
     }
 
     @Test
+    public void testCreatePermissiveBatchEmails_Success() throws ResendException {
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
+        PermissiveBatchEmailsResponse expectedRes = EmailsUtil.createPermissiveBatchEmailsResponse();
+
+        when(batch.sendWithPermissive(batchEmailsRequest)).thenReturn(expectedRes);
+
+        PermissiveBatchEmailsResponse sendBatchEmailsResponse = batch.sendWithPermissive(batchEmailsRequest);
+
+        assertNotNull(sendBatchEmailsResponse);
+        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+    }
+
+    @Test
     public void testCreateBatchEmailsWithIdempotencyKey_Success() throws ResendException {
         List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
         CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
@@ -93,7 +108,7 @@ public class EmailsTest {
 
         when(batch.send(batchEmailsRequest, requestOptions)).thenReturn(expectedRes);
 
-        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
+        AbstractBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
 
         assertNotNull(sendBatchEmailsResponse);
         assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());

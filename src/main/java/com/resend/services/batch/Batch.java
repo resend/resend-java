@@ -6,7 +6,9 @@ import com.resend.core.net.HttpMethod;
 import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 
+import com.resend.services.batch.model.AbstractBatchEmailsResponse;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
+import com.resend.services.batch.model.PermissiveBatchEmailsResponse;
 import com.resend.services.emails.model.CreateEmailOptions;
 import okhttp3.MediaType;
 
@@ -43,9 +45,7 @@ public class Batch extends BaseService {
 
         String responseBody = response.getBody();
 
-        CreateBatchEmailsResponse createBatchEmailsResponse = resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
-
-        return createBatchEmailsResponse;
+        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
     }
 
     /**
@@ -67,19 +67,41 @@ public class Batch extends BaseService {
 
         String responseBody = response.getBody();
 
-        CreateBatchEmailsResponse createBatchEmailsResponse = resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
+        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
+    }
 
-        return createBatchEmailsResponse;
+    /**
+     * Sends up to 100 batch emails with permissive mode.
+     *
+     * @param emails batch emails to send.
+     * @return The emails ids.
+     * @throws ResendException If an error occurs while sending batch emails.
+     */
+    public PermissiveBatchEmailsResponse sendWithPermissive(List<CreateEmailOptions> emails) throws ResendException {
+        RequestOptions requestOptions = RequestOptions.builder()
+                .add("x-batch-validation", "permissive")
+                .build();
+
+        String payload = super.resendMapper.writeValue(emails);
+        AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("Failed to send batch emails with permissive mode: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, PermissiveBatchEmailsResponse.class);
     }
 
     /**
      * Creates and sends a batch of email messages based on the provided list of email requests.
      *
      * @param emails A list of {@link CreateEmailOptions} objects representing the email messages to be sent.
-     * @return A {@link CreateBatchEmailsResponse} containing information about the created batch of emails.
+     * @return A {@link AbstractBatchEmailsResponse} containing information about the created batch of emails.
      * @throws ResendException if an error occurs during the creation and sending of the emails.
      */
-    public CreateBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
+    public AbstractBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
         return this.send(emails);
     }
 

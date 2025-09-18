@@ -98,10 +98,10 @@ public class Batch extends BaseService {
      * Creates and sends a batch of email messages based on the provided list of email requests.
      *
      * @param emails A list of {@link CreateEmailOptions} objects representing the email messages to be sent.
-     * @return A {@link AbstractBatchEmailsResponse} containing information about the created batch of emails.
+     * @return A {@link CreateBatchEmailsResponse} containing information about the created batch of emails.
      * @throws ResendException if an error occurs during the creation and sending of the emails.
      */
-    public AbstractBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
+    public CreateBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
         return this.send(emails);
     }
 

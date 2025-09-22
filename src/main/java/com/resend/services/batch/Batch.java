@@ -6,9 +6,7 @@ import com.resend.core.net.HttpMethod;
 import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 
-import com.resend.services.batch.model.AbstractBatchEmailsResponse;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
-import com.resend.services.batch.model.PermissiveBatchEmailsResponse;
 import com.resend.services.emails.model.CreateEmailOptions;
 import okhttp3.MediaType;
 
@@ -68,30 +66,6 @@ public class Batch extends BaseService {
         String responseBody = response.getBody();
 
         return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
-    }
-
-    /**
-     * Sends up to 100 batch emails with permissive mode.
-     *
-     * @param emails batch emails to send.
-     * @return The emails ids.
-     * @throws ResendException If an error occurs while sending batch emails.
-     */
-    public PermissiveBatchEmailsResponse sendWithPermissive(List<CreateEmailOptions> emails) throws ResendException {
-        RequestOptions requestOptions = RequestOptions.builder()
-                .add("x-batch-validation", "permissive")
-                .build();
-
-        String payload = super.resendMapper.writeValue(emails);
-        AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
-
-        if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to send batch emails with permissive mode: " + response.getCode() + " " + response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, PermissiveBatchEmailsResponse.class);
     }
 
     /**

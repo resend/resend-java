@@ -10,10 +10,10 @@ import java.util.List;
  * The actual implementation depends on the validation mode used.
  */
 @JsonSubTypes({
-        @JsonSubTypes.Type(CreateBatchEmailsResponse.class),
-        @JsonSubTypes.Type(PermissiveBatchEmailsResponse.class)
+        @JsonSubTypes.Type(CreateBatchEmailsResponse.class)
 })
 public abstract class AbstractBatchEmailsResponse {
+
     /**
      * The list of e-mail ids created.
      */

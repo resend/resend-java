@@ -4,7 +4,6 @@ import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.Batch;
 import com.resend.services.batch.model.AbstractBatchEmailsResponse;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
-import com.resend.services.batch.model.PermissiveBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,12 +88,15 @@ public class EmailsTest {
 
     @Test
     public void testCreatePermissiveBatchEmails_Success() throws ResendException {
+        RequestOptions options = RequestOptions.builder()
+                .add("x-batch-validation", "permissive").build();
+
         List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
-        PermissiveBatchEmailsResponse expectedRes = EmailsUtil.createPermissiveBatchEmailsResponse();
+        CreateBatchEmailsResponse expectedRes = EmailsUtil.createPermissiveBatchEmailsResponse();
 
-        when(batch.sendWithPermissive(batchEmailsRequest)).thenReturn(expectedRes);
+        when(batch.send(batchEmailsRequest, options)).thenReturn(expectedRes);
 
-        PermissiveBatchEmailsResponse sendBatchEmailsResponse = batch.sendWithPermissive(batchEmailsRequest);
+        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, options);
 
         assertNotNull(sendBatchEmailsResponse);
         assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());

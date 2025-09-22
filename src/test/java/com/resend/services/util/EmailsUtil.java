@@ -4,10 +4,10 @@ import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.model.BatchEmail;
 import com.resend.services.batch.model.BatchError;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
-import com.resend.services.batch.model.PermissiveBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,10 +68,10 @@ public class EmailsUtil {
     }
 
     public static CreateBatchEmailsResponse createBatchEmailsResponse() {
-        return new CreateBatchEmailsResponse(Arrays.asList(new BatchEmail("123"), new BatchEmail("321")));
+        return new CreateBatchEmailsResponse(Arrays.asList(new BatchEmail("123"), new BatchEmail("321")), new ArrayList<>());
     }
 
-    public static PermissiveBatchEmailsResponse createPermissiveBatchEmailsResponse() {
+    public static CreateBatchEmailsResponse createPermissiveBatchEmailsResponse() {
         List<BatchEmail> successes = Arrays.asList(
                 new BatchEmail("123"),
                 new BatchEmail("321")
@@ -82,7 +82,7 @@ public class EmailsUtil {
                 new BatchError(789, "Domain not reachable")
         );
 
-        return new PermissiveBatchEmailsResponse(successes, errors);
+        return new CreateBatchEmailsResponse(successes, errors);
     }
 
     public static Email createTestEmail() {

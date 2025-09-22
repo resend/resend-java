@@ -1,8 +1,10 @@
 package com.resend.services.apikeys;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
@@ -52,6 +54,27 @@ public final class ApiKeys extends BaseService {
      */
     public ListApiKeysResponse list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/api-keys", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve api keys: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        ListApiKeysResponse listApiKeysResponse = resendMapper.readValue(responseBody, ListApiKeysResponse.class);
+        return listApiKeysResponse;
+    }
+
+    /**
+     * Retrieves a paginated list of api keys and returns a ListApiKeysResponse.
+     * @param params The params used to customize the list.
+     *
+     * @return A ListApiKeysResponse containing the paginated list of api keys.
+     * @throws ResendException If an error occurs during the api keys list retrieval process.
+     */
+    public ListApiKeysResponse list(ListParams params) throws ResendException {
+        String pathWithQuery = "/api-keys" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to retrieve api keys: " + response.getCode() + " " + response.getBody());

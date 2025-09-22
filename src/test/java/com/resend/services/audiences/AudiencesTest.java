@@ -1,6 +1,7 @@
 package com.resend.services.audiences;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
 import com.resend.services.audiences.model.CreateAudienceOptions;
 import com.resend.services.audiences.model.CreateAudienceResponseSuccess;
 import com.resend.services.audiences.model.ListAudiencesResponseSuccess;
@@ -66,6 +67,22 @@ public class AudiencesTest {
 
         assertNotNull(res);
         assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testListAudienceWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder()
+                .limit(3).build();
+        ListAudiencesResponseSuccess expectedResponse = AudiencesUtil.createAudiencesListResponse();
+
+        when(audiences.list(params))
+                .thenReturn(expectedResponse);
+
+        ListAudiencesResponseSuccess res = audiences.list(params);
+
+        assertNotNull(res);
+        assertEquals(params.getLimit(), res.getData().size());
         assertEquals(expectedResponse.getObject(), res.getObject());
     }
 }

@@ -1,8 +1,10 @@
 package com.resend.services.audiences;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.audiences.model.*;
 import okhttp3.MediaType;
@@ -48,6 +50,26 @@ public class Audiences extends BaseService {
      */
     public ListAudiencesResponseSuccess list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve audiences: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListAudiencesResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of audiences and returns a ListAudiencesResponseSuccess.
+     * @param params The params used to customize the list.
+     *
+     * @return A ListAudiencesResponseSuccess containing the paginated list of audiences.
+     * @throws ResendException If an error occurs during the audiences list retrieval process.
+     */
+    public ListAudiencesResponseSuccess list(ListParams params) throws ResendException {
+        String pathWithQuery = "/audiences" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to retrieve audiences: " + response.getCode() + " " + response.getBody());

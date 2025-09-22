@@ -1,5 +1,6 @@
 package com.resend.services.emails;
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.Batch;
 import com.resend.services.batch.model.AbstractBatchEmailsResponse;
@@ -137,5 +138,32 @@ public class EmailsTest {
         CancelEmailResponse cancelEmailResponse = emails.cancel("123");
 
         assertNotNull(cancelEmailResponse);
+    }
+
+    @Test
+    public void testListEmails_Success() throws ResendException {
+
+        ListEmailsResponseSuccess expectedResponse = new ListEmailsResponseSuccess(EmailsUtil.createEmailList(), "emails", true);
+
+        when(emails.list()).thenReturn(expectedResponse);
+
+        ListEmailsResponseSuccess response = emails.list();
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getData().size(), response.getData().size());
+    }
+
+    @Test
+    public void testListEmailsWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder()
+                .limit(3).build();
+        ListEmailsResponseSuccess expectedResponse = new ListEmailsResponseSuccess(EmailsUtil.createEmailList(), "emails", true);
+
+        when(emails.list(params)).thenReturn(expectedResponse);
+
+        ListEmailsResponseSuccess response = emails.list(params);
+
+        assertNotNull(response);
+        assertEquals(params.getLimit(), response.getData().size());
     }
 }

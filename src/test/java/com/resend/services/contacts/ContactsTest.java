@@ -1,6 +1,7 @@
 package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
 import com.resend.services.contacts.model.*;
 import com.resend.services.util.ContactsUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,6 +68,24 @@ public class ContactsTest {
 
         assertNotNull(res);
         assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testListContactsWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder()
+                .limit(3).build();
+
+        String audienceId = "123";
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(audienceId, params))
+                .thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(audienceId, params);
+
+        assertNotNull(res);
+        assertEquals(params.getLimit(), res.getData().size());
         assertEquals(expectedResponse.getObject(), res.getObject());
     }
 

@@ -7,9 +7,7 @@ import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class EmailsUtil {
 
@@ -100,6 +98,57 @@ public class EmailsUtil {
                 Arrays.asList("replyto@example.com"),
                 "last_event_status"
         );
+    }
+
+    public static List<Email> createEmailList() {
+        List<Email> emails = new ArrayList<>();
+
+        emails.add(new Email(
+                "email_1",
+                "qwert1",
+                "sender1@example.com",
+                Arrays.asList("recipient1@example.com"),
+                "2023-04-08T00:11:13.110779+00:00",
+                "Test Email Subject 1",
+                "<html><body>This is the HTML content 1</body></html>",
+                "This is the plain text content 1",
+                Arrays.asList("bcc1@example.com"),
+                Arrays.asList("cc1@example.com"),
+                Arrays.asList("replyto1@example.com"),
+                "last_event_status_1"
+        ));
+
+        emails.add(new Email(
+                "email_2",
+                "qwert2",
+                "sender2@example.com",
+                Arrays.asList("recipient2@example.com"),
+                "2023-04-09T00:11:13.110779+00:00",
+                "Test Email Subject 2",
+                "<html><body>This is the HTML content 2</body></html>",
+                "This is the plain text content 2",
+                Arrays.asList("bcc2@example.com"),
+                Arrays.asList("cc2@example.com"),
+                Arrays.asList("replyto2@example.com"),
+                "last_event_status_2"
+        ));
+
+        emails.add(new Email(
+                "email_3",
+                "qwert3",
+                "sender3@example.com",
+                Arrays.asList("recipient3@example.com"),
+                "2023-04-10T00:11:13.110779+00:00",
+                "Test Email Subject 3",
+                "<html><body>This is the HTML content 3</body></html>",
+                "This is the plain text content 3",
+                Arrays.asList("bcc3@example.com"),
+                Arrays.asList("cc3@example.com"),
+                Arrays.asList("replyto3@example.com"),
+                "last_event_status_3"
+        ));
+
+        return emails;
     }
 
     public static CreateEmailResponse createSendEmailResponse() {

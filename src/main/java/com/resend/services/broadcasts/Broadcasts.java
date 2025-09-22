@@ -1,8 +1,10 @@
 package com.resend.services.broadcasts;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.broadcasts.model.*;
 import okhttp3.MediaType;
@@ -107,6 +109,26 @@ public class Broadcasts extends BaseService  {
      */
     public ListBroadcastsResponseSuccess list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException("Failed to retrieve broadcasts: " + response.getCode() + " " + response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListBroadcastsResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of broadcasts and returns a List.
+     * @param params The params used to customize the list.
+     *
+     * @return A ListBroadcastsResponseSuccess containing the paginated list of broadcasts.
+     * @throws ResendException If an error occurs during the broadcasts list retrieval process.
+     */
+    public ListBroadcastsResponseSuccess list(ListParams params) throws ResendException {
+        String pathWithQuery = "/broadcasts" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException("Failed to retrieve broadcasts: " + response.getCode() + " " + response.getBody());

@@ -38,7 +38,7 @@ public class ApiKeysUtil {
         apiKeys.add(apiKey1);
         apiKeys.add(apiKey2);
 
-        ListApiKeysResponse response = new ListApiKeysResponse(apiKeys);
+        ListApiKeysResponse response = new ListApiKeysResponse(apiKeys, true, "list");
 
         return response;
     }

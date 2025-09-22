@@ -65,6 +65,7 @@ public class Contacts extends BaseService {
      * Retrieves a paginated list of contacts and returns a ListContactsResponseSuccess.
      *
      * @param audienceId The id of the audience.
+     * @param params The params used to customize the list.
      * @return A ListContactsResponseSuccess containing the paginated list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */

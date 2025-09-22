@@ -118,7 +118,7 @@ public class DomainsTest {
         ListParams params = ListParams.builder().limit(2).build();
         ListDomainsResponse expectedResponse = DomainsUtil.createDomainListResponse();
         List<DomainDTO> paginatedData = expectedResponse.getData().subList(0, params.getLimit());
-        ListDomainsResponse paginatedResponse = new ListDomainsResponse(paginatedData, true);
+        ListDomainsResponse paginatedResponse = new ListDomainsResponse(paginatedData, true, "list");
 
         when(domains.list(params)).thenReturn(paginatedResponse);
 

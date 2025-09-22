@@ -121,6 +121,7 @@ public class Broadcasts extends BaseService  {
 
     /**
      * Retrieves a paginated list of broadcasts and returns a List.
+     * @param params The params used to customize the list.
      *
      * @return A ListBroadcastsResponseSuccess containing the paginated list of broadcasts.
      * @throws ResendException If an error occurs during the broadcasts list retrieval process.

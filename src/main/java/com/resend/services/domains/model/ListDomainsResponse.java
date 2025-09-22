@@ -19,6 +19,9 @@ public class ListDomainsResponse {
     @JsonProperty("has_more")
     private Boolean hasMore;
 
+    @JsonProperty("object")
+    private String object;
+
     /**
      * Default constructor for creating an empty ListDomainsResponse object.
      */
@@ -29,10 +32,13 @@ public class ListDomainsResponse {
      * Constructor to create a ListDomainsResponse object with the provided list of DomainDTO objects.
      *
      * @param data The list of DomainDTO objects.
+     * @param hasMore Indicate if there are more items to be returned.
+     * @param object the object type of the module.
      */
-    public ListDomainsResponse(List<DomainDTO> data, Boolean hasMore) {
+    public ListDomainsResponse(List<DomainDTO> data, Boolean hasMore, String object) {
         this.data = data;
         this.hasMore = hasMore;
+        this.object = object;
     }
 
     /**
@@ -51,6 +57,15 @@ public class ListDomainsResponse {
      */
     public Boolean hasMore() {
         return hasMore;
+    }
+
+    /**
+     * Get the type of the object.
+     *
+     * @return The type of the object.
+     */
+    public String getObject() {
+        return object;
     }
 }
 

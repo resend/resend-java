@@ -30,6 +30,7 @@ public class ListBroadcastsResponseSuccess {
      *
      * @param object Type of the object (e.g., "list").
      * @param data List of Broadcast objects.
+     * @param hasMore Indicate if there are more items to be returned.
      */
     public ListBroadcastsResponseSuccess(String object, List<Broadcast> data, Boolean hasMore) {
         this.object = object;

@@ -45,7 +45,7 @@ public class DomainsUtil {
         data.add(domain2);
         data.add(domain3);
 
-        return new ListDomainsResponse(data, true);
+        return new ListDomainsResponse(data, true, "list");
     }
 
     public static final CreateDomainResponse createDomainResponse() {

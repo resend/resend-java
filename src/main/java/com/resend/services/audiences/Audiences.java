@@ -62,6 +62,7 @@ public class Audiences extends BaseService {
 
     /**
      * Retrieves a paginated list of audiences and returns a ListAudiencesResponseSuccess.
+     * @param params The params used to customize the list.
      *
      * @return A ListAudiencesResponseSuccess containing the paginated list of audiences.
      * @throws ResendException If an error occurs during the audiences list retrieval process.

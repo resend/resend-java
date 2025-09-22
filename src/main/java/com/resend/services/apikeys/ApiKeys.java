@@ -67,6 +67,7 @@ public final class ApiKeys extends BaseService {
 
     /**
      * Retrieves a paginated list of api keys and returns a ListApiKeysResponse.
+     * @param params The params used to customize the list.
      *
      * @return A ListApiKeysResponse containing the paginated list of api keys.
      * @throws ResendException If an error occurs during the api keys list retrieval process.

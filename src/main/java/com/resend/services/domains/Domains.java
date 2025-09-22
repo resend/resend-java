@@ -105,6 +105,7 @@ public final class Domains extends BaseService {
     /**
      * Retrieves a paginated list of domains and returns a ListDomainsResponse.
      *
+     * @param params The params used to customize the list.
      * @return A ListDomainsResponse containing the paginated list of domains.
      * @throws ResendException If an error occurs during the domain list retrieval process.
      */

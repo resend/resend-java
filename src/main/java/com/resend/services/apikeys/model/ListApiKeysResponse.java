@@ -15,6 +15,9 @@ public class ListApiKeysResponse {
     @JsonProperty("has_more")
     private Boolean hasMore;
 
+    @JsonProperty("object")
+    private String object;
+
     /**
      * Default constructor. Creates an instance of ListApiKeysResponse with an empty data list.
      */
@@ -25,10 +28,13 @@ public class ListApiKeysResponse {
      * Creates an instance of ListApiKeyResponse with the specified data.
      *
      * @param data The list of API key items.
+     * @param hasMore Indicate if there are more items to be returned.
+     * @param object the object type of the module.
      */
-    public ListApiKeysResponse(List<ApiKey> data, Boolean hasMore) {
+    public ListApiKeysResponse(List<ApiKey> data, Boolean hasMore, String object) {
         this.data = data;
         this.hasMore = hasMore;
+        this.object = object;
     }
 
     /**
@@ -47,6 +53,15 @@ public class ListApiKeysResponse {
      */
     public Boolean hasMore() {
         return hasMore;
+    }
+
+    /**
+     * Get the type of the object.
+     *
+     * @return The type of the object.
+     */
+    public String getObject() {
+        return object;
     }
 }
 

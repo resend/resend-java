@@ -176,6 +176,7 @@ public final class Emails extends BaseService {
     /**
      * Retrieves a paginated list of emails and returns a List.
      *
+     * @param params The params used to customize the list.
      * @return A ListEmailsResponseSuccess containing the paginated list of emails.
      * @throws ResendException If an error occurs during the emails list retrieval process.
      */

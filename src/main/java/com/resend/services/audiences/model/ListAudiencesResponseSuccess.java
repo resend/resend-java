@@ -29,6 +29,7 @@ public class ListAudiencesResponseSuccess {
      *
      * @param data   The list of audiences.
      * @param object The object of the audiences.
+     * @param hasMore Indicate if there are more items to be returned.
      */
     public ListAudiencesResponseSuccess(List<Audience> data, String object, Boolean hasMore) {
         this.data = data;

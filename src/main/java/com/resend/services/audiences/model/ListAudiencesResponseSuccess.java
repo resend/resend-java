@@ -15,6 +15,9 @@ public class ListAudiencesResponseSuccess {
     @JsonProperty("object")
     private String object;
 
+    @JsonProperty("has_more")
+    private Boolean hasMore;
+
     /**
      * Default constructor
      */
@@ -26,10 +29,12 @@ public class ListAudiencesResponseSuccess {
      *
      * @param data   The list of audiences.
      * @param object The object of the audiences.
+     * @param hasMore Indicate if there are more items to be returned.
      */
-    public ListAudiencesResponseSuccess(List<Audience> data, String object) {
+    public ListAudiencesResponseSuccess(List<Audience> data, String object, Boolean hasMore) {
         this.data = data;
         this.object = object;
+        this.hasMore = hasMore;
     }
 
     /**
@@ -48,5 +53,14 @@ public class ListAudiencesResponseSuccess {
      */
     public String getObject() {
         return object;
+    }
+
+    /**
+     * Gets the indicator whether there are more items available for pagination.
+     *
+     * @return Whether there are more items available for pagination.
+     */
+    public Boolean hasMore() {
+        return hasMore;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.apikey;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
 import com.resend.services.apikeys.ApiKeys;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
@@ -64,5 +65,20 @@ public class ApiKeysTest {
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());
+    }
+
+    @Test
+    public void testListApiKeysWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder()
+                .limit(2).build();
+        ListApiKeysResponse expectedResponse = ApiKeysUtil.createListApiKeyResponse();
+
+        when(apiKeys.list(params))
+                .thenReturn(expectedResponse);
+
+        ListApiKeysResponse response = apiKeys.list(params);
+
+        assertNotNull(response);
+        assertEquals(params.getLimit(), response.getData().size());
     }
 }

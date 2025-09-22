@@ -1,12 +1,16 @@
 package com.resend.services.domains;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.ListParams;
+import com.resend.services.domains.dto.DomainDTO;
 import com.resend.services.domains.model.*;
 import com.resend.services.util.DomainsUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -93,5 +97,35 @@ public class DomainsTest {
         assertNotNull(response);
         assertEquals(expectedResponse, response);
         assertEquals(expectedResponse.getId(), response.getId());
+    }
+
+    @Test
+    public void testListDomains_Success() throws ResendException {
+        ListDomainsResponse expectedResponse = DomainsUtil.createDomainListResponse();
+
+        when(domains.list()).thenReturn(expectedResponse);
+
+
+        ListDomainsResponse response = domains.list();
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getData().size(), response.getData().size());
+    }
+
+    @Test
+    public void testListDomainsWithPagination_Success() throws ResendException {
+        // Arrange
+        ListParams params = ListParams.builder().limit(2).build();
+        ListDomainsResponse expectedResponse = DomainsUtil.createDomainListResponse();
+        List<DomainDTO> paginatedData = expectedResponse.getData().subList(0, params.getLimit());
+        ListDomainsResponse paginatedResponse = new ListDomainsResponse(paginatedData, true, "list");
+
+        when(domains.list(params)).thenReturn(paginatedResponse);
+
+        ListDomainsResponse response = domains.list(params);
+
+        assertNotNull(response);
+        assertEquals(params.getLimit(), response.getData().size());
+
     }
 }

@@ -75,7 +75,7 @@ public class BroadcastsUtil {
         broadcastList.add(new Broadcast("2", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "sent", "2024-12-02T10:15:30.000Z", "2024-12-02T11:00:00.000Z", "2024-12-02T12:00:00.000Z"));
         broadcastList.add(new Broadcast("3", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "queued", "2024-12-03T08:45:00.000Z", null, null));
 
-        return new ListBroadcastsResponseSuccess("list", broadcastList);
+        return new ListBroadcastsResponseSuccess("list", broadcastList, true);
     }
 
     public static SendBroadcastOptions sendBroadcastRequest() {

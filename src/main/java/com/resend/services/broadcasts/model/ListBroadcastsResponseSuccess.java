@@ -15,6 +15,9 @@ public class ListBroadcastsResponseSuccess {
     @JsonProperty("data")
     private List<Broadcast> data;
 
+    @JsonProperty("has_more")
+    private Boolean hasMore;
+
     /**
      * Default constructor
      */
@@ -27,10 +30,12 @@ public class ListBroadcastsResponseSuccess {
      *
      * @param object Type of the object (e.g., "list").
      * @param data List of Broadcast objects.
+     * @param hasMore Indicate if there are more items to be returned.
      */
-    public ListBroadcastsResponseSuccess(String object, List<Broadcast> data) {
+    public ListBroadcastsResponseSuccess(String object, List<Broadcast> data, Boolean hasMore) {
         this.object = object;
         this.data = data;
+        this.hasMore = hasMore;
     }
 
     /**
@@ -45,6 +50,15 @@ public class ListBroadcastsResponseSuccess {
      */
     public List<Broadcast> getData() {
         return data;
+    }
+
+    /**
+     * Gets the indicator whether there are more items available for pagination.
+     *
+     * @return Whether there are more items available for pagination.
+     */
+    public Boolean hasMore() {
+        return hasMore;
     }
 }
 

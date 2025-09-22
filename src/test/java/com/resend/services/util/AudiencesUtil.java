@@ -30,6 +30,6 @@ public class AudiencesUtil {
         audList.add(aud2);
         audList.add(aud3);
 
-        return new ListAudiencesResponseSuccess(audList, "list");
+        return new ListAudiencesResponseSuccess(audList, "list", true);
     }
 }

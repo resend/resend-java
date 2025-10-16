@@ -18,6 +18,9 @@ public class GetBroadcastResponseSuccess extends Broadcast {
     @JsonProperty("from")
     private String from;
 
+    @JsonProperty("html")
+    private String html;
+
     @JsonProperty("subject")
     private String subject;
 
@@ -26,6 +29,9 @@ public class GetBroadcastResponseSuccess extends Broadcast {
 
     @JsonProperty("preview_text")
     private String previewText;
+
+    @JsonProperty("text")
+    private String text;
 
     /**
      * Default constructor
@@ -45,9 +51,11 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      * @param object Type of the object (e.g., "broadcast").
      * @param name Name of the broadcast.
      * @param from Sender of the broadcast.
+     * @param html The HTML content of the broadcast.
      * @param subject Subject line of the broadcast.
      * @param replyTo Reply-to address for the broadcast.
      * @param previewText Preview text of the broadcast.
+     * @param text The plain text content of the broadcast.
      */
     public GetBroadcastResponseSuccess(
             String id,
@@ -59,17 +67,21 @@ public class GetBroadcastResponseSuccess extends Broadcast {
             String object,
             String name,
             String from,
+            String html,
             String subject,
             List<String> replyTo,
-            String previewText
+            String previewText,
+            String text
     ) {
         super(id, audienceId, status, createdAt, scheduledAt, sentAt);
         this.object = object;
         this.name = name;
         this.from = from;
+        this.html = html;
         this.subject = subject;
         this.replyTo = replyTo;
         this.previewText = previewText;
+        this.text = text;
     }
 
     /**
@@ -94,6 +106,13 @@ public class GetBroadcastResponseSuccess extends Broadcast {
     }
 
     /**
+     * @return The HTML content of the broadcast.
+     */
+    public String getHtml() {
+        return html;
+    }
+
+    /**
      * @return Subject line of the broadcast.
      */
     public String getSubject() {
@@ -112,6 +131,13 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      */
     public String getPreviewText() {
         return previewText;
+    }
+
+    /**
+     * @return The plain text content of the broadcast.
+     */
+    public String getText() {
+        return text;
     }
 }
 

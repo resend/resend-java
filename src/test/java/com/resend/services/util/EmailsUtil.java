@@ -2,6 +2,7 @@ package com.resend.services.util;
 
 import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.model.BatchEmail;
+import com.resend.services.batch.model.BatchError;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.core.net.AbstractHttpResponse;
@@ -65,7 +66,21 @@ public class EmailsUtil {
     }
 
     public static CreateBatchEmailsResponse createBatchEmailsResponse() {
-        return new CreateBatchEmailsResponse(Arrays.asList(new BatchEmail("123"), new BatchEmail("321")));
+        return new CreateBatchEmailsResponse(Arrays.asList(new BatchEmail("123"), new BatchEmail("321")), new ArrayList<>());
+    }
+
+    public static CreateBatchEmailsResponse createPermissiveBatchEmailsResponse() {
+        List<BatchEmail> successes = Arrays.asList(
+                new BatchEmail("123"),
+                new BatchEmail("321")
+        );
+
+        List<BatchError> errors = Arrays.asList(
+                new BatchError(456, "Invalid recipient address"),
+                new BatchError(789, "Domain not reachable")
+        );
+
+        return new CreateBatchEmailsResponse(successes, errors);
     }
 
     public static Email createTestEmail() {

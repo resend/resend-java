@@ -40,7 +40,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -62,7 +62,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -86,7 +86,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = super.httpClient.perform("/emails", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to send email: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -105,7 +105,7 @@ public final class Emails extends BaseService {
             AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
             if (!response.isSuccessful()) {
-                throw new RuntimeException("Failed to retrieve email: " + response.getCode() + " " + response.getBody());
+                throw new ResendException(response.getCode(), response.getBody());
             }
 
             String responseBody = response.getBody();
@@ -127,7 +127,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to update email: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -147,7 +147,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId + "/cancel", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to cancel email schedule: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -165,7 +165,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/emails", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve emails: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -185,7 +185,7 @@ public final class Emails extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve emails: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();

@@ -35,7 +35,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/domains", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to create domain: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -50,20 +50,15 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain retrieval process.
      */
     public Domain get(String domainId) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
-        try {
-            AbstractHttpResponse<String> response = this.httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-            if (!response.isSuccessful()) {
-                throw new ResendException("Failed to retrieve domain: " + response.getCode() + " " + response.getBody());
-            }
-
-            String responseBody = response.getBody();
-
-            return resendMapper.readValue(responseBody, Domain.class);
-        } catch (Exception e) {
-            throw new ResendException("Error retrieving domain: " + e.getMessage(), e);
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
         }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, Domain.class);
+
     }
 
     /**
@@ -77,7 +72,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/verify", super.apiKey, HttpMethod.POST, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to verify domain: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -94,7 +89,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -114,7 +109,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve domains list: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -134,7 +129,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/domains/" + updateDomainOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete domain: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -152,7 +147,7 @@ public final class Domains extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete domain: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();

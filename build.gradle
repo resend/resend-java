@@ -28,6 +28,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
 
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation("org.json:json:20250517")
 }
 
 test {
@@ -86,8 +87,8 @@ publishing {
     }
     repositories {
         maven {
-            name = 'nexus'
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            name = 'ossrh-staging-api'
+            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
             credentials {
                 username = USERNAME
                 password = PASSWORD

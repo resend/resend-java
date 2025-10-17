@@ -35,7 +35,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + createContactOptions.getAudienceId()+ "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to create contact: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -53,7 +53,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +audienceId+ "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve contacts: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -74,7 +74,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve contacts: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -105,7 +105,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to retrieve contact: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -131,7 +131,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete contact: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -158,7 +158,7 @@ public class Contacts extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to patch contact: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();

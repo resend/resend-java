@@ -37,7 +37,7 @@ public final class ApiKeys extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/api-keys", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to create api key: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -56,7 +56,7 @@ public final class ApiKeys extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/api-keys", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve api keys: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -77,7 +77,7 @@ public final class ApiKeys extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve api keys: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -97,7 +97,7 @@ public final class ApiKeys extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/api-keys/" + apiKeyId, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete api key: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         return true;

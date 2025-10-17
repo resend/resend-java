@@ -35,7 +35,7 @@ public class Audiences extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to create Audience: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -52,7 +52,7 @@ public class Audiences extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve audiences: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -72,7 +72,7 @@ public class Audiences extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve audiences: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -91,7 +91,7 @@ public class Audiences extends BaseService {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to retrieve audience: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -110,7 +110,7 @@ public class Audiences extends BaseService {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete audience: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();

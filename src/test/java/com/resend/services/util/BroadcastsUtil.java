@@ -58,9 +58,11 @@ public class BroadcastsUtil {
                 "broadcast",
                 "Announcements",
                 "Acme <onboarding@resend.dev>",
+                "<p>Hello World</p>",
                 "Hello World",
                 null,
-                "Check out our latest announcements"
+                "Check out our latest announcements",
+                "The plain text of the broadcast"
         );
     }
 

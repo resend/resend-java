@@ -36,7 +36,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = httpClient.perform("/broadcasts", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to create Broadcast: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -54,7 +54,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("Failed to retrieve broadcast: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -75,7 +75,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" +broadcastId + "/send", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to send broadcast: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -93,7 +93,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" +id, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to delete broadcast: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -111,7 +111,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve broadcasts: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -131,7 +131,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to retrieve broadcasts: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();
@@ -151,7 +151,7 @@ public class Broadcasts extends BaseService  {
         AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/"+updateBroadcastOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
-            throw new ResendException("Failed to update Broadcast: " + response.getCode() + " " + response.getBody());
+            throw new ResendException(response.getCode(), response.getBody());
         }
 
         String responseBody = response.getBody();

@@ -3,6 +3,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
 import com.resend.services.batch.Batch;
+import com.resend.services.batch.model.AbstractBatchEmailsResponse;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
@@ -87,6 +88,22 @@ public class EmailsTest {
     }
 
     @Test
+    public void testCreatePermissiveBatchEmails_Success() throws ResendException {
+        RequestOptions options = RequestOptions.builder()
+                .add("x-batch-validation", "permissive").build();
+
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
+        CreateBatchEmailsResponse expectedRes = EmailsUtil.createPermissiveBatchEmailsResponse();
+
+        when(batch.send(batchEmailsRequest, options)).thenReturn(expectedRes);
+
+        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, options);
+
+        assertNotNull(sendBatchEmailsResponse);
+        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+    }
+
+    @Test
     public void testCreateBatchEmailsWithIdempotencyKey_Success() throws ResendException {
         List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
         CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
@@ -94,7 +111,7 @@ public class EmailsTest {
 
         when(batch.send(batchEmailsRequest, requestOptions)).thenReturn(expectedRes);
 
-        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
+        AbstractBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
 
         assertNotNull(sendBatchEmailsResponse);
         assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());

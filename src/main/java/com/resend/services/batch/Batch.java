@@ -43,9 +43,7 @@ public class Batch extends BaseService {
 
         String responseBody = response.getBody();
 
-        CreateBatchEmailsResponse createBatchEmailsResponse = resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
-
-        return createBatchEmailsResponse;
+        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
     }
 
     /**
@@ -67,9 +65,7 @@ public class Batch extends BaseService {
 
         String responseBody = response.getBody();
 
-        CreateBatchEmailsResponse createBatchEmailsResponse = resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
-
-        return createBatchEmailsResponse;
+        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
     }
 
     /**

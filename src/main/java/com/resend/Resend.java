@@ -7,6 +7,7 @@ import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
+import com.resend.services.topics.Topics;
 
 /**
  * The Resend class provides a facade for the Domains and Emails services.
@@ -88,5 +89,14 @@ public class Resend {
      */
     public Broadcasts broadcasts() {
         return new Broadcasts(apiKey);
+    }
+
+    /**
+     * Returns a Topics object that can be used to interact with the Topics service.
+     *
+     * @return A Topics object.
+     */
+    public Topics topics() {
+        return new Topics(apiKey);
     }
 }

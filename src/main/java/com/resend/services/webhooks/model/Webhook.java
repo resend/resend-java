@@ -18,7 +18,7 @@ public class Webhook {
     private String createdAt;
 
     @JsonProperty("status")
-    private String status;
+    private WebhookStatus status;
 
     @JsonProperty("endpoint")
     private String endpoint;
@@ -88,7 +88,7 @@ public class Webhook {
      *
      * @return The webhook status.
      */
-    public String getStatus() {
+    public WebhookStatus getStatus() {
         return status;
     }
 
@@ -97,7 +97,7 @@ public class Webhook {
      *
      * @param status The webhook status.
      */
-    public void setStatus(String status) {
+    public void setStatus(WebhookStatus status) {
         this.status = status;
     }
 

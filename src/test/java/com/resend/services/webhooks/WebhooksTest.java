@@ -74,7 +74,7 @@ public class WebhooksTest {
         assertEquals(expectedWebhook, response);
         assertEquals(expectedWebhook.getId(), response.getId());
         assertEquals("webhook", response.getObject());
-        assertEquals("enabled", response.getStatus());
+        assertEquals(WebhookStatus.ENABLED, response.getStatus());
         assertEquals("https://webhook.example.com/handler", response.getEndpoint());
     }
 

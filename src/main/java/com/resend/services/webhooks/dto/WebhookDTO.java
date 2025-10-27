@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.resend.services.webhooks.model.WebhookStatus;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class WebhookDTO {
     private String createdAt;
 
     @JsonProperty("status")
-    private String status;
+    private WebhookStatus status;
 
     @JsonProperty("endpoint")
     private String endpoint;
@@ -38,7 +39,7 @@ public class WebhookDTO {
      * @param endpoint The webhook endpoint URL.
      * @param events The list of event names.
      */
-    public WebhookDTO(String id, String createdAt, String status, String endpoint, List<String> events) {
+    public WebhookDTO(String id, String createdAt, WebhookStatus status, String endpoint, List<String> events) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -87,7 +88,7 @@ public class WebhookDTO {
      *
      * @return The webhook status.
      */
-    public String getStatus() {
+    public WebhookStatus getStatus() {
         return status;
     }
 
@@ -96,7 +97,7 @@ public class WebhookDTO {
      *
      * @param status The webhook status.
      */
-    public void setStatus(String status) {
+    public void setStatus(WebhookStatus status) {
         this.status = status;
     }
 

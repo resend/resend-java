@@ -7,6 +7,7 @@ import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
+import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
 import com.resend.services.templates.Templates;
 
@@ -92,6 +93,15 @@ public class Resend {
         return new Broadcasts(apiKey);
     }
 
+    /**
+     * Returns a Receiving object that can be used to interact with the Receiving service for inbound emails.
+     *
+     * @return A Receiving object.
+     */
+    public Receiving receiving() {
+        return new Receiving(apiKey);
+    }
+  
     /**
      * Returns a Topics object that can be used to interact with the Topics service.
      *

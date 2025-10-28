@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a response after creating a topic.
  */
-public class CreateTopicResponse {
+public class CreateTopicResponseSuccess {
 
     /**
      * The unique identifier associated with the topic.
@@ -16,7 +16,7 @@ public class CreateTopicResponse {
     /**
      * Constructs a new instance of {@code CreateTopicResponse}.
      */
-    public CreateTopicResponse() {
+    public CreateTopicResponseSuccess() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class CreateTopicResponse {
      *
      * @param id The ID associated with the created topic.
      */
-    public CreateTopicResponse(String id) {
+    public CreateTopicResponseSuccess(String id) {
         this.id = id;
     }
 

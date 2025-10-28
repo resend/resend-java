@@ -3,7 +3,6 @@ package com.resend.services.util;
 import com.resend.services.topics.model.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,8 +40,8 @@ public class TopicsUtil {
      *
      * @return A CreateTopicResponse instance.
      */
-    public static CreateTopicResponse createTopicResponse() {
-        return new CreateTopicResponse("b6d24b8e-af0b-4c3c-be0c-359bbd97381e");
+    public static CreateTopicResponseSuccess createTopicResponse() {
+        return new CreateTopicResponseSuccess("b6d24b8e-af0b-4c3c-be0c-359bbd97381e");
     }
 
     /**
@@ -50,8 +49,8 @@ public class TopicsUtil {
      *
      * @return An UpdateTopicResponse instance.
      */
-    public static UpdateTopicResponse updateTopicResponse() {
-        return new UpdateTopicResponse("b6d24b8e-af0b-4c3c-be0c-359bbd97381e");
+    public static UpdateTopicResponseSuccess updateTopicResponse() {
+        return new UpdateTopicResponseSuccess("b6d24b8e-af0b-4c3c-be0c-359bbd97381e");
     }
 
     /**
@@ -59,8 +58,8 @@ public class TopicsUtil {
      *
      * @return A RemoveTopicResponse instance.
      */
-    public static RemoveTopicResponse removeTopicResponse() {
-        return new RemoveTopicResponse("topic", "b6d24b8e-af0b-4c3c-be0c-359bbd97381e", true);
+    public static RemoveTopicResponseSuccess removeTopicResponse() {
+        return new RemoveTopicResponseSuccess("topic", "b6d24b8e-af0b-4c3c-be0c-359bbd97381e", true);
     }
 
     /**
@@ -68,8 +67,8 @@ public class TopicsUtil {
      *
      * @return A Topic instance.
      */
-    public static Topic createTopic() {
-        return new Topic(
+    public static GetTopicResponseSuccess createTopic() {
+        return new GetTopicResponseSuccess(
                 "b6d24b8e-af0b-4c3c-be0c-359bbd97381e",
                 "Weekly Newsletter",
                 "Weekly newsletter for our subscribers",
@@ -118,7 +117,7 @@ public class TopicsUtil {
      *
      * @return A ListTopicsResponse instance.
      */
-    public static ListTopicsResponse createListTopicsResponse() {
-        return new ListTopicsResponse("list", createTopicList(), false);
+    public static ListTopicsResponseSuccess createListTopicsResponse() {
+        return new ListTopicsResponseSuccess("list", createTopicList(), false);
     }
 }

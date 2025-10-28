@@ -30,11 +30,11 @@ public class TopicsTest {
     @Test
     public void testCreateTopic_Success() throws ResendException {
         CreateTopicOptions createOptions = TopicsUtil.createTopicOptions();
-        CreateTopicResponse expectedResponse = TopicsUtil.createTopicResponse();
+        CreateTopicResponseSuccess expectedResponse = TopicsUtil.createTopicResponse();
 
         when(topics.create(createOptions)).thenReturn(expectedResponse);
 
-        CreateTopicResponse response = topics.create(createOptions);
+        CreateTopicResponseSuccess response = topics.create(createOptions);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -43,11 +43,11 @@ public class TopicsTest {
 
     @Test
     public void testGetTopic_Success() throws ResendException {
-        Topic expectedTopic = TopicsUtil.createTopic();
+        GetTopicResponseSuccess expectedTopic = TopicsUtil.createTopic();
 
         when(topics.get(expectedTopic.getId())).thenReturn(expectedTopic);
 
-        Topic retrievedTopic = topics.get(expectedTopic.getId());
+        GetTopicResponseSuccess retrievedTopic = topics.get(expectedTopic.getId());
 
         assertNotNull(retrievedTopic);
         assertEquals(expectedTopic.getId(), retrievedTopic.getId());
@@ -61,11 +61,11 @@ public class TopicsTest {
     public void testUpdateTopic_Success() throws ResendException {
         String topicId = "b6d24b8e-af0b-4c3c-be0c-359bbd97381e";
         UpdateTopicOptions updateOptions = TopicsUtil.updateTopicOptions();
-        UpdateTopicResponse expectedResponse = TopicsUtil.updateTopicResponse();
+        UpdateTopicResponseSuccess expectedResponse = TopicsUtil.updateTopicResponse();
 
         when(topics.update(topicId, updateOptions)).thenReturn(expectedResponse);
 
-        UpdateTopicResponse response = topics.update(topicId, updateOptions);
+        UpdateTopicResponseSuccess response = topics.update(topicId, updateOptions);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -75,11 +75,11 @@ public class TopicsTest {
     @Test
     public void testRemoveTopic_Success() throws ResendException {
         String topicId = "b6d24b8e-af0b-4c3c-be0c-359bbd97381e";
-        RemoveTopicResponse expectedResponse = TopicsUtil.removeTopicResponse();
+        RemoveTopicResponseSuccess expectedResponse = TopicsUtil.removeTopicResponse();
 
         when(topics.remove(topicId)).thenReturn(expectedResponse);
 
-        RemoveTopicResponse response = topics.remove(topicId);
+        RemoveTopicResponseSuccess response = topics.remove(topicId);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -89,11 +89,11 @@ public class TopicsTest {
 
     @Test
     public void testListTopics_Success() throws ResendException {
-        ListTopicsResponse expectedResponse = TopicsUtil.createListTopicsResponse();
+        ListTopicsResponseSuccess expectedResponse = TopicsUtil.createListTopicsResponse();
 
         when(topics.list()).thenReturn(expectedResponse);
 
-        ListTopicsResponse response = topics.list();
+        ListTopicsResponseSuccess response = topics.list();
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());
@@ -106,11 +106,11 @@ public class TopicsTest {
         ListParams params = ListParams.builder()
                 .limit(3)
                 .build();
-        ListTopicsResponse expectedResponse = TopicsUtil.createListTopicsResponse();
+        ListTopicsResponseSuccess expectedResponse = TopicsUtil.createListTopicsResponse();
 
         when(topics.list(params)).thenReturn(expectedResponse);
 
-        ListTopicsResponse response = topics.list(params);
+        ListTopicsResponseSuccess response = topics.list(params);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());

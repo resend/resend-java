@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a response object for a topic deletion operation.
  */
-public class RemoveTopicResponse {
+public class RemoveTopicResponseSuccess {
 
     /**
      * The object type of the response.
@@ -28,7 +28,7 @@ public class RemoveTopicResponse {
     /**
      * Default constructor for creating an empty RemoveTopicResponse object.
      */
-    public RemoveTopicResponse() {
+    public RemoveTopicResponseSuccess() {
     }
 
     /**
@@ -38,7 +38,7 @@ public class RemoveTopicResponse {
      * @param id The unique identifier associated with the topic.
      * @param deleted A boolean flag indicating whether the topic was successfully deleted.
      */
-    public RemoveTopicResponse(String object, String id, boolean deleted) {
+    public RemoveTopicResponseSuccess(String object, String id, boolean deleted) {
         this.object = object;
         this.id = id;
         this.deleted = deleted;

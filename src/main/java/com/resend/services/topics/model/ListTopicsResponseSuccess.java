@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Represents a successful response for listing topics.
  */
-public class ListTopicsResponse {
+public class ListTopicsResponseSuccess {
 
     /**
      * The object type of the response.
@@ -29,7 +29,7 @@ public class ListTopicsResponse {
     /**
      * Default constructor
      */
-    public ListTopicsResponse() {
+    public ListTopicsResponseSuccess() {
     }
 
     /**
@@ -39,7 +39,7 @@ public class ListTopicsResponse {
      * @param data The list of topics.
      * @param hasMore Whether there are more topics available for pagination.
      */
-    public ListTopicsResponse(String object, List<Topic> data, Boolean hasMore) {
+    public ListTopicsResponseSuccess(String object, List<Topic> data, Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;

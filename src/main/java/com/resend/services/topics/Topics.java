@@ -30,7 +30,7 @@ public final class Topics extends BaseService {
      * @return The response indicating the status of the topic creation.
      * @throws ResendException If an error occurs while creating the topic.
      */
-    public CreateTopicResponse create(CreateTopicOptions createTopicOptions) throws ResendException {
+    public CreateTopicResponseSuccess create(CreateTopicOptions createTopicOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createTopicOptions);
         AbstractHttpResponse<String> response = super.httpClient.perform("/topics", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
@@ -39,7 +39,7 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateTopicResponse.class);
+        return resendMapper.readValue(responseBody, CreateTopicResponseSuccess.class);
     }
 
     /**
@@ -49,7 +49,7 @@ public final class Topics extends BaseService {
      * @return The retrieved topic's details.
      * @throws ResendException If an error occurs while retrieving the topic.
      */
-    public Topic get(String topicId) throws ResendException {
+    public GetTopicResponseSuccess get(String topicId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/topics/" + topicId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -57,7 +57,7 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, Topic.class);
+        return resendMapper.readValue(responseBody, GetTopicResponseSuccess.class);
     }
 
     /**
@@ -68,7 +68,7 @@ public final class Topics extends BaseService {
      * @return The response indicating the status of the topic update.
      * @throws ResendException If an error occurs while updating the topic.
      */
-    public UpdateTopicResponse update(String topicId, UpdateTopicOptions updateTopicOptions) throws ResendException {
+    public UpdateTopicResponseSuccess update(String topicId, UpdateTopicOptions updateTopicOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateTopicOptions);
         AbstractHttpResponse<String> response = this.httpClient.perform("/topics/" + topicId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
@@ -77,7 +77,7 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateTopicResponse.class);
+        return resendMapper.readValue(responseBody, UpdateTopicResponseSuccess.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public final class Topics extends BaseService {
      * @return The response indicating the status of the topic removal.
      * @throws ResendException If an error occurs while removing the topic.
      */
-    public RemoveTopicResponse remove(String topicId) throws ResendException {
+    public RemoveTopicResponseSuccess remove(String topicId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/topics/" + topicId, super.apiKey, HttpMethod.DELETE, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -95,7 +95,7 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, RemoveTopicResponse.class);
+        return resendMapper.readValue(responseBody, RemoveTopicResponseSuccess.class);
     }
 
     /**
@@ -104,7 +104,7 @@ public final class Topics extends BaseService {
      * @return A ListTopicsResponse containing the list of topics.
      * @throws ResendException If an error occurs during the topics list retrieval process.
      */
-    public ListTopicsResponse list() throws ResendException {
+    public ListTopicsResponseSuccess list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/topics", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -112,7 +112,7 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListTopicsResponse.class);
+        return resendMapper.readValue(responseBody, ListTopicsResponseSuccess.class);
     }
 
     /**
@@ -122,7 +122,7 @@ public final class Topics extends BaseService {
      * @return A ListTopicsResponse containing the paginated list of topics.
      * @throws ResendException If an error occurs during the topics list retrieval process.
      */
-    public ListTopicsResponse list(ListParams params) throws ResendException {
+    public ListTopicsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/topics" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -131,6 +131,6 @@ public final class Topics extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListTopicsResponse.class);
+        return resendMapper.readValue(responseBody, ListTopicsResponseSuccess.class);
     }
 }

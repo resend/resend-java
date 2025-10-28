@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a response after updating a topic.
  */
-public class UpdateTopicResponse {
+public class UpdateTopicResponseSuccess {
 
     /**
      * The unique identifier associated with the topic.
@@ -16,7 +16,7 @@ public class UpdateTopicResponse {
     /**
      * Constructs a new instance of {@code UpdateTopicResponse}.
      */
-    public UpdateTopicResponse() {
+    public UpdateTopicResponseSuccess() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class UpdateTopicResponse {
      *
      * @param id The ID associated with the updated topic.
      */
-    public UpdateTopicResponse(String id) {
+    public UpdateTopicResponseSuccess(String id) {
         this.id = id;
     }
 

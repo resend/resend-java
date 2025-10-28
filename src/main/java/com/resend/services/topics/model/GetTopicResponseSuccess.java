@@ -1,20 +1,19 @@
 package com.resend.services.topics.model;
 
 /**
- * Represents a topic in a list response.
- * This class is used when topics are returned as part of a collection.
+ * Represents a successful response when getting a single topic.
  */
-public class Topic extends AbstractTopic {
+public class GetTopicResponseSuccess extends AbstractTopic {
 
     /**
-     * Default constructor for creating an empty Topic object.
+     * Default constructor for creating an empty GetTopicResponseSuccess object.
      */
-    public Topic() {
+    public GetTopicResponseSuccess() {
         super();
     }
 
     /**
-     * Constructs a Topic with the provided attributes.
+     * Constructs a GetTopicResponseSuccess with the provided attributes.
      *
      * @param id The unique identifier of the topic.
      * @param name The name of the topic.
@@ -22,7 +21,7 @@ public class Topic extends AbstractTopic {
      * @param defaultSubscription The default subscription preference.
      * @param createdAt The creation timestamp.
      */
-    public Topic(String id, String name, String description, String defaultSubscription, String createdAt) {
+    public GetTopicResponseSuccess(String id, String name, String description, String defaultSubscription, String createdAt) {
         super(id, name, description, defaultSubscription, createdAt);
     }
 }

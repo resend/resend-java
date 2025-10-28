@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represents the response from listing templates.
  */
-public class ListTemplatesResponse {
+public class ListTemplatesResponseSuccess {
 
     @JsonProperty("object")
     private String object;
@@ -21,7 +21,7 @@ public class ListTemplatesResponse {
     /**
      * Default constructor.
      */
-    public ListTemplatesResponse() {
+    public ListTemplatesResponseSuccess() {
     }
 
     /**
@@ -31,7 +31,7 @@ public class ListTemplatesResponse {
      * @param data    The list of templates.
      * @param hasMore Whether there are more templates available.
      */
-    public ListTemplatesResponse(String object, List<TemplateListItem> data, Boolean hasMore) {
+    public ListTemplatesResponseSuccess(String object, List<TemplateListItem> data, Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;

@@ -14,22 +14,7 @@ public enum VariableType {
     /**
      * Number type variable.
      */
-    NUMBER("number"),
-
-    /**
-     * Boolean type variable.
-     */
-    BOOLEAN("boolean"),
-
-    /**
-     * Object type variable.
-     */
-    OBJECT("object"),
-
-    /**
-     * List type variable.
-     */
-    LIST("list");
+    NUMBER("number");
 
     private final String value;
 

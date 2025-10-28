@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents the response from duplicating a template.
  */
-public class DuplicateTemplateResponse {
+public class DuplicateTemplateResponseSuccess {
 
     @JsonProperty("object")
     private String object;
@@ -16,7 +16,7 @@ public class DuplicateTemplateResponse {
     /**
      * Default constructor.
      */
-    public DuplicateTemplateResponse() {
+    public DuplicateTemplateResponseSuccess() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class DuplicateTemplateResponse {
      * @param object The object type.
      * @param id     The ID of the duplicated template.
      */
-    public DuplicateTemplateResponse(String object, String id) {
+    public DuplicateTemplateResponseSuccess(String object, String id) {
         this.object = object;
         this.id = id;
     }

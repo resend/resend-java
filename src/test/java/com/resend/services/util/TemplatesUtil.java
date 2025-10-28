@@ -84,8 +84,8 @@ public class TemplatesUtil {
      *
      * @return A CreateTemplateResponse instance for testing.
      */
-    public static CreateTemplateResponse createTemplateResponse() {
-        return new CreateTemplateResponse("49a3999c-0ce1-4ea6-ab68-afcd6dc2e794", "template");
+    public static CreateTemplateResponseSuccess createTemplateResponse() {
+        return new CreateTemplateResponseSuccess("49a3999c-0ce1-4ea6-ab68-afcd6dc2e794", "template");
     }
 
     /**
@@ -93,8 +93,8 @@ public class TemplatesUtil {
      *
      * @return A DeleteTemplateResponse instance for testing.
      */
-    public static DeleteTemplateResponse deleteTemplateResponse() {
-        return new DeleteTemplateResponse("template", "34a080c9-b17d-4187-ad80-5af20266e535", true);
+    public static DeleteTemplateResponseSuccess deleteTemplateResponse() {
+        return new DeleteTemplateResponseSuccess("template", "34a080c9-b17d-4187-ad80-5af20266e535", true);
     }
 
     /**
@@ -102,8 +102,8 @@ public class TemplatesUtil {
      *
      * @return A DuplicateTemplateResponse instance for testing.
      */
-    public static DuplicateTemplateResponse duplicateTemplateResponse() {
-        return new DuplicateTemplateResponse("template", "e169aa45-1ecf-4183-9955-b1499d5701d3");
+    public static DuplicateTemplateResponseSuccess duplicateTemplateResponse() {
+        return new DuplicateTemplateResponseSuccess("template", "e169aa45-1ecf-4183-9955-b1499d5701d3");
     }
 
     /**
@@ -111,8 +111,8 @@ public class TemplatesUtil {
      *
      * @return A PublishTemplateResponse instance for testing.
      */
-    public static PublishTemplateResponse publishTemplateResponse() {
-        return new PublishTemplateResponse("34a080c9-b17d-4187-ad80-5af20266e535", "template");
+    public static PublishTemplateResponseSuccess publishTemplateResponse() {
+        return new PublishTemplateResponseSuccess("34a080c9-b17d-4187-ad80-5af20266e535", "template");
     }
 
     /**
@@ -120,8 +120,8 @@ public class TemplatesUtil {
      *
      * @return An UpdateTemplateResponse instance for testing.
      */
-    public static UpdateTemplateResponse updateTemplateResponse() {
-        return new UpdateTemplateResponse("34a080c9-b17d-4187-ad80-5af20266e535", "template");
+    public static UpdateTemplateResponseSuccess updateTemplateResponse() {
+        return new UpdateTemplateResponseSuccess("34a080c9-b17d-4187-ad80-5af20266e535", "template");
     }
 
     /**
@@ -129,8 +129,8 @@ public class TemplatesUtil {
      *
      * @return A Template instance for testing.
      */
-    public static Template createTemplate() {
-        Template template = new Template();
+    public static GetTemplateResponseSuccess createTemplate() {
+        GetTemplateResponseSuccess template = new GetTemplateResponseSuccess();
         template.setObject("template");
         template.setId("34a080c9-b17d-4187-ad80-5af20266e535");
         template.setAlias("reset-password");
@@ -209,7 +209,7 @@ public class TemplatesUtil {
      *
      * @return A ListTemplatesResponse instance for testing.
      */
-    public static ListTemplatesResponse listTemplatesResponse() {
-        return new ListTemplatesResponse("list", createTemplateList(), false);
+    public static ListTemplatesResponseSuccess listTemplatesResponse() {
+        return new ListTemplatesResponseSuccess("list", createTemplateList(), false);
     }
 }

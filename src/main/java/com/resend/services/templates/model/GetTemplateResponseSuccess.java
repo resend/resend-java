@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represents a complete template object.
  */
-public class Template {
+public class GetTemplateResponseSuccess {
 
     @JsonProperty("object")
     private String object;
@@ -54,7 +54,7 @@ public class Template {
     /**
      * Default constructor.
      */
-    public Template() {
+    public GetTemplateResponseSuccess() {
     }
 
     /**

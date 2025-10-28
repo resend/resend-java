@@ -3,9 +3,9 @@ package com.resend.services.templates.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents the response from updating a template.
+ * Represents the response from publishing a template.
  */
-public class UpdateTemplateResponse {
+public class PublishTemplateResponseSuccess {
 
     @JsonProperty("id")
     private String id;
@@ -16,33 +16,33 @@ public class UpdateTemplateResponse {
     /**
      * Default constructor.
      */
-    public UpdateTemplateResponse() {
+    public PublishTemplateResponseSuccess() {
     }
 
     /**
-     * Constructs an UpdateTemplateResponse with the specified attributes.
+     * Constructs a PublishTemplateResponse with the specified attributes.
      *
-     * @param id     The ID of the updated template.
+     * @param id     The ID of the published template.
      * @param object The object type.
      */
-    public UpdateTemplateResponse(String id, String object) {
+    public PublishTemplateResponseSuccess(String id, String object) {
         this.id = id;
         this.object = object;
     }
 
     /**
-     * Gets the ID of the updated template.
+     * Gets the ID of the published template.
      *
-     * @return The ID of the updated template.
+     * @return The ID of the published template.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * Sets the ID of the updated template.
+     * Sets the ID of the published template.
      *
-     * @param id The ID of the updated template.
+     * @param id The ID of the published template.
      */
     public void setId(String id) {
         this.id = id;

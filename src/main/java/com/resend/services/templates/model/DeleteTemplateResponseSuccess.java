@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents the response from deleting a template.
  */
-public class DeleteTemplateResponse {
+public class DeleteTemplateResponseSuccess {
 
     @JsonProperty("object")
     private String object;
@@ -19,7 +19,7 @@ public class DeleteTemplateResponse {
     /**
      * Default constructor.
      */
-    public DeleteTemplateResponse() {
+    public DeleteTemplateResponseSuccess() {
     }
 
     /**
@@ -29,7 +29,7 @@ public class DeleteTemplateResponse {
      * @param id      The ID of the deleted template.
      * @param deleted Whether the template was deleted.
      */
-    public DeleteTemplateResponse(String object, String id, Boolean deleted) {
+    public DeleteTemplateResponseSuccess(String object, String id, Boolean deleted) {
         this.object = object;
         this.id = id;
         this.deleted = deleted;

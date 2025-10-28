@@ -30,7 +30,7 @@ public final class Templates extends BaseService {
      * @return The response indicating the status of the template creation.
      * @throws ResendException If an error occurs while creating the template.
      */
-    public CreateTemplateResponse create(CreateTemplateOptions options) throws ResendException {
+    public CreateTemplateResponseSuccess create(CreateTemplateOptions options) throws ResendException {
         String payload = super.resendMapper.writeValue(options);
         AbstractHttpResponse<String> response = super.httpClient.perform("/templates", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
@@ -40,7 +40,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, CreateTemplateResponse.class);
+        return resendMapper.readValue(responseBody, CreateTemplateResponseSuccess.class);
     }
 
     /**
@@ -50,7 +50,7 @@ public final class Templates extends BaseService {
      * @return The retrieved template's details.
      * @throws ResendException If an error occurs while retrieving the template.
      */
-    public Template get(String templateId) throws ResendException {
+    public GetTemplateResponseSuccess get(String templateId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -59,7 +59,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, Template.class);
+        return resendMapper.readValue(responseBody, GetTemplateResponseSuccess.class);
     }
 
     /**
@@ -68,7 +68,7 @@ public final class Templates extends BaseService {
      * @return A ListTemplatesResponse containing the list of templates.
      * @throws ResendException If an error occurs during the templates list retrieval process.
      */
-    public ListTemplatesResponse list() throws ResendException {
+    public ListTemplatesResponseSuccess list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -77,7 +77,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, ListTemplatesResponse.class);
+        return resendMapper.readValue(responseBody, ListTemplatesResponseSuccess.class);
     }
 
     /**
@@ -87,7 +87,7 @@ public final class Templates extends BaseService {
      * @return A ListTemplatesResponse containing the paginated list of templates.
      * @throws ResendException If an error occurs during the templates list retrieval process.
      */
-    public ListTemplatesResponse list(ListParams params) throws ResendException {
+    public ListTemplatesResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/templates" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -97,7 +97,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, ListTemplatesResponse.class);
+        return resendMapper.readValue(responseBody, ListTemplatesResponseSuccess.class);
     }
 
     /**
@@ -108,7 +108,7 @@ public final class Templates extends BaseService {
      * @return The response indicating the status of the template update.
      * @throws ResendException If an error occurs while updating the template.
      */
-    public UpdateTemplateResponse update(String templateId, UpdateTemplateOptions options) throws ResendException {
+    public UpdateTemplateResponseSuccess update(String templateId, UpdateTemplateOptions options) throws ResendException {
         String payload = super.resendMapper.writeValue(options);
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
@@ -118,7 +118,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, UpdateTemplateResponse.class);
+        return resendMapper.readValue(responseBody, UpdateTemplateResponseSuccess.class);
     }
 
     /**
@@ -128,7 +128,7 @@ public final class Templates extends BaseService {
      * @return The response indicating the status of the template deletion.
      * @throws ResendException If an error occurs while deleting the template.
      */
-    public DeleteTemplateResponse remove(String templateId) throws ResendException {
+    public DeleteTemplateResponseSuccess remove(String templateId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.DELETE, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -137,7 +137,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, DeleteTemplateResponse.class);
+        return resendMapper.readValue(responseBody, DeleteTemplateResponseSuccess.class);
     }
 
     /**
@@ -147,7 +147,7 @@ public final class Templates extends BaseService {
      * @return The response indicating the status of the template duplication.
      * @throws ResendException If an error occurs while duplicating the template.
      */
-    public DuplicateTemplateResponse duplicate(String templateId) throws ResendException {
+    public DuplicateTemplateResponseSuccess duplicate(String templateId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -156,7 +156,7 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, DuplicateTemplateResponse.class);
+        return resendMapper.readValue(responseBody, DuplicateTemplateResponseSuccess.class);
     }
 
     /**
@@ -166,7 +166,7 @@ public final class Templates extends BaseService {
      * @return The response indicating the status of the template publication.
      * @throws ResendException If an error occurs while publishing the template.
      */
-    public PublishTemplateResponse publish(String templateId) throws ResendException {
+    public PublishTemplateResponseSuccess publish(String templateId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId + "/publish", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -175,6 +175,6 @@ public final class Templates extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, PublishTemplateResponse.class);
+        return resendMapper.readValue(responseBody, PublishTemplateResponseSuccess.class);
     }
 }

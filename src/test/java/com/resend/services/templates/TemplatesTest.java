@@ -30,11 +30,11 @@ public class TemplatesTest {
     @Test
     public void testCreateTemplate_Success() throws ResendException {
         CreateTemplateOptions createOptions = TemplatesUtil.createTemplateOptions();
-        CreateTemplateResponse expectedResponse = TemplatesUtil.createTemplateResponse();
+        CreateTemplateResponseSuccess expectedResponse = TemplatesUtil.createTemplateResponse();
 
         when(templates.create(createOptions)).thenReturn(expectedResponse);
 
-        CreateTemplateResponse response = templates.create(createOptions);
+        CreateTemplateResponseSuccess response = templates.create(createOptions);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -45,11 +45,11 @@ public class TemplatesTest {
     @Test
     public void testGetTemplate_Success() throws ResendException {
         String templateId = "34a080c9-b17d-4187-ad80-5af20266e535";
-        Template expectedTemplate = TemplatesUtil.createTemplate();
+        GetTemplateResponseSuccess expectedTemplate = TemplatesUtil.createTemplate();
 
         when(templates.get(templateId)).thenReturn(expectedTemplate);
 
-        Template retrievedTemplate = templates.get(templateId);
+        GetTemplateResponseSuccess retrievedTemplate = templates.get(templateId);
 
         assertNotNull(retrievedTemplate);
         assertEquals(expectedTemplate.getId(), retrievedTemplate.getId());
@@ -61,11 +61,11 @@ public class TemplatesTest {
     @Test
     public void testGetTemplateByAlias_Success() throws ResendException {
         String alias = "reset-password";
-        Template expectedTemplate = TemplatesUtil.createTemplate();
+        GetTemplateResponseSuccess expectedTemplate = TemplatesUtil.createTemplate();
 
         when(templates.get(alias)).thenReturn(expectedTemplate);
 
-        Template retrievedTemplate = templates.get(alias);
+        GetTemplateResponseSuccess retrievedTemplate = templates.get(alias);
 
         assertNotNull(retrievedTemplate);
         assertEquals(expectedTemplate.getAlias(), retrievedTemplate.getAlias());
@@ -74,11 +74,11 @@ public class TemplatesTest {
 
     @Test
     public void testListTemplates_Success() throws ResendException {
-        ListTemplatesResponse expectedResponse = TemplatesUtil.listTemplatesResponse();
+        ListTemplatesResponseSuccess expectedResponse = TemplatesUtil.listTemplatesResponse();
 
         when(templates.list()).thenReturn(expectedResponse);
 
-        ListTemplatesResponse response = templates.list();
+        ListTemplatesResponseSuccess response = templates.list();
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());
@@ -92,11 +92,11 @@ public class TemplatesTest {
                 .limit(2)
                 .after("34a080c9-b17d-4187-ad80-5af20266e535")
                 .build();
-        ListTemplatesResponse expectedResponse = TemplatesUtil.listTemplatesResponse();
+        ListTemplatesResponseSuccess expectedResponse = TemplatesUtil.listTemplatesResponse();
 
         when(templates.list(params)).thenReturn(expectedResponse);
 
-        ListTemplatesResponse response = templates.list(params);
+        ListTemplatesResponseSuccess response = templates.list(params);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getData().size(), response.getData().size());
@@ -107,11 +107,11 @@ public class TemplatesTest {
     public void testUpdateTemplate_Success() throws ResendException {
         String templateId = "34a080c9-b17d-4187-ad80-5af20266e535";
         UpdateTemplateOptions updateOptions = TemplatesUtil.updateTemplateOptions();
-        UpdateTemplateResponse expectedResponse = TemplatesUtil.updateTemplateResponse();
+        UpdateTemplateResponseSuccess expectedResponse = TemplatesUtil.updateTemplateResponse();
 
         when(templates.update(templateId, updateOptions)).thenReturn(expectedResponse);
 
-        UpdateTemplateResponse response = templates.update(templateId, updateOptions);
+        UpdateTemplateResponseSuccess response = templates.update(templateId, updateOptions);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -122,11 +122,11 @@ public class TemplatesTest {
     @Test
     public void testDeleteTemplate_Success() throws ResendException {
         String templateId = "34a080c9-b17d-4187-ad80-5af20266e535";
-        DeleteTemplateResponse expectedResponse = TemplatesUtil.deleteTemplateResponse();
+        DeleteTemplateResponseSuccess expectedResponse = TemplatesUtil.deleteTemplateResponse();
 
         when(templates.remove(templateId)).thenReturn(expectedResponse);
 
-        DeleteTemplateResponse response = templates.remove(templateId);
+        DeleteTemplateResponseSuccess response = templates.remove(templateId);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -137,11 +137,11 @@ public class TemplatesTest {
     @Test
     public void testDuplicateTemplate_Success() throws ResendException {
         String templateId = "34a080c9-b17d-4187-ad80-5af20266e535";
-        DuplicateTemplateResponse expectedResponse = TemplatesUtil.duplicateTemplateResponse();
+        DuplicateTemplateResponseSuccess expectedResponse = TemplatesUtil.duplicateTemplateResponse();
 
         when(templates.duplicate(templateId)).thenReturn(expectedResponse);
 
-        DuplicateTemplateResponse response = templates.duplicate(templateId);
+        DuplicateTemplateResponseSuccess response = templates.duplicate(templateId);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
@@ -152,11 +152,11 @@ public class TemplatesTest {
     @Test
     public void testPublishTemplate_Success() throws ResendException {
         String templateId = "34a080c9-b17d-4187-ad80-5af20266e535";
-        PublishTemplateResponse expectedResponse = TemplatesUtil.publishTemplateResponse();
+        PublishTemplateResponseSuccess expectedResponse = TemplatesUtil.publishTemplateResponse();
 
         when(templates.publish(templateId)).thenReturn(expectedResponse);
 
-        PublishTemplateResponse response = templates.publish(templateId);
+        PublishTemplateResponseSuccess response = templates.publish(templateId);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());

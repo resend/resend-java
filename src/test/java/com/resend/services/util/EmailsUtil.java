@@ -159,4 +159,53 @@ public class EmailsUtil {
         return new AbstractHttpResponse(200, "test", true);
 
     }
+
+    public static AttachmentResponse createAttachmentResponse() {
+        AttachmentResponse response = new AttachmentResponse();
+        response.setObject("attachment");
+        response.setId("2a0c9ce0-3112-4728-976e-47ddcd16a318");
+        response.setFilename("avatar.png");
+        response.setSize(4096);
+        response.setContentType("image/png");
+        response.setContentDisposition("inline");
+        response.setContentId("img001");
+        response.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/2a0c9ce0-3112-4728-976e-47ddcd16a318?some-params=example&signature=sig-123");
+        response.setExpiresAt("2025-10-17T14:29:41.521Z");
+        return response;
+    }
+
+    public static List<AttachmentResponse> createAttachmentResponseList() {
+        List<AttachmentResponse> attachments = new ArrayList<>();
+
+        AttachmentResponse attachment1 = new AttachmentResponse();
+        attachment1.setObject("attachment");
+        attachment1.setId("2a0c9ce0-3112-4728-976e-47ddcd16a318");
+        attachment1.setFilename("avatar.png");
+        attachment1.setSize(4096);
+        attachment1.setContentType("image/png");
+        attachment1.setContentDisposition("inline");
+        attachment1.setContentId("img001");
+        attachment1.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/2a0c9ce0-3112-4728-976e-47ddcd16a318?some-params=example&signature=sig-123");
+        attachment1.setExpiresAt("2025-10-17T14:29:41.521Z");
+
+        AttachmentResponse attachment2 = new AttachmentResponse();
+        attachment2.setObject("attachment");
+        attachment2.setId("3b0d9ce0-4223-5839-087f-58eede27b429");
+        attachment2.setFilename("invoice.pdf");
+        attachment2.setSize(8192);
+        attachment2.setContentType("application/pdf");
+        attachment2.setContentDisposition("attachment");
+        attachment2.setContentId("doc001");
+        attachment2.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/3b0d9ce0-4223-5839-087f-58eede27b429?some-params=example&signature=sig-456");
+        attachment2.setExpiresAt("2025-10-17T14:29:41.521Z");
+
+        attachments.add(attachment1);
+        attachments.add(attachment2);
+
+        return attachments;
+    }
+
+    public static ListAttachmentsResponse createListAttachmentsResponse() {
+        return new ListAttachmentsResponse(createAttachmentResponseList(), "list", false);
+    }
 }

@@ -192,4 +192,82 @@ public final class Emails extends BaseService {
 
         return resendMapper.readValue(responseBody, ListEmailsResponseSuccess.class);
     }
+
+    /**
+     * Retrieves a single attachment from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param attachmentId The unique identifier of the attachment.
+     * @return The attachment details including download URL.
+     * @throws ResendException If an error occurs while retrieving the attachment.
+     */
+    public AttachmentResponse getAttachment(String emailId, String attachmentId) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform(
+            "/emails/" + emailId + "/attachments/" + attachmentId,
+            super.apiKey,
+            HttpMethod.GET,
+            null,
+            MediaType.get("application/json")
+        );
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, AttachmentResponse.class);
+    }
+
+    /**
+     * Retrieves all attachments from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @return A ListAttachmentsResponse containing all attachments from the email.
+     * @throws ResendException If an error occurs while retrieving the attachments.
+     */
+    public ListAttachmentsResponse listAttachments(String emailId) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform(
+            "/emails/" + emailId + "/attachments",
+            super.apiKey,
+            HttpMethod.GET,
+            null,
+            MediaType.get("application/json")
+        );
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListAttachmentsResponse.class);
+    }
+
+    /**
+     * Retrieves a paginated list of attachments from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param params The params used to customize the list (pagination).
+     * @return A ListAttachmentsResponse containing the paginated list of attachments.
+     * @throws ResendException If an error occurs while retrieving the attachments.
+     */
+    public ListAttachmentsResponse listAttachments(String emailId, ListParams params) throws ResendException {
+        String pathWithQuery = "/emails/" + emailId + "/attachments" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(
+            pathWithQuery,
+            super.apiKey,
+            HttpMethod.GET,
+            null,
+            MediaType.get("application/json")
+        );
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListAttachmentsResponse.class);
+    }
 }

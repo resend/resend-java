@@ -99,6 +99,7 @@ public class Resend {
      */
     public Webhooks webhooks() {
         return new Webhooks(apiKey);
+    }
         
     /**
      * Returns a Templates object that can be used to interact with the Templates service.

@@ -63,12 +63,12 @@ public class WebhooksTest {
 
     @Test
     public void testGetWebhook_Success() throws ResendException {
-        Webhook expectedWebhook = WebhooksUtil.getWebhookResponse();
+        GetWebhookResponseSuccess expectedWebhook = WebhooksUtil.getWebhookResponse();
 
         when(webhooks.get(expectedWebhook.getId()))
                 .thenReturn(expectedWebhook);
 
-        Webhook response = webhooks.get(expectedWebhook.getId());
+        GetWebhookResponseSuccess response = webhooks.get(expectedWebhook.getId());
 
         assertNotNull(response);
         assertEquals(expectedWebhook, response);

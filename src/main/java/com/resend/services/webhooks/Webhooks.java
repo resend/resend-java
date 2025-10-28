@@ -12,7 +12,7 @@ import com.resend.services.webhooks.model.ListWebhooksResponseSuccess;
 import com.resend.services.webhooks.model.RemoveWebhookResponseSuccess;
 import com.resend.services.webhooks.model.UpdateWebhookOptions;
 import com.resend.services.webhooks.model.UpdateWebhookResponseSuccess;
-import com.resend.services.webhooks.model.Webhook;
+import com.resend.services.webhooks.model.GetWebhookResponseSuccess;
 import okhttp3.MediaType;
 
 /**
@@ -75,7 +75,7 @@ public final class Webhooks extends BaseService {
      * @return A Webhook object representing the retrieved webhook.
      * @throws ResendException If an error occurs during the webhook retrieval process.
      */
-    public Webhook get(String webhookId) throws ResendException {
+    public GetWebhookResponseSuccess get(String webhookId) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -83,7 +83,7 @@ public final class Webhooks extends BaseService {
         }
 
         String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, Webhook.class);
+        return resendMapper.readValue(responseBody, GetWebhookResponseSuccess.class);
     }
 
     /**

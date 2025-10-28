@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Represents a webhook.
  */
-public class Webhook {
+public class GetWebhookResponseSuccess {
 
     @JsonProperty("object")
     private String object;

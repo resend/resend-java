@@ -46,8 +46,8 @@ public class WebhooksUtil {
         return response;
     }
 
-    public static final Webhook getWebhookResponse() {
-        Webhook webhook = new Webhook();
+    public static final GetWebhookResponseSuccess getWebhookResponse() {
+        GetWebhookResponseSuccess webhook = new GetWebhookResponseSuccess();
         webhook.setObject("webhook");
         webhook.setId("4dd369bc-aa82-4ff3-97de-514ae3000ee0");
         webhook.setCreatedAt("2023-08-22T15:28:00.000Z");

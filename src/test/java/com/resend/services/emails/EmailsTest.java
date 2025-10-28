@@ -166,4 +166,56 @@ public class EmailsTest {
         assertNotNull(response);
         assertEquals(params.getLimit(), response.getData().size());
     }
+
+    @Test
+    public void testGetAttachment_Success() throws ResendException {
+        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
+        String attachmentId = "2a0c9ce0-3112-4728-976e-47ddcd16a318";
+        AttachmentResponse expectedResponse = EmailsUtil.createAttachmentResponse();
+
+        when(emails.getAttachment(emailId, attachmentId)).thenReturn(expectedResponse);
+
+        AttachmentResponse response = emails.getAttachment(emailId, attachmentId);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getId(), response.getId());
+        assertEquals(expectedResponse.getFilename(), response.getFilename());
+        assertEquals(expectedResponse.getSize(), response.getSize());
+        assertEquals(expectedResponse.getContentType(), response.getContentType());
+        assertEquals(expectedResponse.getDownloadUrl(), response.getDownloadUrl());
+        verify(emails, times(1)).getAttachment(emailId, attachmentId);
+    }
+
+    @Test
+    public void testListAttachments_Success() throws ResendException {
+        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
+        ListAttachmentsResponse expectedResponse = EmailsUtil.createListAttachmentsResponse();
+
+        when(emails.listAttachments(emailId)).thenReturn(expectedResponse);
+
+        ListAttachmentsResponse response = emails.listAttachments(emailId);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getData().size(), response.getData().size());
+        assertEquals(expectedResponse.getObject(), response.getObject());
+        verify(emails, times(1)).listAttachments(emailId);
+    }
+
+    @Test
+    public void testListAttachmentsWithPagination_Success() throws ResendException {
+        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
+        ListParams params = ListParams.builder()
+                .limit(10)
+                .build();
+        ListAttachmentsResponse expectedResponse = EmailsUtil.createListAttachmentsResponse();
+
+        when(emails.listAttachments(emailId, params)).thenReturn(expectedResponse);
+
+        ListAttachmentsResponse response = emails.listAttachments(emailId, params);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getData().size(), response.getData().size());
+        assertEquals(expectedResponse.hasMore(), response.hasMore());
+        verify(emails, times(1)).listAttachments(emailId, params);
+    }
 }

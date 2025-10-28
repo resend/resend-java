@@ -15,7 +15,7 @@ public class ListReceivedEmailsResponse {
     private Boolean hasMore;
 
     @JsonProperty("data")
-    private List<ReceivedEmail> data;
+    private List<ReceivedEmailSummary> data;
 
     /**
      * Default constructor.
@@ -30,7 +30,7 @@ public class ListReceivedEmailsResponse {
      * @param hasMore Whether there are more items.
      * @param data The list of received emails.
      */
-    public ListReceivedEmailsResponse(String object, Boolean hasMore, List<ReceivedEmail> data) {
+    public ListReceivedEmailsResponse(String object, Boolean hasMore, List<ReceivedEmailSummary> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -77,7 +77,7 @@ public class ListReceivedEmailsResponse {
      *
      * @return The list of received emails.
      */
-    public List<ReceivedEmail> getData() {
+    public List<ReceivedEmailSummary> getData() {
         return data;
     }
 
@@ -86,7 +86,7 @@ public class ListReceivedEmailsResponse {
      *
      * @param data The list of received emails.
      */
-    public void setData(List<ReceivedEmail> data) {
+    public void setData(List<ReceivedEmailSummary> data) {
         this.data = data;
     }
 }

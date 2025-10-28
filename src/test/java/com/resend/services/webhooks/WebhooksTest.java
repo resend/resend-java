@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -127,5 +131,210 @@ public class WebhooksTest {
         assertEquals(expectedResponse.getId(), response.getId());
         assertEquals("webhook", response.getObject());
         assertTrue(response.getDeleted());
+    }
+
+    @Test
+    public void testVerifyWebhook_Success() throws Exception {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        // Test data
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{\"type\":\"email.sent\",\"created_at\":\"2024-01-01T00:00:00.000Z\"}";
+        String msgId = "msg_test123";
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        String timestamp = String.valueOf(currentTimestamp);
+
+        // Generate valid signature
+        String signedContent = msgId + "." + timestamp + "." + payload;
+        String secretKey = secret.substring(6); // Remove "whsec_" prefix
+        byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
+
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(decodedSecret, "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
+        String signature = "v1," + Base64.getEncoder().encodeToString(hash);
+
+        // Create verification options
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", msgId)
+                .add("svix-timestamp", timestamp)
+                .add("svix-signature", signature)
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .headers(headers)
+                .secret(secret)
+                .build();
+
+        // Should not throw exception
+        assertDoesNotThrow(() -> webhooksService.verify(options));
+    }
+
+    @Test
+    public void testVerifyWebhook_InvalidSignature() {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{\"type\":\"email.sent\",\"created_at\":\"2024-01-01T00:00:00.000Z\"}";
+        String msgId = "msg_test123";
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        String timestamp = String.valueOf(currentTimestamp);
+
+        // Invalid signature
+        String invalidSignature = "v1,invalid_signature_here";
+
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", msgId)
+                .add("svix-timestamp", timestamp)
+                .add("svix-signature", invalidSignature)
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .headers(headers)
+                .secret(secret)
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> {
+            webhooksService.verify(options);
+        });
+
+        assertEquals(401, exception.getStatusCode());
+        assertTrue(exception.getMessage().contains("signature verification failed"));
+    }
+
+    @Test
+    public void testVerifyWebhook_ExpiredTimestamp() {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{\"type\":\"email.sent\"}";
+        String msgId = "msg_test123";
+
+        // Timestamp from 10 minutes ago (should fail 5-minute tolerance)
+        long expiredTimestamp = (System.currentTimeMillis() / 1000) - 600;
+        String timestamp = String.valueOf(expiredTimestamp);
+
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", msgId)
+                .add("svix-timestamp", timestamp)
+                .add("svix-signature", "v1,dummy_signature")
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .headers(headers)
+                .secret(secret)
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> {
+            webhooksService.verify(options);
+        });
+
+        assertEquals(400, exception.getStatusCode());
+        assertTrue(exception.getMessage().contains("outside the tolerance window"));
+    }
+
+    @Test
+    public void testVerifyWebhook_NullOptions() {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        ResendException exception = assertThrows(ResendException.class, () -> {
+            webhooksService.verify(null);
+        });
+
+        assertEquals(400, exception.getStatusCode());
+        assertTrue(exception.getMessage().contains("cannot be null"));
+    }
+
+    @Test
+    public void testVerifyWebhook_NullPayload() {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", "msg_123")
+                .add("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
+                .add("svix-signature", "v1,signature")
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(null)
+                .headers(headers)
+                .secret("whsec_test")
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> {
+            webhooksService.verify(options);
+        });
+
+        assertEquals(400, exception.getStatusCode());
+        assertTrue(exception.getMessage().contains("payload cannot be null"));
+    }
+
+    @Test
+    public void testVerifyWebhook_EmptySecret() {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", "msg_123")
+                .add("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
+                .add("svix-signature", "v1,signature")
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload("{\"test\":\"data\"}")
+                .headers(headers)
+                .secret("")
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> {
+            webhooksService.verify(options);
+        });
+
+        assertEquals(400, exception.getStatusCode());
+        assertTrue(exception.getMessage().contains("secret cannot be null or empty"));
+    }
+
+    @Test
+    public void testVerifyWebhook_MultipleSignatures() throws Exception {
+        // Test that verification works with multiple signatures in the header
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{\"type\":\"email.delivered\"}";
+        String msgId = "msg_multi_sig";
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        String timestamp = String.valueOf(currentTimestamp);
+
+        // Generate valid signature
+        String signedContent = msgId + "." + timestamp + "." + payload;
+        String secretKey = secret.substring(6);
+        byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
+
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(decodedSecret, "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
+        String validSignature = Base64.getEncoder().encodeToString(hash);
+
+        // Multiple signatures: one invalid, one valid
+        String multipleSignatures = "v1,invalid_sig v1," + validSignature;
+
+        WebhookHeaders headers = WebhookHeaders.builder()
+                .add("svix-id", msgId)
+                .add("svix-timestamp", timestamp)
+                .add("svix-signature", multipleSignatures)
+                .build();
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .headers(headers)
+                .secret(secret)
+                .build();
+
+        // Should not throw exception (one valid signature is enough)
+        assertDoesNotThrow(() -> webhooksService.verify(options));
     }
 }

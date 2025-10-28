@@ -1,17 +1,20 @@
 package com.resend.services.webhooks.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents the options for verifying a webhook signature.
  */
 public class VerifyWebhookOptions {
 
     private final String payload;
-    private final WebhookHeaders headers;
+    private final Map<String, String> headers;
     private final String secret;
 
     private VerifyWebhookOptions(Builder builder) {
         this.payload = builder.payload;
-        this.headers = builder.headers;
+        this.headers = new HashMap<String, String>(builder.headers);
         this.secret = builder.secret;
     }
 
@@ -27,10 +30,10 @@ public class VerifyWebhookOptions {
     /**
      * Gets the webhook headers containing signature information.
      *
-     * @return The WebhookHeaders object.
+     * @return A map of header names to values.
      */
-    public WebhookHeaders getHeaders() {
-        return headers;
+    public Map<String, String> getHeaders() {
+        return new HashMap<String, String>(headers);
     }
 
     /**
@@ -56,7 +59,7 @@ public class VerifyWebhookOptions {
      */
     public static class Builder {
         private String payload;
-        private WebhookHeaders headers;
+        private Map<String, String> headers = new HashMap<String, String>();
         private String secret;
 
         /**
@@ -71,13 +74,27 @@ public class VerifyWebhookOptions {
         }
 
         /**
-         * Sets the webhook headers containing signature information.
+         * Adds a single header to the webhook headers.
          *
-         * @param headers The WebhookHeaders object.
+         * @param name The header name.
+         * @param value The header value.
          * @return This builder instance.
          */
-        public Builder headers(WebhookHeaders headers) {
-            this.headers = headers;
+        public Builder addHeader(String name, String value) {
+            this.headers.put(name, value);
+            return this;
+        }
+
+        /**
+         * Adds multiple headers to the webhook headers.
+         *
+         * @param headers A map of header names to values.
+         * @return This builder instance.
+         */
+        public Builder addHeaders(Map<String, String> headers) {
+            if (headers != null) {
+                this.headers.putAll(headers);
+            }
             return this;
         }
 

@@ -156,15 +156,11 @@ public class WebhooksTest {
         String signature = "v1," + Base64.getEncoder().encodeToString(hash);
 
         // Create verification options
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", msgId)
-                .add("svix-timestamp", timestamp)
-                .add("svix-signature", signature)
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(payload)
-                .headers(headers)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", signature)
                 .secret(secret)
                 .build();
 
@@ -185,15 +181,11 @@ public class WebhooksTest {
         // Invalid signature
         String invalidSignature = "v1,invalid_signature_here";
 
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", msgId)
-                .add("svix-timestamp", timestamp)
-                .add("svix-signature", invalidSignature)
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(payload)
-                .headers(headers)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", invalidSignature)
                 .secret(secret)
                 .build();
 
@@ -217,15 +209,11 @@ public class WebhooksTest {
         long expiredTimestamp = (System.currentTimeMillis() / 1000) - 600;
         String timestamp = String.valueOf(expiredTimestamp);
 
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", msgId)
-                .add("svix-timestamp", timestamp)
-                .add("svix-signature", "v1,dummy_signature")
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(payload)
-                .headers(headers)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", "v1,dummy_signature")
                 .secret(secret)
                 .build();
 
@@ -253,15 +241,11 @@ public class WebhooksTest {
     public void testVerifyWebhook_NullPayload() {
         Webhooks webhooksService = new Webhooks("test-api-key");
 
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", "msg_123")
-                .add("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
-                .add("svix-signature", "v1,signature")
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(null)
-                .headers(headers)
+                .addHeader("svix-id", "msg_123")
+                .addHeader("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
+                .addHeader("svix-signature", "v1,signature")
                 .secret("whsec_test")
                 .build();
 
@@ -277,15 +261,11 @@ public class WebhooksTest {
     public void testVerifyWebhook_EmptySecret() {
         Webhooks webhooksService = new Webhooks("test-api-key");
 
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", "msg_123")
-                .add("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
-                .add("svix-signature", "v1,signature")
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload("{\"test\":\"data\"}")
-                .headers(headers)
+                .addHeader("svix-id", "msg_123")
+                .addHeader("svix-timestamp", String.valueOf(System.currentTimeMillis() / 1000))
+                .addHeader("svix-signature", "v1,signature")
                 .secret("")
                 .build();
 
@@ -322,15 +302,11 @@ public class WebhooksTest {
         // Multiple signatures: one invalid, one valid
         String multipleSignatures = "v1,invalid_sig v1," + validSignature;
 
-        WebhookHeaders headers = WebhookHeaders.builder()
-                .add("svix-id", msgId)
-                .add("svix-timestamp", timestamp)
-                .add("svix-signature", multipleSignatures)
-                .build();
-
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(payload)
-                .headers(headers)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", multipleSignatures)
                 .secret(secret)
                 .build();
 

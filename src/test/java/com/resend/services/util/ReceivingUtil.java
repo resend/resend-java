@@ -57,10 +57,10 @@ public class ReceivingUtil {
      *
      * @return A list of ReceivedEmail instances.
      */
-    public static List<ReceivedEmail> createReceivedEmailList() {
-        List<ReceivedEmail> emails = new ArrayList<ReceivedEmail>();
+    public static List<ReceivedEmailSummary> createReceivedEmailList() {
+        List<ReceivedEmailSummary> emails = new ArrayList<>();
 
-        ReceivedEmail email1 = new ReceivedEmail();
+        ReceivedEmailSummary email1 = new ReceivedEmailSummary();
         email1.setId("a39999a6-88e3-48b1-888b-beaabcde1b33");
         email1.setTo(Arrays.asList("recipient@example.com"));
         email1.setFrom("sender@example.com");
@@ -77,7 +77,7 @@ public class ReceivingUtil {
         attachment1.setContentId(null);
         attachment1.setContentDisposition("attachment");
         attachment1.setId("47e999c7-c89c-4999-bf32-aaaaa1c3ff21");
-        attachment1.setSize(13L);
+        attachment1.setSize(13);
         email1.setAttachments(Arrays.asList(attachment1));
 
         emails.add(email1);

@@ -8,6 +8,7 @@ import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 import com.resend.services.receiving.Receiving;
+import com.resend.services.templates.Templates;
 
 /**
  * The Resend class provides a facade for the Domains and Emails services.
@@ -98,5 +99,14 @@ public class Resend {
      */
     public Receiving receiving() {
         return new Receiving(apiKey);
+    }
+  
+    /**
+     * Returns a Templates object that can be used to interact with the Templates service.
+     *
+     * @return A Templates object.
+     */
+    public Templates templates() {
+        return new Templates(apiKey);
     }
 }

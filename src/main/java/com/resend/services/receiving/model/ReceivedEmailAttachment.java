@@ -23,7 +23,7 @@ public class ReceivedEmailAttachment {
     private String contentId;
 
     @JsonProperty("size")
-    private Long size;
+    private Integer size;
 
     /**
      * Default constructor.
@@ -126,7 +126,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The attachment size.
      */
-    public Long getSize() {
+    public Integer getSize() {
         return size;
     }
 
@@ -135,7 +135,7 @@ public class ReceivedEmailAttachment {
      *
      * @param size The attachment size in bytes.
      */
-    public void setSize(Long size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 }

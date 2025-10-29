@@ -3,6 +3,8 @@ package com.resend.services.contacts.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -104,6 +106,21 @@ public class UpdateContactTopicsOptions {
          */
         public Builder topics(List<ContactTopicOptions> topics) {
             this.topics = topics;
+            return this;
+        }
+
+        /**
+         * Sets the list of topic subscription updates using varargs.
+         *
+         * @param topics The list of topic subscription updates.
+         * @return The builder instance.
+         */
+        public Builder topics(ContactTopicOptions... topics) {
+            if (this.topics == null) {
+                this.topics = new ArrayList<>();
+            }
+
+            this.topics.addAll(Arrays.asList(topics));
             return this;
         }
 

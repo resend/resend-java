@@ -46,12 +46,12 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a list of contacts and returns a ListContactsResponseSuccess.
      *
-     * @param audienceId The id of the audience.
+     * @param segmentId The id of the segment (formerly known as audienceId).
      * @return A ListContactsResponseSuccess containing the list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(String audienceId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" +audienceId+ "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+    public ListContactsResponseSuccess list(String segmentId) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + segmentId + "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -65,13 +65,13 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a paginated list of contacts and returns a ListContactsResponseSuccess.
      *
-     * @param audienceId The id of the audience.
+     * @param segmentId The id of the segment (formerly known as audienceId).
      * @param params The params used to customize the list.
      * @return A ListContactsResponseSuccess containing the paginated list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(String audienceId, ListParams params) throws ResendException {
-        String pathWithQuery = "/segments/" +audienceId+ "/contacts" + URLHelper.parse(params);
+    public ListContactsResponseSuccess list(String segmentId, ListParams params) throws ResendException {
+        String pathWithQuery = "/segments/" + segmentId + "/contacts" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {

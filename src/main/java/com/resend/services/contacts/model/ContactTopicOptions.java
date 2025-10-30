@@ -20,7 +20,7 @@ public class ContactTopicOptions {
     }
 
     /**
-     * Creates an instance of TopicSubscriptionOptions.
+     * Creates an instance of ContactTopicOptions.
      *
      * @param id            The topic ID.
      * @param subscription  The subscription action (opt_in or opt_out).

@@ -105,7 +105,7 @@ public class ContactTopicOptions {
         }
 
         /**
-         * Builds the TopicSubscriptionOptions instance.
+         * Builds the ContactTopicOptions instance.
          *
          * @return A new TopicSubscriptionOptions instance.
          */

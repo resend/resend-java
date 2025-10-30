@@ -60,4 +60,47 @@ public class ContactsUtil {
                 false
         );
     }
+
+    public static ListContactTopicsResponse createContactTopicsListResponse() {
+        List<ContactTopic> topics = new ArrayList<>();
+
+        ContactTopic t1 = new ContactTopic(
+                "b6d24b8e-af0b-4c3c-be0c-359bbd97381e",
+                "Product Updates",
+                "New features, and latest announcements.",
+                "opt_in"
+        );
+        ContactTopic t2 = new ContactTopic(
+                "07d84122-7224-4881-9c31-1c048e204602",
+                "Weekly Newsletter",
+                "Weekly digest of content.",
+                "opt_out"
+        );
+
+        topics.add(t1);
+        topics.add(t2);
+
+        return new ListContactTopicsResponse("list", topics, false);
+    }
+
+    public static UpdateContactTopicsOptions createUpdateTopicsOptions() {
+        List<ContactTopicOptions> updates = new ArrayList<>();
+        updates.add(ContactTopicOptions.builder()
+                .id("b6d24b8e-af0b-4c3c-be0c-359bbd97381e")
+                .subscription("opt_out")
+                .build());
+        updates.add(ContactTopicOptions.builder()
+                .id("07d84122-7224-4881-9c31-1c048e204602")
+                .subscription("opt_in")
+                .build());
+
+        return UpdateContactTopicsOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .topics(updates)
+                .build();
+    }
+
+    public static UpdateContactTopicsResponse updateContactTopicsResponse() {
+        return new UpdateContactTopicsResponse("e169aa45-1ecf-4183-9955-b1499d5701d3");
+    }
 }

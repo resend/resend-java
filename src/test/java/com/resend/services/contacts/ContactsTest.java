@@ -137,4 +137,70 @@ public class ContactsTest {
         assertEquals(expected, res);
         verify(contacts, times(1)).get(params);
     }
+
+    @Test
+    public void testGetTopicsById_Success() throws ResendException {
+        String contactId = "e169aa45-1ecf-4183-9955-b1499d5701d3";
+        ListContactTopicsResponse expectedResponse = ContactsUtil.createContactTopicsListResponse();
+
+        when(contacts.getTopics(contactId))
+                .thenReturn(expectedResponse);
+
+        ListContactTopicsResponse res = contacts.getTopics(contactId);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+        verify(contacts, times(1)).getTopics(contactId);
+    }
+
+    @Test
+    public void testGetTopicsByEmail_Success() throws ResendException {
+        String contactEmail = "steve.wozniak@gmail.com";
+        ListContactTopicsResponse expectedResponse = ContactsUtil.createContactTopicsListResponse();
+
+        when(contacts.getTopics(contactEmail))
+                .thenReturn(expectedResponse);
+
+        ListContactTopicsResponse res = contacts.getTopics(contactEmail);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+        verify(contacts, times(1)).getTopics(contactEmail);
+    }
+
+    @Test
+    public void testGetTopicsWithPagination_Success() throws ResendException {
+        String contactId = "e169aa45-1ecf-4183-9955-b1499d5701d3";
+        ListParams params = ListParams.builder()
+                .limit(10)
+                .build();
+        ListContactTopicsResponse expectedResponse = ContactsUtil.createContactTopicsListResponse();
+
+        when(contacts.getTopics(contactId, params))
+                .thenReturn(expectedResponse);
+
+        ListContactTopicsResponse res = contacts.getTopics(contactId, params);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+        verify(contacts, times(1)).getTopics(contactId, params);
+    }
+
+    @Test
+    public void testUpdateTopics_Success() throws ResendException {
+        UpdateContactTopicsOptions options = ContactsUtil.createUpdateTopicsOptions();
+        UpdateContactTopicsResponse expectedResponse = ContactsUtil.updateContactTopicsResponse();
+
+        when(contacts.updateTopics(options))
+                .thenReturn(expectedResponse);
+
+        UpdateContactTopicsResponse res = contacts.updateTopics(options);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getId(), res.getId());
+        verify(contacts, times(1)).updateTopics(options);
+    }
 }

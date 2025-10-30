@@ -67,7 +67,7 @@ public class ContactTopicOptions {
     }
 
     /**
-     * Creates a builder for TopicSubscriptionOptions.
+     * Creates a builder for ContactTopicOptions.
      *
      * @return A new builder instance.
      */

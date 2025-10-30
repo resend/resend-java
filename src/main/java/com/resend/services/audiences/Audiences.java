@@ -29,7 +29,9 @@ public class Audiences extends BaseService {
      * @param createAudienceOptions The Audience details.
      * @return The details of the created audience.
      * @throws ResendException If an error occurs during the Audience creation process.
+     * @deprecated Use {@link com.resend.services.segments.Segments#create(com.resend.services.segments.model.CreateSegmentOptions)} instead.
      */
+    @Deprecated
     public CreateAudienceResponseSuccess create(CreateAudienceOptions createAudienceOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createAudienceOptions);
         AbstractHttpResponse<String> response = httpClient.perform("/audiences", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
@@ -47,7 +49,9 @@ public class Audiences extends BaseService {
      *
      * @return A ListAudiencesResponseSuccess containing the list of audiences.
      * @throws ResendException If an error occurs during the audiences list retrieval process.
+     * @deprecated Use {@link com.resend.services.segments.Segments#list()} instead.
      */
+    @Deprecated
     public ListAudiencesResponseSuccess list() throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -66,7 +70,9 @@ public class Audiences extends BaseService {
      *
      * @return A ListAudiencesResponseSuccess containing the paginated list of audiences.
      * @throws ResendException If an error occurs during the audiences list retrieval process.
+     * @deprecated Use {@link com.resend.services.segments.Segments#list(ListParams)} instead.
      */
+    @Deprecated
     public ListAudiencesResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
@@ -86,7 +92,9 @@ public class Audiences extends BaseService {
      * @param id The unique identifier of the audience.
      * @return The retrieved audience details.
      * @throws ResendException If an error occurs while retrieving the audience.
+     * @deprecated Use {@link com.resend.services.segments.Segments#get(String)} instead.
      */
+    @Deprecated
     public GetAudienceResponseSuccess get(String id) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -105,7 +113,9 @@ public class Audiences extends BaseService {
      * @param id The unique identifier of the audience to delete.
      * @return The RemoveAudiencesResponseSuccess with the details of the removed audience.
      * @throws ResendException If an error occurs during the audience deletion process.
+     * @deprecated Use {@link com.resend.services.segments.Segments#remove(String)} instead.
      */
+    @Deprecated
     public RemoveAudienceResponseSuccess remove(String id) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.DELETE, "", null);
 

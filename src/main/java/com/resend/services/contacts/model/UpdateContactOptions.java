@@ -14,7 +14,11 @@ public class UpdateContactOptions {
     private final String email;
 
     @JsonProperty("audience_id")
+    @Deprecated
     private final String audienceId;
+
+    @JsonProperty("segment_id")
+    private final String segmentId;
 
     @JsonProperty("unsubscribed")
     private final Boolean unsubscribed;
@@ -32,6 +36,7 @@ public class UpdateContactOptions {
      */
     public UpdateContactOptions(Builder builder) {
         this.audienceId = builder.audienceId;
+        this.segmentId = builder.segmentId;
         this.id = builder.id;
         this.email = builder.email;
         this.unsubscribed = builder.unsubscribed;
@@ -43,9 +48,20 @@ public class UpdateContactOptions {
      * Get the audience ID of the contact.
      *
      * @return The audience ID of the contact.
+     * @deprecated Use {@link #getSegmentId()} instead.
      */
+    @Deprecated
     public String getAudienceId() {
         return audienceId;
+    }
+
+    /**
+     * Get the segment ID of the contact.
+     *
+     * @return The segment ID of the contact.
+     */
+    public String getSegmentId() {
+        return segmentId;
     }
 
     /**
@@ -107,6 +123,7 @@ public class UpdateContactOptions {
      */
     public static class Builder {
         private String audienceId;
+        private String segmentId;
         private String id;
         private String email;
         private Boolean unsubscribed;
@@ -118,9 +135,22 @@ public class UpdateContactOptions {
          *
          * @param audienceId The audience ID of the contact.
          * @return The builder instance.
+         * @deprecated Use {@link #segmentId(String)} instead.
          */
+        @Deprecated
         public Builder audienceId(String audienceId) {
             this.audienceId = audienceId;
+            return this;
+        }
+
+        /**
+         * Set the segment ID of the contact.
+         *
+         * @param segmentId The segment ID of the contact.
+         * @return The builder instance.
+         */
+        public Builder segmentId(String segmentId) {
+            this.segmentId = segmentId;
             return this;
         }
 

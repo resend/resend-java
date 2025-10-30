@@ -7,6 +7,7 @@ import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
+import com.resend.services.segments.Segments;
 import com.resend.services.webhooks.Webhooks;
 import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
@@ -71,9 +72,20 @@ public class Resend {
      * Returns an Audience object that can be used to interact with the Audiences service.
      *
      * @return an Audiences object.
+     * @deprecated Use {@link #segments()} instead.
      */
+    @Deprecated
     public Audiences audiences() {
         return new Audiences(apiKey);
+    }
+
+    /**
+     * Returns a Segments object that can be used to interact with the Segments service.
+     *
+     * @return a Segments object.
+     */
+    public Segments segments() {
+        return new Segments(apiKey);
     }
 
     /**

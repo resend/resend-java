@@ -15,9 +15,17 @@ public abstract class ContactOptions {
 
     /**
      * The audience_id of the contact options
+     * @deprecated Use {@link #segmentId} instead.
      */
+    @Deprecated
     @JsonProperty("audience_id")
     protected final String audienceId;
+
+    /**
+     * The segment_id of the contact options
+     */
+    @JsonProperty("segment_id")
+    protected final String segmentId;
 
     /**
      * The email of the contact options
@@ -33,6 +41,7 @@ public abstract class ContactOptions {
     protected ContactOptions(Builder builder) {
         this.id = builder.id;
         this.audienceId = builder.audienceId;
+        this.segmentId = builder.segmentId;
         this.email = builder.email;
     }
 
@@ -49,9 +58,20 @@ public abstract class ContactOptions {
      * Get the audienceId of the ContactOptions.
      *
      * @return The audienceId of the ContactOptions.
+     * @deprecated Use {@link #getSegmentId()} instead.
      */
+    @Deprecated
     public String getAudienceId() {
         return audienceId;
+    }
+
+    /**
+     * Get the segmentId of the ContactOptions.
+     *
+     * @return The segmentId of the ContactOptions.
+     */
+    public String getSegmentId() {
+        return segmentId;
     }
 
     /**
@@ -74,8 +94,15 @@ public abstract class ContactOptions {
 
         /**
          * The audienceId of the contact options builder
+         * @deprecated Use {@link #segmentId} instead.
          */
+        @Deprecated
         protected String audienceId;
+
+        /**
+         * The segmentId of the contact options builder
+         */
+        protected String segmentId;
 
         /**
          * The email of the contact options builder
@@ -98,9 +125,22 @@ public abstract class ContactOptions {
          *
          * @param audienceId The audienceId of the ContactOptions.
          * @return The builder instance.
+         * @deprecated Use {@link #segmentId(String)} instead.
          */
+        @Deprecated
         public B audienceId(String audienceId) {
             this.audienceId = audienceId;
+            return self();
+        }
+
+        /**
+         * Set the segmentId of the ContactOptions.
+         *
+         * @param segmentId The segmentId of the ContactOptions.
+         * @return The builder instance.
+         */
+        public B segmentId(String segmentId) {
+            this.segmentId = segmentId;
             return self();
         }
 

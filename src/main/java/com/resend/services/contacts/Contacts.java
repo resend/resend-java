@@ -31,8 +31,9 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the Contact creation process.
      */
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
+        String segmentId = createContactOptions.getSegmentId() != null ? createContactOptions.getSegmentId() : createContactOptions.getAudienceId();
         String payload = super.resendMapper.writeValue(createContactOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + createContactOptions.getAudienceId()+ "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + segmentId + "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -101,8 +102,9 @@ public class Contacts extends BaseService {
         }
 
         String contactIdentifier =  (id != null && !id.isEmpty()) ? id : email;
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" + segmentId + "/contacts/" + contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -127,8 +129,9 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -153,9 +156,10 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
         String payload = super.resendMapper.writeValue(params);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

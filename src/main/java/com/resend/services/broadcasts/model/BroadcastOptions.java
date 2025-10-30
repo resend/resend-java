@@ -9,7 +9,11 @@ import java.util.*;
  */
 public class BroadcastOptions {
     @JsonProperty("audience_id")
+    @Deprecated
     private final String audienceId;
+
+    @JsonProperty("segment_id")
+    private final String segmentId;
 
     @JsonProperty("from")
     private final String from;
@@ -36,6 +40,7 @@ public class BroadcastOptions {
      */
     protected BroadcastOptions(Builder builder) {
         this.audienceId = builder.audienceId;
+        this.segmentId = builder.segmentId;
         this.from = builder.from;
         this.subject = builder.subject;
         this.replyTo = builder.replyTo;
@@ -48,9 +53,20 @@ public class BroadcastOptions {
      * Gets the audience ID.
      *
      * @return the unique identifier of the audience.
+     * @deprecated Use {@link #getSegmentId()} instead.
      */
+    @Deprecated
     public String getAudienceId() {
         return audienceId;
+    }
+
+    /**
+     * Gets the segment ID.
+     *
+     * @return the unique identifier of the segment.
+     */
+    public String getSegmentId() {
+        return segmentId;
     }
 
     /**
@@ -114,8 +130,15 @@ public class BroadcastOptions {
 
         /**
          * The ID of the audience targeted by the broadcast.
+         * @deprecated Use {@link #segmentId} instead.
          */
+        @Deprecated
         protected String audienceId;
+
+        /**
+         * The ID of the segment targeted by the broadcast.
+         */
+        protected String segmentId;
 
         /**
          * The email address of the sender.
@@ -152,9 +175,22 @@ public class BroadcastOptions {
          *
          * @param audienceId the unique identifier of the audience.
          * @return the builder instance.
+         * @deprecated Use {@link #segmentId(String)} instead.
          */
+        @Deprecated
         public B audienceId(String audienceId) {
             this.audienceId = audienceId;
+            return self();
+        }
+
+        /**
+         * Sets the segment ID.
+         *
+         * @param segmentId the unique identifier of the segment.
+         * @return the builder instance.
+         */
+        public B segmentId(String segmentId) {
+            this.segmentId = segmentId;
             return self();
         }
 

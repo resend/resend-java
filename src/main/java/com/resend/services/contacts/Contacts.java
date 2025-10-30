@@ -31,8 +31,9 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the Contact creation process.
      */
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
+        String segmentId = createContactOptions.getSegmentId() != null ? createContactOptions.getSegmentId() : createContactOptions.getAudienceId();
         String payload = super.resendMapper.writeValue(createContactOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" + createContactOptions.getAudienceId()+ "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -45,12 +46,12 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a list of contacts and returns a ListContactsResponseSuccess.
      *
-     * @param audienceId The id of the audience.
+     * @param segmentId The id of the segment (formerly known as audienceId).
      * @return A ListContactsResponseSuccess containing the list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(String audienceId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +audienceId+ "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+    public ListContactsResponseSuccess list(String segmentId) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + segmentId + "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -64,13 +65,13 @@ public class Contacts extends BaseService {
     /**
      * Retrieves a paginated list of contacts and returns a ListContactsResponseSuccess.
      *
-     * @param audienceId The id of the audience.
+     * @param segmentId The id of the segment (formerly known as audienceId).
      * @param params The params used to customize the list.
      * @return A ListContactsResponseSuccess containing the paginated list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(String audienceId, ListParams params) throws ResendException {
-        String pathWithQuery = "/audiences/" +audienceId+ "/contacts" + URLHelper.parse(params);
+    public ListContactsResponseSuccess list(String segmentId, ListParams params) throws ResendException {
+        String pathWithQuery = "/segments/" + segmentId + "/contacts" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -101,8 +102,9 @@ public class Contacts extends BaseService {
         }
 
         String contactIdentifier =  (id != null && !id.isEmpty()) ? id : email;
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" +contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + segmentId + "/contacts/" + contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -127,8 +129,9 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
+        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -153,9 +156,10 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
+        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
         String payload = super.resendMapper.writeValue(params);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +params.getAudienceId()+ "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

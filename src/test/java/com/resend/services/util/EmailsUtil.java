@@ -27,6 +27,35 @@ public class EmailsUtil {
                 .build();
     }
 
+    public static Template createTemplate() {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("name", "John");
+        variables.put("company", "Acme Corp");
+
+        return Template.builder()
+                .id("template_123")
+                .variables(variables)
+                .build();
+    }
+
+    public static Template createTemplateWithAddVariable() {
+        return Template.builder()
+                .id("template_123")
+                .addVariable("name", "John")
+                .addVariable("company", "Acme Corp")
+                .build();
+    }
+
+    public static Template createTemplateWithVarargs() {
+        return Template.builder()
+                .id("template_123")
+                .variables(
+                        Template.variable("name", "John"),
+                        Template.variable("company", "Acme Corp")
+                )
+                .build();
+    }
+
     public static CreateEmailOptions createEmailOptions() {
         return CreateEmailOptions.builder()
                 .from("Acme <onboarding@resend.dev>")
@@ -39,6 +68,15 @@ public class EmailsUtil {
                 .attachments(Arrays.asList(createAttachment()))
                 .tags(Arrays.asList(createTag()))
                 .scheduledAt("2024-08-20T11:52:01.858Z")
+                .build();
+    }
+
+    public static CreateEmailOptions createEmailOptionsWithTemplate() {
+        return CreateEmailOptions.builder()
+                .from("Acme <onboarding@resend.dev>")
+                .to(Arrays.asList("example@resend.dev"))
+                .subject("Welcome to Acme")
+                .template(createTemplate())
                 .build();
     }
 

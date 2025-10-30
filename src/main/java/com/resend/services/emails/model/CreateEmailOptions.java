@@ -44,6 +44,9 @@ public class CreateEmailOptions {
     @JsonProperty("scheduled_at")
     private final String scheduledAt;
 
+    @JsonProperty("template")
+    private final Template template;
+
     private CreateEmailOptions(Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
@@ -57,6 +60,7 @@ public class CreateEmailOptions {
         this.html = builder.html;
         this.headers = builder.headers;
         this.scheduledAt = builder.scheduledAt;
+        this.template = builder.template;
     }
 
     /**
@@ -168,6 +172,15 @@ public class CreateEmailOptions {
     }
 
     /**
+     * Retrieves the template configuration of the email.
+     *
+     * @return The template configuration of the email.
+     */
+    public Template getTemplate() {
+        return template;
+    }
+
+    /**
      * Creates a new builder instance to construct CreateEmailOptions.
      *
      * @return A new builder instance.
@@ -192,6 +205,7 @@ public class CreateEmailOptions {
         private List<Tag> tags;
         private Map<String, String> headers;
         private String scheduledAt;
+        private Template template;
 
         /**
          * Set the 'from' email address.
@@ -525,6 +539,21 @@ public class CreateEmailOptions {
          */
         public Builder scheduledAt(String scheduledAt) {
             this.scheduledAt = scheduledAt;
+            return this;
+        }
+
+        /**
+         * Set the template configuration for the email.
+         * <p>
+         * Note: If a template is provided, you cannot send html, text, or react in the payload.
+         * When sending a template, the payload for from, subject, and reply_to take precedence
+         * over the template's defaults for these fields.
+         *
+         * @param template The template configuration.
+         * @return This builder instance for method chaining.
+         */
+        public Builder template(Template template) {
+            this.template = template;
             return this;
         }
 

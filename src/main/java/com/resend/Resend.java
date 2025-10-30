@@ -5,6 +5,7 @@ import com.resend.services.audiences.Audiences;
 import com.resend.services.batch.Batch;
 import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
+import com.resend.services.contactproperties.ContactProperties;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 import com.resend.services.webhooks.Webhooks;
@@ -65,6 +66,15 @@ public class Resend {
      */
     public Contacts contacts() {
         return new Contacts(apiKey);
+    }
+
+    /**
+     * Returns a ContactProperties object that can be used to interact with the ContactProperties service.
+     *
+     * @return A ContactProperties object.
+     */
+    public ContactProperties contactProperties() {
+        return new ContactProperties(apiKey);
     }
 
     /**

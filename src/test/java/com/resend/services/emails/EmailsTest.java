@@ -218,4 +218,71 @@ public class EmailsTest {
         assertEquals(expectedResponse.hasMore(), response.hasMore());
         verify(emails, times(1)).listAttachments(emailId, params);
     }
+
+    @Test
+    public void testSendEmail_WithTemplate_Success() throws ResendException {
+        Template template = Template.builder()
+                .id("template_123")
+                .addVariable("firstName", "John")
+                .addVariable("lastName", "Doe")
+                .addVariable("company", "Acme Corp")
+                .build();
+
+        CreateEmailOptions emailWithTemplate = CreateEmailOptions.builder()
+                .from("Acme <onboarding@resend.dev>")
+                .to("john.doe@example.com")
+                .subject("Welcome John!")
+                .template(template)
+                .build();
+
+        CreateEmailResponse expectedResponse = EmailsUtil.createSendEmailResponse();
+
+        when(emails.send(emailWithTemplate)).thenReturn(expectedResponse);
+
+        CreateEmailResponse response = emails.send(emailWithTemplate);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getId(), response.getId());
+        verify(emails, times(1)).send(emailWithTemplate);
+    }
+
+    @Test
+    public void testSendBatchEmails_WithTemplate_Success() throws ResendException {
+        Template template1 = Template.builder()
+                .id("template_123")
+                .addVariable("firstName", "John")
+                .addVariable("company", "Tech Corp")
+                .build();
+
+        Template template2 = Template.builder()
+                .id("template_123")
+                .addVariable("firstName", "Jane")
+                .addVariable("company", "Design Studios")
+                .build();
+
+        CreateEmailOptions email1 = CreateEmailOptions.builder()
+                .from("Acme <onboarding@resend.dev>")
+                .to("john@example.com")
+                .subject("Welcome John!")
+                .template(template1)
+                .build();
+
+        CreateEmailOptions email2 = CreateEmailOptions.builder()
+                .from("Acme <onboarding@resend.dev>")
+                .to("jane@example.com")
+                .subject("Welcome Jane!")
+                .template(template2)
+                .build();
+
+        List<CreateEmailOptions> batchEmails = java.util.Arrays.asList(email1, email2);
+        CreateBatchEmailsResponse expectedResponse = EmailsUtil.createBatchEmailsResponse();
+
+        when(batch.send(batchEmails)).thenReturn(expectedResponse);
+
+        CreateBatchEmailsResponse response = batch.send(batchEmails);
+
+        assertNotNull(response);
+        assertEquals(expectedResponse.getData().size(), response.getData().size());
+        verify(batch, times(1)).send(batchEmails);
+    }
 }

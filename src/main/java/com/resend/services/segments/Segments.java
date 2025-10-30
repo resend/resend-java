@@ -32,7 +32,7 @@ public class Segments extends BaseService {
      */
     public CreateSegmentResponseSuccess create(CreateSegmentOptions createSegmentOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createSegmentOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/segments", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -49,7 +49,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
     public ListSegmentsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -88,7 +88,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs while retrieving the segment.
      */
     public GetSegmentResponseSuccess get(String id) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -107,7 +107,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segment deletion process.
      */
     public RemoveSegmentResponseSuccess remove(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.DELETE, "", null);
+        AbstractHttpResponse<String> response = httpClient.perform("/segments/" +id, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

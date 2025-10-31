@@ -33,7 +33,13 @@ public class Contacts extends BaseService {
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
         String segmentId = createContactOptions.getSegmentId() != null ? createContactOptions.getSegmentId() : createContactOptions.getAudienceId();
         String payload = super.resendMapper.writeValue(createContactOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts" , super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+
+        // Use /contacts for global contacts (when no segment ID is provided)
+        String endpoint = (segmentId == null || segmentId.isEmpty())
+            ? "/contacts"
+            : "/segments/" + segmentId + "/contacts";
+
+        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -84,12 +90,50 @@ public class Contacts extends BaseService {
     }
 
     /**
+     * Retrieves a list of global contacts (not associated with any segment).
+     *
+     * @return A ListContactsResponseSuccess containing the list of global contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list() throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/contacts", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListContactsResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of global contacts (not associated with any segment).
+     *
+     * @param params The params used to customize the list.
+     * @return A ListContactsResponseSuccess containing the paginated list of global contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListParams params) throws ResendException {
+        String pathWithQuery = "/contacts" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListContactsResponseSuccess.class);
+    }
+
+    /**
      * Retrieves a contact by its unique identifier.
      *
      * @param params The object containing:
      *               – {@code audienceId}: the audience to which the contact belongs
-     *               – Either {@code id}: the contact’s id
-     *                 or {@code email}: the contact’s email address
+     *               – Either {@code id}: the contact's id
+     *                 or {@code email}: the contact's email address
      * @return The retrieved contact details.
      * @throws ResendException If an error occurs while retrieving the contact.
      */
@@ -104,7 +148,35 @@ public class Contacts extends BaseService {
         String contactIdentifier =  (id != null && !id.isEmpty()) ? id : email;
         String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + segmentId + "/contacts/" + contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        // Use /contacts for global contacts (when no segment ID is provided)
+        String endpoint = (segmentId == null || segmentId.isEmpty())
+            ? "/contacts/" + contactIdentifier
+            : "/segments/" + segmentId + "/contacts/" + contactIdentifier;
+
+        AbstractHttpResponse<String> response = this.httpClient.perform(endpoint, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, GetContactResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a global contact by its unique identifier (not associated with any segment).
+     *
+     * @param contactIdOrEmail The contact's id or email address.
+     * @return The retrieved contact details.
+     * @throws ResendException If an error occurs while retrieving the contact.
+     */
+    public GetContactResponseSuccess get(String contactIdOrEmail) throws ResendException {
+        if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
+            throw new IllegalArgumentException("Contact id or email must be provided");
+        }
+
+        AbstractHttpResponse<String> response = this.httpClient.perform("/contacts/" + contactIdOrEmail, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -131,7 +203,36 @@ public class Contacts extends BaseService {
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
         String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
+        // Use /contacts for global contacts (when no segment ID is provided)
+        String endpoint = (segmentId == null || segmentId.isEmpty())
+            ? "/contacts/" + pathParameter
+            : "/segments/" + segmentId + "/contacts/" + pathParameter;
+
+        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.DELETE, "", null);
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, RemoveContactResponseSuccess.class);
+    }
+
+    /**
+     * Deletes a global contact based on the provided contact ID.
+     * Note: Global contacts can only be removed by ID, not by email.
+     *
+     * @param contactId The contact's id.
+     * @return The RemoveContactsResponseSuccess with the details of the removed contact.
+     * @throws ResendException If an error occurs during the contact deletion process.
+     */
+    public RemoveContactResponseSuccess remove(String contactId) throws ResendException {
+        if (contactId == null || contactId.isEmpty()) {
+            throw new IllegalArgumentException("Contact id must be provided");
+        }
+
+        AbstractHttpResponse<String> response = httpClient.perform("/contacts/" + contactId, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -158,8 +259,13 @@ public class Contacts extends BaseService {
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
         String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
+        // Use /contacts for global contacts (when no segment ID is provided)
+        String endpoint = (segmentId == null || segmentId.isEmpty())
+            ? "/contacts/" + pathParameter
+            : "/segments/" + segmentId + "/contacts/" + pathParameter;
+
         String payload = super.resendMapper.writeValue(params);
-        AbstractHttpResponse<String> response = httpClient.perform("/segments/" + segmentId + "/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

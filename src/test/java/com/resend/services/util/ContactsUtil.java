@@ -103,4 +103,51 @@ public class ContactsUtil {
     public static UpdateContactTopicsResponse updateContactTopicsResponse() {
         return new UpdateContactTopicsResponse("e169aa45-1ecf-4183-9955-b1499d5701d3");
     }
+
+    public static AddContactToSegmentOptions createAddContactToSegmentOptions() {
+        return AddContactToSegmentOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .segmentId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .build();
+    }
+
+    public static AddContactToSegmentResponseSuccess addContactToSegmentResponseSuccess() {
+        AddContactToSegmentResponseSuccess response = new AddContactToSegmentResponseSuccess();
+        response.setId("78261eea-8f8b-4381-83c6-79fa7120f1cf");
+        return response;
+    }
+
+    public static RemoveContactFromSegmentOptions createRemoveContactFromSegmentOptions() {
+        return RemoveContactFromSegmentOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .segmentId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .build();
+    }
+
+    public static RemoveContactFromSegmentResponseSuccess removeContactFromSegmentResponseSuccess() {
+        RemoveContactFromSegmentResponseSuccess response = new RemoveContactFromSegmentResponseSuccess();
+        response.setId("78261eea-8f8b-4381-83c6-79fa7120f1cf");
+        response.setDeleted(true);
+        return response;
+    }
+
+    public static ListContactSegmentsResponseSuccess listContactSegmentsResponseSuccess() {
+        List<ContactSegment> segments = new ArrayList<>();
+
+        ContactSegment seg1 = new ContactSegment(
+                "78261eea-8f8b-4381-83c6-79fa7120f1cf",
+                "Registered Users",
+                "2023-10-06T22:59:55.977Z"
+        );
+        ContactSegment seg2 = new ContactSegment(
+                "b9d24c8e-bf1c-5d4d-cf1d-470cbd97482f",
+                "Premium Users",
+                "2023-11-12T14:23:10.123Z"
+        );
+
+        segments.add(seg1);
+        segments.add(seg2);
+
+        return new ListContactSegmentsResponseSuccess("list", segments, false);
+    }
 }

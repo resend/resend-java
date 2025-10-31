@@ -1,10 +1,15 @@
 package com.resend.services.contacts.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Common superclass for contact options.
+ *
+ * <p><strong>Note:</strong> These option classes are for global contact operations only.
+ * Segment-related fields are ignored.</p>
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class ContactOptions {
 
     /**
@@ -15,7 +20,7 @@ public abstract class ContactOptions {
 
     /**
      * The audience_id of the contact options
-     * @deprecated Use {@link #segmentId} instead.
+     * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
     @Deprecated
     @JsonProperty("audience_id")
@@ -23,7 +28,9 @@ public abstract class ContactOptions {
 
     /**
      * The segment_id of the contact options
+     * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
+    @Deprecated
     @JsonProperty("segment_id")
     protected final String segmentId;
 
@@ -58,7 +65,7 @@ public abstract class ContactOptions {
      * Get the audienceId of the ContactOptions.
      *
      * @return The audienceId of the ContactOptions.
-     * @deprecated Use {@link #getSegmentId()} instead.
+     * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
     @Deprecated
     public String getAudienceId() {
@@ -69,7 +76,9 @@ public abstract class ContactOptions {
      * Get the segmentId of the ContactOptions.
      *
      * @return The segmentId of the ContactOptions.
+     * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
+    @Deprecated
     public String getSegmentId() {
         return segmentId;
     }
@@ -125,7 +134,7 @@ public abstract class ContactOptions {
          *
          * @param audienceId The audienceId of the ContactOptions.
          * @return The builder instance.
-         * @deprecated Use {@link #segmentId(String)} instead.
+         * @deprecated This field is ignored. Use ContactSegments service for segment operations.
          */
         @Deprecated
         public B audienceId(String audienceId) {
@@ -138,7 +147,9 @@ public abstract class ContactOptions {
          *
          * @param segmentId The segmentId of the ContactOptions.
          * @return The builder instance.
+         * @deprecated This field is ignored. Use ContactSegments service for segment operations.
          */
+        @Deprecated
         public B segmentId(String segmentId) {
             this.segmentId = segmentId;
             return self();

@@ -10,9 +10,33 @@ import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
 
 /**
- *  Represents the Resend Contacts module.
+ * Represents the Resend Contacts module.
+ *
+ * <p>This service handles global contact operations (CRUD for contacts not associated with specific segments).
+ * For specialized operations, use the following sub-services:</p>
+ *
+ * <ul>
+ *   <li>{@link #segments()} - Manage contact membership in segments (add/remove contacts from segments)</li>
+ *   <li>{@link #topics()} - Manage contact topic subscriptions (list and update topic preferences)</li>
+ * </ul>
+ *
+ * <p><strong>Global Contact Operations:</strong></p>
+ * <ul>
+ *   <li>{@link #create(CreateContactOptions)} - Create a global contact</li>
+ *   <li>{@link #list()} - List all global contacts</li>
+ *   <li>{@link #list(ListParams)} - List global contacts with pagination</li>
+ *   <li>{@link #get(String)} - Get a global contact by ID or email</li>
+ *   <li>{@link #update(UpdateContactOptions)} - Update a global contact</li>
+ *   <li>{@link #remove(String)} - Remove a global contact</li>
+ * </ul>
+ *
+ * <p><strong>Migration Note:</strong> Methods that accept {@code segmentId} or {@code audienceId} parameters
+ * are deprecated. Use the Segments service for segment-specific operations instead.</p>
  */
 public class Contacts extends BaseService {
+
+    private ContactSegments contactSegments;
+    private ContactTopics contactTopics;
 
     /**
      * Constructs an instance of the {@code Contacts} class.
@@ -24,22 +48,46 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Creates a Contact.
+     * Returns the ContactSegments sub-service for managing contact segment memberships.
+     *
+     * @return The ContactSegments service instance.
+     */
+    public ContactSegments segments() {
+        if (this.contactSegments == null) {
+            this.contactSegments = new ContactSegments(this.apiKey);
+        }
+        return this.contactSegments;
+    }
+
+    /**
+     * Returns the ContactTopics sub-service for managing contact topic subscriptions.
+     *
+     * @return The ContactTopics service instance.
+     */
+    public ContactTopics topics() {
+        if (this.contactTopics == null) {
+            this.contactTopics = new ContactTopics(this.apiKey);
+        }
+        return this.contactTopics;
+    }
+
+    /**
+     * Creates a global contact (not associated with any segment).
+     *
+     * <p>To add a contact to a segment, first create the global contact using this method,
+     * then use {@code contacts().segments().add(options)} to add it to specific segments.</p>
+     *
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code CreateContactOptions}
+     * are ignored. Use the workflow above for segment membership.</p>
      *
      * @param createContactOptions The Contact details.
      * @return The details of the created contact.
      * @throws ResendException If an error occurs during the Contact creation process.
      */
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
-        String segmentId = createContactOptions.getSegmentId() != null ? createContactOptions.getSegmentId() : createContactOptions.getAudienceId();
         String payload = super.resendMapper.writeValue(createContactOptions);
 
-        // Use /contacts for global contacts (when no segment ID is provided)
-        String endpoint = (segmentId == null || segmentId.isEmpty())
-            ? "/contacts"
-            : "/segments/" + segmentId + "/contacts";
-
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/contacts", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -50,12 +98,18 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Retrieves a list of contacts and returns a ListContactsResponseSuccess.
+     * Retrieves a list of contacts in a segment.
+     *
+     * @deprecated This method is deprecated. Segment-related operations have been moved to dedicated services.
+     *             For segment-specific contact operations, use the Segments service instead:
+     *             {@code resend.segments().get(segmentId)} or contact operations through the Segments API.
+     *             This method will be removed in a future version.
      *
      * @param segmentId The id of the segment (formerly known as audienceId).
      * @return A ListContactsResponseSuccess containing the list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
+    @Deprecated
     public ListContactsResponseSuccess list(String segmentId) throws ResendException {
         AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + segmentId + "/contacts" , super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -69,13 +123,19 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Retrieves a paginated list of contacts and returns a ListContactsResponseSuccess.
+     * Retrieves a paginated list of contacts in a segment.
+     *
+     * @deprecated This method is deprecated. Segment-related operations have been moved to dedicated services.
+     *             For segment-specific contact operations, use the Segments service instead:
+     *             {@code resend.segments().get(segmentId)} or contact operations through the Segments API.
+     *             This method will be removed in a future version.
      *
      * @param segmentId The id of the segment (formerly known as audienceId).
      * @param params The params used to customize the list.
      * @return A ListContactsResponseSuccess containing the paginated list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
+    @Deprecated
     public ListContactsResponseSuccess list(String segmentId, ListParams params) throws ResendException {
         String pathWithQuery = "/segments/" + segmentId + "/contacts" + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
@@ -128,15 +188,18 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Retrieves a contact by its unique identifier.
+     * Retrieves a global contact by its unique identifier.
      *
-     * @param params The object containing:
-     *               – {@code audienceId}: the audience to which the contact belongs
-     *               – Either {@code id}: the contact's id
-     *                 or {@code email}: the contact's email address
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code GetContactOptions}
+     * are ignored. This method only retrieves global contacts. Use {@link #get(String)} for a simpler API.</p>
+     *
+     * @deprecated Use {@link #get(String)} instead for global contacts.
+     *
+     * @param params The object containing either {@code id} or {@code email} of the contact.
      * @return The retrieved contact details.
      * @throws ResendException If an error occurs while retrieving the contact.
      */
+    @Deprecated
     public GetContactResponseSuccess get(GetContactOptions params) throws ResendException {
         String id    = params.getId();
         String email = params.getEmail();
@@ -146,14 +209,8 @@ public class Contacts extends BaseService {
         }
 
         String contactIdentifier =  (id != null && !id.isEmpty()) ? id : email;
-        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        // Use /contacts for global contacts (when no segment ID is provided)
-        String endpoint = (segmentId == null || segmentId.isEmpty())
-            ? "/contacts/" + contactIdentifier
-            : "/segments/" + segmentId + "/contacts/" + contactIdentifier;
-
-        AbstractHttpResponse<String> response = this.httpClient.perform(endpoint, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = this.httpClient.perform("/contacts/" + contactIdentifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -188,12 +245,18 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Deletes a contact based on the provided contact ID or email.
+     * Deletes a global contact based on the provided contact ID or email.
+     *
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code RemoveContactOptions}
+     * are ignored. This method only removes global contacts. Use {@link #remove(String)} for a simpler API.</p>
+     *
+     * @deprecated Use {@link #remove(String)} instead for global contacts.
      *
      * @param params The object with identifier of the contact to delete.
      * @return The RemoveContactsResponseSuccess with the details of the removed contact.
      * @throws ResendException If an error occurs during the contact deletion process.
      */
+    @Deprecated
     public RemoveContactResponseSuccess remove(RemoveContactOptions params) throws ResendException {
         if ((params.getId() == null && params.getEmail() == null) ||
                 (params.getId() != null && params.getEmail() != null)) {
@@ -201,14 +264,8 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
-        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
 
-        // Use /contacts for global contacts (when no segment ID is provided)
-        String endpoint = (segmentId == null || segmentId.isEmpty())
-            ? "/contacts/" + pathParameter
-            : "/segments/" + segmentId + "/contacts/" + pathParameter;
-
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.DELETE, "", null);
+        AbstractHttpResponse<String> response = httpClient.perform("/contacts/" + pathParameter, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -244,7 +301,10 @@ public class Contacts extends BaseService {
     }
 
     /**
-     * Updates a contact based on the provided contact ID or email.
+     * Updates a global contact based on the provided contact ID or email.
+     *
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code UpdateContactOptions}
+     * are ignored. This method only updates global contacts.</p>
      *
      * @param params The object with identifier of the contact to patch.
      * @return The UpdateContactResponseSuccess with the details of the patched contact.
@@ -257,15 +317,9 @@ public class Contacts extends BaseService {
         }
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
-        String segmentId = params.getSegmentId() != null ? params.getSegmentId() : params.getAudienceId();
-
-        // Use /contacts for global contacts (when no segment ID is provided)
-        String endpoint = (segmentId == null || segmentId.isEmpty())
-            ? "/contacts/" + pathParameter
-            : "/segments/" + segmentId + "/contacts/" + pathParameter;
 
         String payload = super.resendMapper.writeValue(params);
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+        AbstractHttpResponse<String> response = httpClient.perform("/contacts/" + pathParameter, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
@@ -278,6 +332,11 @@ public class Contacts extends BaseService {
 
     /**
      * Retrieves a list of topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(contactIdOrEmail)}.
+     *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
      * @return A ListContactTopicsResponse containing the list of topic subscriptions.
@@ -301,6 +360,11 @@ public class Contacts extends BaseService {
 
     /**
      * Retrieves a paginated list of topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(contactIdOrEmail, params)}.
+     *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
      * @param params           The params used to customize the list.
@@ -326,6 +390,11 @@ public class Contacts extends BaseService {
 
     /**
      * Updates topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(options)}.
+     *             This method will be removed in a future version.
      *
      * @param options The options containing the contact identifier and topic updates.
      * @return The UpdateContactTopicsResponse with the contact ID.

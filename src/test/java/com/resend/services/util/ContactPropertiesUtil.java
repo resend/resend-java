@@ -38,7 +38,6 @@ public class ContactPropertiesUtil {
         return new ContactProperty(
                 "123",
                 "age",
-                "contact_property",
                 "2023-04-08T00:11:13.110779+00:00",
                 "number",
                 "25"
@@ -48,9 +47,9 @@ public class ContactPropertiesUtil {
     public static ListContactPropertiesResponseSuccess createContactPropertiesListResponse() {
         List<ContactProperty> properties = new ArrayList<>();
 
-        ContactProperty p1 = new ContactProperty("1", "age", "contact_property", "2023-04-08T00:11:13.110779+00:00", "string", "25");
-        ContactProperty p2 = new ContactProperty("2", "city", "contact_property", "2023-04-08T00:11:13.110779+00:00", "string", "New York");
-        ContactProperty p3 = new ContactProperty("3", "subscribed", "contact_property", "2023-04-08T00:11:13.110779+00:00", "string", "fallback");
+        ContactProperty p1 = new ContactProperty("1", "age", "2023-04-08T00:11:13.110779+00:00", "string", "25");
+        ContactProperty p2 = new ContactProperty("2", "city", "2023-04-08T00:11:13.110779+00:00", "string", "New York");
+        ContactProperty p3 = new ContactProperty("3", "subscribed", "2023-04-08T00:11:13.110779+00:00", "string", "fallback");
 
         properties.add(p1);
         properties.add(p2);

@@ -13,9 +13,6 @@ public class ContactProperty {
     @JsonProperty("key")
     private String key;
 
-    @JsonProperty("display_name")
-    private String displayName;
-
     @JsonProperty("created_at")
     private String createdAt;
 
@@ -23,7 +20,7 @@ public class ContactProperty {
     private String type;
 
     @JsonProperty("fallback_value")
-    private Object fallbackValue;
+    private String fallbackValue;
 
     /**
      * Default constructor
@@ -37,15 +34,13 @@ public class ContactProperty {
      *
      * @param id              The ID of the contact property.
      * @param key             The key of the contact property.
-     * @param displayName     The display name of the contact property.
      * @param createdAt       The creation timestamp of the contact property.
      * @param type            The type of the contact property.
      * @param fallbackValue   The fallback value of the contact property.
      */
-    public ContactProperty(final String id, final String key, final String displayName, final String createdAt, final String type, final String fallbackValue) {
+    public ContactProperty(final String id, final String key, final String createdAt, final String type, final String fallbackValue) {
         this.id = id;
         this.key = key;
-        this.displayName = displayName;
         this.createdAt = createdAt;
         this.type = type;
         this.fallbackValue = fallbackValue;
@@ -67,15 +62,6 @@ public class ContactProperty {
      */
     public String getKey() {
         return key;
-    }
-
-    /**
-     * Gets the display name of the contact property.
-     *
-     * @return The display name of the contact property.
-     */
-    public String getDisplayName() {
-        return displayName;
     }
 
     /**
@@ -101,7 +87,7 @@ public class ContactProperty {
      *
      * @return The fallback value of the contact property.
      */
-    public Object getFallbackValue() {
+    public String getFallbackValue() {
         return fallbackValue;
     }
 }

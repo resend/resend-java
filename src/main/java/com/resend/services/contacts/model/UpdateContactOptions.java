@@ -1,10 +1,15 @@
 package com.resend.services.contacts.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents a request to update a contact.
+ * Represents a request to update a global contact.
+ *
+ * <p><strong>Note:</strong> This class is for updating global contacts only.
+ * Segment-related fields are ignored.</p>
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateContactOptions {
 
     @JsonProperty("id")
@@ -18,6 +23,7 @@ public class UpdateContactOptions {
     private final String audienceId;
 
     @JsonProperty("segment_id")
+    @Deprecated
     private final String segmentId;
 
     @JsonProperty("unsubscribed")
@@ -59,7 +65,9 @@ public class UpdateContactOptions {
      * Get the segment ID of the contact.
      *
      * @return The segment ID of the contact.
+     * @deprecated This field is ignored when updating global contacts.
      */
+    @Deprecated
     public String getSegmentId() {
         return segmentId;
     }
@@ -148,7 +156,9 @@ public class UpdateContactOptions {
          *
          * @param segmentId The segment ID of the contact.
          * @return The builder instance.
+         * @deprecated This field is ignored when updating global contacts.
          */
+        @Deprecated
         public Builder segmentId(String segmentId) {
             this.segmentId = segmentId;
             return this;

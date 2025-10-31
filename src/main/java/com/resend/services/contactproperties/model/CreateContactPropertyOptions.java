@@ -14,7 +14,7 @@ public class CreateContactPropertyOptions {
     private final String type;
 
     @JsonProperty("fallback_value")
-    private final Object fallbackValue;
+    private final String fallbackValue;
 
     /**
      * Constructs a CreateContactPropertyOptions object using the provided builder.
@@ -69,7 +69,7 @@ public class CreateContactPropertyOptions {
     public static class Builder {
         private String key;
         private String type;
-        private Object fallbackValue;
+        private String fallbackValue;
 
         /**
          * Set the key of the contact property.
@@ -99,7 +99,7 @@ public class CreateContactPropertyOptions {
          * @param fallbackValue The fallback value of the contact property.
          * @return The builder instance.
          */
-        public Builder fallbackValue(Object fallbackValue) {
+        public Builder fallbackValue(String fallbackValue) {
             this.fallbackValue = fallbackValue;
             return this;
         }

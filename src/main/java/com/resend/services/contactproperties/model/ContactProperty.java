@@ -20,7 +20,7 @@ public class ContactProperty {
     private String type;
 
     @JsonProperty("fallback_value")
-    private String fallbackValue;
+    private Object fallbackValue;
 
     /**
      * Default constructor
@@ -38,7 +38,7 @@ public class ContactProperty {
      * @param type            The type of the contact property.
      * @param fallbackValue   The fallback value of the contact property.
      */
-    public ContactProperty(final String id, final String key, final String createdAt, final String type, final String fallbackValue) {
+    public ContactProperty(final String id, final String key, final String createdAt, final String type, final Object fallbackValue) {
         this.id = id;
         this.key = key;
         this.createdAt = createdAt;
@@ -87,7 +87,7 @@ public class ContactProperty {
      *
      * @return The fallback value of the contact property.
      */
-    public String getFallbackValue() {
+    public Object getFallbackValue() {
         return fallbackValue;
     }
 }

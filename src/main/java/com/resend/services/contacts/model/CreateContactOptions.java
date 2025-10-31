@@ -1,10 +1,20 @@
 package com.resend.services.contacts.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents a request to create a contact.
+ * Represents a request to create a global contact.
+ *
+ * <p><strong>Note:</strong> This class is for creating global contacts only.
+ * To add a contact to a segment, use the workflow:
+ * <ol>
+ *   <li>Create global contact: {@code resend.contacts().create(options)}</li>
+ *   <li>Add to segment: {@code resend.contacts().segments().add(options)}</li>
+ * </ol>
+ * </p>
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateContactOptions {
 
     @JsonProperty("audience_id")
@@ -12,6 +22,7 @@ public class CreateContactOptions {
     private final String audienceId;
 
     @JsonProperty("segment_id")
+    @Deprecated
     private final String segmentId;
 
     @JsonProperty("email")
@@ -55,7 +66,10 @@ public class CreateContactOptions {
      * Get the segment ID of the contact.
      *
      * @return The segment ID of the contact.
+     * @deprecated This field is ignored when creating global contacts.
+     *             Use {@code resend.contacts().segments().add(options)} to add contacts to segments.
      */
+    @Deprecated
     public String getSegmentId() {
         return segmentId;
     }
@@ -134,7 +148,10 @@ public class CreateContactOptions {
          *
          * @param segmentId The segment ID of the contact.
          * @return The builder instance.
+         * @deprecated This field is ignored when creating global contacts.
+         *             Use {@code resend.contacts().segments().add(options)} to add contacts to segments.
          */
+        @Deprecated
         public Builder segmentId(String segmentId) {
             this.segmentId = segmentId;
             return this;

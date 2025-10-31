@@ -13,9 +13,6 @@ public class ContactProperty {
     @JsonProperty("key")
     private String key;
 
-    @JsonProperty("object")
-    private String object;
-
     @JsonProperty("created_at")
     private String createdAt;
 
@@ -37,15 +34,13 @@ public class ContactProperty {
      *
      * @param id              The ID of the contact property.
      * @param key             The key of the contact property.
-     * @param object          The object type of the contact property.
      * @param createdAt       The creation timestamp of the contact property.
      * @param type            The type of the contact property.
      * @param fallbackValue   The fallback value of the contact property.
      */
-    public ContactProperty(final String id, final String key, final String object, final String createdAt, final String type, final Object fallbackValue) {
+    public ContactProperty(final String id, final String key, final String createdAt, final String type, final Object fallbackValue) {
         this.id = id;
         this.key = key;
-        this.object = object;
         this.createdAt = createdAt;
         this.type = type;
         this.fallbackValue = fallbackValue;
@@ -67,15 +62,6 @@ public class ContactProperty {
      */
     public String getKey() {
         return key;
-    }
-
-    /**
-     * Gets the object type of the contact property.
-     *
-     * @return The object type of the contact property.
-     */
-    public String getObject() {
-        return object;
     }
 
     /**

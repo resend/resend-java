@@ -11,7 +11,7 @@ public class ContactPropertiesUtil {
         return CreateContactPropertyOptions.builder()
                 .key("age")
                 .type("number")
-                .fallbackValue(25)
+                .fallbackValue("25")
                 .build();
     }
 
@@ -38,24 +38,23 @@ public class ContactPropertiesUtil {
         return new ContactProperty(
                 "123",
                 "age",
-                "contact_property",
                 "2023-04-08T00:11:13.110779+00:00",
                 "number",
-                25
+                "25"
         );
     }
 
     public static ListContactPropertiesResponseSuccess createContactPropertiesListResponse() {
         List<ContactProperty> properties = new ArrayList<>();
 
-        ContactProperty p1 = new ContactProperty("1", "age", "contact_property", "2023-04-08T00:11:13.110779+00:00", "number", 25);
-        ContactProperty p2 = new ContactProperty("2", "city", "contact_property", "2023-04-08T00:11:13.110779+00:00", "string", "New York");
-        ContactProperty p3 = new ContactProperty("3", "subscribed", "contact_property", "2023-04-08T00:11:13.110779+00:00", "boolean", true);
+        ContactProperty p1 = new ContactProperty("1", "age", "2023-04-08T00:11:13.110779+00:00", "string", "25");
+        ContactProperty p2 = new ContactProperty("2", "city", "2023-04-08T00:11:13.110779+00:00", "string", "New York");
+        ContactProperty p3 = new ContactProperty("3", "subscribed", "2023-04-08T00:11:13.110779+00:00", "string", "fallback");
 
         properties.add(p1);
         properties.add(p2);
         properties.add(p3);
 
-        return new ListContactPropertiesResponseSuccess(properties, "list");
+        return new ListContactPropertiesResponseSuccess(properties, "list", false);
     }
 }

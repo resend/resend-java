@@ -14,6 +14,9 @@ public class ListContactPropertiesResponseSuccess {
     @JsonProperty("object")
     private String object;
 
+    @JsonProperty("has_more")
+    private Boolean hasMore;
+
     /**
      * Default constructor
      */
@@ -25,10 +28,12 @@ public class ListContactPropertiesResponseSuccess {
      *
      * @param data      The list of contact properties.
      * @param object    The object type.
+     * @param hasMore   Indicate if there are more items to be returned.
      */
-    public ListContactPropertiesResponseSuccess(final List<ContactProperty> data, final String object) {
+    public ListContactPropertiesResponseSuccess(final List<ContactProperty> data, final String object, final Boolean hasMore) {
         this.data = data;
         this.object = object;
+        this.hasMore = hasMore;
     }
 
     /**
@@ -47,6 +52,15 @@ public class ListContactPropertiesResponseSuccess {
      */
     public String getObject() {
         return object;
+    }
+
+    /**
+     * Gets the indicator whether there are more items available for pagination.
+     *
+     * @return Whether there are more items available for pagination.
+     */
+    public Boolean hasMore() {
+        return hasMore;
     }
 
 }

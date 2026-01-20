@@ -7,12 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Represents a request to create a global contact.
  *
  * <p><strong>Note:</strong> This class is for creating global contacts only.
- * To add a contact to a segment, use the workflow:
+ * To add a contact to a segment, use the workflow:</p>
  * <ol>
  *   <li>Create global contact: {@code resend.contacts().create(options)}</li>
  *   <li>Add to segment: {@code resend.contacts().segments().add(options)}</li>
  * </ol>
- * </p>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateContactOptions {

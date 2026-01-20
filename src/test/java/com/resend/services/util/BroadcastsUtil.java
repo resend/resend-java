@@ -85,5 +85,30 @@ public class BroadcastsUtil {
                 .scheduledAt("2024-12-18T15:00:00.000Z")
                 .build();
     }
+
+    public static CreateBroadcastOptions createAndSendBroadcastRequest() {
+        return CreateBroadcastOptions.builder()
+                .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .from("example@resend.dev")
+                .subject("Sample Subject")
+                .html("<p>This is a test email.</p>")
+                .text("This is a test email.")
+                .name("Sample Broadcast")
+                .send(true)
+                .build();
+    }
+
+    public static CreateBroadcastOptions createAndScheduleBroadcastRequest() {
+        return CreateBroadcastOptions.builder()
+                .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")
+                .from("example@resend.dev")
+                .subject("Sample Subject")
+                .html("<p>This is a test email.</p>")
+                .text("This is a test email.")
+                .name("Sample Broadcast")
+                .send(true)
+                .scheduledAt("2024-12-18T15:00:00.000Z")
+                .build();
+    }
 }
 

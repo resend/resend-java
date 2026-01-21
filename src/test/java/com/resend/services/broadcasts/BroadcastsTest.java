@@ -123,5 +123,34 @@ public class BroadcastsTest {
         verify(broadcasts, times(1)).list(params);
     }
 
+    @Test
+    public void testCreateAndSendBroadcast_Success() throws ResendException {
+        CreateBroadcastResponseSuccess expectedResponse = BroadcastsUtil.createBroadcastResponse();
+        CreateBroadcastOptions createOptions = BroadcastsUtil.createAndSendBroadcastRequest();
+
+        when(broadcasts.create(createOptions)).thenReturn(expectedResponse);
+
+        CreateBroadcastResponseSuccess response = broadcasts.create(createOptions);
+
+        assertEquals(expectedResponse, response);
+        assertTrue(createOptions.getSend());
+        verify(broadcasts, times(1)).create(createOptions);
+    }
+
+    @Test
+    public void testCreateAndScheduleBroadcast_Success() throws ResendException {
+        CreateBroadcastResponseSuccess expectedResponse = BroadcastsUtil.createBroadcastResponse();
+        CreateBroadcastOptions createOptions = BroadcastsUtil.createAndScheduleBroadcastRequest();
+
+        when(broadcasts.create(createOptions)).thenReturn(expectedResponse);
+
+        CreateBroadcastResponseSuccess response = broadcasts.create(createOptions);
+
+        assertEquals(expectedResponse, response);
+        assertTrue(createOptions.getSend());
+        assertNotNull(createOptions.getScheduledAt());
+        verify(broadcasts, times(1)).create(createOptions);
+    }
+
 }
 

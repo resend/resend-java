@@ -16,6 +16,9 @@ public class ApiKey {
     @JsonProperty("created_at")
     private String createdAt;
 
+    @JsonProperty("last_used_at")
+    private String lastUsedAt;
+
     /**
      * Default constructor. Creates an instance of ApiKey with default values.
      */
@@ -30,9 +33,22 @@ public class ApiKey {
      * @param createdAt The creation timestamp of the API key item.
      */
     public ApiKey(String id, String name, String createdAt) {
+        this(id, name, createdAt, null);
+    }
+
+    /**
+     * Creates an instance of ApiKey with the specified attributes.
+     *
+     * @param id         The ID of the API key item.
+     * @param name       The name of the API key item.
+     * @param createdAt  The creation timestamp of the API key item.
+     * @param lastUsedAt The last used timestamp of the API key item.
+     */
+    public ApiKey(String id, String name, String createdAt, String lastUsedAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
+        this.lastUsedAt = lastUsedAt;
     }
 
     /**
@@ -60,5 +76,14 @@ public class ApiKey {
      */
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    /**
+     * Gets the last used timestamp of the API key item.
+     *
+     * @return The last used timestamp of the API key item, or null if never used.
+     */
+    public String getLastUsedAt() {
+        return lastUsedAt;
     }
 }

@@ -89,19 +89,13 @@ public class ContactsTest {
     }
 
     @Test
-    public void testListContactsSegmentIdTakesPrecedenceOverAudienceId_Success() throws ResendException {
+    public void testListContactsSegmentIdTakesPrecedenceOverAudienceId_Success() {
         ListContactsOptions options = ListContactsOptions.builder()
                 .segmentId("segment-123")
                 .audienceId("audience-456")
                 .build();
-        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
 
-        when(contacts.list(options)).thenReturn(expectedResponse);
-
-        ListContactsResponseSuccess res = contacts.list(options);
-
-        assertNotNull(res);
-        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals("segment-123", options.resolvedSegmentId());
     }
 
     @Test

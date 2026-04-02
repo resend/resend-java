@@ -161,7 +161,7 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list(ListContactsOptions options) throws ResendException {
-        String resolvedId = options.resolvedSegmentId();
+        String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String path = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
         AbstractHttpResponse<String> response = this.httpClient.perform(path, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -187,7 +187,7 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list(ListContactsOptions options, ListParams params) throws ResendException {
-        String resolvedId = options.resolvedSegmentId();
+        String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String basePath = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
         String pathWithQuery = basePath + URLHelper.parse(params);
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));

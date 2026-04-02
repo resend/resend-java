@@ -34,3 +34,10 @@ out/
 # Compiled files
 /bin/
 /target/
+
+# Sensitive files - NEVER commit these
+*.gpg
+*.asc
+secring.*
+gradle.properties.local
+local.properties

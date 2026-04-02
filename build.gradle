@@ -87,17 +87,24 @@ publishing {
     }
     repositories {
         maven {
-            name = 'ossrh-staging-api'
+            name = 'central'
             url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
             credentials {
-                username = USERNAME
-                password = PASSWORD
+                username = System.getenv('SONATYPE_USERNAME') ?: ''
+                password = System.getenv('SONATYPE_PASSWORD') ?: ''
             }
         }
     }
 }
 
 signing {
+    def signingKeyId = System.getenv('SIGNING_KEY_ID')
+    def signingKey = System.getenv('GPG_PRIVATE_KEY')
+    def signingPassword = System.getenv('SIGNING_PASSWORD')
+
+    if (signingKey) {
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    }
     sign publishing.publications.mavenJava
 }
 

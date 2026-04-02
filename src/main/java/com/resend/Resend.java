@@ -12,6 +12,7 @@ import com.resend.services.segments.Segments;
 import com.resend.services.webhooks.Webhooks;
 import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
+import com.resend.services.logs.Logs;
 import com.resend.services.templates.Templates;
 
 /**
@@ -150,5 +151,14 @@ public class Resend {
      */
     public Templates templates() {
         return new Templates(apiKey);
+    }
+
+    /**
+     * Returns a Logs object that can be used to interact with the Logs service.
+     *
+     * @return A Logs object.
+     */
+    public Logs logs() {
+        return new Logs(apiKey);
     }
 }

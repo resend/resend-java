@@ -150,6 +150,58 @@ public class Contacts extends BaseService {
     }
 
     /**
+     * Retrieves a list of contacts, optionally scoped to a segment.
+     *
+     * <p>If {@code options} contains a {@code segmentId} (or the deprecated {@code audienceId}),
+     * the contacts are fetched from that segment. When both are provided, {@code segmentId}
+     * takes precedence. If neither is set, all global contacts are returned.</p>
+     *
+     * @param options The options specifying an optional segment/audience ID.
+     * @return A ListContactsResponseSuccess containing the list of contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListContactsOptions options) throws ResendException {
+        String resolvedId = options.resolvedSegmentId();
+        String path = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
+        AbstractHttpResponse<String> response = this.httpClient.perform(path, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListContactsResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of contacts, optionally scoped to a segment.
+     *
+     * <p>If {@code options} contains a {@code segmentId} (or the deprecated {@code audienceId}),
+     * the contacts are fetched from that segment. When both are provided, {@code segmentId}
+     * takes precedence. If neither is set, all global contacts are returned.</p>
+     *
+     * @param options The options specifying an optional segment/audience ID.
+     * @param params  The params used to customize the list.
+     * @return A ListContactsResponseSuccess containing the paginated list of contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListContactsOptions options, ListParams params) throws ResendException {
+        String resolvedId = options.resolvedSegmentId();
+        String basePath = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
+        String pathWithQuery = basePath + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListContactsResponseSuccess.class);
+    }
+
+    /**
      * Retrieves a list of global contacts (not associated with any segment).
      *
      * @return A ListContactsResponseSuccess containing the list of global contacts.

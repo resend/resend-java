@@ -57,6 +57,84 @@ public class ContactsTest {
     }
 
     @Test
+    public void testListContactsBySegmentId_Success() throws ResendException {
+        ListContactsOptions options = ListContactsOptions.builder()
+                .segmentId("segment-123")
+                .build();
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(options)).thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(options);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testListContactsByAudienceId_Success() throws ResendException {
+        ListContactsOptions options = ListContactsOptions.builder()
+                .audienceId("audience-123")
+                .build();
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(options)).thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(options);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testListContactsSegmentIdTakesPrecedenceOverAudienceId_Success() throws ResendException {
+        ListContactsOptions options = ListContactsOptions.builder()
+                .segmentId("segment-123")
+                .audienceId("audience-456")
+                .build();
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(options)).thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(options);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+    }
+
+    @Test
+    public void testListContactsWithPaginationBySegmentId_Success() throws ResendException {
+        ListParams params = ListParams.builder().limit(3).build();
+        ListContactsOptions options = ListContactsOptions.builder()
+                .segmentId("segment-123")
+                .build();
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(options, params)).thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(options, params);
+
+        assertNotNull(res);
+        assertEquals(params.getLimit(), res.getData().size());
+        assertEquals(expectedResponse.getObject(), res.getObject());
+    }
+
+    @Test
+    public void testListContactsGlobalWhenNoId_Success() throws ResendException {
+        ListContactsOptions options = ListContactsOptions.builder().build();
+        ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();
+
+        when(contacts.list(options)).thenReturn(expectedResponse);
+
+        ListContactsResponseSuccess res = contacts.list(options);
+
+        assertNotNull(res);
+        assertEquals(expectedResponse.getData().size(), res.getData().size());
+    }
+
+    @Test
     public void testListContacts_Success() throws ResendException {
         String audienceId = "123";
         ListContactsResponseSuccess expectedResponse = ContactsUtil.createContactsListResponse();

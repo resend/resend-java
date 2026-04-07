@@ -62,8 +62,8 @@ public class UpdateAutomationOptions {
         private String id;
         private String name;
         private AutomationStatus status;
-        private List<AutomationStep> steps = new ArrayList<>();
-        private List<AutomationEdge> edges = new ArrayList<>();
+        private List<AutomationStep> steps;
+        private List<AutomationEdge> edges;
         private boolean stepsSet = false;
         private boolean edgesSet = false;
 
@@ -89,12 +89,18 @@ public class UpdateAutomationOptions {
         }
 
         public Builder steps(AutomationStep... steps) {
-            this.steps = Arrays.asList(steps);
+            if (this.steps == null) {
+                this.steps = new ArrayList<>();
+            }
+            this.steps.addAll(Arrays.asList(steps));
             this.stepsSet = true;
             return this;
         }
 
         public Builder step(AutomationStep step) {
+            if (this.steps == null) {
+                this.steps = new ArrayList<>();
+            }
             this.steps.add(step);
             this.stepsSet = true;
             return this;
@@ -107,12 +113,18 @@ public class UpdateAutomationOptions {
         }
 
         public Builder edges(AutomationEdge... edges) {
-            this.edges = Arrays.asList(edges);
+            if (this.edges == null) {
+                this.edges = new ArrayList<>();
+            }
+            this.edges.addAll(Arrays.asList(edges));
             this.edgesSet = true;
             return this;
         }
 
         public Builder edge(AutomationEdge edge) {
+            if (this.edges == null) {
+                this.edges = new ArrayList<>();
+            }
             this.edges.add(edge);
             this.edgesSet = true;
             return this;

@@ -19,9 +19,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Decode GPG key
-        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d > /tmp/secring.gpg
-
       - name: Run tests
         run: ./gradlew test
 

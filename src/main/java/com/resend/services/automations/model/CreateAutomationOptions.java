@@ -52,8 +52,8 @@ public class CreateAutomationOptions {
     public static class Builder {
         private String name;
         private AutomationStatus status;
-        private List<AutomationStep> steps = new ArrayList<>();
-        private List<AutomationEdge> edges = new ArrayList<>();
+        private List<AutomationStep> steps;
+        private List<AutomationEdge> edges;
 
         public Builder name(String name) {
             this.name = name;
@@ -71,11 +71,17 @@ public class CreateAutomationOptions {
         }
 
         public Builder steps(AutomationStep... steps) {
-            this.steps = Arrays.asList(steps);
+            if (this.steps == null) {
+                this.steps = new ArrayList<>();
+            }
+            this.steps.addAll(Arrays.asList(steps));
             return this;
         }
 
         public Builder step(AutomationStep step) {
+            if (this.steps == null) {
+                this.steps = new ArrayList<>();
+            }
             this.steps.add(step);
             return this;
         }
@@ -86,11 +92,17 @@ public class CreateAutomationOptions {
         }
 
         public Builder edges(AutomationEdge... edges) {
-            this.edges = Arrays.asList(edges);
+            if (this.edges == null) {
+                this.edges = new ArrayList<>();
+            }
+            this.edges.addAll(Arrays.asList(edges));
             return this;
         }
 
         public Builder edge(AutomationEdge edge) {
+            if (this.edges == null) {
+                this.edges = new ArrayList<>();
+            }
             this.edges.add(edge);
             return this;
         }

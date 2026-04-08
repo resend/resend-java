@@ -75,7 +75,7 @@ public class EventsUtil {
 
         return SendEventOptions.builder()
                 .event("user.signup")
-                .email("kewynakshlley@gmail.com")
+                .email("user@example.com")
                 .payload(payload)
                 .build();
     }

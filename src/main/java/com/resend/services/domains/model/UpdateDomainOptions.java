@@ -17,6 +17,10 @@ public class UpdateDomainOptions {
 
     @JsonProperty("tls")
     private final Tls tls;
+
+    @JsonProperty("tracking_subdomain")
+    private final String trackingSubdomain;
+
     /**
      * Constructs a UpdateDomainOptions object using the provided builder.
      *
@@ -27,6 +31,7 @@ public class UpdateDomainOptions {
         this.clickTracking = builder.clickTracking;
         this.openTracking = builder.openTracking;
         this.tls = builder.tls;
+        this.trackingSubdomain = builder.trackingSubdomain;
     }
 
     /**
@@ -66,6 +71,15 @@ public class UpdateDomainOptions {
     }
 
     /**
+     * Get the trackingSubdomain of the domain.
+     *
+     * @return The subdomain used for click and open tracking.
+     */
+    public String getTrackingSubdomain() {
+        return trackingSubdomain;
+    }
+
+    /**
      * Create a new builder instance for constructing UpdateDomainOptions objects.
      *
      * @return A new builder instance.
@@ -82,6 +96,7 @@ public class UpdateDomainOptions {
         private boolean clickTracking;
         private boolean openTracking;
         private Tls tls;
+        private String trackingSubdomain;
 
         /**
          * Set the id of the domain.
@@ -124,6 +139,17 @@ public class UpdateDomainOptions {
          */
         public Builder tls(Tls tls) {
             this.tls = tls;
+            return this;
+        }
+
+        /**
+         * Set the trackingSubdomain of the domain.
+         *
+         * @param trackingSubdomain The subdomain to use for click and open tracking.
+         * @return The builder instance.
+         */
+        public Builder trackingSubdomain(String trackingSubdomain) {
+            this.trackingSubdomain = trackingSubdomain;
             return this;
         }
 

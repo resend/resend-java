@@ -2,6 +2,9 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Represents a successful response from stopping an automation.
+ */
 public class StopAutomationResponseSuccess {
 
     @JsonProperty("object")
@@ -22,14 +25,29 @@ public class StopAutomationResponseSuccess {
         this.status = status;
     }
 
+    /**
+     * Retrieves the object type.
+     *
+     * @return The object type.
+     */
     public String getObject() {
         return object;
     }
 
+    /**
+     * Retrieves the stopped automation ID.
+     *
+     * @return The automation ID.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Retrieves the automation status after stopping.
+     *
+     * @return The automation status.
+     */
     public AutomationStatus getStatus() {
         return status;
     }

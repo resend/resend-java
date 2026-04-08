@@ -1,5 +1,8 @@
 package com.resend.services.automations.model;
 
+/**
+ * Represents parameters for listing automations with filtering and pagination.
+ */
 public class ListAutomationsParams {
 
     private final AutomationStatus status;
@@ -14,22 +17,47 @@ public class ListAutomationsParams {
         this.before = builder.before;
     }
 
+    /**
+     * Retrieves the status filter.
+     *
+     * @return The automation status filter.
+     */
     public AutomationStatus getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the maximum number of results.
+     *
+     * @return The limit.
+     */
     public Integer getLimit() {
         return limit;
     }
 
+    /**
+     * Retrieves the cursor for pagination (after).
+     *
+     * @return The after cursor.
+     */
     public String getAfter() {
         return after;
     }
 
+    /**
+     * Retrieves the cursor for pagination (before).
+     *
+     * @return The before cursor.
+     */
     public String getBefore() {
         return before;
     }
 
+    /**
+     * Creates a new builder instance for ListAutomationsParams.
+     *
+     * @return A new Builder instance.
+     */
     public static Builder builder() {
         return new Builder();
     }

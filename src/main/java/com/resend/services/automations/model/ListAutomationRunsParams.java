@@ -1,5 +1,8 @@
 package com.resend.services.automations.model;
 
+/**
+ * Represents parameters for listing automation runs with filtering and pagination.
+ */
 public class ListAutomationRunsParams {
 
     private final RunStatus status;
@@ -14,22 +17,47 @@ public class ListAutomationRunsParams {
         this.before = builder.before;
     }
 
+    /**
+     * Retrieves the status filter.
+     *
+     * @return The run status filter.
+     */
     public RunStatus getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the maximum number of results.
+     *
+     * @return The limit.
+     */
     public Integer getLimit() {
         return limit;
     }
 
+    /**
+     * Retrieves the cursor for pagination (after).
+     *
+     * @return The after cursor.
+     */
     public String getAfter() {
         return after;
     }
 
+    /**
+     * Retrieves the cursor for pagination (before).
+     *
+     * @return The before cursor.
+     */
     public String getBefore() {
         return before;
     }
 
+    /**
+     * Creates a new builder instance for ListAutomationRunsParams.
+     *
+     * @return A new Builder instance.
+     */
     public static Builder builder() {
         return new Builder();
     }

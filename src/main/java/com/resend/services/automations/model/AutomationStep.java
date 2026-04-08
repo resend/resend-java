@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a step in an automation workflow.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AutomationStep {
 
@@ -24,18 +27,38 @@ public class AutomationStep {
         this.config = builder.config;
     }
 
+    /**
+     * Retrieves the step reference identifier.
+     *
+     * @return The step reference.
+     */
     public String getRef() {
         return ref;
     }
 
+    /**
+     * Retrieves the step type.
+     *
+     * @return The step type.
+     */
     public StepType getType() {
         return type;
     }
 
+    /**
+     * Retrieves the step configuration.
+     *
+     * @return The configuration as a map of key-value pairs.
+     */
     public Map<String, Object> getConfig() {
         return config;
     }
 
+    /**
+     * Creates a new builder instance for AutomationStep.
+     *
+     * @return A new Builder instance.
+     */
     public static Builder builder() {
         return new Builder();
     }

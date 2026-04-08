@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Represents a successful response from listing automations.
+ */
 public class ListAutomationsResponseSuccess {
 
     @JsonProperty("object")
@@ -24,14 +27,29 @@ public class ListAutomationsResponseSuccess {
         this.data = data;
     }
 
+    /**
+     * Retrieves the object type.
+     *
+     * @return The object type.
+     */
     public String getObject() {
         return object;
     }
 
+    /**
+     * Indicates if there are more automations available for pagination.
+     *
+     * @return True if more automations are available, false otherwise.
+     */
     public Boolean hasMore() {
         return hasMore;
     }
 
+    /**
+     * Retrieves the list of automations.
+     *
+     * @return The list of automation summaries.
+     */
     public List<AutomationListItem> getData() {
         return data;
     }

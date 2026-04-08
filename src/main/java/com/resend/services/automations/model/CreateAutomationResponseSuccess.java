@@ -2,6 +2,9 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Represents a successful response from creating an automation.
+ */
 public class CreateAutomationResponseSuccess {
 
     @JsonProperty("object")
@@ -18,10 +21,20 @@ public class CreateAutomationResponseSuccess {
         this.id = id;
     }
 
+    /**
+     * Retrieves the object type.
+     *
+     * @return The object type.
+     */
     public String getObject() {
         return object;
     }
 
+    /**
+     * Retrieves the created automation ID.
+     *
+     * @return The automation ID.
+     */
     public String getId() {
         return id;
     }

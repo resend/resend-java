@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents a request to update an automation.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateAutomationOptions {
 
@@ -34,26 +37,56 @@ public class UpdateAutomationOptions {
         this.edges = builder.edgesSet ? builder.edges : null;
     }
 
+    /**
+     * Retrieves the automation ID.
+     *
+     * @return The automation ID.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Retrieves the automation name.
+     *
+     * @return The automation name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieves the automation status.
+     *
+     * @return The automation status.
+     */
     public AutomationStatus getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the list of automation steps.
+     *
+     * @return The list of steps.
+     */
     public List<AutomationStep> getSteps() {
         return steps;
     }
 
+    /**
+     * Retrieves the list of automation edges.
+     *
+     * @return The list of edges.
+     */
     public List<AutomationEdge> getEdges() {
         return edges;
     }
 
+    /**
+     * Creates a new builder instance for UpdateAutomationOptions.
+     *
+     * @return A new Builder instance.
+     */
     public static Builder builder() {
         return new Builder();
     }

@@ -3,6 +3,9 @@ package com.resend.services.automations.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Represents an edge (connection) between steps in an automation workflow.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AutomationEdge {
 
@@ -30,18 +33,38 @@ public class AutomationEdge {
         this.edgeType = edgeType;
     }
 
+    /**
+     * Retrieves the source step reference.
+     *
+     * @return The source step reference.
+     */
     public String getFrom() {
         return from;
     }
 
+    /**
+     * Retrieves the target step reference.
+     *
+     * @return The target step reference.
+     */
     public String getTo() {
         return to;
     }
 
+    /**
+     * Retrieves the edge type.
+     *
+     * @return The edge type.
+     */
     public EdgeType getEdgeType() {
         return edgeType;
     }
 
+    /**
+     * Creates a new builder instance for AutomationEdge.
+     *
+     * @return A new Builder instance.
+     */
     public static Builder builder() {
         return new Builder();
     }

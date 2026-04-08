@@ -2,6 +2,9 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * Represents the comparison operator for condition steps.
+ */
 public enum ConditionOperator {
     EQ("eq"),
     NEQ("neq");
@@ -12,6 +15,11 @@ public enum ConditionOperator {
         this.value = value;
     }
 
+    /**
+     * Returns the string value of the operator.
+     *
+     * @return The operator value.
+     */
     @JsonValue
     public String getValue() {
         return value;

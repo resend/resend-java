@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Represents a run of an automation with its full details.
+ */
 public class AutomationRun {
 
     @JsonProperty("object")
@@ -41,30 +44,65 @@ public class AutomationRun {
         this.steps = steps;
     }
 
+    /**
+     * Retrieves the object type.
+     *
+     * @return The object type.
+     */
     public String getObject() {
         return object;
     }
 
+    /**
+     * Retrieves the run ID.
+     *
+     * @return The run ID.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Retrieves the run status.
+     *
+     * @return The run status.
+     */
     public RunStatus getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the start timestamp.
+     *
+     * @return The start timestamp.
+     */
     public String getStartedAt() {
         return startedAt;
     }
 
+    /**
+     * Retrieves the completion timestamp.
+     *
+     * @return The completion timestamp.
+     */
     public String getCompletedAt() {
         return completedAt;
     }
 
+    /**
+     * Retrieves the creation timestamp.
+     *
+     * @return The creation timestamp.
+     */
     public String getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * Retrieves the list of run steps.
+     *
+     * @return The list of run steps.
+     */
     public List<AutomationRunStep> getSteps() {
         return steps;
     }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Represents an automation with its full details.
+ */
 public class Automation {
 
     @JsonProperty("object")
@@ -46,34 +49,74 @@ public class Automation {
         this.edges = edges;
     }
 
+    /**
+     * Retrieves the object type.
+     *
+     * @return The object type.
+     */
     public String getObject() {
         return object;
     }
 
+    /**
+     * Retrieves the automation ID.
+     *
+     * @return The automation ID.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Retrieves the automation name.
+     *
+     * @return The automation name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieves the automation status.
+     *
+     * @return The automation status.
+     */
     public AutomationStatus getStatus() {
         return status;
     }
 
+    /**
+     * Retrieves the creation timestamp.
+     *
+     * @return The creation timestamp.
+     */
     public String getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * Retrieves the last update timestamp.
+     *
+     * @return The last update timestamp.
+     */
     public String getUpdatedAt() {
         return updatedAt;
     }
 
+    /**
+     * Retrieves the list of automation steps.
+     *
+     * @return The list of steps.
+     */
     public List<AutomationStepResponse> getSteps() {
         return steps;
     }
 
+    /**
+     * Retrieves the list of automation edges.
+     *
+     * @return The list of edges.
+     */
     public List<AutomationEdge> getEdges() {
         return edges;
     }

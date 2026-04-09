@@ -12,6 +12,12 @@ import java.util.stream.Collectors;
 public class URLHelper {
 
     /**
+     * Private constructor to prevent instantiation.
+     */
+    private URLHelper() {
+    }
+
+    /**
      * Parses the given {@link ListParams} object into a query string.
      *
      * @param params The {@link ListParams} instance (can be null).

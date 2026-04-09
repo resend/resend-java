@@ -8,6 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RemoveContactFromSegmentResponseSuccess {
 
     /**
+     * Creates a new RemoveContactFromSegmentResponseSuccess instance.
+     */
+    public RemoveContactFromSegmentResponseSuccess() {
+    }
+
+    /**
      * The segment ID.
      */
     @JsonProperty("id")

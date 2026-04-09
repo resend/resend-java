@@ -76,6 +76,12 @@ public class AddContactToSegmentOptions {
      * Builder class for constructing AddContactToSegmentOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private String email;
         private String segmentId;

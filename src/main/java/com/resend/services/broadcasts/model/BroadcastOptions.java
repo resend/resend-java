@@ -124,9 +124,18 @@ public class BroadcastOptions {
     }
 
     /**
-     * Builder class for creating instances of CreateBroadcastOptions.
+     * Builder class for creating instances of BroadcastOptions.
+     *
+     * @param <T> the type of BroadcastOptions being built
+     * @param <B> the type of the builder itself for method chaining
      */
     protected static abstract class Builder<T extends BroadcastOptions, B extends Builder<T, B>> {
+
+        /**
+         * Creates a new Builder instance.
+         */
+        protected Builder() {
+        }
 
         /**
          * The ID of the audience targeted by the broadcast.

@@ -193,6 +193,12 @@ public class CreateEmailOptions {
      * Builder class for constructing CreateEmailOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String from;
         private List<String> to;
         private String text;

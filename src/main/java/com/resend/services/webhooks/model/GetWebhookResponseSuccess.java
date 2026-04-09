@@ -8,6 +8,12 @@ import java.util.List;
  */
 public class GetWebhookResponseSuccess {
 
+    /**
+     * Creates a new GetWebhookResponseSuccess instance.
+     */
+    public GetWebhookResponseSuccess() {
+    }
+
     @JsonProperty("object")
     private String object;
 

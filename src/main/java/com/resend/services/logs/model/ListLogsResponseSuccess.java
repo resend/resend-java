@@ -37,7 +37,24 @@ public class ListLogsResponseSuccess {
         this.data = data;
     }
 
+    /**
+     * Gets the object type.
+     *
+     * @return the object type ("list")
+     */
     public String getObject() { return object; }
+
+    /**
+     * Checks if there are more items available for pagination.
+     *
+     * @return true if more items are available, false otherwise
+     */
     public Boolean hasMore() { return hasMore; }
+
+    /**
+     * Gets the list of log entries.
+     *
+     * @return the list of log entries
+     */
     public List<LogEntry> getData() { return data; }
 }

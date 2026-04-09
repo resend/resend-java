@@ -27,6 +27,11 @@ public class RemoveContactOptions extends ContactOptions {
      * Builder class for constructing RemoveContactOptions objects.
      */
     public static class Builder extends ContactOptions.Builder<RemoveContactOptions, Builder> {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         /**
          * Build a new RemoveContactOptions object.

@@ -41,6 +41,12 @@ public class CreateSegmentOptions {
      * Builder class for constructing CreateSegmentOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
 
         /**

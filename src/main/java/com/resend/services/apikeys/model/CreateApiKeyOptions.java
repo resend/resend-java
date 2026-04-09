@@ -67,6 +67,12 @@ public class CreateApiKeyOptions {
      * Builder class for constructing CreateApiKeyRequest objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String permission;
         private String domainId;

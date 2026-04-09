@@ -79,6 +79,12 @@ public class ContactTopicOptions {
      * Builder for ContactTopicOptions.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private String subscription;
 

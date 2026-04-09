@@ -81,6 +81,12 @@ public class Attachment {
      * Builder class for creating Attachment instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String fileName;
         private String content;
         private String path;

@@ -62,6 +62,12 @@ public class ListParams {
      * Builder class for constructing ListParams objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private Integer limit;
 
         private String before;

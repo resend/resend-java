@@ -16,6 +16,9 @@ public class CreateDomainOptions {
     @JsonProperty("custom_return_path")
     private final String customReturnPath;
 
+    @JsonProperty("tracking_subdomain")
+    private final String trackingSubdomain;
+
     /**
      * Constructs a CreateDomainOptions object using the provided builder.
      *
@@ -25,6 +28,7 @@ public class CreateDomainOptions {
         this.name = builder.name;
         this.region = builder.region;
         this.customReturnPath = builder.customReturnPath;
+        this.trackingSubdomain = builder.trackingSubdomain;
     }
 
     /**
@@ -55,6 +59,15 @@ public class CreateDomainOptions {
     }
 
     /**
+     * Get the trackingSubdomain of the domain.
+     *
+     * @return The trackingSubdomain of the domain.
+     */
+    public String getTrackingSubdomain() {
+        return trackingSubdomain;
+    }
+
+    /**
      * Create a new builder instance for constructing CreateDomainOptions objects.
      *
      * @return A new builder instance.
@@ -70,6 +83,7 @@ public class CreateDomainOptions {
         private String name;
         private String region;
         private String customReturnPath;
+        private String trackingSubdomain;
 
         /**
          * Set the name of the domain.
@@ -101,6 +115,17 @@ public class CreateDomainOptions {
          */
         public Builder customReturnPath(String customReturnPath) {
             this.customReturnPath = customReturnPath;
+            return this;
+        }
+
+        /**
+         * Set the trackingSubdomain of the domain.
+         *
+         * @param trackingSubdomain The subdomain to use for click and open tracking.
+         * @return The builder instance.
+         */
+        public Builder trackingSubdomain(String trackingSubdomain) {
+            this.trackingSubdomain = trackingSubdomain;
             return this;
         }
 

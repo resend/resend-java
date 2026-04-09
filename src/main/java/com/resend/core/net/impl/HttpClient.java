@@ -1,5 +1,6 @@
 package com.resend.core.net.impl;
 
+import com.resend.core.SdkVersion;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
@@ -19,11 +20,8 @@ public class HttpClient implements IHttpClient<Response> {
     /** The base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
 
-    /** The version of the API */
-    private static final String VERSION_NAME = "4.13.0";
-
     /** The User-Agent header value for HTTP requests. */
-    public static final String USER_AGENT = "resend-java/" + VERSION_NAME;
+    public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
 
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;

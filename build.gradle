@@ -104,8 +104,8 @@ signing {
 
     if (signingKey) {
         useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign publishing.publications.mavenJava
     }
-    sign publishing.publications.mavenJava
 }
 
 javadoc {

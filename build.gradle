@@ -113,3 +113,9 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
+
+processResources {
+    filesMatching('resend-sdk.properties') {
+        expand(VERSION_NAME: VERSION_NAME)
+    }
+}

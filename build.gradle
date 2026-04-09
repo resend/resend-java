@@ -104,12 +104,18 @@ signing {
 
     if (signingKey) {
         useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign publishing.publications.mavenJava
     }
-    sign publishing.publications.mavenJava
 }
 
 javadoc {
     if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
+    }
+}
+
+processResources {
+    filesMatching('resend-sdk.properties') {
+        expand(VERSION_NAME: VERSION_NAME)
     }
 }

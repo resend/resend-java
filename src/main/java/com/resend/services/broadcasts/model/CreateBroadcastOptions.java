@@ -56,6 +56,11 @@ public class CreateBroadcastOptions extends BroadcastOptions {
      * Builder class for constructing CreateBroadcastOptions objects.
      */
     public static class Builder extends BroadcastOptions.Builder<CreateBroadcastOptions, Builder> {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         private Boolean send;
         private String scheduledAt;

@@ -51,10 +51,45 @@ public class LogEntry {
         this.userAgent = userAgent;
     }
 
+    /**
+     * Gets the unique identifier of the log.
+     *
+     * @return the log ID
+     */
     public String getId() { return id; }
+
+    /**
+     * Gets the creation timestamp of the log.
+     *
+     * @return the creation timestamp
+     */
     public String getCreatedAt() { return createdAt; }
+
+    /**
+     * Gets the API endpoint that was called.
+     *
+     * @return the endpoint path
+     */
     public String getEndpoint() { return endpoint; }
+
+    /**
+     * Gets the HTTP method used.
+     *
+     * @return the HTTP method
+     */
     public String getMethod() { return method; }
+
+    /**
+     * Gets the HTTP response status code.
+     *
+     * @return the response status code
+     */
     public Integer getResponseStatus() { return responseStatus; }
+
+    /**
+     * Gets the user agent string.
+     *
+     * @return the user agent
+     */
     public String getUserAgent() { return userAgent; }
 }

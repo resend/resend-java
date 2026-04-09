@@ -178,6 +178,12 @@ public class Variable {
      * Builder class for constructing Variable instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String key;
         private VariableType type;
         private Object fallbackValue;

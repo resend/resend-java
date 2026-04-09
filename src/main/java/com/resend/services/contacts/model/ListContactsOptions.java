@@ -65,6 +65,11 @@ public class ListContactsOptions {
      * Builder for {@code ListContactsOptions}.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         private String segmentId;
         private String audienceId;

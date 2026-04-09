@@ -27,6 +27,11 @@ public class GetContactOptions extends ContactOptions {
      * Builder class for constructing GetContactOptions objects.
      */
     public static class Builder extends ContactOptions.Builder<GetContactOptions, Builder> {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         /**
          * Build a new GetContactOptions object.

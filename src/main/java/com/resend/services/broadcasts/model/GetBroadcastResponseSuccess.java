@@ -85,56 +85,72 @@ public class GetBroadcastResponseSuccess extends Broadcast {
     }
 
     /**
-     * @return Type of the object (e.g., "broadcast").
+     * Gets the type of the object.
+     *
+     * @return the object type (e.g., "broadcast")
      */
     public String getObject() {
         return object;
     }
 
     /**
-     * @return Name of the broadcast.
+     * Gets the name of the broadcast.
+     *
+     * @return the broadcast name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return Sender of the broadcast.
+     * Gets the sender of the broadcast.
+     *
+     * @return the sender email address
      */
     public String getFrom() {
         return from;
     }
 
     /**
-     * @return The HTML content of the broadcast.
+     * Gets the HTML content of the broadcast.
+     *
+     * @return the HTML content
      */
     public String getHtml() {
         return html;
     }
 
     /**
-     * @return Subject line of the broadcast.
+     * Gets the subject line of the broadcast.
+     *
+     * @return the subject line
      */
     public String getSubject() {
         return subject;
     }
 
     /**
-     * @return Reply-to addresses for the broadcast.
+     * Gets the reply-to addresses for the broadcast.
+     *
+     * @return the list of reply-to addresses
      */
     public List<String> getReplyTo() {
         return replyTo;
     }
 
     /**
-     * @return Preview text of the broadcast.
+     * Gets the preview text of the broadcast.
+     *
+     * @return the preview text
      */
     public String getPreviewText() {
         return previewText;
     }
 
     /**
-     * @return The plain text content of the broadcast.
+     * Gets the plain text content of the broadcast.
+     *
+     * @return the plain text content
      */
     public String getText() {
         return text;

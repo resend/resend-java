@@ -104,6 +104,12 @@ public class Template {
      * Builder class for constructing Template objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private Map<String, Object> variables;
 

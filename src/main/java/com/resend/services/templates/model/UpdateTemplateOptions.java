@@ -132,6 +132,12 @@ public class UpdateTemplateOptions {
      * Builder class for constructing UpdateTemplateOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String alias;
         private String from;

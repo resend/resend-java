@@ -20,7 +20,9 @@ public class SendBroadcastOptions {
     }
 
     /**
-     * @return The scheduled time for sending the email, in natural language or ISO 8601 format.
+     * Gets the scheduled time for sending the email.
+     *
+     * @return the scheduled time in natural language or ISO 8601 format
      */
     public String getScheduledAt() {
         return scheduledAt;
@@ -30,6 +32,11 @@ public class SendBroadcastOptions {
      * Builder for creating instances of {@link SendBroadcastOptions}.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         private String scheduledAt;
 

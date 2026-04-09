@@ -39,14 +39,18 @@ public class ListBroadcastsResponseSuccess {
     }
 
     /**
-     * @return Type of the object (e.g., "list").
+     * Gets the type of the object.
+     *
+     * @return the object type (e.g., "list")
      */
     public String getObject() {
         return object;
     }
 
     /**
-     * @return List of Broadcast objects.
+     * Gets the list of Broadcast objects.
+     *
+     * @return the list of broadcasts
      */
     public List<Broadcast> getData() {
         return data;

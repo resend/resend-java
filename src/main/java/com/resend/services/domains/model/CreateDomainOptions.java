@@ -80,6 +80,12 @@ public class CreateDomainOptions {
      * Builder class for constructing CreateDomainOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String region;
         private String customReturnPath;

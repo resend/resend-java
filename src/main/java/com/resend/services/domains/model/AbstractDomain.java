@@ -38,6 +38,24 @@ public abstract class AbstractDomain {
     private String region;
 
     /**
+     * Whether open tracking is enabled for this domain.
+     */
+    @JsonProperty("open_tracking")
+    private Boolean openTracking;
+
+    /**
+     * Whether click tracking is enabled for this domain.
+     */
+    @JsonProperty("click_tracking")
+    private Boolean clickTracking;
+
+    /**
+     * The subdomain used for click and open tracking.
+     */
+    @JsonProperty("tracking_subdomain")
+    private String trackingSubdomain;
+
+    /**
      * Default constructor for creating an AbstractDomain instance with uninitialized fields.
      */
     public AbstractDomain() {
@@ -107,5 +125,32 @@ public abstract class AbstractDomain {
      */
     public String getRegion() {
         return region;
+    }
+
+    /**
+     * Get whether open tracking is enabled for this domain.
+     *
+     * @return Whether open tracking is enabled.
+     */
+    public Boolean getOpenTracking() {
+        return openTracking;
+    }
+
+    /**
+     * Get whether click tracking is enabled for this domain.
+     *
+     * @return Whether click tracking is enabled.
+     */
+    public Boolean getClickTracking() {
+        return clickTracking;
+    }
+
+    /**
+     * Get the subdomain used for click and open tracking.
+     *
+     * @return The tracking subdomain.
+     */
+    public String getTrackingSubdomain() {
+        return trackingSubdomain;
     }
 }

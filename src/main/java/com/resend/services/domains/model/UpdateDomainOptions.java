@@ -1,19 +1,21 @@
 package com.resend.services.domains.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents a request to update a domain.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateDomainOptions {
 
     @JsonProperty("id")
     private final String id;
     @JsonProperty("click_tracking")
-    private final boolean clickTracking;
+    private final Boolean clickTracking;
 
     @JsonProperty("open_tracking")
-    private final boolean openTracking;
+    private final Boolean openTracking;
 
     @JsonProperty("tls")
     private final Tls tls;
@@ -48,7 +50,7 @@ public class UpdateDomainOptions {
      *
      * @return The clickTracking state in the domain.
      */
-    public boolean getClickTracking() {
+    public Boolean getClickTracking() {
         return clickTracking;
     }
 
@@ -57,7 +59,7 @@ public class UpdateDomainOptions {
      *
      * @return The openTracking state in the domain.
      */
-    public boolean getOpenTracking() {
+    public Boolean getOpenTracking() {
         return openTracking;
     }
 
@@ -93,8 +95,8 @@ public class UpdateDomainOptions {
      */
     public static class Builder {
         private String id;
-        private boolean clickTracking;
-        private boolean openTracking;
+        private Boolean clickTracking;
+        private Boolean openTracking;
         private Tls tls;
         private String trackingSubdomain;
 
@@ -115,7 +117,7 @@ public class UpdateDomainOptions {
          * @param clickTracking The clickTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder clickTracking(boolean clickTracking) {
+        public Builder clickTracking(Boolean clickTracking) {
             this.clickTracking = clickTracking;
             return this;
         }
@@ -126,7 +128,7 @@ public class UpdateDomainOptions {
          * @param openTracking The openTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder openTracking(boolean openTracking) {
+        public Builder openTracking(Boolean openTracking) {
             this.openTracking = openTracking;
             return this;
         }

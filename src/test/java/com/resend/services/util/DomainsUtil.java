@@ -11,6 +11,7 @@ public class DomainsUtil {
         return CreateDomainOptions.builder()
                 .name("resend.dev")
                 .customReturnPath("custom")
+                .trackingSubdomain("track")
                 .build();
     }
 
@@ -95,6 +96,7 @@ public class DomainsUtil {
                 .openTracking(true)
                 .clickTracking(true)
                 .tls(Tls.OPPORTUNISTIC)
+                .trackingSubdomain("track")
                 .id("2c64b27c-6237-4626-85d2-a0a8b5832070")
                 .build();
     }

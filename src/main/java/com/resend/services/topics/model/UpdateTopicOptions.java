@@ -60,6 +60,12 @@ public class UpdateTopicOptions {
      * Builder class for constructing UpdateTopicOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String description;
 

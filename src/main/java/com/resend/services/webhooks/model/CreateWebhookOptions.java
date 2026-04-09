@@ -50,6 +50,12 @@ public class CreateWebhookOptions {
      * Builder class for CreateWebhookOptions.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String endpoint;
         private List<WebhookEvent> events;
 

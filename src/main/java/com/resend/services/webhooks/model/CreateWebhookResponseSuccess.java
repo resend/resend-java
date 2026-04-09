@@ -7,6 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CreateWebhookResponseSuccess {
 
+    /**
+     * Creates a new CreateWebhookResponseSuccess instance.
+     */
+    public CreateWebhookResponseSuccess() {
+    }
+
     @JsonProperty("object")
     private String object;
 

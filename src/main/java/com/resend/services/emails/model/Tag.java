@@ -49,6 +49,12 @@ public class Tag {
      * A builder for constructing Tag objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String value;
 

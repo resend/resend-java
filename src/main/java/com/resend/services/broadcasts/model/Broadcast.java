@@ -53,42 +53,54 @@ public class Broadcast {
     }
 
     /**
-     * @return Unique identifier for the broadcast.
+     * Gets the unique identifier for the broadcast.
+     *
+     * @return the broadcast ID
      */
     public String getId() {
         return id;
     }
 
     /**
-     * @return Identifier for the audience associated with this broadcast.
+     * Gets the identifier for the audience associated with this broadcast.
+     *
+     * @return the audience ID
      */
     public String getAudienceId() {
         return audienceId;
     }
 
     /**
-     * @return Current status of the broadcast (e.g., draft, sent, queued).
+     * Gets the current status of the broadcast.
+     *
+     * @return the status (e.g., draft, sent, queued)
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * @return Timestamp when the broadcast was created.
+     * Gets the timestamp when the broadcast was created.
+     *
+     * @return the creation timestamp
      */
     public String getCreatedAt() {
         return createdAt;
     }
 
     /**
-     * @return Scheduled timestamp for sending the broadcast.
+     * Gets the scheduled timestamp for sending the broadcast.
+     *
+     * @return the scheduled timestamp
      */
     public String getScheduledAt() {
         return scheduledAt;
     }
 
     /**
-     * @return Timestamp when the broadcast was sent.
+     * Gets the timestamp when the broadcast was sent.
+     *
+     * @return the sent timestamp
      */
     public String getSentAt() {
         return sentAt;

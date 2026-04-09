@@ -63,6 +63,12 @@ public class UpdateWebhookOptions {
      * Builder class for UpdateWebhookOptions.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String endpoint;
         private List<WebhookEvent> events;
         private WebhookStatus status;

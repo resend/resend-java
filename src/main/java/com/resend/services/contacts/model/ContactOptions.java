@@ -94,8 +94,18 @@ public abstract class ContactOptions {
 
     /**
      * Common builder class for constructing ContactOptions objects.
+     *
+     * @param <T> the type of ContactOptions being built
+     * @param <B> the type of the builder itself for method chaining
      */
     protected static abstract class Builder<T extends ContactOptions, B extends Builder<T, B>> {
+
+        /**
+         * Creates a new Builder instance.
+         */
+        protected Builder() {
+        }
+
         /**
          * The id of the contact options builder
          */

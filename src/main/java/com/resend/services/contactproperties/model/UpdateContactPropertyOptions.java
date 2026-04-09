@@ -54,6 +54,12 @@ public class UpdateContactPropertyOptions {
      * Builder class for constructing UpdateContactPropertyOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private Object fallbackValue;
 

@@ -41,6 +41,12 @@ public class CreateAudienceOptions {
      * Builder class for constructing CreateAudienceOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
 
         /**

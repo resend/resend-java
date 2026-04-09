@@ -58,6 +58,12 @@ public class VerifyWebhookOptions {
      * Builder class for VerifyWebhookOptions.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String payload;
         private Map<String, String> headers = new HashMap<String, String>();
         private String secret;

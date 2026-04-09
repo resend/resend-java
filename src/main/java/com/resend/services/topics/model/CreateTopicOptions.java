@@ -76,6 +76,12 @@ public class CreateTopicOptions {
      * Builder class for constructing CreateTopicOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String name;
         private String defaultSubscription;
         private String description;

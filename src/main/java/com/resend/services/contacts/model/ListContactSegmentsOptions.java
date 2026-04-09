@@ -60,6 +60,12 @@ public class ListContactSegmentsOptions {
      * Builder class for constructing ListContactSegmentsOptions instances.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private String email;
 

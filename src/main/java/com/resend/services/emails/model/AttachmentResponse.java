@@ -8,6 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AttachmentResponse {
 
     /**
+     * Creates a new AttachmentResponse instance.
+     */
+    public AttachmentResponse() {
+    }
+
+    /**
      * The object type, always "attachment".
      */
     @JsonProperty("object")

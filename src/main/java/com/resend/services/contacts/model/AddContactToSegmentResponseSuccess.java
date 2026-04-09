@@ -8,6 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AddContactToSegmentResponseSuccess {
 
     /**
+     * Creates a new AddContactToSegmentResponseSuccess instance.
+     */
+    public AddContactToSegmentResponseSuccess() {
+    }
+
+    /**
      * The segment ID.
      */
     @JsonProperty("id")

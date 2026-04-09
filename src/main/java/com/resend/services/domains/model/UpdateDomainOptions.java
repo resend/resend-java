@@ -78,6 +78,12 @@ public class UpdateDomainOptions {
      * Builder class for constructing UpdateDomainOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private boolean clickTracking;
         private boolean openTracking;

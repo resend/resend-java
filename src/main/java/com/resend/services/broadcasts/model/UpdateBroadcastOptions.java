@@ -54,6 +54,11 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
      * Builder class for constructing UpdateBroadcastOptions objects.
      */
     public static class Builder extends BroadcastOptions.Builder<UpdateBroadcastOptions, Builder> {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
 
         private String id;
 

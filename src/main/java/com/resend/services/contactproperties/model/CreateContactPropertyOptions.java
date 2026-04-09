@@ -67,6 +67,12 @@ public class CreateContactPropertyOptions {
      * Builder class for constructing CreateContactPropertyOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String key;
         private String type;
         private Object fallbackValue;

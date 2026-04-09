@@ -130,6 +130,12 @@ public class UpdateContactOptions {
      * Builder class for constructing UpdateContactOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String audienceId;
         private String segmentId;
         private String id;

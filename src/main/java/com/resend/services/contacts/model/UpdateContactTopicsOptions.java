@@ -72,6 +72,12 @@ public class UpdateContactTopicsOptions {
      * Builder class for constructing UpdateContactTopicsOptions objects.
      */
     public static class Builder {
+        /**
+         * Creates a new Builder instance.
+         */
+        public Builder() {
+        }
+
         private String id;
         private String email;
         private List<ContactTopicOptions> topics;

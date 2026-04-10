@@ -157,17 +157,20 @@ public class AutomationsTest {
 
     @Test
     public void testGetAutomationRun_Success() throws ResendException {
-        String automationId = "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794";
-        String runId = "run_1";
+        GetAutomationRunOptions options = GetAutomationRunOptions.builder()
+                .automationId("49a3999c-0ce1-4ea6-ab68-afcd6dc2e794")
+                .runId("run_1")
+                .build();
+
         AutomationRun expectedResponse = AutomationsUtil.getAutomationRunResponse();
 
-        when(automations.getRun(automationId, runId)).thenReturn(expectedResponse);
+        when(automations.getRun(options)).thenReturn(expectedResponse);
 
-        AutomationRun response = automations.getRun(automationId, runId);
+        AutomationRun response = automations.getRun(options);
 
         assertNotNull(response);
         assertEquals(expectedResponse.getId(), response.getId());
         assertEquals(expectedResponse.getStatus(), response.getStatus());
-        verify(automations, times(1)).getRun(automationId, runId);
+        verify(automations, times(1)).getRun(options);
     }
 }

@@ -194,13 +194,12 @@ public class Automations extends BaseService {
     /**
      * Retrieves a specific run for an automation.
      *
-     * @param automationId The unique identifier of the automation.
-     * @param runId The unique identifier of the run.
+     * @param options The options containing automation ID and run ID.
      * @return The automation run details.
      * @throws ResendException If an error occurs while retrieving the run.
      */
-    public AutomationRun getRun(String automationId, String runId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + automationId + "/runs/" + runId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+    public AutomationRun getRun(GetAutomationRunOptions options) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + options.getAutomationId() + "/runs/" + options.getRunId(), super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

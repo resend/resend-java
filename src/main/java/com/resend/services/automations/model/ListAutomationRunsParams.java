@@ -1,6 +1,9 @@
 package com.resend.services.automations.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -9,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class ListAutomationRunsParams {
 
-    private final RunStatus status;
+    private final List<RunStatus> status;
     private final Integer limit;
     private final String after;
     private final String before;
@@ -22,11 +25,11 @@ public class ListAutomationRunsParams {
     }
 
     /**
-     * Retrieves the status filter.
+     * Retrieves the status filters.
      *
-     * @return The run status filter.
+     * @return The list of run status filters.
      */
-    public RunStatus getStatus() {
+    public List<RunStatus> getStatus() {
         return status;
     }
 
@@ -65,8 +68,11 @@ public class ListAutomationRunsParams {
     public String toQueryString() {
         Map<String, String> queryParams = new LinkedHashMap<>();
 
-        if (status != null) {
-            queryParams.put("status", status.getValue());
+        if (status != null && !status.isEmpty()) {
+            String statusValue = status.stream()
+                    .map(RunStatus::getValue)
+                    .collect(Collectors.joining(","));
+            queryParams.put("status", statusValue);
         }
         if (limit != null) {
             queryParams.put("limit", limit.toString());
@@ -97,13 +103,30 @@ public class ListAutomationRunsParams {
     }
 
     public static class Builder {
-        private RunStatus status;
+        private List<RunStatus> status;
         private Integer limit;
         private String after;
         private String before;
 
-        public Builder status(RunStatus status) {
-            this.status = status;
+        /**
+         * Sets the status filters.
+         *
+         * @param status The run statuses to filter by.
+         * @return This builder instance.
+         */
+        public Builder status(RunStatus... status) {
+            this.status = new ArrayList<>(Arrays.asList(status));
+            return this;
+        }
+
+        /**
+         * Sets the status filters from a list.
+         *
+         * @param status The list of run statuses to filter by.
+         * @return This builder instance.
+         */
+        public Builder status(List<RunStatus> status) {
+            this.status = new ArrayList<>(status);
             return this;
         }
 

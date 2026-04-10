@@ -13,6 +13,7 @@ import com.resend.services.segments.Segments;
 import com.resend.services.webhooks.Webhooks;
 import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
+import com.resend.services.events.Events;
 import com.resend.services.logs.Logs;
 import com.resend.services.templates.Templates;
 
@@ -161,6 +162,15 @@ public class Resend {
      */
     public Logs logs() {
         return new Logs(apiKey);
+    }
+
+    /**
+     * Returns an Events object that can be used to interact with the Events service.
+     *
+     * @return An Events object.
+     */
+    public Events events() {
+        return new Events(apiKey);
     }
 
     /**

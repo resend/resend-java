@@ -109,24 +109,30 @@ public class ListAutomationRunsParams {
         private String before;
 
         /**
-         * Sets the status filters.
+         * Adds status filters.
          *
          * @param status The run statuses to filter by.
          * @return This builder instance.
          */
         public Builder status(RunStatus... status) {
-            this.status = new ArrayList<>(Arrays.asList(status));
+            if (this.status == null) {
+                this.status = new ArrayList<>();
+            }
+            this.status.addAll(Arrays.asList(status));
             return this;
         }
 
         /**
-         * Sets the status filters from a list.
+         * Adds status filters from a list.
          *
          * @param status The list of run statuses to filter by.
          * @return This builder instance.
          */
         public Builder status(List<RunStatus> status) {
-            this.status = new ArrayList<>(status);
+            if (this.status == null) {
+                this.status = new ArrayList<>();
+            }
+            this.status.addAll(status);
             return this;
         }
 

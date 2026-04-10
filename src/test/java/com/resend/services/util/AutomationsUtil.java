@@ -12,13 +12,13 @@ public class AutomationsUtil {
 
     public static CreateAutomationOptions createAutomationRequest() {
         AutomationStep triggerStep = AutomationStep.builder()
-                .ref("trigger_1")
+                .key("trigger_1")
                 .type(StepType.TRIGGER)
                 .addConfig("event_name", "user.signup")
                 .build();
 
         AutomationStep emailStep = AutomationStep.builder()
-                .ref("email_1")
+                .key("email_1")
                 .type(StepType.SEND_EMAIL)
                 .addConfig("template_id", "tmpl_123")
                 .addConfig("subject", "Welcome!")

@@ -12,8 +12,8 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AutomationStep {
 
-    @JsonProperty("ref")
-    private final String ref;
+    @JsonProperty("key")
+    private final String key;
 
     @JsonProperty("type")
     private final StepType type;
@@ -22,18 +22,18 @@ public class AutomationStep {
     private final Map<String, Object> config;
 
     public AutomationStep(Builder builder) {
-        this.ref = builder.ref;
+        this.key = builder.key;
         this.type = builder.type;
         this.config = builder.config;
     }
 
     /**
-     * Retrieves the step reference identifier.
+     * Retrieves the step key identifier.
      *
-     * @return The step reference.
+     * @return The step key.
      */
-    public String getRef() {
-        return ref;
+    public String getKey() {
+        return key;
     }
 
     /**
@@ -64,12 +64,12 @@ public class AutomationStep {
     }
 
     public static class Builder {
-        private String ref;
+        private String key;
         private StepType type;
         private Map<String, Object> config = new HashMap<>();
 
-        public Builder ref(String ref) {
-            this.ref = ref;
+        public Builder key(String key) {
+            this.key = key;
             return this;
         }
 

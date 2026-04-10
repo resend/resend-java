@@ -1,5 +1,9 @@
 package com.resend.services.automations.model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * Represents parameters for listing automation runs with filtering and pagination.
  */
@@ -51,6 +55,36 @@ public class ListAutomationRunsParams {
      */
     public String getBefore() {
         return before;
+    }
+
+    /**
+     * Converts the parameters to a query string.
+     *
+     * @return A query string starting with "?" if parameters exist, or an empty string otherwise.
+     */
+    public String toQueryString() {
+        Map<String, String> queryParams = new LinkedHashMap<>();
+
+        if (status != null) {
+            queryParams.put("status", status.getValue());
+        }
+        if (limit != null) {
+            queryParams.put("limit", limit.toString());
+        }
+        if (after != null && !after.isEmpty()) {
+            queryParams.put("after", after);
+        }
+        if (before != null && !before.isEmpty()) {
+            queryParams.put("before", before);
+        }
+
+        if (queryParams.isEmpty()) {
+            return "";
+        }
+
+        return "?" + queryParams.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
     }
 
     /**

@@ -7,9 +7,6 @@ import com.resend.core.service.BaseService;
 import com.resend.services.automations.model.*;
 import okhttp3.MediaType;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Represents the Resend Automations module.
@@ -87,7 +84,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the automations.
      */
     public ListAutomationsResponseSuccess list(ListAutomationsParams params) throws ResendException {
-        String pathWithQuery = "/automations" + buildQueryString(params);
+        String pathWithQuery = "/automations" + params.toQueryString();
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -180,7 +177,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the runs.
      */
     public ListAutomationRunsResponseSuccess listRuns(String automationId, ListAutomationRunsParams params) throws ResendException {
-        String pathWithQuery = "/automations/" + automationId + "/runs" + buildRunsQueryString(params);
+        String pathWithQuery = "/automations/" + automationId + "/runs" + params.toQueryString();
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -207,67 +204,5 @@ public class Automations extends BaseService {
 
         String responseBody = response.getBody();
         return resendMapper.readValue(responseBody, AutomationRun.class);
-    }
-
-    private String buildQueryString(ListAutomationsParams params) {
-        if (params == null) {
-            return "";
-        }
-
-        Map<String, String> queryParams = new LinkedHashMap<>();
-
-        if (params.getStatus() != null) {
-            queryParams.put("status", params.getStatus().getValue());
-        }
-        if (params.getLimit() != null) {
-            queryParams.put("limit", params.getLimit().toString());
-        }
-        if (params.getAfter() != null && !params.getAfter().isEmpty()) {
-            queryParams.put("after", params.getAfter());
-        }
-        if (params.getBefore() != null && !params.getBefore().isEmpty()) {
-            queryParams.put("before", params.getBefore());
-        }
-
-        if (queryParams.isEmpty()) {
-            return "";
-        }
-
-        String query = queryParams.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
-
-        return "?" + query;
-    }
-
-    private String buildRunsQueryString(ListAutomationRunsParams params) {
-        if (params == null) {
-            return "";
-        }
-
-        Map<String, String> queryParams = new LinkedHashMap<>();
-
-        if (params.getStatus() != null) {
-            queryParams.put("status", params.getStatus().getValue());
-        }
-        if (params.getLimit() != null) {
-            queryParams.put("limit", params.getLimit().toString());
-        }
-        if (params.getAfter() != null && !params.getAfter().isEmpty()) {
-            queryParams.put("after", params.getAfter());
-        }
-        if (params.getBefore() != null && !params.getBefore().isEmpty()) {
-            queryParams.put("before", params.getBefore());
-        }
-
-        if (queryParams.isEmpty()) {
-            return "";
-        }
-
-        String query = queryParams.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
-
-        return "?" + query;
     }
 }

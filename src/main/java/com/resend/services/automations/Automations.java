@@ -84,7 +84,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the automations.
      */
     public ListAutomationsResponseSuccess list(ListAutomationsParams params) throws ResendException {
-        String pathWithQuery = "/automations" + params.toQueryString();
+        String pathWithQuery = "/automations" + (params != null ? params.toQueryString() : "");
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -177,7 +177,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the runs.
      */
     public ListAutomationRunsResponseSuccess listRuns(String automationId, ListAutomationRunsParams params) throws ResendException {
-        String pathWithQuery = "/automations/" + automationId + "/runs" + params.toQueryString();
+        String pathWithQuery = "/automations/" + automationId + "/runs" + (params != null ? params.toQueryString() : "");
         AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {
@@ -196,6 +196,12 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while retrieving the run.
      */
     public AutomationRun getRun(GetAutomationRunOptions options) throws ResendException {
+        if (options.getAutomationId() == null || options.getAutomationId().isEmpty()) {
+            throw new IllegalArgumentException("automationId must be provided");
+        }
+        if (options.getRunId() == null || options.getRunId().isEmpty()) {
+            throw new IllegalArgumentException("runId must be provided");
+        }
         AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + options.getAutomationId() + "/runs/" + options.getRunId(), super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
         if (!response.isSuccessful()) {

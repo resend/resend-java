@@ -2,6 +2,7 @@ package com.resend;
 
 import com.resend.services.apikeys.ApiKeys;
 import com.resend.services.audiences.Audiences;
+import com.resend.services.automations.Automations;
 import com.resend.services.batch.Batch;
 import com.resend.services.broadcasts.Broadcasts;
 import com.resend.services.contacts.Contacts;
@@ -170,5 +171,14 @@ public class Resend {
      */
     public Events events() {
         return new Events(apiKey);
+    }
+
+    /**
+     * Returns an Automations object that can be used to interact with the Automations service.
+     *
+     * @return An Automations object.
+     */
+    public Automations automations() {
+        return new Automations(apiKey);
     }
 }

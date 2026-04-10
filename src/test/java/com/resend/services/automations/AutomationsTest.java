@@ -156,6 +156,26 @@ public class AutomationsTest {
     }
 
     @Test
+    public void testListAutomationRunsWithMultipleStatuses_Success() throws ResendException {
+        String automationId = "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794";
+        ListAutomationRunsParams params = ListAutomationRunsParams.builder()
+                .status(RunStatus.RUNNING, RunStatus.COMPLETED)
+                .limit(10)
+                .build();
+
+        ListAutomationRunsResponseSuccess expectedResponse = AutomationsUtil.listAutomationRunsResponse();
+
+        when(automations.listRuns(automationId, params)).thenReturn(expectedResponse);
+
+        ListAutomationRunsResponseSuccess response = automations.listRuns(automationId, params);
+
+        assertNotNull(response);
+        assertEquals(2, params.getStatus().size());
+        assertEquals("?status=running,completed&limit=10", params.toQueryString());
+        verify(automations, times(1)).listRuns(automationId, params);
+    }
+
+    @Test
     public void testGetAutomationRun_Success() throws ResendException {
         GetAutomationRunOptions options = GetAutomationRunOptions.builder()
                 .automationId("49a3999c-0ce1-4ea6-ab68-afcd6dc2e794")

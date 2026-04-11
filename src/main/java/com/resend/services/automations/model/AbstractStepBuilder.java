@@ -63,7 +63,7 @@ public abstract class AbstractStepBuilder<T extends AbstractStepBuilder<T>> {
         return AutomationStep.builder()
                 .key(key)
                 .type(getType())
-                .config(config)
+                .config(new HashMap<>(config))
                 .build();
     }
 }

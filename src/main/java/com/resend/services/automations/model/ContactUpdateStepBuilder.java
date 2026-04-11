@@ -61,7 +61,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
      * @return The builder instance.
      */
     public ContactUpdateStepBuilder properties(Map<String, Object> properties) {
-        this.properties = properties;
+        this.properties = properties != null ? new HashMap<>(properties) : null;
         return this;
     }
 

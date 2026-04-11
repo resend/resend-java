@@ -43,7 +43,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
      * @return The builder instance.
      */
     public SendEmailStepBuilder templateVariables(Map<String, Object> variables) {
-        this.templateVariables = variables;
+        this.templateVariables = variables != null ? new HashMap<>(variables) : null;
         return this;
     }
 
@@ -94,12 +94,14 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
 
     @Override
     public AutomationStep build() {
-        Map<String, Object> template = new HashMap<>();
-        template.put("id", templateId);
-        if (templateVariables != null && !templateVariables.isEmpty()) {
-            template.put("variables", templateVariables);
+        if (templateId != null) {
+            Map<String, Object> template = new HashMap<>();
+            template.put("id", templateId);
+            if (templateVariables != null && !templateVariables.isEmpty()) {
+                template.put("variables", templateVariables);
+            }
+            config.put("template", template);
         }
-        config.put("template", template);
         return super.build();
     }
 }

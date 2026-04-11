@@ -49,6 +49,11 @@ public class GetAutomationRunOptions {
      * Builder class for constructing GetAutomationRunOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String automationId;
         private String runId;
 

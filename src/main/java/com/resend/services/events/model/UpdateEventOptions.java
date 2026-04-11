@@ -60,6 +60,11 @@ public class UpdateEventOptions {
      * Builder class for constructing UpdateEventOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String identifier;
         private Map<String, String> schema;
 

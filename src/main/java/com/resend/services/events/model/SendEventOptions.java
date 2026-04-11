@@ -85,6 +85,11 @@ public class SendEventOptions {
      * Builder class for constructing SendEventOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String event;
         private String contactId;
         private String email;

@@ -69,9 +69,94 @@ public class AutomationStep {
     }
 
     /**
+     * Creates a new trigger step builder.
+     *
+     * @param key The step key.
+     * @return A new TriggerStepBuilder instance.
+     */
+    public static TriggerStepBuilder trigger(String key) {
+        return new TriggerStepBuilder(key);
+    }
+
+    /**
+     * Creates a new send_email step builder.
+     *
+     * @param key The step key.
+     * @return A new SendEmailStepBuilder instance.
+     */
+    public static SendEmailStepBuilder sendEmail(String key) {
+        return new SendEmailStepBuilder(key);
+    }
+
+    /**
+     * Creates a new delay step builder.
+     *
+     * @param key The step key.
+     * @return A new DelayStepBuilder instance.
+     */
+    public static DelayStepBuilder delay(String key) {
+        return new DelayStepBuilder(key);
+    }
+
+    /**
+     * Creates a new wait_for_event step builder.
+     *
+     * @param key The step key.
+     * @return A new WaitForEventStepBuilder instance.
+     */
+    public static WaitForEventStepBuilder waitForEvent(String key) {
+        return new WaitForEventStepBuilder(key);
+    }
+
+    /**
+     * Creates a new condition step builder.
+     *
+     * @param key The step key.
+     * @return A new ConditionStepBuilder instance.
+     */
+    public static ConditionStepBuilder condition(String key) {
+        return new ConditionStepBuilder(key);
+    }
+
+    /**
+     * Creates a new contact_update step builder.
+     *
+     * @param key The step key.
+     * @return A new ContactUpdateStepBuilder instance.
+     */
+    public static ContactUpdateStepBuilder contactUpdate(String key) {
+        return new ContactUpdateStepBuilder(key);
+    }
+
+    /**
+     * Creates a new contact_delete step builder.
+     *
+     * @param key The step key.
+     * @return A new ContactDeleteStepBuilder instance.
+     */
+    public static ContactDeleteStepBuilder contactDelete(String key) {
+        return new ContactDeleteStepBuilder(key);
+    }
+
+    /**
+     * Creates a new add_to_segment step builder.
+     *
+     * @param key The step key.
+     * @return A new AddToSegmentStepBuilder instance.
+     */
+    public static AddToSegmentStepBuilder addToSegment(String key) {
+        return new AddToSegmentStepBuilder(key);
+    }
+
+    /**
      * Builder class for constructing AutomationStep objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String key;
         private StepType type;
         private Map<String, Object> config = new HashMap<>();

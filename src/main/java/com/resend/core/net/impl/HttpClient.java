@@ -15,6 +15,7 @@ import java.util.Map;
  * An implementation of the {@link IHttpClient} interface for performing HTTP requests.
  * This implementation utilizes the OkHttp library for handling HTTP communication.
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class HttpClient implements IHttpClient<Response> {
 
     /** The base URL for the API. */

@@ -8,6 +8,7 @@ import com.resend.core.net.impl.HttpClient;
  * An abstract base class for service implementations, providing common functionality such as HTTP client,
  * authentication provider, and mapper initialization.
  */
+@SuppressWarnings("rawtypes")
 public abstract class BaseService {
 
     /**

@@ -11,21 +11,14 @@ import java.util.Map;
 public class AutomationsUtil {
 
     public static CreateAutomationOptions createAutomationRequest() {
-        AutomationStep triggerStep = AutomationStep.builder()
-                .key("trigger_1")
-                .type(StepType.TRIGGER)
-                .addConfig("event_name", "user.signup")
+        AutomationStep triggerStep = AutomationStep.trigger("trigger_1")
+                .eventName("user.signup")
                 .build();
 
-        Map<String, Object> templateConfig = new HashMap<>();
-        templateConfig.put("id", "tmpl_123");
-
-        AutomationStep emailStep = AutomationStep.builder()
-                .key("email_1")
-                .type(StepType.SEND_EMAIL)
-                .addConfig("template", templateConfig)
-                .addConfig("subject", "Welcome!")
-                .addConfig("from", "onboarding@kewynakshlley.me")
+        AutomationStep emailStep = AutomationStep.sendEmail("email_1")
+                .template("tmpl_123")
+                .subject("Welcome!")
+                .from("onboarding@kewynakshlley.me")
                 .build();
 
         AutomationConnection connection = AutomationConnection.builder()

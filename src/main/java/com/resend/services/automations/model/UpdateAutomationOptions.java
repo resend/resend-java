@@ -100,6 +100,11 @@ public class UpdateAutomationOptions {
      * Builder class for constructing UpdateAutomationOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String id;
         private String name;
         private AutomationStatus status;

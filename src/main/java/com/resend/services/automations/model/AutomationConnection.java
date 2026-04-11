@@ -88,6 +88,11 @@ public class AutomationConnection {
      * Builder class for constructing AutomationConnection objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String from;
         private String to;
         private ConnectionType type;

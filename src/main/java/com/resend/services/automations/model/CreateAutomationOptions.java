@@ -22,14 +22,14 @@ public class CreateAutomationOptions {
     @JsonProperty("steps")
     private final List<AutomationStep> steps;
 
-    @JsonProperty("edges")
-    private final List<AutomationEdge> edges;
+    @JsonProperty("connections")
+    private final List<AutomationConnection> connections;
 
     public CreateAutomationOptions(Builder builder) {
         this.name = builder.name;
         this.status = builder.status;
         this.steps = builder.steps;
-        this.edges = builder.edges;
+        this.connections = builder.connections;
     }
 
     /**
@@ -60,12 +60,12 @@ public class CreateAutomationOptions {
     }
 
     /**
-     * Retrieves the list of automation edges.
+     * Retrieves the list of automation connections.
      *
-     * @return The list of edges.
+     * @return The list of connections.
      */
-    public List<AutomationEdge> getEdges() {
-        return edges;
+    public List<AutomationConnection> getConnections() {
+        return connections;
     }
 
     /**
@@ -81,7 +81,7 @@ public class CreateAutomationOptions {
         private String name;
         private AutomationStatus status;
         private List<AutomationStep> steps;
-        private List<AutomationEdge> edges;
+        private List<AutomationConnection> connections;
 
         public Builder name(String name) {
             this.name = name;
@@ -114,24 +114,24 @@ public class CreateAutomationOptions {
             return this;
         }
 
-        public Builder edges(List<AutomationEdge> edges) {
-            this.edges = edges;
+        public Builder connections(List<AutomationConnection> connections) {
+            this.connections = connections;
             return this;
         }
 
-        public Builder edges(AutomationEdge... edges) {
-            if (this.edges == null) {
-                this.edges = new ArrayList<>();
+        public Builder connections(AutomationConnection... connections) {
+            if (this.connections == null) {
+                this.connections = new ArrayList<>();
             }
-            this.edges.addAll(Arrays.asList(edges));
+            this.connections.addAll(Arrays.asList(connections));
             return this;
         }
 
-        public Builder edge(AutomationEdge edge) {
-            if (this.edges == null) {
-                this.edges = new ArrayList<>();
+        public Builder connection(AutomationConnection connection) {
+            if (this.connections == null) {
+                this.connections = new ArrayList<>();
             }
-            this.edges.add(edge);
+            this.connections.add(connection);
             return this;
         }
 

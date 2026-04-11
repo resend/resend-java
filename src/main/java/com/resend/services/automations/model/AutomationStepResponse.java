@@ -9,6 +9,9 @@ import java.util.Map;
  */
 public class AutomationStepResponse {
 
+    @JsonProperty("key")
+    private String key;
+
     @JsonProperty("type")
     private StepType type;
 
@@ -18,9 +21,19 @@ public class AutomationStepResponse {
     public AutomationStepResponse() {
     }
 
-    public AutomationStepResponse(StepType type, Map<String, Object> config) {
+    public AutomationStepResponse(String key, StepType type, Map<String, Object> config) {
+        this.key = key;
         this.type = type;
         this.config = config;
+    }
+
+    /**
+     * Retrieves the step key.
+     *
+     * @return The step key.
+     */
+    public String getKey() {
+        return key;
     }
 
     /**

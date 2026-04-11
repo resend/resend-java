@@ -30,15 +30,15 @@ public class Automation {
     @JsonProperty("steps")
     private List<AutomationStepResponse> steps;
 
-    @JsonProperty("edges")
-    private List<AutomationEdge> edges;
+    @JsonProperty("connections")
+    private List<AutomationConnection> connections;
 
     public Automation() {
     }
 
     public Automation(String object, String id, String name, AutomationStatus status,
                       String createdAt, String updatedAt,
-                      List<AutomationStepResponse> steps, List<AutomationEdge> edges) {
+                      List<AutomationStepResponse> steps, List<AutomationConnection> connections) {
         this.object = object;
         this.id = id;
         this.name = name;
@@ -46,7 +46,7 @@ public class Automation {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.steps = steps;
-        this.edges = edges;
+        this.connections = connections;
     }
 
     /**
@@ -113,11 +113,11 @@ public class Automation {
     }
 
     /**
-     * Retrieves the list of automation edges.
+     * Retrieves the list of automation connections.
      *
-     * @return The list of edges.
+     * @return The list of connections.
      */
-    public List<AutomationEdge> getEdges() {
-        return edges;
+    public List<AutomationConnection> getConnections() {
+        return connections;
     }
 }

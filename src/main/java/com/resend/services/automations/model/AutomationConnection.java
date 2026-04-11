@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents an edge (connection) between steps in an automation workflow.
+ * Represents a connection between steps in an automation workflow.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AutomationEdge {
+public class AutomationConnection {
 
     @JsonProperty("from")
     private String from;
@@ -15,53 +15,53 @@ public class AutomationEdge {
     @JsonProperty("to")
     private String to;
 
-    @JsonProperty("edge_type")
-    private EdgeType edgeType;
+    @JsonProperty("type")
+    private ConnectionType type;
 
-    public AutomationEdge() {
+    public AutomationConnection() {
     }
 
-    public AutomationEdge(Builder builder) {
+    public AutomationConnection(Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
-        this.edgeType = builder.edgeType;
+        this.type = builder.type;
     }
 
-    public AutomationEdge(String from, String to, EdgeType edgeType) {
+    public AutomationConnection(String from, String to, ConnectionType type) {
         this.from = from;
         this.to = to;
-        this.edgeType = edgeType;
+        this.type = type;
     }
 
     /**
-     * Retrieves the source step reference.
+     * Retrieves the source step key.
      *
-     * @return The source step reference.
+     * @return The source step key.
      */
     public String getFrom() {
         return from;
     }
 
     /**
-     * Retrieves the target step reference.
+     * Retrieves the target step key.
      *
-     * @return The target step reference.
+     * @return The target step key.
      */
     public String getTo() {
         return to;
     }
 
     /**
-     * Retrieves the edge type.
+     * Retrieves the connection type.
      *
-     * @return The edge type.
+     * @return The connection type.
      */
-    public EdgeType getEdgeType() {
-        return edgeType;
+    public ConnectionType getType() {
+        return type;
     }
 
     /**
-     * Creates a new builder instance for AutomationEdge.
+     * Creates a new builder instance for AutomationConnection.
      *
      * @return A new Builder instance.
      */
@@ -72,7 +72,7 @@ public class AutomationEdge {
     public static class Builder {
         private String from;
         private String to;
-        private EdgeType edgeType;
+        private ConnectionType type;
 
         public Builder from(String from) {
             this.from = from;
@@ -84,13 +84,13 @@ public class AutomationEdge {
             return this;
         }
 
-        public Builder edgeType(EdgeType edgeType) {
-            this.edgeType = edgeType;
+        public Builder type(ConnectionType type) {
+            this.type = type;
             return this;
         }
 
-        public AutomationEdge build() {
-            return new AutomationEdge(this);
+        public AutomationConnection build() {
+            return new AutomationConnection(this);
         }
     }
 }

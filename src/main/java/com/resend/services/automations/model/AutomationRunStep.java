@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class AutomationRunStep {
 
+    @JsonProperty("key")
+    private String key;
+
     @JsonProperty("type")
     private StepType type;
 
@@ -31,8 +34,9 @@ public class AutomationRunStep {
     public AutomationRunStep() {
     }
 
-    public AutomationRunStep(StepType type, String status, String startedAt, String completedAt,
+    public AutomationRunStep(String key, StepType type, String status, String startedAt, String completedAt,
                              Object output, Object error, String createdAt) {
+        this.key = key;
         this.type = type;
         this.status = status;
         this.startedAt = startedAt;
@@ -40,6 +44,15 @@ public class AutomationRunStep {
         this.output = output;
         this.error = error;
         this.createdAt = createdAt;
+    }
+
+    /**
+     * Retrieves the step key.
+     *
+     * @return The step key.
+     */
+    public String getKey() {
+        return key;
     }
 
     /**

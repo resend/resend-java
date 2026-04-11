@@ -7,9 +7,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Represents the status of an automation run.
  */
 public enum RunStatus {
+    /** Run is currently in progress. */
     RUNNING("running"),
+    /** Run completed successfully. */
     COMPLETED("completed"),
+    /** Run failed with an error. */
     FAILED("failed"),
+    /** Run was cancelled. */
     CANCELLED("cancelled");
 
     private final String value;

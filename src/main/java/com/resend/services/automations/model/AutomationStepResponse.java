@@ -18,9 +18,19 @@ public class AutomationStepResponse {
     @JsonProperty("config")
     private Map<String, Object> config;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationStepResponse() {
     }
 
+    /**
+     * Constructs an AutomationStepResponse with specified values.
+     *
+     * @param key The step key.
+     * @param type The step type.
+     * @param config The step configuration.
+     */
     public AutomationStepResponse(String key, StepType type, Map<String, Object> config) {
         this.key = key;
         this.type = type;

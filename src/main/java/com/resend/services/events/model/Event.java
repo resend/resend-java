@@ -27,9 +27,22 @@ public class Event {
     @JsonProperty("updated_at")
     private String updatedAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public Event() {
     }
 
+    /**
+     * Constructs an Event with specified values.
+     *
+     * @param object The object type.
+     * @param id The event ID.
+     * @param name The event name.
+     * @param schema The event schema.
+     * @param createdAt The creation timestamp.
+     * @param updatedAt The last update timestamp.
+     */
     public Event(String object, String id, String name, Map<String, String> schema,
                  String createdAt, String updatedAt) {
         this.object = object;

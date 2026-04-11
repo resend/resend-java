@@ -18,6 +18,11 @@ public class CreateEventOptions {
     @JsonProperty("schema")
     private final Map<String, String> schema;
 
+    /**
+     * Constructs CreateEventOptions using the provided builder.
+     *
+     * @param builder The builder to construct the options.
+     */
     public CreateEventOptions(Builder builder) {
         this.name = builder.name;
         this.schema = builder.schema;
@@ -50,20 +55,42 @@ public class CreateEventOptions {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing CreateEventOptions objects.
+     */
     public static class Builder {
         private String name;
         private Map<String, String> schema;
 
+        /**
+         * Sets the event name.
+         *
+         * @param name The event name.
+         * @return The builder instance.
+         */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Sets the event schema.
+         *
+         * @param schema The schema map.
+         * @return The builder instance.
+         */
         public Builder schema(Map<String, String> schema) {
             this.schema = schema;
             return this;
         }
 
+        /**
+         * Adds a schema field.
+         *
+         * @param key The field key.
+         * @param type The field type.
+         * @return The builder instance.
+         */
         public Builder addSchema(String key, String type) {
             if (this.schema == null) {
                 this.schema = new HashMap<>();
@@ -72,6 +99,11 @@ public class CreateEventOptions {
             return this;
         }
 
+        /**
+         * Builds a new CreateEventOptions instance.
+         *
+         * @return A new CreateEventOptions.
+         */
         public CreateEventOptions build() {
             return new CreateEventOptions(this);
         }

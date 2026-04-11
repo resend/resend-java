@@ -16,9 +16,19 @@ public class RemoveEventResponseSuccess {
     @JsonProperty("deleted")
     private Boolean deleted;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public RemoveEventResponseSuccess() {
     }
 
+    /**
+     * Constructs a RemoveEventResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The event ID.
+     * @param deleted Whether the event was deleted.
+     */
     public RemoveEventResponseSuccess(String object, String id, Boolean deleted) {
         this.object = object;
         this.id = id;

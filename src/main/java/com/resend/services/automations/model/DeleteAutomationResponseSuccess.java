@@ -16,9 +16,19 @@ public class DeleteAutomationResponseSuccess {
     @JsonProperty("deleted")
     private Boolean deleted;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public DeleteAutomationResponseSuccess() {
     }
 
+    /**
+     * Constructs a DeleteAutomationResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The automation ID.
+     * @param deleted Whether the automation was deleted.
+     */
     public DeleteAutomationResponseSuccess(String object, String id, Boolean deleted) {
         this.object = object;
         this.id = id;

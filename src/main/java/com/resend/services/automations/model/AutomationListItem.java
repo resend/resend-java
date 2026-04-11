@@ -22,9 +22,21 @@ public class AutomationListItem {
     @JsonProperty("updated_at")
     private String updatedAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationListItem() {
     }
 
+    /**
+     * Constructs an AutomationListItem with specified values.
+     *
+     * @param id The automation ID.
+     * @param name The automation name.
+     * @param status The automation status.
+     * @param createdAt The creation timestamp.
+     * @param updatedAt The last update timestamp.
+     */
     public AutomationListItem(String id, String name, AutomationStatus status, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;

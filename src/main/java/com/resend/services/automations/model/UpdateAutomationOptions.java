@@ -29,6 +29,11 @@ public class UpdateAutomationOptions {
     @JsonProperty("connections")
     private final List<AutomationConnection> connections;
 
+    /**
+     * Constructs UpdateAutomationOptions using the provided builder.
+     *
+     * @param builder The builder to construct the options.
+     */
     public UpdateAutomationOptions(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -91,6 +96,9 @@ public class UpdateAutomationOptions {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing UpdateAutomationOptions objects.
+     */
     public static class Builder {
         private String id;
         private String name;
@@ -100,27 +108,57 @@ public class UpdateAutomationOptions {
         private boolean stepsSet = false;
         private boolean connectionsSet = false;
 
+        /**
+         * Sets the automation ID.
+         *
+         * @param id The automation ID.
+         * @return The builder instance.
+         */
         public Builder id(String id) {
             this.id = id;
             return this;
         }
 
+        /**
+         * Sets the automation name.
+         *
+         * @param name The automation name.
+         * @return The builder instance.
+         */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Sets the automation status.
+         *
+         * @param status The automation status.
+         * @return The builder instance.
+         */
         public Builder status(AutomationStatus status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * Sets the list of automation steps.
+         *
+         * @param steps The list of steps.
+         * @return The builder instance.
+         */
         public Builder steps(List<AutomationStep> steps) {
             this.steps = steps;
             this.stepsSet = true;
             return this;
         }
 
+        /**
+         * Sets the automation steps using varargs.
+         *
+         * @param steps The steps to add.
+         * @return The builder instance.
+         */
         public Builder steps(AutomationStep... steps) {
             if (this.steps == null) {
                 this.steps = new ArrayList<>();
@@ -130,6 +168,12 @@ public class UpdateAutomationOptions {
             return this;
         }
 
+        /**
+         * Adds a single automation step.
+         *
+         * @param step The step to add.
+         * @return The builder instance.
+         */
         public Builder step(AutomationStep step) {
             if (this.steps == null) {
                 this.steps = new ArrayList<>();
@@ -139,12 +183,24 @@ public class UpdateAutomationOptions {
             return this;
         }
 
+        /**
+         * Sets the list of automation connections.
+         *
+         * @param connections The list of connections.
+         * @return The builder instance.
+         */
         public Builder connections(List<AutomationConnection> connections) {
             this.connections = connections;
             this.connectionsSet = true;
             return this;
         }
 
+        /**
+         * Sets the automation connections using varargs.
+         *
+         * @param connections The connections to add.
+         * @return The builder instance.
+         */
         public Builder connections(AutomationConnection... connections) {
             if (this.connections == null) {
                 this.connections = new ArrayList<>();
@@ -154,6 +210,12 @@ public class UpdateAutomationOptions {
             return this;
         }
 
+        /**
+         * Adds a single automation connection.
+         *
+         * @param connection The connection to add.
+         * @return The builder instance.
+         */
         public Builder connection(AutomationConnection connection) {
             if (this.connections == null) {
                 this.connections = new ArrayList<>();
@@ -163,6 +225,11 @@ public class UpdateAutomationOptions {
             return this;
         }
 
+        /**
+         * Builds a new UpdateAutomationOptions instance.
+         *
+         * @return A new UpdateAutomationOptions.
+         */
         public UpdateAutomationOptions build() {
             return new UpdateAutomationOptions(this);
         }

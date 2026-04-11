@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Represents the status of an automation.
  */
 public enum AutomationStatus {
+    /** Automation is enabled and active. */
     ENABLED("enabled"),
+    /** Automation is disabled and inactive. */
     DISABLED("disabled");
 
     private final String value;

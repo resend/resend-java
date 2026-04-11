@@ -14,6 +14,11 @@ public class ListAutomationsParams {
     private final String after;
     private final String before;
 
+    /**
+     * Constructs ListAutomationsParams using the provided builder.
+     *
+     * @param builder The builder to construct the params.
+     */
     public ListAutomationsParams(Builder builder) {
         this.status = builder.status;
         this.limit = builder.limit;
@@ -96,32 +101,64 @@ public class ListAutomationsParams {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing ListAutomationsParams objects.
+     */
     public static class Builder {
         private AutomationStatus status;
         private Integer limit;
         private String after;
         private String before;
 
+        /**
+         * Sets the status filter.
+         *
+         * @param status The automation status.
+         * @return The builder instance.
+         */
         public Builder status(AutomationStatus status) {
             this.status = status;
             return this;
         }
 
+        /**
+         * Sets the maximum number of results.
+         *
+         * @param limit The limit.
+         * @return The builder instance.
+         */
         public Builder limit(Integer limit) {
             this.limit = limit;
             return this;
         }
 
+        /**
+         * Sets the after cursor for pagination.
+         *
+         * @param after The after cursor.
+         * @return The builder instance.
+         */
         public Builder after(String after) {
             this.after = after;
             return this;
         }
 
+        /**
+         * Sets the before cursor for pagination.
+         *
+         * @param before The before cursor.
+         * @return The builder instance.
+         */
         public Builder before(String before) {
             this.before = before;
             return this;
         }
 
+        /**
+         * Builds a new ListAutomationsParams instance.
+         *
+         * @return A new ListAutomationsParams.
+         */
         public ListAutomationsParams build() {
             return new ListAutomationsParams(this);
         }

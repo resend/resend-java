@@ -13,9 +13,18 @@ public class CreateAutomationResponseSuccess {
     @JsonProperty("id")
     private String id;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public CreateAutomationResponseSuccess() {
     }
 
+    /**
+     * Constructs a CreateAutomationResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The automation ID.
+     */
     public CreateAutomationResponseSuccess(String object, String id) {
         this.object = object;
         this.id = id;

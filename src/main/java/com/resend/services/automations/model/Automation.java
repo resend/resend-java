@@ -33,9 +33,24 @@ public class Automation {
     @JsonProperty("connections")
     private List<AutomationConnection> connections;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public Automation() {
     }
 
+    /**
+     * Constructs an Automation with specified values.
+     *
+     * @param object The object type.
+     * @param id The automation ID.
+     * @param name The automation name.
+     * @param status The automation status.
+     * @param createdAt The creation timestamp.
+     * @param updatedAt The last update timestamp.
+     * @param steps The list of steps.
+     * @param connections The list of connections.
+     */
     public Automation(String object, String id, String name, AutomationStatus status,
                       String createdAt, String updatedAt,
                       List<AutomationStepResponse> steps, List<AutomationConnection> connections) {

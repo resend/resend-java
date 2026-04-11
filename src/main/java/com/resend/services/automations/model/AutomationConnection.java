@@ -18,15 +18,30 @@ public class AutomationConnection {
     @JsonProperty("type")
     private ConnectionType type;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationConnection() {
     }
 
+    /**
+     * Constructs an AutomationConnection using the provided builder.
+     *
+     * @param builder The builder to construct the connection.
+     */
     public AutomationConnection(Builder builder) {
         this.from = builder.from;
         this.to = builder.to;
         this.type = builder.type;
     }
 
+    /**
+     * Constructs an AutomationConnection with specified values.
+     *
+     * @param from The source step key.
+     * @param to The target step key.
+     * @param type The connection type.
+     */
     public AutomationConnection(String from, String to, ConnectionType type) {
         this.from = from;
         this.to = to;
@@ -69,26 +84,52 @@ public class AutomationConnection {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing AutomationConnection objects.
+     */
     public static class Builder {
         private String from;
         private String to;
         private ConnectionType type;
 
+        /**
+         * Sets the source step key.
+         *
+         * @param from The source step key.
+         * @return The builder instance.
+         */
         public Builder from(String from) {
             this.from = from;
             return this;
         }
 
+        /**
+         * Sets the target step key.
+         *
+         * @param to The target step key.
+         * @return The builder instance.
+         */
         public Builder to(String to) {
             this.to = to;
             return this;
         }
 
+        /**
+         * Sets the connection type.
+         *
+         * @param type The connection type.
+         * @return The builder instance.
+         */
         public Builder type(ConnectionType type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Builds a new AutomationConnection instance.
+         *
+         * @return A new AutomationConnection.
+         */
         public AutomationConnection build() {
             return new AutomationConnection(this);
         }

@@ -17,6 +17,11 @@ public class ListAutomationRunsParams {
     private final String after;
     private final String before;
 
+    /**
+     * Constructs ListAutomationRunsParams using the provided builder.
+     *
+     * @param builder The builder to construct the params.
+     */
     public ListAutomationRunsParams(Builder builder) {
         this.status = builder.status;
         this.limit = builder.limit;
@@ -102,6 +107,9 @@ public class ListAutomationRunsParams {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing ListAutomationRunsParams objects.
+     */
     public static class Builder {
         private List<RunStatus> status;
         private Integer limit;
@@ -136,21 +144,44 @@ public class ListAutomationRunsParams {
             return this;
         }
 
+        /**
+         * Sets the maximum number of results.
+         *
+         * @param limit The limit.
+         * @return The builder instance.
+         */
         public Builder limit(Integer limit) {
             this.limit = limit;
             return this;
         }
 
+        /**
+         * Sets the after cursor for pagination.
+         *
+         * @param after The after cursor.
+         * @return The builder instance.
+         */
         public Builder after(String after) {
             this.after = after;
             return this;
         }
 
+        /**
+         * Sets the before cursor for pagination.
+         *
+         * @param before The before cursor.
+         * @return The builder instance.
+         */
         public Builder before(String before) {
             this.before = before;
             return this;
         }
 
+        /**
+         * Builds a new ListAutomationRunsParams instance.
+         *
+         * @return A new ListAutomationRunsParams.
+         */
         public ListAutomationRunsParams build() {
             return new ListAutomationRunsParams(this);
         }

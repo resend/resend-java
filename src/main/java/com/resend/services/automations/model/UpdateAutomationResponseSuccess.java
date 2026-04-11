@@ -13,9 +13,18 @@ public class UpdateAutomationResponseSuccess {
     @JsonProperty("id")
     private String id;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public UpdateAutomationResponseSuccess() {
     }
 
+    /**
+     * Constructs an UpdateAutomationResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The automation ID.
+     */
     public UpdateAutomationResponseSuccess(String object, String id) {
         this.object = object;
         this.id = id;

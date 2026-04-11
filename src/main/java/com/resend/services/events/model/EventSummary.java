@@ -24,9 +24,21 @@ public class EventSummary {
     @JsonProperty("updated_at")
     private String updatedAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public EventSummary() {
     }
 
+    /**
+     * Constructs an EventSummary with specified values.
+     *
+     * @param id The event ID.
+     * @param name The event name.
+     * @param schema The event schema.
+     * @param createdAt The creation timestamp.
+     * @param updatedAt The last update timestamp.
+     */
     public EventSummary(String id, String name, Map<String, String> schema,
                         String createdAt, String updatedAt) {
         this.id = id;

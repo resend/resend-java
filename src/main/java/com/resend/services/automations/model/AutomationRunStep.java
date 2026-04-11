@@ -31,9 +31,24 @@ public class AutomationRunStep {
     @JsonProperty("created_at")
     private String createdAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationRunStep() {
     }
 
+    /**
+     * Constructs an AutomationRunStep with specified values.
+     *
+     * @param key The step key.
+     * @param type The step type.
+     * @param status The execution status.
+     * @param startedAt The start timestamp.
+     * @param completedAt The completion timestamp.
+     * @param output The step output.
+     * @param error The step error.
+     * @param createdAt The creation timestamp.
+     */
     public AutomationRunStep(String key, StepType type, String status, String startedAt, String completedAt,
                              Object output, Object error, String createdAt) {
         this.key = key;

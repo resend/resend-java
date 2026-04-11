@@ -18,9 +18,19 @@ public class ListAutomationsResponseSuccess {
     @JsonProperty("data")
     private List<AutomationListItem> data;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public ListAutomationsResponseSuccess() {
     }
 
+    /**
+     * Constructs a ListAutomationsResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param hasMore Whether more results are available.
+     * @param data The list of automations.
+     */
     public ListAutomationsResponseSuccess(String object, Boolean hasMore, List<AutomationListItem> data) {
         this.object = object;
         this.hasMore = hasMore;

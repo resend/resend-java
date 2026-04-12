@@ -16,9 +16,19 @@ public class StopAutomationResponseSuccess {
     @JsonProperty("status")
     private AutomationStatus status;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public StopAutomationResponseSuccess() {
     }
 
+    /**
+     * Constructs a StopAutomationResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The automation ID.
+     * @param status The automation status.
+     */
     public StopAutomationResponseSuccess(String object, String id, AutomationStatus status) {
         this.object = object;
         this.id = id;

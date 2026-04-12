@@ -17,25 +17,28 @@ public class AutomationsUtil {
                 .addConfig("event_name", "user.signup")
                 .build();
 
+        Map<String, Object> templateConfig = new HashMap<>();
+        templateConfig.put("id", "tmpl_123");
+
         AutomationStep emailStep = AutomationStep.builder()
                 .key("email_1")
                 .type(StepType.SEND_EMAIL)
-                .addConfig("template_id", "tmpl_123")
+                .addConfig("template", templateConfig)
                 .addConfig("subject", "Welcome!")
                 .addConfig("from", "onboarding@kewynakshlley.me")
                 .build();
 
-        AutomationEdge edge = AutomationEdge.builder()
+        AutomationConnection connection = AutomationConnection.builder()
                 .from("trigger_1")
                 .to("email_1")
-                .edgeType(EdgeType.DEFAULT)
+                .type(ConnectionType.DEFAULT)
                 .build();
 
         return CreateAutomationOptions.builder()
                 .name("Welcome Automation")
                 .status(AutomationStatus.DISABLED)
                 .steps(triggerStep, emailStep)
-                .edges(edge)
+                .connections(connection)
                 .build();
     }
 
@@ -59,8 +62,8 @@ public class AutomationsUtil {
         Map<String, Object> triggerConfig = new HashMap<>();
         triggerConfig.put("event_name", "user.signup");
 
-        AutomationStepResponse triggerStep = new AutomationStepResponse(StepType.TRIGGER, triggerConfig);
-        AutomationEdge edge = new AutomationEdge("step_1", "step_2", EdgeType.DEFAULT);
+        AutomationStepResponse triggerStep = new AutomationStepResponse("step_1", StepType.TRIGGER, triggerConfig);
+        AutomationConnection connection = new AutomationConnection("step_1", "step_2", ConnectionType.DEFAULT);
 
         return new Automation(
                 "automation",
@@ -70,7 +73,7 @@ public class AutomationsUtil {
                 "2024-12-01T10:00:00.000Z",
                 "2024-12-02T10:00:00.000Z",
                 Arrays.asList(triggerStep),
-                Arrays.asList(edge)
+                Arrays.asList(connection)
         );
     }
 
@@ -101,8 +104,8 @@ public class AutomationsUtil {
     }
 
     public static AutomationRun getAutomationRunResponse() {
-        AutomationRunStep step1 = new AutomationRunStep(StepType.TRIGGER, "completed", "2024-12-01T10:00:00.000Z", "2024-12-01T10:00:01.000Z", null, null, "2024-12-01T10:00:00.000Z");
-        AutomationRunStep step2 = new AutomationRunStep(StepType.SEND_EMAIL, "completed", "2024-12-01T10:00:01.000Z", "2024-12-01T10:00:05.000Z", null, null, "2024-12-01T10:00:01.000Z");
+        AutomationRunStep step1 = new AutomationRunStep("trigger_1", StepType.TRIGGER, "completed", "2024-12-01T10:00:00.000Z", "2024-12-01T10:00:01.000Z", null, null, "2024-12-01T10:00:00.000Z");
+        AutomationRunStep step2 = new AutomationRunStep("email_1", StepType.SEND_EMAIL, "completed", "2024-12-01T10:00:01.000Z", "2024-12-01T10:00:05.000Z", null, null, "2024-12-01T10:00:01.000Z");
 
         return new AutomationRun(
                 "automation_run",

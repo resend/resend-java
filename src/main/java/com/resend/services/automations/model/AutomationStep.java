@@ -21,6 +21,11 @@ public class AutomationStep {
     @JsonProperty("config")
     private final Map<String, Object> config;
 
+    /**
+     * Constructs an AutomationStep using the provided builder.
+     *
+     * @param builder The builder to construct the step.
+     */
     public AutomationStep(Builder builder) {
         this.key = builder.key;
         this.type = builder.type;
@@ -63,31 +68,64 @@ public class AutomationStep {
         return new Builder();
     }
 
+    /**
+     * Builder class for constructing AutomationStep objects.
+     */
     public static class Builder {
         private String key;
         private StepType type;
         private Map<String, Object> config = new HashMap<>();
 
+        /**
+         * Sets the step key identifier.
+         *
+         * @param key The step key.
+         * @return The builder instance.
+         */
         public Builder key(String key) {
             this.key = key;
             return this;
         }
 
+        /**
+         * Sets the step type.
+         *
+         * @param type The step type.
+         * @return The builder instance.
+         */
         public Builder type(StepType type) {
             this.type = type;
             return this;
         }
 
+        /**
+         * Sets the step configuration.
+         *
+         * @param config The configuration map.
+         * @return The builder instance.
+         */
         public Builder config(Map<String, Object> config) {
             this.config = config;
             return this;
         }
 
+        /**
+         * Adds a configuration entry.
+         *
+         * @param key The configuration key.
+         * @param value The configuration value.
+         * @return The builder instance.
+         */
         public Builder addConfig(String key, Object value) {
             this.config.put(key, value);
             return this;
         }
 
+        /**
+         * Builds a new AutomationStep instance.
+         *
+         * @return A new AutomationStep.
+         */
         public AutomationStep build() {
             return new AutomationStep(this);
         }

@@ -9,18 +9,41 @@ import java.util.Map;
  */
 public class AutomationStepResponse {
 
+    @JsonProperty("key")
+    private String key;
+
     @JsonProperty("type")
     private StepType type;
 
     @JsonProperty("config")
     private Map<String, Object> config;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationStepResponse() {
     }
 
-    public AutomationStepResponse(StepType type, Map<String, Object> config) {
+    /**
+     * Constructs an AutomationStepResponse with specified values.
+     *
+     * @param key The step key.
+     * @param type The step type.
+     * @param config The step configuration.
+     */
+    public AutomationStepResponse(String key, StepType type, Map<String, Object> config) {
+        this.key = key;
         this.type = type;
         this.config = config;
+    }
+
+    /**
+     * Retrieves the step key.
+     *
+     * @return The step key.
+     */
+    public String getKey() {
+        return key;
     }
 
     /**

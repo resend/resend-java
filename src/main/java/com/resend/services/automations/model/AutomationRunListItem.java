@@ -22,9 +22,21 @@ public class AutomationRunListItem {
     @JsonProperty("created_at")
     private String createdAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationRunListItem() {
     }
 
+    /**
+     * Constructs an AutomationRunListItem with specified values.
+     *
+     * @param id The run ID.
+     * @param status The run status.
+     * @param startedAt The start timestamp.
+     * @param completedAt The completion timestamp.
+     * @param createdAt The creation timestamp.
+     */
     public AutomationRunListItem(String id, RunStatus status, String startedAt,
                                  String completedAt, String createdAt) {
         this.id = id;

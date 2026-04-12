@@ -30,9 +30,23 @@ public class AutomationRun {
     @JsonProperty("steps")
     private List<AutomationRunStep> steps;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationRun() {
     }
 
+    /**
+     * Constructs an AutomationRun with specified values.
+     *
+     * @param object The object type.
+     * @param id The run ID.
+     * @param status The run status.
+     * @param startedAt The start timestamp.
+     * @param completedAt The completion timestamp.
+     * @param createdAt The creation timestamp.
+     * @param steps The list of run steps.
+     */
     public AutomationRun(String object, String id, RunStatus status, String startedAt,
                          String completedAt, String createdAt, List<AutomationRunStep> steps) {
         this.object = object;

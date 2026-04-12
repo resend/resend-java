@@ -18,9 +18,19 @@ public class ListEventsResponseSuccess {
     @JsonProperty("data")
     private List<EventSummary> data;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public ListEventsResponseSuccess() {
     }
 
+    /**
+     * Constructs a ListEventsResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param hasMore Whether more results are available.
+     * @param data The list of events.
+     */
     public ListEventsResponseSuccess(String object, Boolean hasMore, List<EventSummary> data) {
         this.object = object;
         this.hasMore = hasMore;

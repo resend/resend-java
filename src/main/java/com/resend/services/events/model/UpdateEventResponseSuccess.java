@@ -13,9 +13,18 @@ public class UpdateEventResponseSuccess {
     @JsonProperty("id")
     private String id;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public UpdateEventResponseSuccess() {
     }
 
+    /**
+     * Constructs an UpdateEventResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param id The event ID.
+     */
     public UpdateEventResponseSuccess(String object, String id) {
         this.object = object;
         this.id = id;

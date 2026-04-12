@@ -13,9 +13,18 @@ public class SendEventResponseSuccess {
     @JsonProperty("event")
     private String event;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public SendEventResponseSuccess() {
     }
 
+    /**
+     * Constructs a SendEventResponseSuccess with specified values.
+     *
+     * @param object The object type.
+     * @param event The event name.
+     */
     public SendEventResponseSuccess(String object, String event) {
         this.object = object;
         this.event = event;

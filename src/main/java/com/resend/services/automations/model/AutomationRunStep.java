@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class AutomationRunStep {
 
+    @JsonProperty("key")
+    private String key;
+
     @JsonProperty("type")
     private StepType type;
 
@@ -28,11 +31,27 @@ public class AutomationRunStep {
     @JsonProperty("created_at")
     private String createdAt;
 
+    /**
+     * Default constructor for deserialization.
+     */
     public AutomationRunStep() {
     }
 
-    public AutomationRunStep(StepType type, String status, String startedAt, String completedAt,
+    /**
+     * Constructs an AutomationRunStep with specified values.
+     *
+     * @param key The step key.
+     * @param type The step type.
+     * @param status The execution status.
+     * @param startedAt The start timestamp.
+     * @param completedAt The completion timestamp.
+     * @param output The step output.
+     * @param error The step error.
+     * @param createdAt The creation timestamp.
+     */
+    public AutomationRunStep(String key, StepType type, String status, String startedAt, String completedAt,
                              Object output, Object error, String createdAt) {
+        this.key = key;
         this.type = type;
         this.status = status;
         this.startedAt = startedAt;
@@ -40,6 +59,15 @@ public class AutomationRunStep {
         this.output = output;
         this.error = error;
         this.createdAt = createdAt;
+    }
+
+    /**
+     * Retrieves the step key.
+     *
+     * @return The step key.
+     */
+    public String getKey() {
+        return key;
     }
 
     /**

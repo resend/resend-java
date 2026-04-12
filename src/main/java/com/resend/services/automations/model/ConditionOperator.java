@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Represents the comparison operator for condition steps.
  */
 public enum ConditionOperator {
+    /** Equals operator. */
     EQ("eq"),
+    /** Not equals operator. */
     NEQ("neq");
 
     private final String value;

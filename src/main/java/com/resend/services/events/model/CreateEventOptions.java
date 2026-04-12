@@ -59,6 +59,11 @@ public class CreateEventOptions {
      * Builder class for constructing CreateEventOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String name;
         private Map<String, String> schema;
 

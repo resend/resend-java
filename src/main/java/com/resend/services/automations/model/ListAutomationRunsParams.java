@@ -111,6 +111,11 @@ public class ListAutomationRunsParams {
      * Builder class for constructing ListAutomationRunsParams objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private List<RunStatus> status;
         private Integer limit;
         private String after;

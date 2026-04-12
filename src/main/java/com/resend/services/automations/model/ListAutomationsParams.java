@@ -105,6 +105,11 @@ public class ListAutomationsParams {
      * Builder class for constructing ListAutomationsParams objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private AutomationStatus status;
         private Integer limit;
         private String after;

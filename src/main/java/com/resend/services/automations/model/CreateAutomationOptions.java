@@ -86,6 +86,11 @@ public class CreateAutomationOptions {
      * Builder class for constructing CreateAutomationOptions objects.
      */
     public static class Builder {
+        /**
+         * Constructs a new Builder instance.
+         */
+        public Builder() {}
+
         private String name;
         private AutomationStatus status;
         private List<AutomationStep> steps;

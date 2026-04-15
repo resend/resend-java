@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents a DNS record associated with a domain.
+ *
+ * <p>The {@code record} field identifies which kind of DNS record this is
+ * (e.g. {@code SPF}, {@code DKIM}, {@code Receiving}, {@code Tracking},
+ * {@code TrackingCAA}). The {@code type} field is the underlying DNS
+ * record type (e.g. {@code MX}, {@code TXT}, {@code CNAME}, {@code CAA}).</p>
  */
 public class Record {
 

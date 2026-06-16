@@ -237,6 +237,11 @@ public class HttpClient implements IHttpClient<Response> {
             final String fileName,
             final Map<String, String> formFields) {
 
+        if (method == HttpMethod.GET) {
+            throw new IllegalArgumentException(
+                    "Multipart requests require a body and cannot use HTTP method " + method);
+        }
+
         MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", fileName, fileBody);

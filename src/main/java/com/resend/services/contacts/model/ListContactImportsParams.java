@@ -140,8 +140,15 @@ public class ListContactImportsParams {
          * Builds a new ListContactImportsParams instance.
          *
          * @return A new ListContactImportsParams instance.
+         * @throws IllegalArgumentException if both {@code after} and {@code before} are set.
          */
         public ListContactImportsParams build() {
+            boolean hasAfter = after != null && !after.isEmpty();
+            boolean hasBefore = before != null && !before.isEmpty();
+            if (hasAfter && hasBefore) {
+                throw new IllegalArgumentException(
+                        "after and before cannot be used together");
+            }
             return new ListContactImportsParams(this);
         }
     }

@@ -164,7 +164,7 @@ public class ContactImportColumnMap {
          * @return The builder instance.
          */
         public Builder properties(Map<String, ContactImportPropertyMapping> properties) {
-            this.properties = properties;
+            this.properties = properties == null ? null : new HashMap<>(properties);
             return this;
         }
 

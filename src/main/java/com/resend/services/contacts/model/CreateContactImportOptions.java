@@ -25,6 +25,11 @@ import java.util.List;
  */
 public class CreateContactImportOptions {
 
+    /**
+     * Maximum file size accepted by the Resend API for a contact import (50MB).
+     */
+    public static final int MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024;
+
     @JsonIgnore
     private final File file;
 
@@ -53,7 +58,7 @@ public class CreateContactImportOptions {
      */
     public CreateContactImportOptions(Builder builder) {
         this.file = builder.file;
-        this.fileBytes = builder.fileBytes;
+        this.fileBytes = builder.fileBytes == null ? null : builder.fileBytes.clone();
         this.fileName = builder.fileName;
         this.columnMap = builder.columnMap;
         this.onConflict = builder.onConflict;
@@ -76,7 +81,7 @@ public class CreateContactImportOptions {
      * @return The file bytes, or {@code null} if the file was supplied as a {@link File}.
      */
     public byte[] getFileBytes() {
-        return fileBytes;
+        return fileBytes == null ? null : fileBytes.clone();
     }
 
     /**
@@ -200,8 +205,14 @@ public class CreateContactImportOptions {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             byte[] chunk = new byte[8192];
             int read;
+            long total = 0;
             try {
                 while ((read = inputStream.read(chunk)) != -1) {
+                    total += read;
+                    if (total > MAX_FILE_SIZE_BYTES) {
+                        throw new IllegalArgumentException(
+                                "File exceeds maximum size of " + MAX_FILE_SIZE_BYTES + " bytes");
+                    }
                     buffer.write(chunk, 0, read);
                 }
             } catch (IOException e) {

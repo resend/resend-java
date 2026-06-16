@@ -1,8 +1,10 @@
 package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.CreateContactImportOptions;
 import com.resend.services.contacts.model.CreateContactImportResponseSuccess;
@@ -11,12 +13,9 @@ import com.resend.services.contacts.model.ListContactImportsParams;
 import com.resend.services.contacts.model.ListContactImportsResponseSuccess;
 import okhttp3.MediaType;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Represents the Contact Imports sub-service.
@@ -169,35 +168,16 @@ public class ContactImports extends BaseService {
             return "";
         }
 
-        Map<String, String> queryParams = new LinkedHashMap<>();
+        ListParams base = ListParams.builder()
+                .limit(params.getLimit())
+                .after(params.getAfter())
+                .before(params.getBefore())
+                .build();
 
-        if (params.getLimit() != null) {
-            queryParams.put("limit", params.getLimit().toString());
-        }
-        if (params.getAfter() != null && !params.getAfter().isEmpty()) {
-            queryParams.put("after", params.getAfter());
-        }
-        if (params.getBefore() != null && !params.getBefore().isEmpty()) {
-            queryParams.put("before", params.getBefore());
-        }
-        if (params.getStatus() != null && !params.getStatus().isEmpty()) {
-            queryParams.put("status", params.getStatus());
-        }
+        Map<String, String> extras = params.getStatus() == null
+                ? Collections.<String, String>emptyMap()
+                : Collections.singletonMap("status", params.getStatus());
 
-        if (queryParams.isEmpty()) {
-            return "";
-        }
-
-        return "?" + queryParams.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + encode(entry.getValue()))
-                .collect(Collectors.joining("&"));
-    }
-
-    private static String encode(String value) {
-        try {
-            return URLEncoder.encode(value, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        return URLHelper.parse(base, extras);
     }
 }

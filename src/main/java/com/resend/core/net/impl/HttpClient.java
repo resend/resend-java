@@ -150,14 +150,14 @@ public class HttpClient implements IHttpClient<Response> {
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
-        if (requestOptions != null && requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
-            requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
-        }
-
-        if (requestOptions.getAdditionalHeaders() != null
-                && !requestOptions.getAdditionalHeaders().isEmpty()) {
-            for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
-                requestBuilder.addHeader(entry.getKey(), entry.getValue());
+        if (requestOptions != null) {
+            if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
+                requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
+            }
+            if (requestOptions.getAdditionalHeaders() != null && !requestOptions.getAdditionalHeaders().isEmpty()) {
+                for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
+                    requestBuilder.addHeader(entry.getKey(), entry.getValue());
+                }
             }
         }
 

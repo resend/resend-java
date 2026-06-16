@@ -168,6 +168,9 @@ public class CreateContactImportOptions {
          * @return The builder instance.
          */
         public Builder file(File file) {
+            if (file != null && file.exists()) {
+                ensureUnderMaxSize(file.length());
+            }
             this.file = file;
             this.fileBytes = null;
             this.fileName = null;
@@ -182,6 +185,9 @@ public class CreateContactImportOptions {
          * @return The builder instance.
          */
         public Builder file(byte[] fileBytes, String fileName) {
+            if (fileBytes != null) {
+                ensureUnderMaxSize(fileBytes.length);
+            }
             this.fileBytes = fileBytes;
             this.fileName = fileName;
             this.file = null;
@@ -209,10 +215,7 @@ public class CreateContactImportOptions {
             try {
                 while ((read = inputStream.read(chunk)) != -1) {
                     total += read;
-                    if (total > MAX_FILE_SIZE_BYTES) {
-                        throw new IllegalArgumentException(
-                                "File exceeds maximum size of " + MAX_FILE_SIZE_BYTES + " bytes");
-                    }
+                    ensureUnderMaxSize(total);
                     buffer.write(chunk, 0, read);
                 }
             } catch (IOException e) {
@@ -222,6 +225,13 @@ public class CreateContactImportOptions {
             this.fileName = fileName;
             this.file = null;
             return this;
+        }
+
+        private static void ensureUnderMaxSize(long size) {
+            if (size > MAX_FILE_SIZE_BYTES) {
+                throw new IllegalArgumentException(
+                        "File exceeds maximum size of " + MAX_FILE_SIZE_BYTES + " bytes");
+            }
         }
 
         /**

@@ -67,6 +67,21 @@ public interface IHttpClient<T> {
     AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final Map<String, String> formFields);
 
     /**
+     * Perform a multipart HTTP request with support for {@link RequestOptions} (idempotency
+     * key and additional headers).
+     *
+     * @param path           The path or endpoint of the request.
+     * @param apiKey         The API Key used to authenticate the request.
+     * @param method         The HTTP method (typically POST).
+     * @param file           The file to upload (sent as the {@code file} form field).
+     * @param fileMediaType  The media type of the file.
+     * @param formFields     A map of additional form field name &rarr; value pairs.
+     * @param requestOptions The request options (can be null).
+     * @return An {@link AbstractHttpResponse} representing the response from the server.
+     */
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final Map<String, String> formFields, final RequestOptions requestOptions);
+
+    /**
      * Perform an HTTP request with a {@code multipart/form-data} body, providing the file
      * content as raw bytes with an explicit file name.
      *
@@ -80,4 +95,19 @@ public interface IHttpClient<T> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final String fileName, final MediaType fileMediaType, final Map<String, String> formFields);
+
+    /**
+     * Perform a multipart HTTP request using raw bytes, with support for {@link RequestOptions}.
+     *
+     * @param path           The path or endpoint of the request.
+     * @param apiKey         The API Key used to authenticate the request.
+     * @param method         The HTTP method (typically POST).
+     * @param fileBytes      The file content as bytes (sent as the {@code file} form field).
+     * @param fileName       The file name to use in the multipart part.
+     * @param fileMediaType  The media type of the file.
+     * @param formFields     A map of additional form field name &rarr; value pairs.
+     * @param requestOptions The request options (can be null).
+     * @return An {@link AbstractHttpResponse} representing the response from the server.
+     */
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final String fileName, final MediaType fileMediaType, final Map<String, String> formFields, final RequestOptions requestOptions);
 }

@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.CreateContactImportOptions;
 import com.resend.services.contacts.model.CreateContactImportResponseSuccess;
@@ -47,6 +48,21 @@ public class ContactImports extends BaseService {
      * @throws ResendException If an error occurs during the contact import creation process.
      */
     public CreateContactImportResponseSuccess create(CreateContactImportOptions options) throws ResendException {
+        return create(options, null);
+    }
+
+    /**
+     * Creates a new contact import from a CSV file with the given {@link RequestOptions}.
+     *
+     * <p>Use an idempotency key on this endpoint to safely retry uploads without creating
+     * duplicate imports.</p>
+     *
+     * @param options        The contact import options. {@code file} is required.
+     * @param requestOptions The request options (idempotency key, additional headers); can be null.
+     * @return The details of the created contact import.
+     * @throws ResendException If an error occurs during the contact import creation process.
+     */
+    public CreateContactImportResponseSuccess create(CreateContactImportOptions options, RequestOptions requestOptions) throws ResendException {
         if (options == null || (options.getFile() == null && options.getFileBytes() == null)) {
             throw new IllegalArgumentException("file must be provided");
         }
@@ -74,7 +90,8 @@ public class ContactImports extends BaseService {
                     HttpMethod.POST,
                     options.getFile(),
                     CSV_MEDIA_TYPE,
-                    formFields);
+                    formFields,
+                    requestOptions);
         } else {
             response = httpClient.performMultipart(
                     "/contacts/imports",
@@ -83,7 +100,8 @@ public class ContactImports extends BaseService {
                     options.getFileBytes(),
                     options.getFileName(),
                     CSV_MEDIA_TYPE,
-                    formFields);
+                    formFields,
+                    requestOptions);
         }
 
         if (!response.isSuccessful()) {

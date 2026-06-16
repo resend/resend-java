@@ -194,10 +194,24 @@ public class HttpClient implements IHttpClient<Response> {
             final MediaType fileMediaType,
             final Map<String, String> formFields) {
 
+        return performMultipart(path, apiKey, method, file, fileMediaType, formFields, null);
+    }
+
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final File file,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
+
         return executeMultipart(path, apiKey, method,
                 RequestBody.create(file, fileMediaType),
                 file.getName(),
-                formFields);
+                formFields,
+                requestOptions);
     }
 
     /**
@@ -223,10 +237,25 @@ public class HttpClient implements IHttpClient<Response> {
             final MediaType fileMediaType,
             final Map<String, String> formFields) {
 
+        return performMultipart(path, apiKey, method, fileBytes, fileName, fileMediaType, formFields, null);
+    }
+
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final byte[] fileBytes,
+            final String fileName,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
+
         return executeMultipart(path, apiKey, method,
                 RequestBody.create(fileBytes, fileMediaType),
                 fileName,
-                formFields);
+                formFields,
+                requestOptions);
     }
 
     private AbstractHttpResponse executeMultipart(
@@ -235,7 +264,8 @@ public class HttpClient implements IHttpClient<Response> {
             final HttpMethod method,
             final RequestBody fileBody,
             final String fileName,
-            final Map<String, String> formFields) {
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
 
         if (method == HttpMethod.GET) {
             throw new IllegalArgumentException(
@@ -254,16 +284,26 @@ public class HttpClient implements IHttpClient<Response> {
             }
         }
 
-        Request request = new Request.Builder()
+        Request.Builder requestBuilder = new Request.Builder()
                 .url(BASE_API + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
-                .method(method.name(), bodyBuilder.build())
-                .build();
+                .method(method.name(), bodyBuilder.build());
+
+        if (requestOptions != null) {
+            if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
+                requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
+            }
+            if (requestOptions.getAdditionalHeaders() != null && !requestOptions.getAdditionalHeaders().isEmpty()) {
+                for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
+                    requestBuilder.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
+        }
 
         try {
-            Response response = httpClient.newCall(request).execute();
+            Response response = httpClient.newCall(requestBuilder.build()).execute();
             return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);

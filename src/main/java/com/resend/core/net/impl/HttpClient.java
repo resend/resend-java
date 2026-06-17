@@ -8,6 +8,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.net.RequestOptions;
 import okhttp3.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -149,14 +150,14 @@ public class HttpClient implements IHttpClient<Response> {
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
-        if (requestOptions != null && requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
-            requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
-        }
-
-        if (requestOptions.getAdditionalHeaders() != null
-                && !requestOptions.getAdditionalHeaders().isEmpty()) {
-            for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
-                requestBuilder.addHeader(entry.getKey(), entry.getValue());
+        if (requestOptions != null) {
+            if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
+                requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
+            }
+            if (requestOptions.getAdditionalHeaders() != null && !requestOptions.getAdditionalHeaders().isEmpty()) {
+                for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
+                    requestBuilder.addHeader(entry.getKey(), entry.getValue());
+                }
             }
         }
 
@@ -164,6 +165,145 @@ public class HttpClient implements IHttpClient<Response> {
 
         try {
             Response response =  httpClient.newCall(request).execute();
+            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Performs an HTTP request with a {@code multipart/form-data} body containing a single
+     * file part and zero or more text form fields.
+     *
+     * @param path         The endpoint path.
+     * @param apiKey       Your API key.
+     * @param method       The HTTP method.
+     * @param file         The file to upload (sent as the {@code file} form field).
+     * @param fileMediaType The media type of the file.
+     * @param formFields   Map of additional form field name &rarr; value pairs to include
+     *                     in the multipart body. JSON-encoded payloads should be sent as
+     *                     strings here.
+     * @return An {@link AbstractHttpResponse} representing the response from the server.
+     */
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final File file,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields) {
+
+        return performMultipart(path, apiKey, method, file, fileMediaType, formFields, null);
+    }
+
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final File file,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
+
+        return executeMultipart(path, apiKey, method,
+                RequestBody.create(file, fileMediaType),
+                file.getName(),
+                formFields,
+                requestOptions);
+    }
+
+    /**
+     * Performs an HTTP request with a {@code multipart/form-data} body using the supplied
+     * raw bytes as the file part.
+     *
+     * @param path           The endpoint path.
+     * @param apiKey         Your API key.
+     * @param method         The HTTP method.
+     * @param fileBytes      The file content as bytes.
+     * @param fileName       The file name to advertise in the multipart part.
+     * @param fileMediaType  The media type of the file.
+     * @param formFields     Map of additional form field name &rarr; value pairs.
+     * @return An {@link AbstractHttpResponse} representing the response from the server.
+     */
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final byte[] fileBytes,
+            final String fileName,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields) {
+
+        return performMultipart(path, apiKey, method, fileBytes, fileName, fileMediaType, formFields, null);
+    }
+
+    @Override
+    public AbstractHttpResponse performMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final byte[] fileBytes,
+            final String fileName,
+            final MediaType fileMediaType,
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
+
+        return executeMultipart(path, apiKey, method,
+                RequestBody.create(fileBytes, fileMediaType),
+                fileName,
+                formFields,
+                requestOptions);
+    }
+
+    private AbstractHttpResponse executeMultipart(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final RequestBody fileBody,
+            final String fileName,
+            final Map<String, String> formFields,
+            final RequestOptions requestOptions) {
+
+        if (method == HttpMethod.GET) {
+            throw new IllegalArgumentException(
+                    "Multipart requests require a body and cannot use HTTP method " + method);
+        }
+
+        MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", fileName, fileBody);
+
+        if (formFields != null) {
+            for (Map.Entry<String, String> entry : formFields.entrySet()) {
+                if (entry.getValue() != null) {
+                    bodyBuilder.addFormDataPart(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(BASE_API + path)
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("Authorization", "Bearer " + apiKey)
+                .method(method.name(), bodyBuilder.build());
+
+        if (requestOptions != null) {
+            if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
+                requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
+            }
+            if (requestOptions.getAdditionalHeaders() != null && !requestOptions.getAdditionalHeaders().isEmpty()) {
+                for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
+                    requestBuilder.addHeader(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+
+        try {
+            Response response = httpClient.newCall(requestBuilder.build()).execute();
             return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);

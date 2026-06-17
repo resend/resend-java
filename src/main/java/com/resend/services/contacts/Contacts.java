@@ -18,6 +18,7 @@ import okhttp3.MediaType;
  * <ul>
  *   <li>{@link #segments()} - Manage contact membership in segments (add/remove contacts from segments)</li>
  *   <li>{@link #topics()} - Manage contact topic subscriptions (list and update topic preferences)</li>
+ *   <li>{@link #imports()} - Manage contact imports from CSV files (beta)</li>
  * </ul>
  *
  * <p><strong>Global Contact Operations:</strong></p>
@@ -37,6 +38,7 @@ public class Contacts extends BaseService {
 
     private ContactSegments contactSegments;
     private ContactTopics contactTopics;
+    private ContactImports contactImports;
 
     /**
      * Constructs an instance of the {@code Contacts} class.
@@ -69,6 +71,21 @@ public class Contacts extends BaseService {
             this.contactTopics = new ContactTopics(this.apiKey);
         }
         return this.contactTopics;
+    }
+
+    /**
+     * Returns the ContactImports sub-service for managing contact imports from CSV files.
+     *
+     * <p><strong>Note:</strong> Contact Imports is currently in beta and only available to
+     * a limited number of users. APIs might change before GA.</p>
+     *
+     * @return The ContactImports service instance.
+     */
+    public ContactImports imports() {
+        if (this.contactImports == null) {
+            this.contactImports = new ContactImports(this.apiKey);
+        }
+        return this.contactImports;
     }
 
     /**

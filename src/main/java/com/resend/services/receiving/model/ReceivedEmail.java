@@ -45,6 +45,9 @@ public class ReceivedEmail {
     @JsonProperty("reply_to")
     private List<String> replyTo;
 
+    @JsonProperty("received_for")
+    private List<String> receivedFor;
+
     @JsonProperty("message_id")
     private String messageId;
 
@@ -271,6 +274,24 @@ public class ReceivedEmail {
      */
     public void setReplyTo(List<String> replyTo) {
         this.replyTo = replyTo;
+    }
+
+    /**
+     * Gets the addresses the email was received for (forwarding recipients).
+     *
+     * @return The list of addresses the email was received for.
+     */
+    public List<String> getReceivedFor() {
+        return receivedFor;
+    }
+
+    /**
+     * Sets the addresses the email was received for (forwarding recipients).
+     *
+     * @param receivedFor The list of addresses the email was received for.
+     */
+    public void setReceivedFor(List<String> receivedFor) {
+        this.receivedFor = receivedFor;
     }
 
     /**

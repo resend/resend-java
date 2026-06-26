@@ -37,6 +37,7 @@ public class ReceivingUtil {
         email.setBcc(new ArrayList<String>());
         email.setCc(new ArrayList<String>());
         email.setReplyTo(new ArrayList<String>());
+        email.setReceivedFor(Arrays.asList("forwarded@example.com"));
         email.setMessageId("<example+123>");
 
         List<ReceivedEmailAttachment> attachments = new ArrayList<ReceivedEmailAttachment>();

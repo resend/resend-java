@@ -40,6 +40,7 @@ public class ReceivingTest {
         assertEquals(expectedEmail.getSubject(), result.getSubject());
         assertEquals(expectedEmail.getFrom(), result.getFrom());
         assertEquals(expectedEmail.getMessageId(), result.getMessageId());
+        assertEquals(expectedEmail.getReceivedFor(), result.getReceivedFor());
         verify(receiving, times(1)).get(expectedEmail.getId());
     }
 

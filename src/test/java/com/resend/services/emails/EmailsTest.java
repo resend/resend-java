@@ -1,222 +1,230 @@
 package com.resend.services.emails;
+
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.AbstractHttpResponse;
+import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
-import com.resend.services.batch.Batch;
-import com.resend.services.batch.model.AbstractBatchEmailsResponse;
-import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
+import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
-
+@SuppressWarnings("unchecked")
 public class EmailsTest {
+
+    private static final String EMAIL_ID = "qwert";
+    private static final String UPDATE_EMAIL_ID = "123";
+    private static final String ATTACHMENT_ID = "2a0c9ce0-3112-4728-976e-47ddcd16a318";
+    private static final String ATTACHMENT_EMAIL_ID = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
+
+    private static final String SEND_RESPONSE_JSON = "{\"id\":\"mock_id\"}";
+
+    private static final String GET_EMAIL_JSON =
+            "{\"object\":\"email_object\",\"id\":\"" + EMAIL_ID + "\"," +
+            "\"from\":\"sender@example.com\",\"to\":[\"recipient@example.com\"]," +
+            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"," +
+            "\"subject\":\"Test Email Subject\"," +
+            "\"html\":\"<html><body>This is the HTML content</body></html>\"," +
+            "\"text\":\"This is the plain text content\"," +
+            "\"bcc\":[\"bcc@example.com\"],\"cc\":[\"cc@example.com\"]," +
+            "\"reply_to\":[\"replyto@example.com\"],\"last_event\":\"last_event_status\"}";
+
+    private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"" + UPDATE_EMAIL_ID + "\",\"object\":\"emails\"}";
+
+    private static final String CANCEL_RESPONSE_JSON = "{\"id\":\"" + UPDATE_EMAIL_ID + "\",\"object\":\"emails\"}";
+
+    private static final String LIST_RESPONSE_JSON =
+            "{\"object\":\"emails\",\"has_more\":true,\"data\":[" +
+            "{\"id\":\"email_1\",\"from\":\"sender1@example.com\"}," +
+            "{\"id\":\"email_2\",\"from\":\"sender2@example.com\"}," +
+            "{\"id\":\"email_3\",\"from\":\"sender3@example.com\"}" +
+            "]}";
+
+    private static final String ATTACHMENT_RESPONSE_JSON =
+            "{\"object\":\"attachment\",\"id\":\"" + ATTACHMENT_ID + "\"," +
+            "\"filename\":\"avatar.png\",\"size\":4096,\"content_type\":\"image/png\"," +
+            "\"download_url\":\"https://outbound-cdn.resend.com/attachments/" + ATTACHMENT_ID + "\"}";
+
+    private static final String LIST_ATTACHMENTS_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"object\":\"attachment\",\"id\":\"" + ATTACHMENT_ID + "\",\"filename\":\"avatar.png\",\"size\":4096,\"content_type\":\"image/png\"}," +
+            "{\"object\":\"attachment\",\"id\":\"3b0d9ce0-4223-5839-087f-58eede27b429\",\"filename\":\"invoice.pdf\",\"size\":8192,\"content_type\":\"application/pdf\"}" +
+            "]}";
+
     @Mock
+    private IHttpClient httpClient;
+
     private Emails emails;
-
-    @Mock
-    private Batch batch;
-
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        emails = mock(Emails.class);
-    }
-
-    @Test
-    public void testRetrieveEmail_Success() throws ResendException {
-        Email expectedEmail = EmailsUtil.createTestEmail();
-
-        when(emails.get(expectedEmail.getId()))
-                .thenReturn(expectedEmail);
-
-        Email retrievedEmail = emails.get(expectedEmail.getId());
-
-
-        assertEquals(expectedEmail, retrievedEmail);
-        verify(emails, times(1)).get(expectedEmail.getId());
+        emails = new Emails("test-api-key", httpClient);
     }
 
     @Test
     public void testSendEmail_Success() throws ResendException {
         CreateEmailOptions createEmailOptions = EmailsUtil.createEmailOptions();
-        CreateEmailResponse expectedRes = EmailsUtil.createSendEmailResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, SEND_RESPONSE_JSON, true);
 
-        when(emails.send(createEmailOptions)).thenReturn(expectedRes);
+        when(httpClient.perform(eq("/emails"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        CreateEmailResponse createEmailResponse = emails.send(createEmailOptions);
+        CreateEmailResponse response = emails.send(createEmailOptions);
 
-        assertNotNull(createEmailResponse);
+        assertNotNull(response);
+        assertEquals("mock_id", response.getId());
+    }
+
+    @Test
+    public void testSendEmail_ApiError_ThrowsResendException() throws ResendException {
+        CreateEmailOptions createEmailOptions = EmailsUtil.createEmailOptions();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
+                "{\"name\":\"validation_error\",\"message\":\"Invalid recipient\"}", false);
+
+        when(httpClient.perform(eq("/emails"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> emails.send(createEmailOptions));
+        assertEquals(422, (int) ex.getStatusCode());
     }
 
     @Test
     public void testSendEmail_WithIdempotencyKey_Success() throws ResendException {
-        CreateEmailResponse expectedResponse = EmailsUtil.createSendEmailResponse();
-        CreateEmailOptions createOptions  = EmailsUtil.createEmailOptions();
+        CreateEmailOptions createEmailOptions = EmailsUtil.createEmailOptions();
         RequestOptions requestOptions = EmailsUtil.createRequestOptions();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, SEND_RESPONSE_JSON, true);
 
-        when(emails.send(createOptions, requestOptions))
-                .thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/emails"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class), any(RequestOptions.class)))
+                .thenReturn(httpResponse);
 
-        CreateEmailResponse response = emails.send(createOptions, requestOptions);
+        CreateEmailResponse response = emails.send(createEmailOptions, requestOptions);
 
-        assertEquals(expectedResponse, response);
-        verify(emails, times(1)).send(createOptions, requestOptions);
-    }
-
-
-    @Test
-    public void testCreateBatchEmails_Success() throws ResendException {
-        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
-        CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
-
-        when(batch.send(batchEmailsRequest)).thenReturn(expectedRes);
-
-        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest);
-
-        assertNotNull(sendBatchEmailsResponse);
-        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+        assertNotNull(response);
+        assertEquals("mock_id", response.getId());
     }
 
     @Test
-    public void testCreatePermissiveBatchEmails_Success() throws ResendException {
-        RequestOptions options = RequestOptions.builder()
-                .add("x-batch-validation", "permissive").build();
+    public void testRetrieveEmail_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, GET_EMAIL_JSON, true);
 
-        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
-        CreateBatchEmailsResponse expectedRes = EmailsUtil.createPermissiveBatchEmailsResponse();
+        when(httpClient.perform(eq("/emails/" + EMAIL_ID), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        when(batch.send(batchEmailsRequest, options)).thenReturn(expectedRes);
+        Email response = emails.get(EMAIL_ID);
 
-        CreateBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, options);
-
-        assertNotNull(sendBatchEmailsResponse);
-        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
-    }
-
-    @Test
-    public void testCreateBatchEmailsWithIdempotencyKey_Success() throws ResendException {
-        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
-        CreateBatchEmailsResponse expectedRes = EmailsUtil.createBatchEmailsResponse();
-        RequestOptions requestOptions = EmailsUtil.createRequestOptions();
-
-        when(batch.send(batchEmailsRequest, requestOptions)).thenReturn(expectedRes);
-
-        AbstractBatchEmailsResponse sendBatchEmailsResponse = batch.send(batchEmailsRequest, requestOptions);
-
-        assertNotNull(sendBatchEmailsResponse);
-        assertEquals(expectedRes.getData().size(), sendBatchEmailsResponse.getData().size());
+        assertNotNull(response);
+        assertEquals(EMAIL_ID, response.getId());
+        assertEquals("sender@example.com", response.getFrom());
     }
 
     @Test
     public void testUpdateEmail_Success() throws ResendException {
         UpdateEmailOptions updateEmailOptions = EmailsUtil.updateEmailOptions();
-        UpdateEmailResponse expectedRes = EmailsUtil.updateEmailResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
 
-        when(emails.update("123", updateEmailOptions)).thenReturn(expectedRes);
+        when(httpClient.perform(eq("/emails/" + UPDATE_EMAIL_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        UpdateEmailResponse updateEmailResponse = emails.update("123", updateEmailOptions);
+        UpdateEmailResponse response = emails.update(UPDATE_EMAIL_ID, updateEmailOptions);
 
-        assertNotNull(updateEmailResponse);
+        assertNotNull(response);
+        assertEquals(UPDATE_EMAIL_ID, response.getId());
     }
 
     @Test
     public void testCancelEmail_Success() throws ResendException {
-        CancelEmailResponse expectedRes = EmailsUtil.cancelEmailResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CANCEL_RESPONSE_JSON, true);
 
-        when(emails.cancel("123")).thenReturn(expectedRes);
+        when(httpClient.perform(eq("/emails/" + UPDATE_EMAIL_ID + "/cancel"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        CancelEmailResponse cancelEmailResponse = emails.cancel("123");
+        CancelEmailResponse response = emails.cancel(UPDATE_EMAIL_ID);
 
-        assertNotNull(cancelEmailResponse);
+        assertNotNull(response);
+        assertEquals(UPDATE_EMAIL_ID, response.getId());
     }
 
     @Test
     public void testListEmails_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_RESPONSE_JSON, true);
 
-        ListEmailsResponseSuccess expectedResponse = new ListEmailsResponseSuccess(EmailsUtil.createEmailList(), "emails", true);
-
-        when(emails.list()).thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/emails"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         ListEmailsResponseSuccess response = emails.list();
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getData().size(), response.getData().size());
+        assertEquals(3, response.getData().size());
     }
 
     @Test
     public void testListEmailsWithPagination_Success() throws ResendException {
-        ListParams params = ListParams.builder()
-                .limit(3).build();
-        ListEmailsResponseSuccess expectedResponse = new ListEmailsResponseSuccess(EmailsUtil.createEmailList(), "emails", true);
+        ListParams params = ListParams.builder().limit(3).build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_RESPONSE_JSON, true);
 
-        when(emails.list(params)).thenReturn(expectedResponse);
+        when(httpClient.perform(startsWith("/emails?"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         ListEmailsResponseSuccess response = emails.list(params);
 
         assertNotNull(response);
-        assertEquals(params.getLimit(), response.getData().size());
+        assertEquals(3, response.getData().size());
     }
 
     @Test
     public void testGetAttachment_Success() throws ResendException {
-        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
-        String attachmentId = "2a0c9ce0-3112-4728-976e-47ddcd16a318";
-        AttachmentResponse expectedResponse = EmailsUtil.createAttachmentResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, ATTACHMENT_RESPONSE_JSON, true);
 
-        when(emails.getAttachment(emailId, attachmentId)).thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/emails/" + ATTACHMENT_EMAIL_ID + "/attachments/" + ATTACHMENT_ID),
+                anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        AttachmentResponse response = emails.getAttachment(emailId, attachmentId);
+        AttachmentResponse response = emails.getAttachment(ATTACHMENT_EMAIL_ID, ATTACHMENT_ID);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getId(), response.getId());
-        assertEquals(expectedResponse.getFilename(), response.getFilename());
-        assertEquals(expectedResponse.getSize(), response.getSize());
-        assertEquals(expectedResponse.getContentType(), response.getContentType());
-        assertEquals(expectedResponse.getDownloadUrl(), response.getDownloadUrl());
-        verify(emails, times(1)).getAttachment(emailId, attachmentId);
+        assertEquals(ATTACHMENT_ID, response.getId());
+        assertEquals("avatar.png", response.getFilename());
+        assertEquals(4096, response.getSize());
     }
 
     @Test
     public void testListAttachments_Success() throws ResendException {
-        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
-        ListAttachmentsResponse expectedResponse = EmailsUtil.createListAttachmentsResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_ATTACHMENTS_JSON, true);
 
-        when(emails.listAttachments(emailId)).thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/emails/" + ATTACHMENT_EMAIL_ID + "/attachments"),
+                anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        ListAttachmentsResponse response = emails.listAttachments(emailId);
+        ListAttachmentsResponse response = emails.listAttachments(ATTACHMENT_EMAIL_ID);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getData().size(), response.getData().size());
-        assertEquals(expectedResponse.getObject(), response.getObject());
-        verify(emails, times(1)).listAttachments(emailId);
+        assertEquals(2, response.getData().size());
+        assertEquals("list", response.getObject());
     }
 
     @Test
     public void testListAttachmentsWithPagination_Success() throws ResendException {
-        String emailId = "4ef9a417-02e9-4d39-ad75-9611e0fcc33c";
-        ListParams params = ListParams.builder()
-                .limit(10)
-                .build();
-        ListAttachmentsResponse expectedResponse = EmailsUtil.createListAttachmentsResponse();
+        ListParams params = ListParams.builder().limit(10).build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_ATTACHMENTS_JSON, true);
 
-        when(emails.listAttachments(emailId, params)).thenReturn(expectedResponse);
+        when(httpClient.perform(startsWith("/emails/" + ATTACHMENT_EMAIL_ID + "/attachments?"),
+                anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        ListAttachmentsResponse response = emails.listAttachments(emailId, params);
+        ListAttachmentsResponse response = emails.listAttachments(ATTACHMENT_EMAIL_ID, params);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getData().size(), response.getData().size());
-        assertEquals(expectedResponse.hasMore(), response.hasMore());
-        verify(emails, times(1)).listAttachments(emailId, params);
+        assertEquals(2, response.getData().size());
     }
 
     @Test
@@ -224,8 +232,6 @@ public class EmailsTest {
         Template template = Template.builder()
                 .id("template_123")
                 .addVariable("firstName", "John")
-                .addVariable("lastName", "Doe")
-                .addVariable("company", "Acme Corp")
                 .build();
 
         CreateEmailOptions emailWithTemplate = CreateEmailOptions.builder()
@@ -235,54 +241,14 @@ public class EmailsTest {
                 .template(template)
                 .build();
 
-        CreateEmailResponse expectedResponse = EmailsUtil.createSendEmailResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, SEND_RESPONSE_JSON, true);
 
-        when(emails.send(emailWithTemplate)).thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/emails"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         CreateEmailResponse response = emails.send(emailWithTemplate);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getId(), response.getId());
-        verify(emails, times(1)).send(emailWithTemplate);
-    }
-
-    @Test
-    public void testSendBatchEmails_WithTemplate_Success() throws ResendException {
-        Template template1 = Template.builder()
-                .id("template_123")
-                .addVariable("firstName", "John")
-                .addVariable("company", "Tech Corp")
-                .build();
-
-        Template template2 = Template.builder()
-                .id("template_123")
-                .addVariable("firstName", "Jane")
-                .addVariable("company", "Design Studios")
-                .build();
-
-        CreateEmailOptions email1 = CreateEmailOptions.builder()
-                .from("Acme <onboarding@resend.dev>")
-                .to("john@example.com")
-                .subject("Welcome John!")
-                .template(template1)
-                .build();
-
-        CreateEmailOptions email2 = CreateEmailOptions.builder()
-                .from("Acme <onboarding@resend.dev>")
-                .to("jane@example.com")
-                .subject("Welcome Jane!")
-                .template(template2)
-                .build();
-
-        List<CreateEmailOptions> batchEmails = java.util.Arrays.asList(email1, email2);
-        CreateBatchEmailsResponse expectedResponse = EmailsUtil.createBatchEmailsResponse();
-
-        when(batch.send(batchEmails)).thenReturn(expectedResponse);
-
-        CreateBatchEmailsResponse response = batch.send(batchEmails);
-
-        assertNotNull(response);
-        assertEquals(expectedResponse.getData().size(), response.getData().size());
-        verify(batch, times(1)).send(batchEmails);
+        assertEquals("mock_id", response.getId());
     }
 }

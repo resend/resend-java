@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
@@ -49,6 +50,10 @@ public class Contacts extends BaseService {
         super(apiKey);
     }
 
+    Contacts(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
+    }
+
     /**
      * Returns the ContactSegments sub-service for managing contact segment memberships.
      *
@@ -56,7 +61,7 @@ public class Contacts extends BaseService {
      */
     public ContactSegments segments() {
         if (this.contactSegments == null) {
-            this.contactSegments = new ContactSegments(this.apiKey);
+            this.contactSegments = new ContactSegments(this.apiKey, this.httpClient);
         }
         return this.contactSegments;
     }
@@ -68,7 +73,7 @@ public class Contacts extends BaseService {
      */
     public ContactTopics topics() {
         if (this.contactTopics == null) {
-            this.contactTopics = new ContactTopics(this.apiKey);
+            this.contactTopics = new ContactTopics(this.apiKey, this.httpClient);
         }
         return this.contactTopics;
     }
@@ -83,7 +88,7 @@ public class Contacts extends BaseService {
      */
     public ContactImports imports() {
         if (this.contactImports == null) {
-            this.contactImports = new ContactImports(this.apiKey);
+            this.contactImports = new ContactImports(this.apiKey, this.httpClient);
         }
         return this.contactImports;
     }

@@ -1,10 +1,13 @@
 package com.resend.services.webhooks;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.net.AbstractHttpResponse;
+import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.services.util.WebhooksUtil;
-import com.resend.services.webhooks.dto.WebhookDTO;
 import com.resend.services.webhooks.model.*;
+import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,70 +16,105 @@ import org.mockito.MockitoAnnotations;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("unchecked")
 public class WebhooksTest {
 
+    private static final String WEBHOOK_ID = "4dd369bc-aa82-4ff3-97de-514ae3000ee0";
+
+    private static final String CREATE_WEBHOOK_JSON =
+            "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\",\"signing_secret\":\"whsec_xxxxxxxxxx\"}";
+
+    private static final String UPDATE_WEBHOOK_JSON =
+            "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\"}";
+
+    private static final String GET_WEBHOOK_JSON =
+            "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\"," +
+            "\"created_at\":\"2023-08-22T15:28:00.000Z\",\"status\":\"enabled\"," +
+            "\"endpoint\":\"https://webhook.example.com/handler\"," +
+            "\"events\":[\"email.sent\",\"email.received\"]," +
+            "\"signing_secret\":\"whsec_xxxxxxxxxx\"}";
+
+    private static final String LIST_WEBHOOKS_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10T10:15:30.000Z\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\",\"email.bounced\"]}," +
+            "{\"id\":\"" + WEBHOOK_ID + "\",\"created_at\":\"2023-08-22T15:28:00.000Z\",\"status\":\"enabled\",\"endpoint\":\"https://second-webhook.example.com/receive\",\"events\":[\"email.received\"]}" +
+            "]}";
+
+    private static final String REMOVE_WEBHOOK_JSON =
+            "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\",\"deleted\":true}";
+
     @Mock
+    private IHttpClient httpClient;
+
     private Webhooks webhooks;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        webhooks = mock(Webhooks.class);
+        webhooks = new Webhooks("test-api-key", httpClient);
     }
 
     @Test
     public void testCreateWebhook_Success() throws ResendException {
-        CreateWebhookResponseSuccess expectedResponse = WebhooksUtil.createWebhookResponse();
-
         CreateWebhookOptions request = WebhooksUtil.createWebhookRequest();
-        when(webhooks.create(request))
-                .thenReturn(expectedResponse);
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_WEBHOOK_JSON, true);
+
+        when(httpClient.perform(eq("/webhooks"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         CreateWebhookResponseSuccess response = webhooks.create(request);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getId(), response.getId());
-        assertEquals(expectedResponse.getObject(), response.getObject());
-        assertEquals(expectedResponse.getSigningSecret(), response.getSigningSecret());
+        assertEquals(WEBHOOK_ID, response.getId());
         assertEquals("webhook", response.getObject());
-        assertEquals("4dd369bc-aa82-4ff3-97de-514ae3000ee0", response.getId());
+        assertEquals("whsec_xxxxxxxxxx", response.getSigningSecret());
+    }
+
+    @Test
+    public void testCreateWebhook_ApiError_ThrowsResendException() throws ResendException {
+        CreateWebhookOptions request = WebhooksUtil.createWebhookRequest();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
+                "{\"name\":\"validation_error\",\"message\":\"Invalid endpoint\"}", false);
+
+        when(httpClient.perform(eq("/webhooks"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> webhooks.create(request));
+        assertEquals(422, (int) ex.getStatusCode());
     }
 
     @Test
     public void testUpdateWebhook_Success() throws ResendException {
-        UpdateWebhookResponseSuccess expectedResponse = WebhooksUtil.updateWebhookResponse();
-        String webhookId = "4dd369bc-aa82-4ff3-97de-514ae3000ee0";
-
         UpdateWebhookOptions request = WebhooksUtil.updateWebhookRequest();
-        when(webhooks.update(webhookId, request))
-                .thenReturn(expectedResponse);
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_WEBHOOK_JSON, true);
 
-        UpdateWebhookResponseSuccess response = webhooks.update(webhookId, request);
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        UpdateWebhookResponseSuccess response = webhooks.update(WEBHOOK_ID, request);
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getId(), response.getId());
-        assertEquals(expectedResponse.getObject(), response.getObject());
+        assertEquals(WEBHOOK_ID, response.getId());
         assertEquals("webhook", response.getObject());
-        assertEquals("4dd369bc-aa82-4ff3-97de-514ae3000ee0", response.getId());
     }
 
     @Test
     public void testGetWebhook_Success() throws ResendException {
-        GetWebhookResponseSuccess expectedWebhook = WebhooksUtil.getWebhookResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, GET_WEBHOOK_JSON, true);
 
-        when(webhooks.get(expectedWebhook.getId()))
-                .thenReturn(expectedWebhook);
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
-        GetWebhookResponseSuccess response = webhooks.get(expectedWebhook.getId());
+        GetWebhookResponseSuccess response = webhooks.get(WEBHOOK_ID);
 
         assertNotNull(response);
-        assertEquals(expectedWebhook, response);
-        assertEquals(expectedWebhook.getId(), response.getId());
+        assertEquals(WEBHOOK_ID, response.getId());
         assertEquals("webhook", response.getObject());
         assertEquals(WebhookStatus.ENABLED, response.getStatus());
         assertEquals("https://webhook.example.com/handler", response.getEndpoint());
@@ -84,14 +122,14 @@ public class WebhooksTest {
 
     @Test
     public void testListWebhooks_Success() throws ResendException {
-        ListWebhooksResponseSuccess expectedResponse = WebhooksUtil.listWebhooksResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_WEBHOOKS_JSON, true);
 
-        when(webhooks.list()).thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/webhooks"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         ListWebhooksResponseSuccess response = webhooks.list();
 
         assertNotNull(response);
-        assertEquals(expectedResponse.getData().size(), response.getData().size());
         assertEquals(2, response.getData().size());
         assertEquals("list", response.getObject());
         assertFalse(response.hasMore());
@@ -100,15 +138,14 @@ public class WebhooksTest {
     @Test
     public void testListWebhooksWithPagination_Success() throws ResendException {
         ListParams params = ListParams.builder().limit(1).build();
-        ListWebhooksResponseSuccess expectedResponse = WebhooksUtil.listWebhooksResponse();
-        WebhookDTO paginatedData = expectedResponse.getData().get(0);
-        ListWebhooksResponseSuccess paginatedResponse = new ListWebhooksResponseSuccess(
-                "list",
-                true,
-                java.util.Collections.singletonList(paginatedData)
-        );
+        String paginatedJson =
+                "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
+                "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10T10:15:30.000Z\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\"]}" +
+                "]}";
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, paginatedJson, true);
 
-        when(webhooks.list(params)).thenReturn(paginatedResponse);
+        when(httpClient.perform(startsWith("/webhooks?"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
 
         ListWebhooksResponseSuccess response = webhooks.list(params);
 
@@ -119,16 +156,15 @@ public class WebhooksTest {
 
     @Test
     public void testRemoveWebhook_Success() throws ResendException {
-        RemoveWebhookResponseSuccess expectedResponse = WebhooksUtil.removeWebhookResponse();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REMOVE_WEBHOOK_JSON, true);
 
-        when(webhooks.remove(expectedResponse.getId()))
-                .thenReturn(expectedResponse);
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID), anyString(), eq(HttpMethod.DELETE), eq(""), isNull()))
+                .thenReturn(httpResponse);
 
-        RemoveWebhookResponseSuccess response = webhooks.remove(expectedResponse.getId());
+        RemoveWebhookResponseSuccess response = webhooks.remove(WEBHOOK_ID);
 
         assertNotNull(response);
-        assertEquals(expectedResponse, response);
-        assertEquals(expectedResponse.getId(), response.getId());
+        assertEquals(WEBHOOK_ID, response.getId());
         assertEquals("webhook", response.getObject());
         assertTrue(response.getDeleted());
     }
@@ -137,16 +173,14 @@ public class WebhooksTest {
     public void testVerifyWebhook_Success() throws Exception {
         Webhooks webhooksService = new Webhooks("test-api-key");
 
-        // Test data
         String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
         String payload = "{\"type\":\"email.sent\",\"created_at\":\"2024-01-01T00:00:00.000Z\"}";
         String msgId = "msg_test123";
         long currentTimestamp = System.currentTimeMillis() / 1000;
         String timestamp = String.valueOf(currentTimestamp);
 
-        // Generate valid signature
         String signedContent = msgId + "." + timestamp + "." + payload;
-        String secretKey = secret.substring(6); // Remove "whsec_" prefix
+        String secretKey = secret.substring(6);
         byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
 
         Mac hmac = Mac.getInstance("HmacSHA256");
@@ -155,7 +189,6 @@ public class WebhooksTest {
         byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
         String signature = "v1," + Base64.getEncoder().encodeToString(hash);
 
-        // Create verification options
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
                 .payload(payload)
                 .addHeader("svix-id", msgId)
@@ -164,7 +197,6 @@ public class WebhooksTest {
                 .secret(secret)
                 .build();
 
-        // Should not throw exception
         assertDoesNotThrow(() -> webhooksService.verify(options));
     }
 
@@ -178,7 +210,6 @@ public class WebhooksTest {
         long currentTimestamp = System.currentTimeMillis() / 1000;
         String timestamp = String.valueOf(currentTimestamp);
 
-        // Invalid signature
         String invalidSignature = "v1,invalid_signature_here";
 
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
@@ -205,7 +236,6 @@ public class WebhooksTest {
         String payload = "{\"type\":\"email.sent\"}";
         String msgId = "msg_test123";
 
-        // Timestamp from 10 minutes ago (should fail 5-minute tolerance)
         long expiredTimestamp = (System.currentTimeMillis() / 1000) - 600;
         String timestamp = String.valueOf(expiredTimestamp);
 
@@ -279,7 +309,6 @@ public class WebhooksTest {
 
     @Test
     public void testVerifyWebhook_MultipleSignatures() throws Exception {
-        // Test that verification works with multiple signatures in the header
         Webhooks webhooksService = new Webhooks("test-api-key");
 
         String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
@@ -288,7 +317,6 @@ public class WebhooksTest {
         long currentTimestamp = System.currentTimeMillis() / 1000;
         String timestamp = String.valueOf(currentTimestamp);
 
-        // Generate valid signature
         String signedContent = msgId + "." + timestamp + "." + payload;
         String secretKey = secret.substring(6);
         byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
@@ -299,7 +327,6 @@ public class WebhooksTest {
         byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
         String validSignature = Base64.getEncoder().encodeToString(hash);
 
-        // Multiple signatures: one invalid, one valid
         String multipleSignatures = "v1,invalid_sig v1," + validSignature;
 
         VerifyWebhookOptions options = VerifyWebhookOptions.builder()
@@ -310,7 +337,6 @@ public class WebhooksTest {
                 .secret(secret)
                 .build();
 
-        // Should not throw exception (one valid signature is enough)
         assertDoesNotThrow(() -> webhooksService.verify(options));
     }
 }

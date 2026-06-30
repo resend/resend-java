@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.domains.model.*;
@@ -21,6 +22,10 @@ public final class Domains extends BaseService {
      */
     public Domains(final String apiKey) {
         super(apiKey);
+    }
+
+    Domains(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
     }
 
     /**
@@ -142,7 +147,7 @@ public final class Domains extends BaseService {
      * @return A DomainClaims object.
      */
     public DomainClaims claims() {
-        return new DomainClaims(apiKey);
+        return new DomainClaims(apiKey, this.httpClient);
     }
 
     /**

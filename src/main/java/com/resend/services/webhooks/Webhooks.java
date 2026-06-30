@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.webhooks.model.CreateWebhookOptions;
@@ -32,6 +33,10 @@ public final class Webhooks extends BaseService {
      */
     public Webhooks(final String apiKey) {
         super(apiKey);
+    }
+
+    Webhooks(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
     }
 
     /**

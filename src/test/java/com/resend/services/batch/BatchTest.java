@@ -29,8 +29,8 @@ public class BatchTest {
 
     private static final String PERMISSIVE_BATCH_RESPONSE_JSON =
             "{\"data\":[{\"id\":\"123\"},{\"id\":\"321\"}]," +
-            "\"errors\":[{\"index\":456,\"message\":\"Invalid recipient address\"}," +
-            "{\"index\":789,\"message\":\"Domain not reachable\"}]}";
+            "\"errors\":[{\"index\":456,\"message\":\"error for email at index 456\"}," +
+            "{\"index\":789,\"message\":\"error for email at index 789\"}]}";
 
     @Mock
     private IHttpClient httpClient;

@@ -5,6 +5,8 @@ import com.resend.services.domains.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class DomainsUtil {
 
     public static final CreateDomainOptions createDomainRequest() {
@@ -99,6 +101,35 @@ public class DomainsUtil {
                 .trackingSubdomain("track")
                 .id("2c64b27c-6237-4626-85d2-a0a8b5832070")
                 .build();
+    }
+
+    public static final ClaimDomainOptions claimDomainRequest() {
+        return ClaimDomainOptions.builder()
+                .name("example.com")
+                .region("us-east-1")
+                .build();
+    }
+
+    public static final DomainClaimResponseSuccess claimDomainResponse() {
+        DomainClaimRecord record = new DomainClaimRecord(
+                "TXT",
+                "example.com",
+                "resend-domain-verification=3f8a1c2d4e5b6a7f8091a2b3c4d5e6f7",
+                "Auto"
+        );
+        return new DomainClaimResponseSuccess(
+                "domain_claim",
+                "dacf4072-4119-4d88-932f-6c6126d3a9d1",
+                "example.com",
+                "pending",
+                "d91cd9bd-1176-453e-8fc1-35364d380206",
+                "us-east-1",
+                record,
+                null,
+                null,
+                "2026-06-16 17:12:02.059593+00",
+                "2026-06-23 17:12:02.059593+00"
+        );
     }
 
 }

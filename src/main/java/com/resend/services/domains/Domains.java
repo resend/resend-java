@@ -137,6 +137,15 @@ public final class Domains extends BaseService {
     }
 
     /**
+     * Returns a DomainClaims object that can be used to interact with the Domain Claims service.
+     *
+     * @return A DomainClaims object.
+     */
+    public DomainClaims claims() {
+        return new DomainClaims(apiKey);
+    }
+
+    /**
      * Deletes a domain based on the provided domain ID and returns a RemoveDomainResponse.
      *
      * @param domainId The unique identifier of the domain to delete.

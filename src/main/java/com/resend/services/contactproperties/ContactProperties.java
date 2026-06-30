@@ -3,6 +3,7 @@ package com.resend.services.contactproperties;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
 import com.resend.services.contactproperties.model.*;
 import okhttp3.MediaType;
@@ -19,6 +20,10 @@ public class ContactProperties extends BaseService {
      */
     public ContactProperties(final String apiKey) {
         super(apiKey);
+    }
+
+    ContactProperties(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
     }
 
     /**

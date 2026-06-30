@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.receiving.model.*;
@@ -21,6 +22,10 @@ public final class Receiving extends BaseService {
      */
     public Receiving(final String apiKey) {
         super(apiKey);
+    }
+
+    Receiving(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
     }
 
     /**

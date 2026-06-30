@@ -3,6 +3,7 @@ package com.resend.services.batch;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
+import com.resend.core.net.IHttpClient;
 import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 
@@ -23,6 +24,10 @@ public class Batch extends BaseService {
      */
     public Batch(final String apiKey) {
         super(apiKey);
+    }
+
+    Batch(final String apiKey, final IHttpClient httpClient) {
+        super(apiKey, httpClient);
     }
 
     /**

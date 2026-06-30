@@ -110,6 +110,7 @@ public class LogsTest {
         ListLogsResponseSuccess res = logs.list(params);
 
         assertNotNull(res);
+        assertEquals(3, res.getData().size());
         assertEquals("list", res.getObject());
     }
 

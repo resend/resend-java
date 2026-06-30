@@ -95,6 +95,7 @@ public class AutomationsTest {
 
         ResendException ex = assertThrows(ResendException.class, () -> automations.create(createOptions));
         assertEquals(422, (int) ex.getStatusCode());
+        assertEquals("Invalid options", ex.getMessage());
     }
 
     @Test

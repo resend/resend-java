@@ -147,7 +147,7 @@ public final class Domains extends BaseService {
      * @return A DomainClaims object.
      */
     public DomainClaims claims() {
-        return new DomainClaims(apiKey);
+        return new DomainClaims(apiKey, this.httpClient);
     }
 
     /**

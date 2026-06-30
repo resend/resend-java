@@ -9,6 +9,7 @@ import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.util.EmailsUtil;
 import okhttp3.MediaType;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -36,10 +37,17 @@ public class BatchTest {
 
     private Batch batch;
 
+    private AutoCloseable mocks;
+
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        mocks = MockitoAnnotations.openMocks(this);
         batch = new Batch("test-api-key", httpClient);
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        mocks.close();
     }
 
     @Test

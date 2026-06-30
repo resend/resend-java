@@ -61,7 +61,7 @@ public class Contacts extends BaseService {
      */
     public ContactSegments segments() {
         if (this.contactSegments == null) {
-            this.contactSegments = new ContactSegments(this.apiKey);
+            this.contactSegments = new ContactSegments(this.apiKey, this.httpClient);
         }
         return this.contactSegments;
     }
@@ -73,7 +73,7 @@ public class Contacts extends BaseService {
      */
     public ContactTopics topics() {
         if (this.contactTopics == null) {
-            this.contactTopics = new ContactTopics(this.apiKey);
+            this.contactTopics = new ContactTopics(this.apiKey, this.httpClient);
         }
         return this.contactTopics;
     }
@@ -88,7 +88,7 @@ public class Contacts extends BaseService {
      */
     public ContactImports imports() {
         if (this.contactImports == null) {
-            this.contactImports = new ContactImports(this.apiKey);
+            this.contactImports = new ContactImports(this.apiKey, this.httpClient);
         }
         return this.contactImports;
     }

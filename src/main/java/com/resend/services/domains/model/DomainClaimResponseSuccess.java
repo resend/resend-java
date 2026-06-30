@@ -5,25 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a domain claim response returned by the claim, get, and verify claim endpoints.
  */
-public class DomainClaimResponseSuccess {
+public class DomainClaimResponseSuccess extends AbstractDomain {
 
     @JsonProperty("object")
     private String object;
 
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("status")
-    private String status;
-
     @JsonProperty("domain_id")
     private String domainId;
-
-    @JsonProperty("region")
-    private String region;
 
     @JsonProperty("record")
     private DomainClaimRecord record;
@@ -33,9 +21,6 @@ public class DomainClaimResponseSuccess {
 
     @JsonProperty("failure_reason")
     private String failureReason;
-
-    @JsonProperty("created_at")
-    private String createdAt;
 
     @JsonProperty("expires_at")
     private String expiresAt;
@@ -72,16 +57,12 @@ public class DomainClaimResponseSuccess {
                                       final String failureReason,
                                       final String createdAt,
                                       final String expiresAt) {
+        super(id, name, createdAt, status, region);
         this.object = object;
-        this.id = id;
-        this.name = name;
-        this.status = status;
         this.domainId = domainId;
-        this.region = region;
         this.record = record;
         this.blockedReason = blockedReason;
         this.failureReason = failureReason;
-        this.createdAt = createdAt;
         this.expiresAt = expiresAt;
     }
 
@@ -95,48 +76,12 @@ public class DomainClaimResponseSuccess {
     }
 
     /**
-     * Get the claim ID.
-     *
-     * @return The claim ID.
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Get the domain name.
-     *
-     * @return The domain name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the claim status.
-     *
-     * @return The claim status.
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
      * Get the placeholder domain ID.
      *
      * @return The domain ID.
      */
     public String getDomainId() {
         return domainId;
-    }
-
-    /**
-     * Get the region.
-     *
-     * @return The region.
-     */
-    public String getRegion() {
-        return region;
     }
 
     /**
@@ -164,15 +109,6 @@ public class DomainClaimResponseSuccess {
      */
     public String getFailureReason() {
         return failureReason;
-    }
-
-    /**
-     * Get the creation timestamp.
-     *
-     * @return The creation timestamp.
-     */
-    public String getCreatedAt() {
-        return createdAt;
     }
 
     /**

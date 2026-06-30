@@ -38,6 +38,18 @@ public abstract class BaseService {
     }
 
     /**
+     * Constructs a BaseService instance with a provided HTTP client, intended for testing.
+     *
+     * @param apiKey     The apiKey to use.
+     * @param httpClient The HTTP client to use.
+     */
+    protected BaseService(final String apiKey, final IHttpClient httpClient) {
+        this.apiKey = apiKey;
+        this.httpClient = httpClient;
+        this.resendMapper = new ResendMapper();
+    }
+
+    /**
      * Gets the HTTP client associated with this service instance.
      *
      * @return The HTTP client.

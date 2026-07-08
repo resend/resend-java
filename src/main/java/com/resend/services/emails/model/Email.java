@@ -278,7 +278,7 @@ public class Email {
     }
 
     /**
-     * Get the RFC Message-ID header value for the email.
+     * Get the message ID of the email.
      * @return The message ID.
      */
     public String getMessageId() {
@@ -286,7 +286,7 @@ public class Email {
     }
 
     /**
-     * Set the RFC Message-ID header value for the email.
+     * Set the message ID of the email.
      * @param messageId The message ID.
      */
     public void setMessageId(String messageId) {

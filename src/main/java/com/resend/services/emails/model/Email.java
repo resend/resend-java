@@ -43,6 +43,9 @@ public class Email {
     @JsonProperty("last_event")
     private String lastEvent;
 
+    @JsonProperty("message_id")
+    private String messageId;
+
     /**
      * Default constructor.
      */
@@ -272,6 +275,22 @@ public class Email {
      */
     public void setLastEvent(String lastEvent) {
         this.lastEvent = lastEvent;
+    }
+
+    /**
+     * Get the RFC Message-ID header value for the email.
+     * @return The message ID.
+     */
+    public String getMessageId() {
+        return messageId;
+    }
+
+    /**
+     * Set the RFC Message-ID header value for the email.
+     * @param messageId The message ID.
+     */
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 }
 

@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum WebhookEvent {
     /** Triggered when an email is sent. */
     EMAIL_SENT("email.sent"),
+    /** Triggered when an email is scheduled. */
+    EMAIL_SCHEDULED("email.scheduled"),
     /** Triggered when an email is delivered. */
     EMAIL_DELIVERED("email.delivered"),
     /** Triggered when an email delivery is delayed. */
@@ -24,6 +26,8 @@ public enum WebhookEvent {
     EMAIL_RECEIVED("email.received"),
     /** Triggered when an email fails to send. */
     EMAIL_FAILED("email.failed"),
+    /** Triggered when an email is suppressed. */
+    EMAIL_SUPPRESSED("email.suppressed"),
     /** Triggered when a contact is created. */
     CONTACT_CREATED("contact.created"),
     /** Triggered when a contact is updated. */

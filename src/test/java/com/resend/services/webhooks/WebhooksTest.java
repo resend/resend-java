@@ -7,6 +7,9 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.services.util.WebhooksUtil;
 import com.resend.services.webhooks.model.*;
+import com.resend.services.webhooks.model.events.EmailDeliveredEvent;
+import com.resend.services.webhooks.model.events.EmailReceivedEvent;
+import com.resend.services.webhooks.model.events.WebhookEventPayload;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -198,6 +201,103 @@ public class WebhooksTest {
                 .build();
 
         assertDoesNotThrow(() -> webhooksService.verify(options));
+    }
+
+    @Test
+    public void testVerifyWebhook_ReturnsParsedPayloadWithMessageId() throws Exception {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{" +
+                "\"type\":\"email.delivered\"," +
+                "\"created_at\":\"2024-01-01T00:00:00.000Z\"," +
+                "\"data\":{" +
+                "\"email_id\":\"56761188-7520-42d8-8898-ff6fc54ce618\"," +
+                "\"message_id\":\"<111-222-333@email.example.com>\"," +
+                "\"from\":\"Acme <onboarding@resend.dev>\"," +
+                "\"to\":[\"delivered@resend.dev\"]," +
+                "\"subject\":\"Sending this example\"," +
+                "\"created_at\":\"2024-01-01T00:00:00.000Z\"" +
+                "}" +
+                "}";
+        String msgId = "msg_test123";
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        String timestamp = String.valueOf(currentTimestamp);
+
+        String signedContent = msgId + "." + timestamp + "." + payload;
+        String secretKey = secret.substring(6);
+        byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
+
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(decodedSecret, "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
+        String signature = "v1," + Base64.getEncoder().encodeToString(hash);
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", signature)
+                .secret(secret)
+                .build();
+
+        WebhookEventPayload event = webhooksService.verify(options);
+
+        assertNotNull(event);
+        assertEquals("email.delivered", event.getType());
+        assertTrue(event instanceof EmailDeliveredEvent);
+        EmailDeliveredEvent deliveredEvent = (EmailDeliveredEvent) event;
+        assertEquals("<111-222-333@email.example.com>", deliveredEvent.getData().getMessageId());
+        assertEquals("56761188-7520-42d8-8898-ff6fc54ce618", deliveredEvent.getData().getEmailId());
+    }
+
+    @Test
+    public void testVerifyWebhook_EmailReceived_ReturnsMessageId() throws Exception {
+        Webhooks webhooksService = new Webhooks("test-api-key");
+
+        String secret = "whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw";
+        String payload = "{" +
+                "\"type\":\"email.received\"," +
+                "\"created_at\":\"2024-02-22T23:41:12.126Z\"," +
+                "\"data\":{" +
+                "\"email_id\":\"56761188-7520-42d8-8898-ff6fc54ce618\"," +
+                "\"message_id\":\"<111-222-333@email.example.com>\"," +
+                "\"from\":\"sender@example.com\"," +
+                "\"to\":[\"support@acme.com\"]," +
+                "\"subject\":\"Question about my order\"," +
+                "\"created_at\":\"2024-02-22T23:41:12.126Z\"," +
+                "\"bcc\":[],\"cc\":[],\"received_for\":[\"support@acme.com\"],\"attachments\":[]" +
+                "}" +
+                "}";
+        String msgId = "msg_received123";
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        String timestamp = String.valueOf(currentTimestamp);
+
+        String signedContent = msgId + "." + timestamp + "." + payload;
+        String secretKey = secret.substring(6);
+        byte[] decodedSecret = Base64.getDecoder().decode(secretKey);
+
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKeySpec = new SecretKeySpec(decodedSecret, "HmacSHA256");
+        hmac.init(secretKeySpec);
+        byte[] hash = hmac.doFinal(signedContent.getBytes("UTF-8"));
+        String signature = "v1," + Base64.getEncoder().encodeToString(hash);
+
+        VerifyWebhookOptions options = VerifyWebhookOptions.builder()
+                .payload(payload)
+                .addHeader("svix-id", msgId)
+                .addHeader("svix-timestamp", timestamp)
+                .addHeader("svix-signature", signature)
+                .secret(secret)
+                .build();
+
+        WebhookEventPayload event = webhooksService.verify(options);
+
+        assertNotNull(event);
+        assertTrue(event instanceof EmailReceivedEvent);
+        EmailReceivedEvent receivedEvent = (EmailReceivedEvent) event;
+        assertEquals("<111-222-333@email.example.com>", receivedEvent.getData().getMessageId());
     }
 
     @Test

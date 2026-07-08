@@ -36,7 +36,8 @@ public class EmailsTest {
             "\"html\":\"<html><body>This is the HTML content</body></html>\"," +
             "\"text\":\"This is the plain text content\"," +
             "\"bcc\":[\"bcc@example.com\"],\"cc\":[\"cc@example.com\"]," +
-            "\"reply_to\":[\"replyto@example.com\"],\"last_event\":\"last_event_status\"}";
+            "\"reply_to\":[\"replyto@example.com\"],\"last_event\":\"last_event_status\"," +
+            "\"message_id\":\"<lc2vu8.gpa9o4@email.example.com>\"}";
 
     private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"" + UPDATE_EMAIL_ID + "\",\"object\":\"emails\"}";
 
@@ -125,6 +126,7 @@ public class EmailsTest {
         assertNotNull(response);
         assertEquals(EMAIL_ID, response.getId());
         assertEquals("sender@example.com", response.getFrom());
+        assertEquals("<lc2vu8.gpa9o4@email.example.com>", response.getMessageId());
     }
 
     @Test

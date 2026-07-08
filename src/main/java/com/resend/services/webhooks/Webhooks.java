@@ -15,7 +15,6 @@ import com.resend.services.webhooks.model.UpdateWebhookOptions;
 import com.resend.services.webhooks.model.UpdateWebhookResponseSuccess;
 import com.resend.services.webhooks.model.GetWebhookResponseSuccess;
 import com.resend.services.webhooks.model.VerifyWebhookOptions;
-import com.resend.services.webhooks.model.events.WebhookEventPayload;
 import okhttp3.MediaType;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -157,10 +156,9 @@ public final class Webhooks extends BaseService {
      * replay attacks.
      *
      * @param options The verification options containing payload, headers, and secret.
-     * @return The verified and parsed webhook event payload.
      * @throws ResendException If the signature is invalid or the timestamp is outside the tolerance window.
      */
-    public WebhookEventPayload verify(VerifyWebhookOptions options) throws ResendException {
+    public void verify(VerifyWebhookOptions options) throws ResendException {
         if (options == null) {
             throw new ResendException(400, "VerifyWebhookOptions cannot be null");
         }
@@ -251,8 +249,6 @@ public final class Webhooks extends BaseService {
             if (!signatureMatches) {
                 throw new ResendException(401, "Webhook signature verification failed");
             }
-
-            return resendMapper.readValue(options.getPayload(), WebhookEventPayload.class);
 
         } catch (ResendException e) {
             throw e;

@@ -15,6 +15,7 @@ import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
 import com.resend.services.events.Events;
 import com.resend.services.logs.Logs;
+import com.resend.services.oauthgrants.OAuthGrants;
 import com.resend.services.templates.Templates;
 
 /**
@@ -180,5 +181,14 @@ public class Resend {
      */
     public Automations automations() {
         return new Automations(apiKey);
+    }
+
+    /**
+     * Returns an OAuthGrants object that can be used to interact with the OAuthGrants service.
+     *
+     * @return An OAuthGrants object.
+     */
+    public OAuthGrants oauthGrants() {
+        return new OAuthGrants(apiKey);
     }
 }

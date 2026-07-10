@@ -73,7 +73,7 @@ public class OAuthGrantsTest {
         ListParams params = ListParams.builder().limit(10).build();
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_RESPONSE_JSON, true);
 
-        when(httpClient.perform(startsWith("/oauth/grants?"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+        when(httpClient.perform(eq("/oauth/grants?limit=10"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(httpResponse);
 
         ListOAuthGrantsResponseSuccess res = oauthGrants.list(params);

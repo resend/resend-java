@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a successful response for revoking an OAuth grant.
  */
-public class RemoveOAuthGrantResponseSuccess {
+public class RevokeOAuthGrantResponseSuccess {
 
     @JsonProperty("object")
     private String object;
@@ -22,18 +22,18 @@ public class RemoveOAuthGrantResponseSuccess {
     /**
      * Default constructor.
      */
-    public RemoveOAuthGrantResponseSuccess() {
+    public RevokeOAuthGrantResponseSuccess() {
     }
 
     /**
-     * Constructs a RemoveOAuthGrantResponseSuccess.
+     * Constructs a RevokeOAuthGrantResponseSuccess.
      *
      * @param object        The object type ("oauth_grant").
      * @param id            The ID of the revoked OAuth grant.
      * @param revokedAt     The revocation timestamp of the OAuth grant.
      * @param revokedReason The reason the OAuth grant was revoked.
      */
-    public RemoveOAuthGrantResponseSuccess(String object, String id, String revokedAt, String revokedReason) {
+    public RevokeOAuthGrantResponseSuccess(String object, String id, String revokedAt, String revokedReason) {
         this.object = object;
         this.id = id;
         this.revokedAt = revokedAt;

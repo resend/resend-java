@@ -41,8 +41,8 @@ public class OAuthGrantsUtil {
         return new ListOAuthGrantsResponseSuccess("list", false, grants);
     }
 
-    public static RemoveOAuthGrantResponseSuccess removeOAuthGrantResponse() {
-        return new RemoveOAuthGrantResponseSuccess(
+    public static RevokeOAuthGrantResponseSuccess revokeOAuthGrantResponse() {
+        return new RevokeOAuthGrantResponseSuccess(
                 "oauth_grant",
                 "650e8400-e29b-41d4-a716-446655440001",
                 "2026-04-08T00:11:13.110Z",

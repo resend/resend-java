@@ -8,7 +8,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.oauthgrants.model.ListOAuthGrantsResponseSuccess;
-import com.resend.services.oauthgrants.model.RemoveOAuthGrantResponseSuccess;
+import com.resend.services.oauthgrants.model.RevokeOAuthGrantResponseSuccess;
 import okhttp3.MediaType;
 
 /**
@@ -71,10 +71,10 @@ public class OAuthGrants extends BaseService {
      * Revokes an OAuth grant based on the provided OAuth grant ID.
      *
      * @param oauthGrantId The unique identifier of the OAuth grant to revoke.
-     * @return The RemoveOAuthGrantResponseSuccess with the details of the revoked OAuth grant.
+     * @return The RevokeOAuthGrantResponseSuccess with the details of the revoked OAuth grant.
      * @throws ResendException If an error occurs during the OAuth grant revocation process.
      */
-    public RemoveOAuthGrantResponseSuccess remove(String oauthGrantId) throws ResendException {
+    public RevokeOAuthGrantResponseSuccess revoke(String oauthGrantId) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/oauth/grants/" + oauthGrantId, super.apiKey, HttpMethod.DELETE, "", null);
 
         if (!response.isSuccessful()) {
@@ -83,6 +83,6 @@ public class OAuthGrants extends BaseService {
 
         String responseBody = response.getBody();
 
-        return resendMapper.readValue(responseBody, RemoveOAuthGrantResponseSuccess.class);
+        return resendMapper.readValue(responseBody, RevokeOAuthGrantResponseSuccess.class);
     }
 }

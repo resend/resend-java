@@ -6,7 +6,7 @@ import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.services.oauthgrants.model.ListOAuthGrantsResponseSuccess;
-import com.resend.services.oauthgrants.model.RemoveOAuthGrantResponseSuccess;
+import com.resend.services.oauthgrants.model.RevokeOAuthGrantResponseSuccess;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class OAuthGrantsTest {
             "\"client\":{\"name\":\"Resend CLI\",\"logo_uri\":\"https://example.com/logo.png\"}}" +
             "]}";
 
-    private static final String REMOVE_RESPONSE_JSON =
+    private static final String REVOKE_RESPONSE_JSON =
             "{\"object\":\"oauth_grant\",\"id\":\"650e8400-e29b-41d4-a716-446655440001\"," +
             "\"revoked_at\":\"2026-04-08T00:11:13.110Z\",\"revoked_reason\":\"revoked_from_api\"}";
 
@@ -94,14 +94,14 @@ public class OAuthGrantsTest {
     }
 
     @Test
-    public void testRemoveOAuthGrant_Success() throws ResendException {
+    public void testRevokeOAuthGrant_Success() throws ResendException {
         String oauthGrantId = "650e8400-e29b-41d4-a716-446655440001";
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REMOVE_RESPONSE_JSON, true);
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REVOKE_RESPONSE_JSON, true);
 
         when(httpClient.perform(eq("/oauth/grants/" + oauthGrantId), anyString(), eq(HttpMethod.DELETE), eq(""), isNull()))
                 .thenReturn(httpResponse);
 
-        RemoveOAuthGrantResponseSuccess res = oauthGrants.remove(oauthGrantId);
+        RevokeOAuthGrantResponseSuccess res = oauthGrants.revoke(oauthGrantId);
 
         assertNotNull(res);
         assertEquals("oauth_grant", res.getObject());
@@ -111,14 +111,14 @@ public class OAuthGrantsTest {
     }
 
     @Test
-    public void testRemoveOAuthGrant_ApiError_ThrowsResendException() throws ResendException {
+    public void testRevokeOAuthGrant_ApiError_ThrowsResendException() throws ResendException {
         String oauthGrantId = "does-not-exist";
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(404, "{\"name\":\"not_found\",\"message\":\"Grant not found\"}", false);
 
         when(httpClient.perform(eq("/oauth/grants/" + oauthGrantId), anyString(), eq(HttpMethod.DELETE), eq(""), isNull()))
                 .thenReturn(httpResponse);
 
-        ResendException ex = assertThrows(ResendException.class, () -> oauthGrants.remove(oauthGrantId));
+        ResendException ex = assertThrows(ResendException.class, () -> oauthGrants.revoke(oauthGrantId));
         assertEquals(404, (int) ex.getStatusCode());
     }
 }

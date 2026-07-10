@@ -33,6 +33,9 @@ public class Batch extends BaseService {
     /**
      * Sends up to 100 batch emails.
      *
+     * <p>Each email supports the same options as single sends, including
+     * {@code scheduled_at}, {@code tags}, and {@code attachments}.
+     *
      * @param emails batch emails to send.
      * @return The emails ids.
      * @throws ResendException If an error occurs while sending batch emails.
@@ -53,6 +56,9 @@ public class Batch extends BaseService {
 
     /**
      * Sends up to 100 batch emails.
+     *
+     * <p>Each email supports the same options as single sends, including
+     * {@code scheduled_at}, {@code tags}, and {@code attachments}.
      *
      * @param emails batch emails to send.
      * @param requestOptions The options with additional headers.

@@ -12,6 +12,7 @@ import okhttp3.MediaType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -48,6 +49,23 @@ public class BatchTest {
     @AfterEach
     public void tearDown() throws Exception {
         mocks.close();
+    }
+
+    @Test
+    public void testCreateBatchEmails_SerializesScheduledAtTagsAndAttachments() throws ResendException {
+        List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
+        ArgumentCaptor<String> payloadCaptor = ArgumentCaptor.forClass(String.class);
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, BATCH_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/emails/batch"), anyString(), eq(HttpMethod.POST), payloadCaptor.capture(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        batch.send(batchEmailsRequest);
+
+        String payload = payloadCaptor.getValue();
+        assertTrue(payload.contains("\"scheduled_at\":\"2024-08-20T11:52:01.858Z\""));
+        assertTrue(payload.contains("\"tags\":[{\"name\":\"tagName\",\"value\":\"tagValue\"}]"));
+        assertTrue(payload.contains("\"attachments\":[{\"filename\":\"invoice.pdf\",\"content\":\"invoice.pdf\",\"content_type\":\"pdf\",\"content_id\":\"my-image\"}]"));
     }
 
     @Test

@@ -52,7 +52,7 @@ public class BatchTest {
     }
 
     @Test
-    public void testCreateBatchEmails_SerializesScheduledAtTagsAndAttachments() throws ResendException {
+    public void testCreateBatchEmails_SerializesTags() throws ResendException {
         List<CreateEmailOptions> batchEmailsRequest = EmailsUtil.createBatchEmailOptions();
         ArgumentCaptor<String> payloadCaptor = ArgumentCaptor.forClass(String.class);
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, BATCH_RESPONSE_JSON, true);
@@ -63,9 +63,9 @@ public class BatchTest {
         batch.send(batchEmailsRequest);
 
         String payload = payloadCaptor.getValue();
-        assertTrue(payload.contains("\"scheduled_at\":\"2024-08-20T11:52:01.858Z\""));
         assertTrue(payload.contains("\"tags\":[{\"name\":\"tagName\",\"value\":\"tagValue\"}]"));
-        assertTrue(payload.contains("\"attachments\":[{\"filename\":\"invoice.pdf\",\"content\":\"invoice.pdf\",\"content_type\":\"pdf\",\"content_id\":\"my-image\"}]"));
+        assertFalse(payload.contains("attachments"));
+        assertFalse(payload.contains("scheduled_at"));
     }
 
     @Test

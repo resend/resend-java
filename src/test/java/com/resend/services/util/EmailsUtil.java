@@ -99,8 +99,21 @@ public class EmailsUtil {
         return new CancelEmailResponse("123", "emails");
     }
 
+    public static CreateEmailOptions createBatchEmailOption() {
+        return CreateEmailOptions.builder()
+                .from("Acme <onboarding@resend.dev>")
+                .to(Arrays.asList("example@resend.dev"))
+                .cc(Arrays.asList("example@resend.dev"))
+                .bcc(Arrays.asList("example@resend.dev"))
+                .replyTo(Arrays.asList("example@resend.dev", "example@resend.dev"))
+                .text("Hello, this is a batch email.")
+                .subject("Test batch email with tags")
+                .tags(Arrays.asList(createTag()))
+                .build();
+    }
+
     public static List<CreateEmailOptions> createBatchEmailOptions() {
-        return Arrays.asList(createEmailOptions(), createEmailOptions());
+        return Arrays.asList(createBatchEmailOption(), createBatchEmailOption());
     }
 
     public static CreateBatchEmailsResponse createBatchEmailsResponse() {

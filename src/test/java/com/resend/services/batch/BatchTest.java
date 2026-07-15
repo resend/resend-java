@@ -64,8 +64,6 @@ public class BatchTest {
 
         String payload = payloadCaptor.getValue();
         assertTrue(payload.contains("\"tags\":[{\"name\":\"tagName\",\"value\":\"tagValue\"}]"));
-        assertFalse(payload.contains("attachments"));
-        assertFalse(payload.contains("scheduled_at"));
     }
 
     @Test

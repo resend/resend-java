@@ -301,6 +301,42 @@ public class SuppressionsTest {
     }
 
     @Test
+    public void testAddSuppressionsOptions_EmptyEmails_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> AddSuppressionsOptions.builder().build());
+    }
+
+    @Test
+    public void testAddSuppressionsOptions_MoreThan100Emails_ThrowsIllegalArgumentException() {
+        AddSuppressionsOptions.Builder builder = AddSuppressionsOptions.builder();
+        for (int i = 0; i <= 100; i++) {
+            builder.email("user" + i + "@example.com");
+        }
+        assertThrows(IllegalArgumentException.class, builder::build);
+    }
+
+    @Test
+    public void testRemoveSuppressionsOptions_NeitherEmailsNorIds_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> RemoveSuppressionsOptions.builder().build());
+    }
+
+    @Test
+    public void testRemoveSuppressionsOptions_BothEmailsAndIds_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> RemoveSuppressionsOptions.builder()
+                .email("steve.wozniak@example.com")
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .build());
+    }
+
+    @Test
+    public void testListSuppressionsParams_ToQueryString_EncodesValues() {
+        ListSuppressionsParams params = ListSuppressionsParams.builder()
+                .after("cursor&abc=def")
+                .build();
+
+        assertEquals("?after=cursor%26abc%3Ddef", params.toQueryString());
+    }
+
+    @Test
     public void testRemoveSuppressions_ApiError_ThrowsResendException() throws ResendException {
         RemoveSuppressionsOptions request = SuppressionsUtil.removeSuppressionsByIdsRequest();
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,

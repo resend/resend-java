@@ -82,8 +82,15 @@ public class AddSuppressionsOptions {
          * Build a new AddSuppressionsOptions object.
          *
          * @return A new AddSuppressionsOptions object.
+         * @throws IllegalArgumentException If emails is empty or contains more than 100 email addresses.
          */
         public AddSuppressionsOptions build() {
+            if (emails == null || emails.isEmpty()) {
+                throw new IllegalArgumentException("At least one email address must be provided");
+            }
+            if (emails.size() > 100) {
+                throw new IllegalArgumentException("A maximum of 100 email addresses can be provided");
+            }
             return new AddSuppressionsOptions(this);
         }
     }

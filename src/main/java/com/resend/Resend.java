@@ -10,6 +10,7 @@ import com.resend.services.contactproperties.ContactProperties;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
 import com.resend.services.segments.Segments;
+import com.resend.services.suppressions.Suppressions;
 import com.resend.services.webhooks.Webhooks;
 import com.resend.services.receiving.Receiving;
 import com.resend.services.topics.Topics;
@@ -181,6 +182,15 @@ public class Resend {
      */
     public Automations automations() {
         return new Automations(apiKey);
+    }
+
+    /**
+     * Returns a Suppressions object that can be used to interact with the Suppressions service.
+     *
+     * @return A Suppressions object.
+     */
+    public Suppressions suppressions() {
+        return new Suppressions(apiKey);
     }
 
     /**

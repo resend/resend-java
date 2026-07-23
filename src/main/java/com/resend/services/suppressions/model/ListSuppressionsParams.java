@@ -1,8 +1,10 @@
 package com.resend.services.suppressions.model;
 
-import java.util.LinkedHashMap;
+import com.resend.core.helper.URLHelper;
+import com.resend.core.net.ListParams;
+
+import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Represents parameters for listing suppressions with filtering and pagination.
@@ -68,28 +70,17 @@ public class ListSuppressionsParams {
      * @return A query string starting with "?" if parameters exist, or an empty string otherwise.
      */
     public String toQueryString() {
-        Map<String, String> queryParams = new LinkedHashMap<>();
+        ListParams base = ListParams.builder()
+                .limit(limit)
+                .after(after)
+                .before(before)
+                .build();
 
-        if (limit != null) {
-            queryParams.put("limit", limit.toString());
-        }
-        if (after != null && !after.isEmpty()) {
-            queryParams.put("after", after);
-        }
-        if (before != null && !before.isEmpty()) {
-            queryParams.put("before", before);
-        }
-        if (origin != null) {
-            queryParams.put("origin", origin.getValue());
-        }
+        Map<String, String> extras = origin == null
+                ? Collections.<String, String>emptyMap()
+                : Collections.singletonMap("origin", origin.getValue());
 
-        if (queryParams.isEmpty()) {
-            return "";
-        }
-
-        return "?" + queryParams.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
+        return URLHelper.parse(base, extras);
     }
 
     /**

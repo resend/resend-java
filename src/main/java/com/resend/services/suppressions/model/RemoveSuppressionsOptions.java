@@ -123,8 +123,14 @@ public class RemoveSuppressionsOptions {
          * Build a new RemoveSuppressionsOptions object.
          *
          * @return A new RemoveSuppressionsOptions object.
+         * @throws IllegalArgumentException If neither or both of emails and ids are provided.
          */
         public RemoveSuppressionsOptions build() {
+            boolean hasEmails = emails != null && !emails.isEmpty();
+            boolean hasIds = ids != null && !ids.isEmpty();
+            if (hasEmails == hasIds) {
+                throw new IllegalArgumentException("Either 'emails' or 'ids' must be provided, but not both.");
+            }
             return new RemoveSuppressionsOptions(this);
         }
     }

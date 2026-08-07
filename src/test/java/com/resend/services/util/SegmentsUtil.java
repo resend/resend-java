@@ -22,9 +22,9 @@ public class SegmentsUtil {
     public static ListSegmentsResponseSuccess createSegmentsListResponse() {
         List<Segment> segList = new ArrayList<>();
 
-        Segment seg1 = new Segment("1", "test1", "2023-04-08T00:11:13.110779+00:00");
-        Segment seg2 = new Segment("2", "test2", "2023-04-08T00:11:13.110779+00:00");
-        Segment seg3 = new Segment("3", "test3", "2023-04-08T00:11:13.110779+00:00");
+        Segment seg1 = new Segment("1", "test1", "2023-04-08 00:11:13.110779+00");
+        Segment seg2 = new Segment("2", "test2", "2023-04-08 00:11:13.110779+00");
+        Segment seg3 = new Segment("3", "test3", "2023-04-08 00:11:13.110779+00");
 
         segList.add(seg1);
         segList.add(seg2);
@@ -34,6 +34,6 @@ public class SegmentsUtil {
     }
 
     public static GetSegmentResponseSuccess getSegmentResponseSuccess() {
-        return new GetSegmentResponseSuccess("123", "seg", "2023-04-08T00:11:13.110779+00:00", "audience");
+        return new GetSegmentResponseSuccess("123", "seg", "2023-04-08 00:11:13.110779+00", "audience");
     }
 }

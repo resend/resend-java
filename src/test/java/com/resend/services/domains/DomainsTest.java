@@ -23,12 +23,12 @@ public class DomainsTest {
 
     private static final String CREATE_RESPONSE_JSON =
             "{\"id\":\"" + DOMAIN_ID + "\",\"name\":\"resend.dev\"," +
-            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"status\":\"Active\"," +
+            "\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"status\":\"Active\"," +
             "\"region\":\"us-east-1\",\"dnsProvider\":\"DNSProviderXYZ\",\"records\":[]}";
 
     private static final String GET_RESPONSE_JSON =
             "{\"id\":\"" + DOMAIN_ID + "\",\"name\":\"resend.dev\"," +
-            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"status\":\"Active\"," +
+            "\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"status\":\"Active\"," +
             "\"region\":\"us-east-1\",\"dnsProvider\":\"DNSProviderXYZ\",\"object\":\"domain\",\"records\":[]}";
 
     private static final String VERIFY_RESPONSE_JSON =
@@ -41,11 +41,11 @@ public class DomainsTest {
             "{\"id\":\"" + DOMAIN_ID + "\",\"object\":\"domain\"}";
 
     private static final String LIST_RESPONSE_JSON = "{\"data\":[" +
-            "{\"id\":\"id-1\",\"name\":\"resend.dev\",\"created_at\":\"2023-04-08T00:11:13.110Z\"," +
+            "{\"id\":\"id-1\",\"name\":\"resend.dev\",\"created_at\":\"2023-04-08 00:11:13.11+00\"," +
             "\"status\":\"Active\",\"region\":\"us-east-1\"}," +
-            "{\"id\":\"id-2\",\"name\":\"example.com\",\"created_at\":\"2023-01-01T12:00:00.000Z\"," +
+            "{\"id\":\"id-2\",\"name\":\"example.com\",\"created_at\":\"2023-01-01 12:00:00+00\"," +
             "\"status\":\"Active\",\"region\":\"us-east-2\"}," +
-            "{\"id\":\"id-3\",\"name\":\"another.com\",\"created_at\":\"2023-02-15T08:30:00.000Z\"," +
+            "{\"id\":\"id-3\",\"name\":\"another.com\",\"created_at\":\"2023-02-15 08:30:00+00\"," +
             "\"status\":\"Inactive\",\"region\":\"us-west-1\"}" +
             "],\"has_more\":true,\"object\":\"list\"}";
 

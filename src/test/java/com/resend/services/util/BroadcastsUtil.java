@@ -52,7 +52,7 @@ public class BroadcastsUtil {
                 "559ac32e-9ef5-46fb-82a1-b76b840c0f7b",
                 "78261eea-8f8b-4381-83c6-79fa7120f1cf",
                 "draft",
-                "2024-12-01T19:32:22.980Z",
+                "2024-12-01 19:32:22.98+00",
                 null,
                 null,
                 "broadcast",
@@ -73,9 +73,9 @@ public class BroadcastsUtil {
     public static ListBroadcastsResponseSuccess createBroadcastsListResponse() {
         List<Broadcast> broadcastList = new ArrayList<>();
 
-        broadcastList.add(new Broadcast("1", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "draft", "2024-12-01T19:32:22.980Z", null, null));
-        broadcastList.add(new Broadcast("2", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "sent", "2024-12-02T10:15:30.000Z", "2024-12-02T11:00:00.000Z", "2024-12-02T12:00:00.000Z"));
-        broadcastList.add(new Broadcast("3", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "queued", "2024-12-03T08:45:00.000Z", null, null));
+        broadcastList.add(new Broadcast("1", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "draft", "2024-12-01 19:32:22.98+00", null, null));
+        broadcastList.add(new Broadcast("2", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "sent", "2024-12-02 10:15:30+00", "2024-12-02 11:00:00+00", "2024-12-02 12:00:00+00"));
+        broadcastList.add(new Broadcast("3", "78261eea-8f8b-4381-83c6-79fa7120f1cf", "queued", "2024-12-03 08:45:00+00", null, null));
 
         return new ListBroadcastsResponseSuccess("list", broadcastList, true);
     }

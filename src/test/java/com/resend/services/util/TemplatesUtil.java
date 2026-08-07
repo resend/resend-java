@@ -135,10 +135,10 @@ public class TemplatesUtil {
         template.setId("34a080c9-b17d-4187-ad80-5af20266e535");
         template.setAlias("reset-password");
         template.setName("reset-password");
-        template.setCreatedAt("2023-10-06T23:47:56.678Z");
-        template.setUpdatedAt("2023-10-06T23:47:56.678Z");
+        template.setCreatedAt("2023-10-06 23:47:56.678+00");
+        template.setUpdatedAt("2023-10-06 23:47:56.678+00");
         template.setStatus("published");
-        template.setPublishedAt("2023-10-06T23:47:56.678Z");
+        template.setPublishedAt("2023-10-06 23:47:56.678+00");
         template.setFrom("John Doe <john.doe@example.com>");
         template.setSubject("Hello, world!");
         template.setReplyTo(null);
@@ -150,8 +150,8 @@ public class TemplatesUtil {
         variable.setKey("user_name");
         variable.setType(VariableType.STRING);
         variable.setFallbackValue("John Doe");
-        variable.setCreatedAt("2023-10-06T23:47:56.678Z");
-        variable.setUpdatedAt("2023-10-06T23:47:56.678Z");
+        variable.setCreatedAt("2023-10-06 23:47:56.678+00");
+        variable.setUpdatedAt("2023-10-06 23:47:56.678+00");
 
         template.setVariables(Arrays.asList(variable));
 
@@ -169,8 +169,8 @@ public class TemplatesUtil {
         item.setName("reset-password");
         item.setStatus("draft");
         item.setPublishedAt(null);
-        item.setCreatedAt("2023-10-06T23:47:56.678Z");
-        item.setUpdatedAt("2023-10-06T23:47:56.678Z");
+        item.setCreatedAt("2023-10-06 23:47:56.678+00");
+        item.setUpdatedAt("2023-10-06 23:47:56.678+00");
         item.setAlias("reset-password");
         return item;
     }
@@ -185,9 +185,9 @@ public class TemplatesUtil {
         item.setId("b7f9c2e1-1234-4abc-9def-567890abcdef");
         item.setName("welcome-message");
         item.setStatus("published");
-        item.setPublishedAt("2023-10-06T23:47:56.678Z");
-        item.setCreatedAt("2023-10-06T23:47:56.678Z");
-        item.setUpdatedAt("2023-10-06T23:47:56.678Z");
+        item.setPublishedAt("2023-10-06 23:47:56.678+00");
+        item.setCreatedAt("2023-10-06 23:47:56.678+00");
+        item.setUpdatedAt("2023-10-06 23:47:56.678+00");
         item.setAlias("welcome-message");
         return item;
     }

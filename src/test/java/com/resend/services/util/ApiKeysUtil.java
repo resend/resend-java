@@ -28,13 +28,13 @@ public class ApiKeysUtil {
         ApiKey apiKey1 = new ApiKey(
                 "abcdefg-4321-5678-ijklmnop",
                 "Production",
-                "2023-04-08T00:11:13.110779+00:00",
-                "2023-04-26T20:21:26.844Z");
+                "2023-04-08 00:11:13.110779+00",
+                "2023-04-26 20:21:26.844+00");
 
         ApiKey apiKey2 = new ApiKey(
                 "abcdefg-1234-5678-ijklmnop",
                 "Staging",
-                "2023-04-08T00:11:13.110779+00:00",
+                "2023-04-08 00:11:13.110779+00",
                 null);
 
         apiKeys.add(apiKey1);

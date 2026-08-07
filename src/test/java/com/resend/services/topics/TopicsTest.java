@@ -25,20 +25,20 @@ public class TopicsTest {
     private static final String GET_RESPONSE_JSON =
             "{\"id\":\"" + TOPIC_ID + "\",\"name\":\"Weekly Newsletter\"," +
             "\"description\":\"Weekly newsletter for our subscribers\"," +
-            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}";
+            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-08 00:11:13.110779+00\"}";
     private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"" + TOPIC_ID + "\"}";
     private static final String REMOVE_RESPONSE_JSON = "{\"object\":\"topic\",\"id\":\"" + TOPIC_ID + "\",\"deleted\":true}";
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
             "{\"id\":\"" + TOPIC_ID + "\",\"name\":\"Weekly Newsletter\"," +
             "\"description\":\"Weekly newsletter for our subscribers\"," +
-            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}," +
+            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-08 00:11:13.110779+00\"}," +
             "{\"id\":\"c7e35c9f-bg1c-5d4d-cf1d-460cce08492f\",\"name\":\"Monthly Updates\"," +
             "\"description\":\"Monthly updates and announcements\"," +
-            "\"default_subscription\":\"opt_out\",\"created_at\":\"2023-04-09T00:11:13.110779+00:00\"}," +
+            "\"default_subscription\":\"opt_out\",\"created_at\":\"2023-04-09 00:11:13.110779+00\"}," +
             "{\"id\":\"d8f46da0-ch2d-6e5e-dg2e-571ddf19503g\",\"name\":\"Product Launches\"," +
             "\"description\":\"Get notified about new product launches\"," +
-            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-10T00:11:13.110779+00:00\"}" +
+            "\"default_subscription\":\"opt_in\",\"created_at\":\"2023-04-10 00:11:13.110779+00\"}" +
             "]}";
 
     @Mock

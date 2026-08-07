@@ -22,9 +22,9 @@ public class AudiencesUtil {
     public static ListAudiencesResponseSuccess createAudiencesListResponse() {
         List<Audience> audList = new ArrayList<>();
 
-        Audience aud1 = new Audience("1", "test1", "2023-04-08T00:11:13.110779+00:00");
-        Audience aud2 = new Audience("2", "test2", "2023-04-08T00:11:13.110779+00:00");
-        Audience aud3 = new Audience("3", "test3", "2023-04-08T00:11:13.110779+00:00");
+        Audience aud1 = new Audience("1", "test1", "2023-04-08 00:11:13.110779+00");
+        Audience aud2 = new Audience("2", "test2", "2023-04-08 00:11:13.110779+00");
+        Audience aud3 = new Audience("3", "test3", "2023-04-08 00:11:13.110779+00");
 
         audList.add(aud1);
         audList.add(aud2);

@@ -29,13 +29,13 @@ public class EventsTest {
             "{\"object\":\"event\",\"id\":\"" + EVENT_ID + "\"," +
             "\"name\":\"user.signup\"," +
             "\"schema\":{\"user_id\":\"string\",\"plan\":\"string\"}," +
-            "\"created_at\":\"2024-12-01T10:00:00.000Z\",\"updated_at\":\"2024-12-02T10:00:00.000Z\"}";
+            "\"created_at\":\"2024-12-01 10:00:00+00\",\"updated_at\":\"2024-12-02 10:00:00+00\"}";
 
     private static final String LIST_EVENTS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
-            "{\"id\":\"1\",\"name\":\"user.signup\",\"created_at\":\"2024-12-01T10:00:00.000Z\"}," +
-            "{\"id\":\"2\",\"name\":\"user.verified\",\"created_at\":\"2024-12-02T10:00:00.000Z\"}," +
-            "{\"id\":\"3\",\"name\":\"order.created\",\"created_at\":\"2024-12-03T10:00:00.000Z\"}" +
+            "{\"id\":\"1\",\"name\":\"user.signup\",\"created_at\":\"2024-12-01 10:00:00+00\"}," +
+            "{\"id\":\"2\",\"name\":\"user.verified\",\"created_at\":\"2024-12-02 10:00:00+00\"}," +
+            "{\"id\":\"3\",\"name\":\"order.created\",\"created_at\":\"2024-12-03 10:00:00+00\"}" +
             "]}";
 
     private static final String UPDATE_EVENT_JSON =

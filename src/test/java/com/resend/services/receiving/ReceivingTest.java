@@ -26,7 +26,7 @@ public class ReceivingTest {
             "{\"object\":\"email\",\"id\":\"" + EMAIL_ID + "\"," +
             "\"to\":[\"delivered@resend.dev\"]," +
             "\"from\":\"Acme <onboarding@resend.dev>\"," +
-            "\"created_at\":\"2023-04-03T22:13:42.674981+00:00\"," +
+            "\"created_at\":\"2023-04-03 22:13:42.674981+00\"," +
             "\"subject\":\"Hello World\"," +
             "\"html\":\"Congrats on sending your <strong>first email</strong>!\"," +
             "\"bcc\":[],\"cc\":[],\"reply_to\":[]," +
@@ -52,7 +52,7 @@ public class ReceivingTest {
             "\"filename\":\"avatar.png\",\"content_type\":\"image/png\"," +
             "\"content_disposition\":\"inline\",\"content_id\":\"img001\"," +
             "\"download_url\":\"https://inbound-cdn.resend.com/" + EMAIL_ID + "/attachments/" + ATTACHMENT_ID + "?some-params=example&signature=sig-123\"," +
-            "\"expires_at\":\"2025-10-17T14:29:41.521Z\"}";
+            "\"expires_at\":\"2025-10-17 14:29:41.521+00\"}";
 
     private static final String LIST_ATTACHMENTS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
@@ -60,7 +60,7 @@ public class ReceivingTest {
             "\"filename\":\"avatar.png\",\"content_type\":\"image/png\"," +
             "\"content_disposition\":\"inline\",\"content_id\":\"img001\"," +
             "\"download_url\":\"https://inbound-cdn.resend.com/" + EMAIL_ID + "/attachments/" + ATTACHMENT_ID + "?some-params=example&signature=sig-123\"," +
-            "\"expires_at\":\"2025-10-17T14:29:41.521Z\"}" +
+            "\"expires_at\":\"2025-10-17 14:29:41.521+00\"}" +
             "]}";
 
     @Mock

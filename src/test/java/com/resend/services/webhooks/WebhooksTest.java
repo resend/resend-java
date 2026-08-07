@@ -35,15 +35,15 @@ public class WebhooksTest {
 
     private static final String GET_WEBHOOK_JSON =
             "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\"," +
-            "\"created_at\":\"2023-08-22T15:28:00.000Z\",\"status\":\"enabled\"," +
+            "\"created_at\":\"2023-08-22 15:28:00+00\",\"status\":\"enabled\"," +
             "\"endpoint\":\"https://webhook.example.com/handler\"," +
             "\"events\":[\"email.sent\",\"email.received\"]," +
             "\"signing_secret\":\"whsec_xxxxxxxxxx\"}";
 
     private static final String LIST_WEBHOOKS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
-            "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10T10:15:30.000Z\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\",\"email.bounced\"]}," +
-            "{\"id\":\"" + WEBHOOK_ID + "\",\"created_at\":\"2023-08-22T15:28:00.000Z\",\"status\":\"enabled\",\"endpoint\":\"https://second-webhook.example.com/receive\",\"events\":[\"email.received\"]}" +
+            "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10 10:15:30+00\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\",\"email.bounced\"]}," +
+            "{\"id\":\"" + WEBHOOK_ID + "\",\"created_at\":\"2023-08-22 15:28:00+00\",\"status\":\"enabled\",\"endpoint\":\"https://second-webhook.example.com/receive\",\"events\":[\"email.received\"]}" +
             "]}";
 
     private static final String REMOVE_WEBHOOK_JSON =
@@ -140,7 +140,7 @@ public class WebhooksTest {
         ListParams params = ListParams.builder().limit(1).build();
         String paginatedJson =
                 "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
-                "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10T10:15:30.000Z\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\"]}" +
+                "{\"id\":\"7ab123cd-ef45-6789-abcd-ef0123456789\",\"created_at\":\"2023-09-10 10:15:30+00\",\"status\":\"disabled\",\"endpoint\":\"https://first-webhook.example.com/handler\",\"events\":[\"email.delivered\"]}" +
                 "]}";
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, paginatedJson, true);
 

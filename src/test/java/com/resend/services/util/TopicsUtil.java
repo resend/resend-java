@@ -73,7 +73,7 @@ public class TopicsUtil {
                 "Weekly Newsletter",
                 "Weekly newsletter for our subscribers",
                 "opt_in",
-                "2023-04-08T00:11:13.110779+00:00"
+                "2023-04-08 00:11:13.110779+00"
         );
     }
 
@@ -90,7 +90,7 @@ public class TopicsUtil {
                 "Weekly Newsletter",
                 "Weekly newsletter for our subscribers",
                 "opt_in",
-                "2023-04-08T00:11:13.110779+00:00"
+                "2023-04-08 00:11:13.110779+00"
         ));
 
         topics.add(new Topic(
@@ -98,7 +98,7 @@ public class TopicsUtil {
                 "Monthly Updates",
                 "Monthly updates and announcements",
                 "opt_out",
-                "2023-04-09T00:11:13.110779+00:00"
+                "2023-04-09 00:11:13.110779+00"
         ));
 
         topics.add(new Topic(
@@ -106,7 +106,7 @@ public class TopicsUtil {
                 "Product Launches",
                 "Get notified about new product launches",
                 "opt_in",
-                "2023-04-10T00:11:13.110779+00:00"
+                "2023-04-10 00:11:13.110779+00"
         ));
 
         return topics;

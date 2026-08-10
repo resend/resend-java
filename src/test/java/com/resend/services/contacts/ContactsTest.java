@@ -26,15 +26,15 @@ public class ContactsTest {
     private static final String GET_CONTACT_JSON =
             "{\"object\":\"contacts\",\"id\":\"123\",\"email\":\"user@example.com\"," +
             "\"first_name\":\"test\",\"last_name\":\"test\"," +
-            "\"created_at\":\"2025-04-30T12:00:00Z\",\"unsubscribed\":false}";
+            "\"created_at\":\"2025-04-30 12:00:00+00\",\"unsubscribed\":false}";
     private static final String LIST_CONTACTS_JSON =
             "{\"data\":[" +
             "{\"id\":\"1\",\"email\":\"frodo.baggins@shire.com\",\"first_name\":\"Frodo\"," +
-            "\"last_name\":\"Baggins\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"unsubscribed\":false}," +
+            "\"last_name\":\"Baggins\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"unsubscribed\":false}," +
             "{\"id\":\"2\",\"email\":\"aragorn.strider@gondor.com\",\"first_name\":\"Aragorn\"," +
-            "\"last_name\":\"Strider\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"unsubscribed\":false}," +
+            "\"last_name\":\"Strider\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"unsubscribed\":false}," +
             "{\"id\":\"3\",\"email\":\"legolas.greenleaf@woodland.com\",\"first_name\":\"Legolas\"," +
-            "\"last_name\":\"Greenleaf\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"unsubscribed\":false}" +
+            "\"last_name\":\"Greenleaf\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"unsubscribed\":false}" +
             "],\"object\":\"list\"}";
     private static final String UPDATE_TOPICS_JSON =
             "{\"id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\"}";

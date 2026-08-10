@@ -24,7 +24,7 @@ public class ReceivingUtil {
         email.setId("4ef9a417-02e9-4d39-ad75-9611e0fcc33c");
         email.setTo(Arrays.asList("delivered@resend.dev"));
         email.setFrom("Acme <onboarding@resend.dev>");
-        email.setCreatedAt("2023-04-03T22:13:42.674981+00:00");
+        email.setCreatedAt("2023-04-03 22:13:42.674981+00");
         email.setSubject("Hello World");
         email.setHtml("Congrats on sending your <strong>first email</strong>!");
         email.setText(null);
@@ -108,7 +108,7 @@ public class ReceivingUtil {
         details.setContentDisposition("inline");
         details.setContentId("img001");
         details.setDownloadUrl("https://inbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/2a0c9ce0-3112-4728-976e-47ddcd16a318?some-params=example&signature=sig-123");
-        details.setExpiresAt("2025-10-17T14:29:41.521Z");
+        details.setExpiresAt("2025-10-17 14:29:41.521+00");
         return details;
     }
 

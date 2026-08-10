@@ -21,14 +21,14 @@ public class ContactPropertiesTest {
 
     private static final String CREATE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"contact_property\"}";
     private static final String GET_RESPONSE_JSON =
-            "{\"id\":\"123\",\"key\":\"age\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"type\":\"number\",\"fallback_value\":\"25\"}";
+            "{\"id\":\"123\",\"key\":\"age\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"type\":\"number\",\"fallback_value\":\"25\"}";
     private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"contact_property\"}";
     private static final String REMOVE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"contact_property\",\"deleted\":true}";
     private static final String LIST_RESPONSE_JSON =
             "{\"data\":[" +
-            "{\"id\":\"1\",\"key\":\"age\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"type\":\"string\",\"fallback_value\":\"25\"}," +
-            "{\"id\":\"2\",\"key\":\"city\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"type\":\"string\",\"fallback_value\":\"New York\"}," +
-            "{\"id\":\"3\",\"key\":\"subscribed\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"type\":\"string\",\"fallback_value\":\"fallback\"}" +
+            "{\"id\":\"1\",\"key\":\"age\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"type\":\"string\",\"fallback_value\":\"25\"}," +
+            "{\"id\":\"2\",\"key\":\"city\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"type\":\"string\",\"fallback_value\":\"New York\"}," +
+            "{\"id\":\"3\",\"key\":\"subscribed\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"type\":\"string\",\"fallback_value\":\"fallback\"}" +
             "],\"object\":\"list\",\"has_more\":false}";
 
     @Mock

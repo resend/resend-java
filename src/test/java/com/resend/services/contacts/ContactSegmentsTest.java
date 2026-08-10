@@ -27,8 +27,8 @@ public class ContactSegmentsTest {
     private static final String REMOVE_SEGMENT_JSON = "{\"id\":\"" + SEGMENT_ID + "\",\"deleted\":true}";
     private static final String LIST_SEGMENTS_JSON =
             "{\"object\":\"list\",\"data\":[" +
-            "{\"id\":\"" + SEGMENT_ID + "\",\"name\":\"Registered Users\",\"created_at\":\"2023-10-06T22:59:55.977Z\"}," +
-            "{\"id\":\"b9d24c8e-bf1c-5d4d-cf1d-470cbd97482f\",\"name\":\"Premium Users\",\"created_at\":\"2023-11-12T14:23:10.123Z\"}" +
+            "{\"id\":\"" + SEGMENT_ID + "\",\"name\":\"Registered Users\",\"created_at\":\"2023-10-06 22:59:55.977+00\"}," +
+            "{\"id\":\"b9d24c8e-bf1c-5d4d-cf1d-470cbd97482f\",\"name\":\"Premium Users\",\"created_at\":\"2023-11-12 14:23:10.123+00\"}" +
             "],\"has_more\":false}";
 
     @Mock

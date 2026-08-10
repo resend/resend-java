@@ -127,7 +127,7 @@ public class EmailsUtil {
                 "qwert",
                 "sender@example.com",
                 Arrays.asList("recipient@example.com"),
-                "2023-04-08T00:11:13.110779+00:00",
+                "2023-04-08 00:11:13.110779+00",
                 "Test Email Subject",
                 "<html><body>This is the HTML content</body></html>",
                 "This is the plain text content",
@@ -146,7 +146,7 @@ public class EmailsUtil {
                 "qwert1",
                 "sender1@example.com",
                 Arrays.asList("recipient1@example.com"),
-                "2023-04-08T00:11:13.110779+00:00",
+                "2023-04-08 00:11:13.110779+00",
                 "Test Email Subject 1",
                 "<html><body>This is the HTML content 1</body></html>",
                 "This is the plain text content 1",
@@ -161,7 +161,7 @@ public class EmailsUtil {
                 "qwert2",
                 "sender2@example.com",
                 Arrays.asList("recipient2@example.com"),
-                "2023-04-09T00:11:13.110779+00:00",
+                "2023-04-09 00:11:13.110779+00",
                 "Test Email Subject 2",
                 "<html><body>This is the HTML content 2</body></html>",
                 "This is the plain text content 2",
@@ -176,7 +176,7 @@ public class EmailsUtil {
                 "qwert3",
                 "sender3@example.com",
                 Arrays.asList("recipient3@example.com"),
-                "2023-04-10T00:11:13.110779+00:00",
+                "2023-04-10 00:11:13.110779+00",
                 "Test Email Subject 3",
                 "<html><body>This is the HTML content 3</body></html>",
                 "This is the plain text content 3",
@@ -208,7 +208,7 @@ public class EmailsUtil {
         response.setContentDisposition("inline");
         response.setContentId("img001");
         response.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/2a0c9ce0-3112-4728-976e-47ddcd16a318?some-params=example&signature=sig-123");
-        response.setExpiresAt("2025-10-17T14:29:41.521Z");
+        response.setExpiresAt("2025-10-17 14:29:41.521+00");
         return response;
     }
 
@@ -224,7 +224,7 @@ public class EmailsUtil {
         attachment1.setContentDisposition("inline");
         attachment1.setContentId("img001");
         attachment1.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/2a0c9ce0-3112-4728-976e-47ddcd16a318?some-params=example&signature=sig-123");
-        attachment1.setExpiresAt("2025-10-17T14:29:41.521Z");
+        attachment1.setExpiresAt("2025-10-17 14:29:41.521+00");
 
         AttachmentResponse attachment2 = new AttachmentResponse();
         attachment2.setObject("attachment");
@@ -235,7 +235,7 @@ public class EmailsUtil {
         attachment2.setContentDisposition("attachment");
         attachment2.setContentId("doc001");
         attachment2.setDownloadUrl("https://outbound-cdn.resend.com/4ef9a417-02e9-4d39-ad75-9611e0fcc33c/attachments/3b0d9ce0-4223-5839-087f-58eede27b429?some-params=example&signature=sig-456");
-        attachment2.setExpiresAt("2025-10-17T14:29:41.521Z");
+        attachment2.setExpiresAt("2025-10-17 14:29:41.521+00");
 
         attachments.add(attachment1);
         attachments.add(attachment2);

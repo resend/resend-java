@@ -25,9 +25,9 @@ public class ContactsUtil {
     public static ListContactsResponseSuccess createContactsListResponse() {
         List<Contact> contacts = new ArrayList<>();
 
-        Contact c1 = new Contact("1", "frodo.baggins@shire.com", "Frodo", "Baggins", "2023-04-08T00:11:13.110779+00:00", false);
-        Contact c2 = new Contact("2", "aragorn.strider@gondor.com", "Aragorn", "Strider", "2023-04-08T00:11:13.110779+00:00", false);
-        Contact c3 = new Contact("3", "legolas.greenleaf@woodland.com", "Legolas", "Greenleaf", "2023-04-08T00:11:13.110779+00:00", false);
+        Contact c1 = new Contact("1", "frodo.baggins@shire.com", "Frodo", "Baggins", "2023-04-08 00:11:13.110779+00", false);
+        Contact c2 = new Contact("2", "aragorn.strider@gondor.com", "Aragorn", "Strider", "2023-04-08 00:11:13.110779+00", false);
+        Contact c3 = new Contact("3", "legolas.greenleaf@woodland.com", "Legolas", "Greenleaf", "2023-04-08 00:11:13.110779+00", false);
 
 
         contacts.add(c1);
@@ -56,7 +56,7 @@ public class ContactsUtil {
                 "user@example.com",
                 "test",
                 "test",
-                "2025-04-30T12:00:00Z",
+                "2025-04-30 12:00:00+00",
                 false
         );
     }
@@ -137,12 +137,12 @@ public class ContactsUtil {
         ContactSegment seg1 = new ContactSegment(
                 "78261eea-8f8b-4381-83c6-79fa7120f1cf",
                 "Registered Users",
-                "2023-10-06T22:59:55.977Z"
+                "2023-10-06 22:59:55.977+00"
         );
         ContactSegment seg2 = new ContactSegment(
                 "b9d24c8e-bf1c-5d4d-cf1d-470cbd97482f",
                 "Premium Users",
-                "2023-11-12T14:23:10.123Z"
+                "2023-11-12 14:23:10.123+00"
         );
 
         segments.add(seg1);

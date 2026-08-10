@@ -23,7 +23,7 @@ public class DomainsUtil {
         DomainDTO domain1 = new DomainDTO(
                 "id-1",
                 "resend.dev",
-                "2023-04-08T00:11:13.110Z",
+                "2023-04-08 00:11:13.11+00",
                 "Active",
                 "us-east-1"
         );
@@ -31,7 +31,7 @@ public class DomainsUtil {
         DomainDTO domain2 = new DomainDTO(
                 "id-2",
                 "example.com",
-                "2023-01-01T12:00:00.000Z",
+                "2023-01-01 12:00:00+00",
                 "Active",
                 "us-east-2"
         );
@@ -39,7 +39,7 @@ public class DomainsUtil {
         DomainDTO domain3 = new DomainDTO(
                 "id-3",
                 "another.com",
-                "2023-02-15T08:30:00.000Z",
+                "2023-02-15 08:30:00+00",
                 "Inactive",
                 "us-west-1"
         );
@@ -55,7 +55,7 @@ public class DomainsUtil {
         return new CreateDomainResponse(
                 "2c64b27c-6237-4626-85d2-a0a8b5832070",
                 "resend.dev",
-                "2023-04-08T00:11:13.110779+00:00",
+                "2023-04-08 00:11:13.110779+00",
                 "Active",
                 "us-east-1",
                 "DNSProviderXYZ",
@@ -66,7 +66,7 @@ public class DomainsUtil {
     public static final Domain createDomain() {
         return new Domain("2c64b27c-6237-4626-85d2-a0a8b5832070",
                 "resend.dev",
-                "2023-04-08T00:11:13.110779+00:00",
+                "2023-04-08 00:11:13.110779+00",
                 "Active",
                 "us-east-1",
                 "DNSProviderXYZ",

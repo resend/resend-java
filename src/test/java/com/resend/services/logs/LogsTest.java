@@ -21,15 +21,15 @@ import static org.mockito.Mockito.when;
 public class LogsTest {
 
     private static final String GET_LOG_JSON =
-            "{\"id\":\"log_123\",\"created_at\":\"2024-01-01T00:00:00.000Z\"," +
+            "{\"id\":\"log_123\",\"created_at\":\"2024-01-01 00:00:00+00\"," +
             "\"endpoint\":\"/emails\",\"method\":\"POST\",\"response_status\":200," +
             "\"user_agent\":\"resend-java/4.13.0\",\"object\":\"log\"}";
 
     private static final String LIST_LOGS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
-            "{\"id\":\"log_1\",\"created_at\":\"2024-01-01T00:00:00.000Z\",\"endpoint\":\"/emails\",\"method\":\"POST\",\"response_status\":200,\"user_agent\":\"resend-java/4.13.0\"}," +
-            "{\"id\":\"log_2\",\"created_at\":\"2024-01-02T00:00:00.000Z\",\"endpoint\":\"/domains\",\"method\":\"GET\",\"response_status\":200,\"user_agent\":\"resend-java/4.13.0\"}," +
-            "{\"id\":\"log_3\",\"created_at\":\"2024-01-03T00:00:00.000Z\",\"endpoint\":\"/contacts\",\"method\":\"DELETE\",\"response_status\":204}" +
+            "{\"id\":\"log_1\",\"created_at\":\"2024-01-01 00:00:00+00\",\"endpoint\":\"/emails\",\"method\":\"POST\",\"response_status\":200,\"user_agent\":\"resend-java/4.13.0\"}," +
+            "{\"id\":\"log_2\",\"created_at\":\"2024-01-02 00:00:00+00\",\"endpoint\":\"/domains\",\"method\":\"GET\",\"response_status\":200,\"user_agent\":\"resend-java/4.13.0\"}," +
+            "{\"id\":\"log_3\",\"created_at\":\"2024-01-03 00:00:00+00\",\"endpoint\":\"/contacts\",\"method\":\"DELETE\",\"response_status\":204}" +
             "]}";
 
     @Mock

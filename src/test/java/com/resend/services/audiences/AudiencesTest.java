@@ -27,16 +27,16 @@ public class AudiencesTest {
             "{\"id\":\"123\",\"name\":\"aud\",\"object\":\"audience\"}";
 
     private static final String LIST_RESPONSE_JSON = "{\"data\":[" +
-            "{\"id\":\"1\",\"name\":\"test1\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}," +
-            "{\"id\":\"2\",\"name\":\"test2\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}," +
-            "{\"id\":\"3\",\"name\":\"test3\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}" +
+            "{\"id\":\"1\",\"name\":\"test1\",\"created_at\":\"2023-04-08 00:11:13.110779+00\"}," +
+            "{\"id\":\"2\",\"name\":\"test2\",\"created_at\":\"2023-04-08 00:11:13.110779+00\"}," +
+            "{\"id\":\"3\",\"name\":\"test3\",\"created_at\":\"2023-04-08 00:11:13.110779+00\"}" +
             "],\"object\":\"list\",\"has_more\":true}";
 
     private static final String REMOVE_RESPONSE_JSON =
             "{\"id\":\"123\",\"object\":\"audience\",\"deleted\":true}";
 
     private static final String GET_RESPONSE_JSON =
-            "{\"id\":\"123\",\"name\":\"aud\",\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"object\":\"audience\"}";
+            "{\"id\":\"123\",\"name\":\"aud\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"object\":\"audience\"}";
 
     @Mock
     private IHttpClient httpClient;

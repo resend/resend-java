@@ -34,16 +34,16 @@ public class EventsUtil {
                 "49a3999c-0ce1-4ea6-ab68-afcd6dc2e794",
                 "user.signup",
                 schema,
-                "2024-12-01T10:00:00.000Z",
-                "2024-12-02T10:00:00.000Z"
+                "2024-12-01 10:00:00+00",
+                "2024-12-02 10:00:00+00"
         );
     }
 
     public static ListEventsResponseSuccess listEventsResponse() {
         List<EventSummary> events = new ArrayList<>();
-        events.add(new EventSummary("1", "user.signup", null, "2024-12-01T10:00:00.000Z", null));
-        events.add(new EventSummary("2", "user.verified", null, "2024-12-02T10:00:00.000Z", null));
-        events.add(new EventSummary("3", "order.created", null, "2024-12-03T10:00:00.000Z", null));
+        events.add(new EventSummary("1", "user.signup", null, "2024-12-01 10:00:00+00", null));
+        events.add(new EventSummary("2", "user.verified", null, "2024-12-02 10:00:00+00", null));
+        events.add(new EventSummary("3", "order.created", null, "2024-12-03 10:00:00+00", null));
 
         return new ListEventsResponseSuccess("list", false, events);
     }

@@ -25,9 +25,9 @@ public class ApiKeysTest {
 
     private static final String LIST_RESPONSE_JSON = "{\"data\":[" +
             "{\"id\":\"abcdefg-4321-5678-ijklmnop\",\"name\":\"Production\"," +
-            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\",\"last_used_at\":\"2023-04-26T20:21:26.844Z\"}," +
+            "\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"last_used_at\":\"2023-04-26 20:21:26.844+00\"}," +
             "{\"id\":\"abcdefg-1234-5678-ijklmnop\",\"name\":\"Staging\"," +
-            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"}" +
+            "\"created_at\":\"2023-04-08 00:11:13.110779+00\"}" +
             "],\"has_more\":true,\"object\":\"list\"}";
 
     @Mock

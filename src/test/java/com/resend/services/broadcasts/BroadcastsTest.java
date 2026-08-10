@@ -31,7 +31,7 @@ public class BroadcastsTest {
             "{\"id\":\"" + GET_BROADCAST_ID + "\"," +
             "\"audience_id\":\"" + AUDIENCE_ID + "\"," +
             "\"status\":\"draft\"," +
-            "\"created_at\":\"2024-12-01T19:32:22.980Z\"," +
+            "\"created_at\":\"2024-12-01 19:32:22.98+00\"," +
             "\"object\":\"broadcast\"," +
             "\"name\":\"Announcements\"," +
             "\"from\":\"Acme <onboarding@resend.dev>\"," +
@@ -44,9 +44,9 @@ public class BroadcastsTest {
 
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
-            "{\"id\":\"1\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"draft\",\"created_at\":\"2024-12-01T19:32:22.980Z\"}," +
-            "{\"id\":\"2\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"sent\",\"created_at\":\"2024-12-02T10:15:30.000Z\"}," +
-            "{\"id\":\"3\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"queued\",\"created_at\":\"2024-12-03T08:45:00.000Z\"}" +
+            "{\"id\":\"1\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"draft\",\"created_at\":\"2024-12-01 19:32:22.98+00\"}," +
+            "{\"id\":\"2\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"sent\",\"created_at\":\"2024-12-02 10:15:30+00\"}," +
+            "{\"id\":\"3\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"queued\",\"created_at\":\"2024-12-03 08:45:00+00\"}" +
             "]}";
 
     private static final String SEND_RESPONSE_JSON =

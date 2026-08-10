@@ -50,7 +50,7 @@ public class WebhooksUtil {
         GetWebhookResponseSuccess webhook = new GetWebhookResponseSuccess();
         webhook.setObject("webhook");
         webhook.setId("4dd369bc-aa82-4ff3-97de-514ae3000ee0");
-        webhook.setCreatedAt("2023-08-22T15:28:00.000Z");
+        webhook.setCreatedAt("2023-08-22 15:28:00+00");
         webhook.setStatus(WebhookStatus.ENABLED);
         webhook.setEndpoint("https://webhook.example.com/handler");
         webhook.setEvents(Arrays.asList("email.sent", "email.received"));
@@ -63,7 +63,7 @@ public class WebhooksUtil {
 
         WebhookDTO webhook1 = new WebhookDTO(
                 "7ab123cd-ef45-6789-abcd-ef0123456789",
-                "2023-09-10T10:15:30.000Z",
+                "2023-09-10 10:15:30+00",
                 WebhookStatus.DISABLED,
                 "https://first-webhook.example.com/handler",
                 Arrays.asList("email.delivered", "email.bounced")
@@ -71,7 +71,7 @@ public class WebhooksUtil {
 
         WebhookDTO webhook2 = new WebhookDTO(
                 "4dd369bc-aa82-4ff3-97de-514ae3000ee0",
-                "2023-08-22T15:28:00.000Z",
+                "2023-08-22 15:28:00+00",
                 WebhookStatus.ENABLED,
                 "https://second-webhook.example.com/receive",
                 Arrays.asList("email.received")

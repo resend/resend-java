@@ -27,14 +27,14 @@ public class AutomationsTest {
     private static final String GET_AUTOMATION_JSON =
             "{\"object\":\"automation\",\"id\":\"" + AUTOMATION_ID + "\"," +
             "\"name\":\"Welcome Automation\",\"status\":\"enabled\"," +
-            "\"created_at\":\"2024-12-01T10:00:00.000Z\",\"updated_at\":\"2024-12-02T10:00:00.000Z\"," +
+            "\"created_at\":\"2024-12-01 10:00:00+00\",\"updated_at\":\"2024-12-02 10:00:00+00\"," +
             "\"steps\":[],\"connections\":[]}";
 
     private static final String LIST_AUTOMATIONS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
-            "{\"id\":\"1\",\"name\":\"Automation 1\",\"status\":\"enabled\",\"created_at\":\"2024-12-01T10:00:00.000Z\",\"updated_at\":\"2024-12-01T10:00:00.000Z\"}," +
-            "{\"id\":\"2\",\"name\":\"Automation 2\",\"status\":\"disabled\",\"created_at\":\"2024-12-02T10:00:00.000Z\",\"updated_at\":\"2024-12-02T10:00:00.000Z\"}," +
-            "{\"id\":\"3\",\"name\":\"Automation 3\",\"status\":\"enabled\",\"created_at\":\"2024-12-03T10:00:00.000Z\",\"updated_at\":\"2024-12-03T10:00:00.000Z\"}" +
+            "{\"id\":\"1\",\"name\":\"Automation 1\",\"status\":\"enabled\",\"created_at\":\"2024-12-01 10:00:00+00\",\"updated_at\":\"2024-12-01 10:00:00+00\"}," +
+            "{\"id\":\"2\",\"name\":\"Automation 2\",\"status\":\"disabled\",\"created_at\":\"2024-12-02 10:00:00+00\",\"updated_at\":\"2024-12-02 10:00:00+00\"}," +
+            "{\"id\":\"3\",\"name\":\"Automation 3\",\"status\":\"enabled\",\"created_at\":\"2024-12-03 10:00:00+00\",\"updated_at\":\"2024-12-03 10:00:00+00\"}" +
             "]}";
 
     private static final String UPDATE_AUTOMATION_JSON =
@@ -48,15 +48,15 @@ public class AutomationsTest {
 
     private static final String LIST_RUNS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
-            "{\"id\":\"run_1\",\"status\":\"completed\",\"started_at\":\"2024-12-01T10:00:00.000Z\",\"finished_at\":\"2024-12-01T10:05:00.000Z\",\"created_at\":\"2024-12-01T10:00:00.000Z\"}," +
-            "{\"id\":\"run_2\",\"status\":\"running\",\"started_at\":\"2024-12-02T10:00:00.000Z\",\"created_at\":\"2024-12-02T10:00:00.000Z\"}," +
-            "{\"id\":\"run_3\",\"status\":\"failed\",\"started_at\":\"2024-12-03T10:00:00.000Z\",\"finished_at\":\"2024-12-03T10:02:00.000Z\",\"created_at\":\"2024-12-03T10:00:00.000Z\"}" +
+            "{\"id\":\"run_1\",\"status\":\"completed\",\"started_at\":\"2024-12-01 10:00:00+00\",\"finished_at\":\"2024-12-01 10:05:00+00\",\"created_at\":\"2024-12-01 10:00:00+00\"}," +
+            "{\"id\":\"run_2\",\"status\":\"running\",\"started_at\":\"2024-12-02 10:00:00+00\",\"created_at\":\"2024-12-02 10:00:00+00\"}," +
+            "{\"id\":\"run_3\",\"status\":\"failed\",\"started_at\":\"2024-12-03 10:00:00+00\",\"finished_at\":\"2024-12-03 10:02:00+00\",\"created_at\":\"2024-12-03 10:00:00+00\"}" +
             "]}";
 
     private static final String GET_RUN_JSON =
             "{\"object\":\"automation_run\",\"id\":\"run_1\",\"status\":\"completed\"," +
-            "\"started_at\":\"2024-12-01T10:00:00.000Z\",\"finished_at\":\"2024-12-01T10:00:05.000Z\"," +
-            "\"created_at\":\"2024-12-01T10:00:00.000Z\",\"steps\":[]}";
+            "\"started_at\":\"2024-12-01 10:00:00+00\",\"finished_at\":\"2024-12-01 10:00:05+00\"," +
+            "\"created_at\":\"2024-12-01 10:00:00+00\",\"steps\":[]}";
 
     @Mock
     private IHttpClient httpClient;

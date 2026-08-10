@@ -25,16 +25,16 @@ public class TemplatesTest {
     private static final String GET_RESPONSE_JSON =
             "{\"id\":\"" + TEMPLATE_ID + "\",\"object\":\"template\",\"alias\":\"reset-password\"," +
             "\"name\":\"reset-password\",\"status\":\"published\"," +
-            "\"created_at\":\"2023-10-06T23:47:56.678Z\",\"updated_at\":\"2023-10-06T23:47:56.678Z\"," +
-            "\"published_at\":\"2023-10-06T23:47:56.678Z\"," +
+            "\"created_at\":\"2023-10-06 23:47:56.678+00\",\"updated_at\":\"2023-10-06 23:47:56.678+00\"," +
+            "\"published_at\":\"2023-10-06 23:47:56.678+00\"," +
             "\"from\":\"John Doe <john.doe@example.com>\",\"subject\":\"Hello, world!\"," +
             "\"html\":\"<h1>Hello, world!</h1>\",\"text\":\"Hello, world!\",\"variables\":[]}";
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
             "{\"id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\",\"name\":\"reset-password\",\"status\":\"draft\"," +
-            "\"alias\":\"reset-password\",\"created_at\":\"2023-10-06T23:47:56.678Z\",\"updated_at\":\"2023-10-06T23:47:56.678Z\"}," +
+            "\"alias\":\"reset-password\",\"created_at\":\"2023-10-06 23:47:56.678+00\",\"updated_at\":\"2023-10-06 23:47:56.678+00\"}," +
             "{\"id\":\"b7f9c2e1-1234-4abc-9def-567890abcdef\",\"name\":\"welcome-message\",\"status\":\"published\"," +
-            "\"alias\":\"welcome-message\",\"created_at\":\"2023-10-06T23:47:56.678Z\",\"updated_at\":\"2023-10-06T23:47:56.678Z\"}" +
+            "\"alias\":\"welcome-message\",\"created_at\":\"2023-10-06 23:47:56.678+00\",\"updated_at\":\"2023-10-06 23:47:56.678+00\"}" +
             "]}";
     private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"" + TEMPLATE_ID + "\",\"object\":\"template\"}";
     private static final String DELETE_RESPONSE_JSON = "{\"object\":\"template\",\"id\":\"" + TEMPLATE_ID + "\",\"deleted\":true}";

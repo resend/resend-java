@@ -31,7 +31,7 @@ public class EmailsTest {
     private static final String GET_EMAIL_JSON =
             "{\"object\":\"email_object\",\"id\":\"" + EMAIL_ID + "\"," +
             "\"from\":\"sender@example.com\",\"to\":[\"recipient@example.com\"]," +
-            "\"created_at\":\"2023-04-08T00:11:13.110779+00:00\"," +
+            "\"created_at\":\"2023-04-08 00:11:13.110779+00\"," +
             "\"subject\":\"Test Email Subject\"," +
             "\"html\":\"<html><body>This is the HTML content</body></html>\"," +
             "\"text\":\"This is the plain text content\"," +

@@ -87,6 +87,24 @@ public class Broadcasts extends BaseService  {
     }
 
     /**
+     * Cancels a queued or scheduled broadcast.
+     *
+     * @param id The unique identifier of the broadcast to cancel.
+     * @return The CancelBroadcastResponseSuccess with the details of the canceled broadcast.
+     * @throws ResendException If an error occurs during the broadcast cancellation process.
+     */
+    public CancelBroadcastResponseSuccess cancel(String id) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" + id + "/cancel", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, CancelBroadcastResponseSuccess.class);
+    }
+
+    /**
      * Deletes a broadcast based on the provided broadcast ID.
      *
      * @param id The unique identifier of the broadcast to delete.

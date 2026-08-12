@@ -42,6 +42,9 @@ public class BroadcastsTest {
     private static final String REMOVE_RESPONSE_JSON =
             "{\"id\":\"" + GET_BROADCAST_ID + "\",\"object\":\"object\",\"deleted\":true}";
 
+    private static final String CANCEL_RESPONSE_JSON =
+            "{\"id\":\"" + GET_BROADCAST_ID + "\",\"object\":\"broadcast\"}";
+
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
             "{\"id\":\"1\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"draft\",\"created_at\":\"2024-12-01 19:32:22.98+00\"}," +
@@ -134,6 +137,20 @@ public class BroadcastsTest {
         assertNotNull(response);
         assertEquals(GET_BROADCAST_ID, response.getId());
         assertTrue(response.isDeleted());
+    }
+
+    @Test
+    public void testCancelBroadcast_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CANCEL_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/cancel"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        CancelBroadcastResponseSuccess response = broadcasts.cancel(GET_BROADCAST_ID);
+
+        assertNotNull(response);
+        assertEquals(GET_BROADCAST_ID, response.getId());
+        assertEquals("broadcast", response.getObject());
     }
 
     @Test

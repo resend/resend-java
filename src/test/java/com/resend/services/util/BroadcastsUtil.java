@@ -70,10 +70,6 @@ public class BroadcastsUtil {
         return new RemoveBroadcastResponseSuccess("559ac32e-9ef5-46fb-82a1-b76b840c0f7b", "object",true);
     }
 
-    public static CancelBroadcastResponseSuccess cancelBroadcastResponseSuccess() {
-        return new CancelBroadcastResponseSuccess("559ac32e-9ef5-46fb-82a1-b76b840c0f7b", "broadcast");
-    }
-
     public static ListBroadcastsResponseSuccess createBroadcastsListResponse() {
         List<Broadcast> broadcastList = new ArrayList<>();
 

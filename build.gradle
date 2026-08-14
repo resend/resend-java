@@ -51,7 +51,7 @@ publishing {
             from components.java
             groupId = GROUP
             artifactId = POM_ARTIFACT_ID
-            version = System.getenv('GITHUB_REF_NAME') ?: version
+            version = VERSION_NAME
             pom {
                 name = project.name
                 description = POM_DESCRIPTION

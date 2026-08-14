@@ -2,6 +2,8 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * Represents a successful response for getting a contact.
  * Extends the Contact class.
@@ -10,6 +12,9 @@ public class GetContactResponseSuccess extends Contact {
 
     @JsonProperty("object")
     private String object;
+
+    @JsonProperty("properties")
+    private Map<String, ContactPropertyValue> properties;
 
     /**
      * Default constructor
@@ -41,5 +46,14 @@ public class GetContactResponseSuccess extends Contact {
      */
     public String getObject() {
         return object;
+    }
+
+    /**
+     * Gets the custom properties of the contact. Only available for global contacts.
+     *
+     * @return The custom properties of the contact.
+     */
+    public Map<String, ContactPropertyValue> getProperties() {
+        return properties;
     }
 }

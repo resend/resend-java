@@ -26,7 +26,8 @@ public class ContactsTest {
     private static final String GET_CONTACT_JSON =
             "{\"object\":\"contacts\",\"id\":\"123\",\"email\":\"user@example.com\"," +
             "\"first_name\":\"test\",\"last_name\":\"test\"," +
-            "\"created_at\":\"2025-04-30 12:00:00+00\",\"unsubscribed\":false}";
+            "\"created_at\":\"2025-04-30 12:00:00+00\",\"unsubscribed\":false," +
+            "\"properties\":{\"tier\":{\"value\":\"premium\",\"type\":\"string\"}}}";
     private static final String LIST_CONTACTS_JSON =
             "{\"data\":[" +
             "{\"id\":\"1\",\"email\":\"frodo.baggins@shire.com\",\"first_name\":\"Frodo\"," +
@@ -229,6 +230,8 @@ public class ContactsTest {
         assertNotNull(res);
         assertEquals("123", res.getId());
         assertEquals("user@example.com", res.getEmail());
+        assertEquals("premium", res.getProperties().get("tier").getValue());
+        assertEquals("string", res.getProperties().get("tier").getType());
     }
 
     @Test

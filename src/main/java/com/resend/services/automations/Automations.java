@@ -138,6 +138,24 @@ public class Automations extends BaseService {
     }
 
     /**
+     * Duplicates an automation by its unique identifier.
+     *
+     * @param automationId The unique identifier of the automation.
+     * @return The response containing the newly created automation ID.
+     * @throws ResendException If an error occurs while duplicating the automation.
+     */
+    public DuplicateAutomationResponseSuccess duplicate(String automationId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/automations/" + automationId + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, DuplicateAutomationResponseSuccess.class);
+    }
+
+    /**
      * Stops an automation by its unique identifier.
      *
      * @param automationId The unique identifier of the automation.

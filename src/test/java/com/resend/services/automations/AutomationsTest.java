@@ -43,6 +43,9 @@ public class AutomationsTest {
     private static final String DELETE_AUTOMATION_JSON =
             "{\"object\":\"automation\",\"id\":\"" + AUTOMATION_ID + "\",\"deleted\":true}";
 
+    private static final String DUPLICATE_AUTOMATION_JSON =
+            "{\"object\":\"automation\",\"id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\"}";
+
     private static final String STOP_AUTOMATION_JSON =
             "{\"object\":\"automation\",\"id\":\"" + AUTOMATION_ID + "\",\"status\":\"disabled\"}";
 
@@ -170,6 +173,20 @@ public class AutomationsTest {
         assertNotNull(response);
         assertTrue(response.getDeleted());
         assertEquals(AUTOMATION_ID, response.getId());
+    }
+
+    @Test
+    public void testDuplicateAutomation_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, DUPLICATE_AUTOMATION_JSON, true);
+
+        when(httpClient.perform(eq("/automations/" + AUTOMATION_ID + "/duplicate"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        DuplicateAutomationResponseSuccess response = automations.duplicate(AUTOMATION_ID);
+
+        assertNotNull(response);
+        assertEquals("automation", response.getObject());
+        assertEquals("e169aa45-1ecf-4183-9955-b1499d5701d3", response.getId());
     }
 
     @Test

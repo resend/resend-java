@@ -43,6 +43,9 @@ public class EmailsTest {
 
     private static final String CANCEL_RESPONSE_JSON = "{\"id\":\"" + UPDATE_EMAIL_ID + "\",\"object\":\"emails\"}";
 
+    private static final String SHARE_RESPONSE_JSON =
+            "{\"object\":\"email\",\"id\":\"" + UPDATE_EMAIL_ID + "\",\"url\":\"https://resend.com/share/abc123\"}";
+
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"emails\",\"has_more\":true,\"data\":[" +
             "{\"id\":\"email_1\",\"from\":\"sender1@example.com\"}," +
@@ -154,6 +157,60 @@ public class EmailsTest {
 
         assertNotNull(response);
         assertEquals(UPDATE_EMAIL_ID, response.getId());
+    }
+
+    @Test
+    public void testShareEmail_DefaultExpiresIn_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, SHARE_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/emails/" + UPDATE_EMAIL_ID + "/share"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ShareEmailResponse response = emails.share(UPDATE_EMAIL_ID);
+
+        assertNotNull(response);
+        assertEquals(UPDATE_EMAIL_ID, response.getId());
+        assertEquals("https://resend.com/share/abc123", response.getUrl());
+    }
+
+    @Test
+    public void testShareEmail_CustomExpiresIn_Success() throws ResendException {
+        ShareEmailOptions shareEmailOptions = EmailsUtil.shareEmailOptions();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, SHARE_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/emails/" + UPDATE_EMAIL_ID + "/share"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ShareEmailResponse response = emails.share(UPDATE_EMAIL_ID, shareEmailOptions);
+
+        assertNotNull(response);
+        assertEquals(UPDATE_EMAIL_ID, response.getId());
+        assertEquals("https://resend.com/share/abc123", response.getUrl());
+    }
+
+    @Test
+    public void testShareEmail_InvalidExpiresIn_ThrowsResendException() throws ResendException {
+        ShareEmailOptions shareEmailOptions = ShareEmailOptions.builder().expiresIn("72h").build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
+                "{\"name\":\"validation_error\",\"message\":\"expires_in exceeds the 48 hour maximum\"}", false);
+
+        when(httpClient.perform(eq("/emails/" + UPDATE_EMAIL_ID + "/share"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> emails.share(UPDATE_EMAIL_ID, shareEmailOptions));
+        assertEquals(422, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testShareEmail_NotFound_ThrowsResendException() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(404,
+                "{\"name\":\"not_found\",\"message\":\"Email not found\"}", false);
+
+        when(httpClient.perform(eq("/emails/" + EMAIL_ID + "/share"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> emails.share(EMAIL_ID));
+        assertEquals(404, (int) ex.getStatusCode());
     }
 
     @Test

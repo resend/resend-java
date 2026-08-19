@@ -99,6 +99,16 @@ public class EmailsUtil {
         return new CancelEmailResponse("123", "emails");
     }
 
+    public static ShareEmailOptions shareEmailOptions() {
+        return ShareEmailOptions.builder()
+                .expiresIn("1 day")
+                .build();
+    }
+
+    public static ShareEmailResponse shareEmailResponse() {
+        return new ShareEmailResponse("123", "email", "https://resend.com/share/abc123");
+    }
+
     public static List<CreateEmailOptions> createBatchEmailOptions() {
         return Arrays.asList(createEmailOptions(), createEmailOptions());
     }

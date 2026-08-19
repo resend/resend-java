@@ -7,6 +7,8 @@ import com.resend.core.net.IHttpClient;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.ListApiKeysResponse;
+import com.resend.services.apikeys.model.UpdateApiKeyOptions;
+import com.resend.services.apikeys.model.UpdateApiKeyResponseSuccess;
 import com.resend.services.util.ApiKeysUtil;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,8 @@ import static org.mockito.Mockito.when;
 public class ApiKeysTest {
 
     private static final String CREATE_RESPONSE_JSON = "{\"id\":\"123\",\"token\":\"re_123\"}";
+
+    private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"api_key\"}";
 
     private static final String LIST_RESPONSE_JSON = "{\"data\":[" +
             "{\"id\":\"abcdefg-4321-5678-ijklmnop\",\"name\":\"Production\"," +
@@ -67,6 +71,34 @@ public class ApiKeysTest {
 
         ResendException ex = assertThrows(ResendException.class, () -> apiKeys.create(request));
         assertEquals(422, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateApiKey_Success() throws ResendException {
+        UpdateApiKeyOptions request = ApiKeysUtil.updateApiKeyOptions();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/api-keys/123"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        UpdateApiKeyResponseSuccess response = apiKeys.update("123", request);
+
+        assertNotNull(response);
+        assertEquals("123", response.getId());
+        assertEquals("api_key", response.getObject());
+    }
+
+    @Test
+    public void testUpdateApiKey_ApiError_ThrowsResendException() throws ResendException {
+        UpdateApiKeyOptions request = ApiKeysUtil.updateApiKeyOptions();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(404,
+                "{\"name\":\"not_found\",\"message\":\"API key not found\"}", false);
+
+        when(httpClient.perform(eq("/api-keys/123"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> apiKeys.update("123", request));
+        assertEquals(404, (int) ex.getStatusCode());
     }
 
     @Test

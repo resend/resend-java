@@ -161,6 +161,48 @@ public final class Emails extends BaseService {
     }
 
     /**
+     * Creates a shareable link for an email, using the default expiration.
+     *
+     * @param emailId The unique identifier of the email.
+     * @return The share link details.
+     * @throws ResendException If an error occurs while creating the shareable link.
+     */
+    public ShareEmailResponse share(String emailId) throws ResendException {
+
+        AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId + "/share", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ShareEmailResponse.class);
+    }
+
+    /**
+     * Creates a shareable link for an email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param shareEmailOptions The options for the shareable link, such as its expiration.
+     * @return The share link details.
+     * @throws ResendException If an error occurs while creating the shareable link.
+     */
+    public ShareEmailResponse share(String emailId, ShareEmailOptions shareEmailOptions) throws ResendException {
+
+        String payload = super.resendMapper.writeValue(shareEmailOptions);
+        AbstractHttpResponse<String> response = this.httpClient.perform("/emails/" + emailId + "/share", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ShareEmailResponse.class);
+    }
+
+    /**
      * Retrieves a list of emails and returns a List.
      *
      * @return A ListEmailsResponseSuccess containing the list of emails.

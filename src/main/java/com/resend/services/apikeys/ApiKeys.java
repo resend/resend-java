@@ -10,6 +10,8 @@ import com.resend.core.service.BaseService;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.ListApiKeysResponse;
+import com.resend.services.apikeys.model.UpdateApiKeyOptions;
+import com.resend.services.apikeys.model.UpdateApiKeyResponseSuccess;
 import okhttp3.MediaType;
 
 /**
@@ -89,6 +91,26 @@ public final class ApiKeys extends BaseService {
 
         ListApiKeysResponse listApiKeysResponse = resendMapper.readValue(responseBody, ListApiKeysResponse.class);
         return listApiKeysResponse;
+    }
+
+    /**
+     * Updates an api key by its unique identifier.
+     *
+     * @param apiKeyId The unique identifier of the api key to update.
+     * @param updateApiKeyOptions The new data for the api key.
+     * @return The response indicating the status of the api key update.
+     * @throws ResendException If an error occurs during the api key update process.
+     */
+    public UpdateApiKeyResponseSuccess update(String apiKeyId, UpdateApiKeyOptions updateApiKeyOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(updateApiKeyOptions);
+        AbstractHttpResponse<String> response = httpClient.perform("/api-keys/" + apiKeyId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, UpdateApiKeyResponseSuccess.class);
     }
 
     /**

@@ -4,6 +4,8 @@ import com.resend.services.apikeys.model.ApiKey;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.ListApiKeysResponse;
+import com.resend.services.apikeys.model.UpdateApiKeyOptions;
+import com.resend.services.apikeys.model.UpdateApiKeyResponseSuccess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,16 @@ public class ApiKeysUtil {
         ListApiKeysResponse response = new ListApiKeysResponse(apiKeys, true, "list");
 
         return response;
+    }
+
+    public static final UpdateApiKeyOptions updateApiKeyOptions() {
+        return UpdateApiKeyOptions.builder()
+                .name("prod-renamed")
+                .build();
+    }
+
+    public static final UpdateApiKeyResponseSuccess updateApiKeyResponse() {
+        return new UpdateApiKeyResponseSuccess("123", "api_key");
     }
 
 }

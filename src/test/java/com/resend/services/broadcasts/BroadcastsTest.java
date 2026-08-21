@@ -58,6 +58,28 @@ public class BroadcastsTest {
     private static final String UPDATE_RESPONSE_JSON =
             "{\"id\":\"" + BROADCAST_ID + "\"}";
 
+    private static final String RECIPIENTS_SENT_RESPONSE_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"id\":\"b2Zmc2V0OjA\",\"contact_id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\",\"email\":\"carter@example.com\"}," +
+            "{\"id\":\"b2Zmc2V0OjE\",\"contact_id\":null,\"email\":\"anonymous@example.com\"}" +
+            "]}";
+
+    private static final String RECIPIENTS_OPENED_RESPONSE_JSON =
+            "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
+            "{\"id\":\"b2Zmc2V0OjA\",\"contact_id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\",\"email\":\"carter@example.com\",\"count\":3}" +
+            "]}";
+
+    private static final String RECIPIENTS_CLICKED_RESPONSE_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"id\":\"b2Zmc2V0OjA\",\"contact_id\":\"e169aa45-1ecf-4183-9955-b1499d5701d3\",\"email\":\"carter@example.com\",\"count\":2," +
+            "\"clicked_links\":[{\"url\":\"https://resend.com/pricing\",\"clicks\":2}]}" +
+            "]}";
+
+    private static final String RECIPIENTS_BOUNCED_RESPONSE_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"id\":\"b2Zmc2V0OjA\",\"contact_id\":null,\"email\":\"bounced@example.com\",\"bounce_type\":\"permanent\"}" +
+            "]}";
+
     @Mock
     private IHttpClient httpClient;
 
@@ -224,5 +246,127 @@ public class BroadcastsTest {
         assertEquals(BROADCAST_ID, response.getId());
         assertTrue(createOptions.getSend());
         assertNotNull(createOptions.getScheduledAt());
+    }
+
+    @Test
+    public void testRecipients_Success() throws ResendException {
+        ListBroadcastRecipientsParams params = BroadcastsUtil.listBroadcastRecipientsRequest();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, RECIPIENTS_SENT_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/recipients?type=sent"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastRecipientsResponseSuccess response = broadcasts.recipients(GET_BROADCAST_ID, params);
+
+        assertNotNull(response);
+        assertEquals("list", response.getObject());
+        assertFalse(response.hasMore());
+        assertEquals(2, response.getData().size());
+        assertEquals("b2Zmc2V0OjA", response.getData().get(0).getId());
+        assertEquals("e169aa45-1ecf-4183-9955-b1499d5701d3", response.getData().get(0).getContactId());
+        assertEquals("carter@example.com", response.getData().get(0).getEmail());
+        assertNull(response.getData().get(0).getCount());
+        assertNull(response.getData().get(0).getBounceType());
+        assertNull(response.getData().get(0).getClickedLinks());
+        assertNull(response.getData().get(1).getContactId());
+    }
+
+    @Test
+    public void testRecipients_OpenedType_IncludesCount() throws ResendException {
+        ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.OPENED)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, RECIPIENTS_OPENED_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/recipients?type=opened"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastRecipientsResponseSuccess response = broadcasts.recipients(GET_BROADCAST_ID, params);
+
+        assertNotNull(response);
+        assertTrue(response.hasMore());
+        assertEquals(3, response.getData().get(0).getCount());
+        assertNull(response.getData().get(0).getClickedLinks());
+    }
+
+    @Test
+    public void testRecipients_ClickedType_IncludesClickedLinks() throws ResendException {
+        ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.CLICKED)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, RECIPIENTS_CLICKED_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/recipients?type=clicked"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastRecipientsResponseSuccess response = broadcasts.recipients(GET_BROADCAST_ID, params);
+
+        assertNotNull(response);
+        assertEquals(2, response.getData().get(0).getCount());
+        assertEquals(1, response.getData().get(0).getClickedLinks().size());
+        assertEquals("https://resend.com/pricing", response.getData().get(0).getClickedLinks().get(0).getUrl());
+        assertEquals(2, response.getData().get(0).getClickedLinks().get(0).getClicks());
+    }
+
+    @Test
+    public void testRecipients_BouncedTypeWithFilters_Success() throws ResendException {
+        ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.BOUNCED)
+                .bounceType(BroadcastRecipientBounceType.PERMANENT)
+                .email("bounced")
+                .limit(10)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, RECIPIENTS_BOUNCED_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/recipients?limit=10&type=bounced&email=bounced&bounce_type=permanent"),
+                anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastRecipientsResponseSuccess response = broadcasts.recipients(GET_BROADCAST_ID, params);
+
+        assertNotNull(response);
+        assertEquals("permanent", response.getData().get(0).getBounceType());
+        assertNull(response.getData().get(0).getContactId());
+    }
+
+    @Test
+    public void testRecipients_ApiError_ThrowsResendException() throws ResendException {
+        ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.SENT)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(404,
+                "{\"name\":\"not_found\",\"message\":\"Broadcast not found\"}", false);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/recipients?type=sent"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> broadcasts.recipients(GET_BROADCAST_ID, params));
+        assertEquals(404, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testListBroadcastRecipientsParams_RequiresType_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> ListBroadcastRecipientsParams.builder().build());
+    }
+
+    @Test
+    public void testListBroadcastRecipientsParams_AfterAndBefore_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.SENT)
+                .after("cursor_a")
+                .before("cursor_b")
+                .build());
+    }
+
+    @Test
+    public void testListBroadcastRecipientsParams_ToQueryString() {
+        ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.CLICKED)
+                .email("carter")
+                .limit(50)
+                .after("cursor_abc")
+                .build();
+
+        assertEquals("?limit=50&after=cursor_abc&type=clicked&email=carter", params.toQueryString());
     }
 }

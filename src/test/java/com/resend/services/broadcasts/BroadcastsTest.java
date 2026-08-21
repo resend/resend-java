@@ -52,6 +52,12 @@ public class BroadcastsTest {
             "{\"id\":\"3\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"queued\",\"created_at\":\"2024-12-03 08:45:00+00\"}" +
             "]}";
 
+    private static final String CLICKED_LINKS_RESPONSE_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[" +
+            "{\"id\":\"b2Zmc2V0OjA\",\"url\":\"https://resend.com/pricing\",\"clicks\":42,\"unique_clicks\":30}," +
+            "{\"id\":\"b2Zmc2V0OjE\",\"url\":\"https://resend.com/docs\",\"clicks\":17,\"unique_clicks\":15}" +
+            "]}";
+
     private static final String SEND_RESPONSE_JSON =
             "{\"id\":\"" + BROADCAST_ID + "\"}";
 
@@ -176,6 +182,37 @@ public class BroadcastsTest {
                 .thenReturn(httpResponse);
 
         ListBroadcastsResponseSuccess response = broadcasts.list(params);
+
+        assertNotNull(response);
+        assertEquals("list", response.getObject());
+    }
+
+    @Test
+    public void testClickedLinks_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CLICKED_LINKS_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/clicked-links"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastClickedLinksResponseSuccess response = broadcasts.clickedLinks(GET_BROADCAST_ID);
+
+        assertNotNull(response);
+        assertEquals(2, response.getData().size());
+        assertEquals("list", response.getObject());
+        assertEquals("https://resend.com/pricing", response.getData().get(0).getUrl());
+        assertEquals(42, response.getData().get(0).getClicks());
+        assertEquals(30, response.getData().get(0).getUniqueClicks());
+    }
+
+    @Test
+    public void testClickedLinksWithPagination_Success() throws ResendException {
+        ListParams params = ListParams.builder().limit(2).build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CLICKED_LINKS_RESPONSE_JSON, true);
+
+        when(httpClient.perform(startsWith("/broadcasts/" + GET_BROADCAST_ID + "/clicked-links?"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListBroadcastClickedLinksResponseSuccess response = broadcasts.clickedLinks(GET_BROADCAST_ID, params);
 
         assertNotNull(response);
         assertEquals("list", response.getObject());

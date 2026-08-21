@@ -80,6 +80,15 @@ public class BroadcastsUtil {
         return new ListBroadcastsResponseSuccess("list", broadcastList, true);
     }
 
+    public static ListBroadcastClickedLinksResponseSuccess createBroadcastClickedLinksResponse() {
+        List<BroadcastClickedLink> clickedLinks = new ArrayList<>();
+
+        clickedLinks.add(new BroadcastClickedLink("b2Zmc2V0OjA", "https://resend.com/pricing", 42, 30));
+        clickedLinks.add(new BroadcastClickedLink("b2Zmc2V0OjE", "https://resend.com/docs", 17, 15));
+
+        return new ListBroadcastClickedLinksResponseSuccess("list", clickedLinks, false);
+    }
+
     public static SendBroadcastOptions sendBroadcastRequest() {
         return SendBroadcastOptions.builder()
                 .scheduledAt("2024-12-18T15:00:00.000Z")

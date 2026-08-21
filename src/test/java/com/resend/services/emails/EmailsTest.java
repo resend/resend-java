@@ -570,14 +570,13 @@ public class EmailsTest {
                 .metrics(MetricName.DELIVERED, MetricName.OPENED)
                 .dimensions(MetricsDimension.PERIOD, MetricsDimension.BROADCAST)
                 .domainIds("d1")
-                .emailIds("e1")
                 .broadcastIds("b1", "b2")
                 .build();
 
         assertEquals(
                 "?start_date=2026-07-01&end_date=2026-07-08&timezone=UTC&granularity=daily" +
                 "&metrics=delivered%2Copened&dimensions=period%2Cbroadcast&domain_id=d1" +
-                "&email_id=e1&broadcast_id=b1%2Cb2",
+                "&broadcast_id=b1%2Cb2",
                 options.toQueryString());
     }
 
@@ -586,6 +585,46 @@ public class EmailsTest {
         GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder().build();
 
         assertEquals("", options.toQueryString());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailAndBroadcastDimensions() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.EMAIL, MetricsDimension.BROADCAST)
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsBroadcastDimensionWithEmailIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.BROADCAST)
+                .emailIds("e1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailDimensionWithBroadcastIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.EMAIL)
+                .broadcastIds("b1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailIdsWithBroadcastIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .emailIds("e1")
+                .broadcastIds("b1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_AllowsDomainAndBroadcastDimensionsCombined() {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.DOMAIN, MetricsDimension.BROADCAST)
+                .build();
+
+        assertEquals("?dimensions=domain%2Cbroadcast", options.toQueryString());
     }
 
     @Test

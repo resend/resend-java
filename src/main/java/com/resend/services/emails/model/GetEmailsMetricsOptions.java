@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
  * Represents the query parameters for {@code GET /emails/metrics}.
  *
  * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA. The API validates that {@code email} is not combined with the {@code broadcast}
- * dimension (or {@code broadcastIds}), and that {@code broadcastIds} is not combined with the
- * {@code email} dimension (or {@code emailIds}); this SDK does not pre-validate those
- * combinations client-side.</p>
+ * before GA. The {@code email} dimension/{@code emailIds} filter cannot be combined with the
+ * {@code broadcast} dimension/{@code broadcastIds} filter, in any pairing; {@link Builder#build()}
+ * validates this client-side.</p>
  */
 public class GetEmailsMetricsOptions {
 
@@ -369,8 +368,18 @@ public class GetEmailsMetricsOptions {
          * Builds a new GetEmailsMetricsOptions instance.
          *
          * @return A new GetEmailsMetricsOptions instance.
+         * @throws IllegalArgumentException If the {@code email} dimension/{@code emailIds} filter
+         *     is combined with the {@code broadcast} dimension/{@code broadcastIds} filter.
          */
         public GetEmailsMetricsOptions build() {
+            boolean hasEmail = (emailIds != null && !emailIds.isEmpty())
+                    || (dimensions != null && dimensions.contains(MetricsDimension.EMAIL));
+            boolean hasBroadcast = (broadcastIds != null && !broadcastIds.isEmpty())
+                    || (dimensions != null && dimensions.contains(MetricsDimension.BROADCAST));
+            if (hasEmail && hasBroadcast) {
+                throw new IllegalArgumentException(
+                        "The `email` dimension/emailIds filter cannot be combined with the `broadcast` dimension/broadcastIds filter");
+            }
             return new GetEmailsMetricsOptions(this);
         }
     }

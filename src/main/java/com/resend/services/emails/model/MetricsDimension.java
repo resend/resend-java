@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * Represents a dimension that emails metrics can be broken down by.
  *
- * <p>{@code EMAIL} and {@code BROADCAST} cannot be combined; the API validates this and
- * returns a 422 response, this SDK does not pre-validate it.</p>
+ * <p>{@code EMAIL} and {@code BROADCAST} cannot be combined; {@link GetEmailsMetricsOptions.Builder#build()}
+ * validates this client-side.</p>
  *
  * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
  * before GA.</p>

@@ -359,6 +359,14 @@ public class BroadcastsTest {
     }
 
     @Test
+    public void testListBroadcastRecipientsParams_BounceTypeRequiresBouncedType_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.SENT)
+                .bounceType(BroadcastRecipientBounceType.PERMANENT)
+                .build());
+    }
+
+    @Test
     public void testListBroadcastRecipientsParams_ToQueryString() {
         ListBroadcastRecipientsParams params = ListBroadcastRecipientsParams.builder()
                 .type(BroadcastRecipientEventType.CLICKED)

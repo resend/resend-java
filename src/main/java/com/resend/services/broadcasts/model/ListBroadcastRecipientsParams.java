@@ -226,6 +226,9 @@ public class ListBroadcastRecipientsParams {
             if (hasAfter && hasBefore) {
                 throw new IllegalArgumentException("after and before cannot be used together");
             }
+            if (bounceType != null && type != BroadcastRecipientEventType.BOUNCED) {
+                throw new IllegalArgumentException("bounceType can only be used when type is BOUNCED");
+            }
             return new ListBroadcastRecipientsParams(this);
         }
     }

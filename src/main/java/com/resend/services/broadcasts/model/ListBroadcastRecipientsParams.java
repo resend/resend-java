@@ -214,8 +214,9 @@ public class ListBroadcastRecipientsParams {
          * Builds a new ListBroadcastRecipientsParams instance.
          *
          * @return A new ListBroadcastRecipientsParams instance.
-         * @throws IllegalArgumentException if {@code type} is not set, or if both {@code after}
-         *         and {@code before} are set.
+         * @throws IllegalArgumentException if {@code type} is not set, if both {@code after}
+         *         and {@code before} are set, or if {@code bounceType} is set while
+         *         {@code type} is not {@code BOUNCED}.
          */
         public ListBroadcastRecipientsParams build() {
             if (type == null) {

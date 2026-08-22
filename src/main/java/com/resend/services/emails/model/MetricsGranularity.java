@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Represents the time bucket size used for the {@code period} dimension of emails metrics.
- *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA.</p>
  */
 public enum MetricsGranularity {
     /** Buckets metrics by hour. */

@@ -322,9 +322,6 @@ public final class Emails extends BaseService {
      * Retrieves aggregate emails metrics (received, delivered, opened, etc.) across the
      * account, for the default date range and with no breakdown by dimension.
      *
-     * <p><strong>Note:</strong> this endpoint is currently in beta and might change before
-     * GA.</p>
-     *
      * @return The emails metrics.
      * @throws ResendException If an error occurs while retrieving the metrics.
      */
@@ -335,9 +332,6 @@ public final class Emails extends BaseService {
     /**
      * Retrieves aggregate emails metrics (received, delivered, opened, etc.) across the
      * account, filtered and broken down according to the given options.
-     *
-     * <p><strong>Note:</strong> this endpoint is currently in beta and might change before
-     * GA.</p>
      *
      * @param options The metrics query options; can be null.
      * @return The emails metrics.

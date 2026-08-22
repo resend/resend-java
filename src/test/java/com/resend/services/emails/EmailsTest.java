@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
+import java.util.Collections;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -615,6 +616,13 @@ public class EmailsTest {
         assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
                 .emailIds("e1")
                 .broadcastIds("b1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsMoreThan100DomainIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .domainIds(Collections.nCopies(101, "d1"))
                 .build());
     }
 

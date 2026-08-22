@@ -12,10 +12,9 @@ import java.util.stream.Collectors;
 /**
  * Represents the query parameters for {@code GET /emails/metrics}.
  *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA. The {@code email} dimension/{@code emailIds} filter cannot be combined with the
- * {@code broadcast} dimension/{@code broadcastIds} filter, in any pairing; {@link Builder#build()}
- * validates this client-side.</p>
+ * <p><strong>Note:</strong> the {@code email} dimension/{@code emailIds} filter cannot be
+ * combined with the {@code broadcast} dimension/{@code broadcastIds} filter, in any pairing;
+ * {@link Builder#build()} validates this client-side.</p>
  */
 public class GetEmailsMetricsOptions {
 
@@ -369,9 +368,16 @@ public class GetEmailsMetricsOptions {
          *
          * @return A new GetEmailsMetricsOptions instance.
          * @throws IllegalArgumentException If the {@code email} dimension/{@code emailIds} filter
-         *     is combined with the {@code broadcast} dimension/{@code broadcastIds} filter.
+         *     is combined with the {@code broadcast} dimension/{@code broadcastIds} filter, or if
+         *     {@code domainIds}, {@code emailIds}, or {@code broadcastIds} has more than 100 entries.
          */
         public GetEmailsMetricsOptions build() {
+            if ((domainIds != null && domainIds.size() > 100)
+                    || (emailIds != null && emailIds.size() > 100)
+                    || (broadcastIds != null && broadcastIds.size() > 100)) {
+                throw new IllegalArgumentException(
+                        "domainIds, emailIds, and broadcastIds can have at most 100 entries each");
+            }
             boolean hasEmail = (emailIds != null && !emailIds.isEmpty())
                     || (dimensions != null && dimensions.contains(MetricsDimension.EMAIL));
             boolean hasBroadcast = (broadcastIds != null && !broadcastIds.isEmpty())

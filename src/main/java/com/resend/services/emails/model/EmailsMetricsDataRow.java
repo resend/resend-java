@@ -17,9 +17,6 @@ import java.util.Map;
  * <p>Metric values (e.g. {@code delivered}, {@code opened}) are not modeled as fixed fields
  * since which ones are present depends on the requested {@code metrics}; they are exposed
  * through {@link #getMetrics()}.</p>
- *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA.</p>
  */
 public class EmailsMetricsDataRow {
 

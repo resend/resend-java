@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Represents a metric that can be requested from the {@code GET /emails/metrics} endpoint.
- *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA.</p>
  */
 public enum MetricName {
     /** Number of emails received for processing. */

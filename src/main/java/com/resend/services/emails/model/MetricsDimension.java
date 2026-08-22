@@ -8,9 +8,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *
  * <p>{@code EMAIL} and {@code BROADCAST} cannot be combined; {@link GetEmailsMetricsOptions.Builder#build()}
  * validates this client-side.</p>
- *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA.</p>
  */
 public enum MetricsDimension {
     /** Breaks metrics down by time bucket, sized by the requested granularity. */

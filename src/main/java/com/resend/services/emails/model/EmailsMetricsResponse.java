@@ -10,9 +10,6 @@ import java.util.Map;
  *
  * <p>{@code data} is {@code null} when no {@code dimensions} were requested; in that case only
  * {@code totals} is populated.</p>
- *
- * <p><strong>Note:</strong> the emails metrics endpoint is currently in beta and might change
- * before GA.</p>
  */
 public class EmailsMetricsResponse {
 

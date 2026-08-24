@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
 import com.resend.services.emails.model.*;
 import com.resend.services.util.EmailsUtil;
+import java.util.Collections;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,41 @@ public class EmailsTest {
             "{\"object\":\"attachment\",\"id\":\"" + ATTACHMENT_ID + "\",\"filename\":\"avatar.png\",\"size\":4096,\"content_type\":\"image/png\"}," +
             "{\"object\":\"attachment\",\"id\":\"3b0d9ce0-4223-5839-087f-58eede27b429\",\"filename\":\"invoice.pdf\",\"size\":8192,\"content_type\":\"application/pdf\"}" +
             "]}";
+
+    private static final String METRICS_TOTALS_ONLY_JSON =
+            "{\"object\":\"metrics\",\"start_date\":\"2026-07-01T00:00:00.000Z\"," +
+            "\"end_date\":\"2026-07-08T00:00:00.000Z\",\"metrics\":[\"delivered\",\"opened\"]," +
+            "\"dimensions\":[],\"granularity\":\"daily\"," +
+            "\"totals\":{\"delivered\":100,\"opened\":40}}";
+
+    private static final String METRICS_WITH_PERIOD_JSON =
+            "{\"object\":\"metrics\",\"start_date\":\"2026-07-01T00:00:00.000Z\"," +
+            "\"end_date\":\"2026-07-08T00:00:00.000Z\",\"metrics\":[\"delivered\"]," +
+            "\"dimensions\":[\"period\"],\"granularity\":\"daily\"," +
+            "\"totals\":{\"delivered\":10},\"data\":[" +
+            "{\"period\":\"2026-07-01\",\"delivered\":10}]}";
+
+    private static final String METRICS_WITH_DOMAIN_JSON =
+            "{\"object\":\"metrics\",\"start_date\":\"2026-07-01T00:00:00.000Z\"," +
+            "\"end_date\":\"2026-07-08T00:00:00.000Z\",\"metrics\":[\"delivered\"]," +
+            "\"dimensions\":[\"domain\"],\"granularity\":\"daily\"," +
+            "\"totals\":{\"delivered\":10},\"data\":[" +
+            "{\"domain_id\":\"d1\",\"domain_name\":\"example.com\",\"delivered\":10}]}";
+
+    private static final String METRICS_WITH_EMAIL_JSON =
+            "{\"object\":\"metrics\",\"start_date\":\"2026-07-01T00:00:00.000Z\"," +
+            "\"end_date\":\"2026-07-08T00:00:00.000Z\",\"metrics\":[\"delivered\"]," +
+            "\"dimensions\":[\"email\"],\"granularity\":\"daily\"," +
+            "\"totals\":{\"delivered\":10},\"data\":[" +
+            "{\"email_id\":\"e1\",\"delivered\":10}]}";
+
+    private static final String METRICS_WITH_BROADCAST_JSON =
+            "{\"object\":\"metrics\",\"start_date\":\"2026-07-01T00:00:00.000Z\"," +
+            "\"end_date\":\"2026-07-08T00:00:00.000Z\",\"metrics\":[\"delivered\",\"opened\"]," +
+            "\"dimensions\":[\"period\",\"broadcast\"],\"granularity\":\"daily\"," +
+            "\"totals\":{\"delivered\":100,\"opened\":40},\"data\":[" +
+            "{\"period\":\"2026-07-01\",\"broadcast_id\":\"uuid\",\"broadcast_name\":\"July Newsletter\"," +
+            "\"delivered\":10,\"opened\":4}]}";
 
     @Mock
     private IHttpClient httpClient;
@@ -309,5 +345,305 @@ public class EmailsTest {
 
         assertNotNull(response);
         assertEquals("mock_id", response.getId());
+    }
+
+    @Test
+    public void testGetEmailsMetrics_NoOptions_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics();
+
+        assertNotNull(response);
+        assertEquals("metrics", response.getObject());
+        assertEquals("2026-07-01T00:00:00.000Z", response.getStartDate());
+        assertEquals("2026-07-08T00:00:00.000Z", response.getEndDate());
+        assertEquals(MetricsGranularity.DAILY, response.getGranularity());
+        assertEquals(2, response.getMetrics().size());
+        assertTrue(response.getDimensions().isEmpty());
+        assertNull(response.getData());
+        assertEquals(100, response.getTotals().get("delivered"));
+        assertEquals(40, response.getTotals().get("opened"));
+    }
+
+    @Test
+    public void testGetEmailsMetrics_NullOptions_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(null);
+
+        assertNotNull(response);
+        assertEquals("metrics", response.getObject());
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DimensionPeriod_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.PERIOD)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_WITH_PERIOD_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?dimensions=period"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+        assertEquals(1, response.getData().size());
+        assertEquals("2026-07-01", response.getData().get(0).getPeriod());
+        assertEquals(10, response.getData().get(0).getMetrics().get("delivered"));
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DimensionDomain_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.DOMAIN)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_WITH_DOMAIN_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?dimensions=domain"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+        assertEquals("d1", response.getData().get(0).getDomainId());
+        assertEquals("example.com", response.getData().get(0).getDomainName());
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DimensionEmail_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.EMAIL)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_WITH_EMAIL_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?dimensions=email"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+        assertEquals("e1", response.getData().get(0).getEmailId());
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DimensionBroadcast_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.PERIOD, MetricsDimension.BROADCAST)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_WITH_BROADCAST_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?dimensions=period%2Cbroadcast"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+        assertEquals("2026-07-01", response.getData().get(0).getPeriod());
+        assertEquals("uuid", response.getData().get(0).getBroadcastId());
+        assertEquals("July Newsletter", response.getData().get(0).getBroadcastName());
+        assertEquals(10, response.getData().get(0).getMetrics().get("delivered"));
+        assertEquals(4, response.getData().get(0).getMetrics().get("opened"));
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DomainIdFilter_SingleValue_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .domainIds("d1")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?domain_id=d1"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_DomainIdFilter_MultipleValues_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .domainIds("d1", "d2")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?domain_id=d1%2Cd2"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_EmailIdFilter_SingleValue_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .emailIds("e1")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?email_id=e1"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_EmailIdFilter_MultipleValues_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .emailIds("e1", "e2")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?email_id=e1%2Ce2"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_BroadcastIdFilter_SingleValue_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .broadcastIds("b1")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?broadcast_id=b1"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_BroadcastIdFilter_MultipleValues_Success() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .broadcastIds("b1", "b2")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(eq("/emails/metrics?broadcast_id=b1%2Cb2"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetrics_MetricsGranularityTimezone_PassedThrough() throws ResendException {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .metrics(MetricName.DELIVERED, MetricName.OPENED)
+                .granularity(MetricsGranularity.WEEKLY)
+                .timezone("America/New_York")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, METRICS_TOTALS_ONLY_JSON, true);
+
+        when(httpClient.perform(
+                eq("/emails/metrics?timezone=America%2FNew_York&granularity=weekly&metrics=delivered%2Copened"),
+                anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        EmailsMetricsResponse response = emails.metrics(options);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_ToQueryString_AllParams() {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .startDate("2026-07-01")
+                .endDate("2026-07-08")
+                .timezone("UTC")
+                .granularity(MetricsGranularity.DAILY)
+                .metrics(MetricName.DELIVERED, MetricName.OPENED)
+                .dimensions(MetricsDimension.PERIOD, MetricsDimension.BROADCAST)
+                .domainIds("d1")
+                .broadcastIds("b1", "b2")
+                .build();
+
+        assertEquals(
+                "?start_date=2026-07-01&end_date=2026-07-08&timezone=UTC&granularity=daily" +
+                "&metrics=delivered%2Copened&dimensions=period%2Cbroadcast&domain_id=d1" +
+                "&broadcast_id=b1%2Cb2",
+                options.toQueryString());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_ToQueryString_Empty() {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder().build();
+
+        assertEquals("", options.toQueryString());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailAndBroadcastDimensions() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.EMAIL, MetricsDimension.BROADCAST)
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsBroadcastDimensionWithEmailIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.BROADCAST)
+                .emailIds("e1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailDimensionWithBroadcastIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.EMAIL)
+                .broadcastIds("b1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsEmailIdsWithBroadcastIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .emailIds("e1")
+                .broadcastIds("b1")
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_RejectsMoreThan100DomainIds() {
+        assertThrows(IllegalArgumentException.class, () -> GetEmailsMetricsOptions.builder()
+                .domainIds(Collections.nCopies(101, "d1"))
+                .build());
+    }
+
+    @Test
+    public void testGetEmailsMetricsOptions_Build_AllowsDomainAndBroadcastDimensionsCombined() {
+        GetEmailsMetricsOptions options = GetEmailsMetricsOptions.builder()
+                .dimensions(MetricsDimension.DOMAIN, MetricsDimension.BROADCAST)
+                .build();
+
+        assertEquals("?dimensions=domain%2Cbroadcast", options.toQueryString());
+    }
+
+    @Test
+    public void testGetEmailsMetrics_ApiError_ThrowsResendException() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
+                "{\"name\":\"validation_error\",\"message\":\"email cannot be combined with broadcast\"}", false);
+
+        when(httpClient.perform(eq("/emails/metrics"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> emails.metrics());
+        assertEquals(422, (int) ex.getStatusCode());
     }
 }

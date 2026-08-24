@@ -184,6 +184,47 @@ public class Broadcasts extends BaseService  {
     }
 
     /**
+     * Retrieves a broadcast's clicked links.
+     *
+     * @param id The unique identifier of the broadcast.
+     * @return A ListBroadcastClickedLinksResponseSuccess containing the broadcast's clicked links.
+     * @throws ResendException If an error occurs during the clicked links retrieval process.
+     */
+    public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id) throws ResendException {
+        AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts/" + id + "/clicked-links", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListBroadcastClickedLinksResponseSuccess.class);
+    }
+
+    /**
+     * Retrieves a paginated list of a broadcast's clicked links.
+     *
+     * @param id The unique identifier of the broadcast.
+     * @param params The params used to customize the list.
+     *
+     * @return A ListBroadcastClickedLinksResponseSuccess containing the paginated list of clicked links.
+     * @throws ResendException If an error occurs during the clicked links retrieval process.
+     */
+    public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id, ListParams params) throws ResendException {
+        String pathWithQuery = "/broadcasts/" + id + "/clicked-links" + URLHelper.parse(params);
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListBroadcastClickedLinksResponseSuccess.class);
+    }
+
+    /**
      * Updates a Broadcast.
      *
      * @param updateBroadcastOptions The Broadcast details.

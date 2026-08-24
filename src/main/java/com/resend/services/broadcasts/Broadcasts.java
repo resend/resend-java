@@ -162,6 +162,28 @@ public class Broadcasts extends BaseService  {
     }
 
     /**
+     * Retrieves the recipients of a broadcast for a given event type, such as who opened,
+     * clicked, or bounced.
+     *
+     * @param id The unique identifier of the broadcast.
+     * @param params The params used to filter and paginate the recipients.
+     * @return A ListBroadcastRecipientsResponseSuccess containing the paginated list of recipients.
+     * @throws ResendException If an error occurs during the broadcast recipients retrieval process.
+     */
+    public ListBroadcastRecipientsResponseSuccess recipients(String id, ListBroadcastRecipientsParams params) throws ResendException {
+        String pathWithQuery = "/broadcasts/" + id + "/recipients" + params.toQueryString();
+        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, ListBroadcastRecipientsResponseSuccess.class);
+    }
+
+    /**
      * Updates a Broadcast.
      *
      * @param updateBroadcastOptions The Broadcast details.

@@ -98,6 +98,12 @@ public class BroadcastsUtil {
                 .build();
     }
 
+    public static ListBroadcastRecipientsParams listBroadcastRecipientsRequest() {
+        return ListBroadcastRecipientsParams.builder()
+                .type(BroadcastRecipientEventType.SENT)
+                .build();
+    }
+
     public static CreateBroadcastOptions createAndScheduleBroadcastRequest() {
         return CreateBroadcastOptions.builder()
                 .audienceId("78261eea-8f8b-4381-83c6-79fa7120f1cf")

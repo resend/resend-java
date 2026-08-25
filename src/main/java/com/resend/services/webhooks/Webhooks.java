@@ -14,6 +14,11 @@ import com.resend.services.webhooks.model.RemoveWebhookResponseSuccess;
 import com.resend.services.webhooks.model.UpdateWebhookOptions;
 import com.resend.services.webhooks.model.UpdateWebhookResponseSuccess;
 import com.resend.services.webhooks.model.GetWebhookResponseSuccess;
+import com.resend.services.webhooks.model.GetWebhookEventResponseSuccess;
+import com.resend.services.webhooks.model.ListWebhookEventAttemptsParams;
+import com.resend.services.webhooks.model.ListWebhookEventAttemptsResponseSuccess;
+import com.resend.services.webhooks.model.ListWebhookEventsParams;
+import com.resend.services.webhooks.model.ListWebhookEventsResponseSuccess;
 import com.resend.services.webhooks.model.VerifyWebhookOptions;
 import okhttp3.MediaType;
 import javax.crypto.Mac;
@@ -130,6 +135,46 @@ public final class Webhooks extends BaseService {
 
         String responseBody = response.getBody();
         return resendMapper.readValue(responseBody, ListWebhooksResponseSuccess.class);
+    }
+
+    public ListWebhookEventsResponseSuccess listEvents(String webhookId) throws ResendException {
+        return listEvents(webhookId, null);
+    }
+
+    public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params) throws ResendException {
+        String query = params == null ? "" : params.toQueryString();
+        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        return resendMapper.readValue(response.getBody(), ListWebhookEventsResponseSuccess.class);
+    }
+
+    public GetWebhookEventResponseSuccess getEvent(String webhookId, String eventId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        return resendMapper.readValue(response.getBody(), GetWebhookEventResponseSuccess.class);
+    }
+
+    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId) throws ResendException {
+        return listEventAttempts(webhookId, eventId, null);
+    }
+
+    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params) throws ResendException {
+        String query = params == null ? "" : params.toQueryString();
+        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        return resendMapper.readValue(response.getBody(), ListWebhookEventAttemptsResponseSuccess.class);
     }
 
     /**

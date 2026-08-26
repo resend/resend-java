@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class SegmentsTest {
 
     private static final String CREATE_RESPONSE_JSON = "{\"id\":\"123\",\"name\":\"seg\",\"object\":\"audience\"}";
-    private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"123\",\"name\":\"updated-seg\",\"object\":\"segment\"}";
+    private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"segment\"}";
     private static final String REMOVE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"audience\",\"deleted\":true}";
     private static final String GET_RESPONSE_JSON =
             "{\"id\":\"123\",\"name\":\"seg\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"object\":\"audience\"}";
@@ -84,7 +84,6 @@ public class SegmentsTest {
 
         assertNotNull(updated);
         assertEquals("123", updated.getId());
-        assertEquals("updated-seg", updated.getName());
         assertEquals("segment", updated.getObject());
     }
 

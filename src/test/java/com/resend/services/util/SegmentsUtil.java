@@ -22,7 +22,7 @@ public class SegmentsUtil {
     }
 
     public static UpdateSegmentResponseSuccess updateSegmentResponse() {
-        return new UpdateSegmentResponseSuccess("123", "updated-seg", "segment");
+        return new UpdateSegmentResponseSuccess("123", "segment");
     }
 
     public static RemoveSegmentResponseSuccess removeSegmentsResponseSuccess() {

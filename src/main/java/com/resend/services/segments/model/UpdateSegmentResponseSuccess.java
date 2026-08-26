@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents a successful response for updating a segment.
- * Extends the BaseSegment class.
  */
-public class UpdateSegmentResponseSuccess extends BaseSegment {
+public class UpdateSegmentResponseSuccess {
+
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("object")
     private String object;
@@ -22,12 +24,20 @@ public class UpdateSegmentResponseSuccess extends BaseSegment {
      * Constructs a successful response for updating a segment.
      *
      * @param id        The ID of the segment.
-     * @param name      The name of the segment.
      * @param object    The object of the segment.
      */
-    public UpdateSegmentResponseSuccess(String id, String name, String object) {
-        super(id, name);
+    public UpdateSegmentResponseSuccess(String id, String object) {
+        this.id = id;
         this.object = object;
+    }
+
+    /**
+     * Get the ID.
+     *
+     * @return The ID of the segment.
+     */
+    public String getId() {
+        return id;
     }
 
     /**

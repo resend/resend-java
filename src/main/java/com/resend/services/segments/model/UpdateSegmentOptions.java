@@ -70,10 +70,20 @@ public class UpdateSegmentOptions {
          * @throws IllegalArgumentException if {@code name} is null or blank.
          */
         public UpdateSegmentOptions build() {
-            if (name == null || name.trim().isEmpty()) {
+            if (name == null || isBlank(name)) {
                 throw new IllegalArgumentException("name must not be null or blank");
             }
             return new UpdateSegmentOptions(this);
+        }
+
+        private static boolean isBlank(String value) {
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (!Character.isWhitespace(c) && !Character.isSpaceChar(c)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

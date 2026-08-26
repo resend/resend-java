@@ -111,6 +111,11 @@ public class SegmentsTest {
     }
 
     @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameUnicodeWhitespace() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().name("\u2003").build());
+    }
+
+    @Test
     public void testDeleteSegment_Success() throws ResendException {
         String segmentId = "123";
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REMOVE_RESPONSE_JSON, true);

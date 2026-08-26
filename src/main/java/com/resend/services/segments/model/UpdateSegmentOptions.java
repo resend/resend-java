@@ -67,8 +67,12 @@ public class UpdateSegmentOptions {
          * Builds and returns a {@code UpdateSegmentOptions} based on the configured properties.
          *
          * @return A {@code UpdateSegmentOptions} instance.
+         * @throws IllegalArgumentException if {@code name} is null or blank.
          */
         public UpdateSegmentOptions build() {
+            if (name == null || name.trim().isEmpty()) {
+                throw new IllegalArgumentException("name must not be null or blank");
+            }
             return new UpdateSegmentOptions(this);
         }
     }

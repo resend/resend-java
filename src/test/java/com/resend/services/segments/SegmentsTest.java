@@ -102,6 +102,16 @@ public class SegmentsTest {
     }
 
     @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameMissing() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().build());
+    }
+
+    @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameBlank() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().name("  ").build());
+    }
+
+    @Test
     public void testDeleteSegment_Success() throws ResendException {
         String segmentId = "123";
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REMOVE_RESPONSE_JSON, true);

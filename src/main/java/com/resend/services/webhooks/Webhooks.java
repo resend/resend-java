@@ -137,10 +137,25 @@ public final class Webhooks extends BaseService {
         return resendMapper.readValue(responseBody, ListWebhooksResponseSuccess.class);
     }
 
+    /**
+     * Retrieves a list of events delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @return A ListWebhookEventsResponseSuccess containing the webhook events.
+     * @throws ResendException If an error occurs while retrieving the events.
+     */
     public ListWebhookEventsResponseSuccess listEvents(String webhookId) throws ResendException {
         return listEvents(webhookId, null);
     }
 
+    /**
+     * Retrieves a paginated list of events delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param params The params used to customize the list.
+     * @return A ListWebhookEventsResponseSuccess containing the webhook events.
+     * @throws ResendException If an error occurs while retrieving the events.
+     */
     public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
         AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
@@ -152,6 +167,14 @@ public final class Webhooks extends BaseService {
         return resendMapper.readValue(response.getBody(), ListWebhookEventsResponseSuccess.class);
     }
 
+    /**
+     * Retrieves a single event delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @return The retrieved webhook event.
+     * @throws ResendException If an error occurs while retrieving the event.
+     */
     public GetWebhookEventResponseSuccess getEvent(String webhookId, String eventId) throws ResendException {
         AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
 
@@ -162,10 +185,27 @@ public final class Webhooks extends BaseService {
         return resendMapper.readValue(response.getBody(), GetWebhookEventResponseSuccess.class);
     }
 
+    /**
+     * Retrieves the delivery attempts for a webhook event.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @return A ListWebhookEventAttemptsResponseSuccess containing the delivery attempts.
+     * @throws ResendException If an error occurs while retrieving the attempts.
+     */
     public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId) throws ResendException {
         return listEventAttempts(webhookId, eventId, null);
     }
 
+    /**
+     * Retrieves a paginated list of delivery attempts for a webhook event.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @param params The params used to customize the list.
+     * @return A ListWebhookEventAttemptsResponseSuccess containing the delivery attempts.
+     * @throws ResendException If an error occurs while retrieving the attempts.
+     */
     public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
         AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));

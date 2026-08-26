@@ -15,6 +15,16 @@ public class SegmentsUtil {
         return new CreateSegmentResponseSuccess("123", "seg", "audience");
     }
 
+    public static UpdateSegmentOptions updateSegmentRequest() {
+        return UpdateSegmentOptions.builder()
+                .name("updated-seg")
+                .build();
+    }
+
+    public static UpdateSegmentResponseSuccess updateSegmentResponse() {
+        return new UpdateSegmentResponseSuccess("123", "segment");
+    }
+
     public static RemoveSegmentResponseSuccess removeSegmentsResponseSuccess() {
         return new RemoveSegmentResponseSuccess("123", "audience", true);
     }

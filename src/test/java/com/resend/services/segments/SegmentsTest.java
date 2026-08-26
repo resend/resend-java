@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 public class SegmentsTest {
 
     private static final String CREATE_RESPONSE_JSON = "{\"id\":\"123\",\"name\":\"seg\",\"object\":\"audience\"}";
+    private static final String UPDATE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"segment\"}";
     private static final String REMOVE_RESPONSE_JSON = "{\"id\":\"123\",\"object\":\"audience\",\"deleted\":true}";
     private static final String GET_RESPONSE_JSON =
             "{\"id\":\"123\",\"name\":\"seg\",\"created_at\":\"2023-04-08 00:11:13.110779+00\",\"object\":\"audience\"}";
@@ -68,6 +69,50 @@ public class SegmentsTest {
 
         ResendException ex = assertThrows(ResendException.class, () -> segments.create(param));
         assertEquals(422, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateSegment_Success() throws ResendException {
+        String segmentId = "123";
+        UpdateSegmentOptions param = SegmentsUtil.updateSegmentRequest();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/segments/" + segmentId), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        UpdateSegmentResponseSuccess updated = segments.update(segmentId, param);
+
+        assertNotNull(updated);
+        assertEquals("123", updated.getId());
+        assertEquals("segment", updated.getObject());
+    }
+
+    @Test
+    public void testUpdateSegment_ApiError_ThrowsResendException() throws ResendException {
+        String segmentId = "123";
+        UpdateSegmentOptions param = SegmentsUtil.updateSegmentRequest();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(404, "{\"name\":\"not_found\",\"message\":\"Segment not found\"}", false);
+
+        when(httpClient.perform(eq("/segments/" + segmentId), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ResendException ex = assertThrows(ResendException.class, () -> segments.update(segmentId, param));
+        assertEquals(404, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameMissing() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().build());
+    }
+
+    @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameBlank() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().name("  ").build());
+    }
+
+    @Test
+    public void testUpdateSegmentOptions_Builder_ThrowsWhenNameUnicodeWhitespace() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateSegmentOptions.builder().name("\u2003").build());
     }
 
     @Test

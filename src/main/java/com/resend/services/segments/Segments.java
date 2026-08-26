@@ -105,6 +105,27 @@ public class Segments extends BaseService {
     }
 
     /**
+     * Updates a segment by its unique identifier.
+     *
+     * @param id The unique identifier of the segment.
+     * @param updateSegmentOptions The new data for the segment.
+     * @return The response indicating the status of the segment update.
+     * @throws ResendException If an error occurs while updating the segment.
+     */
+    public UpdateSegmentResponseSuccess update(String id, UpdateSegmentOptions updateSegmentOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(updateSegmentOptions);
+        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + id, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+
+        return resendMapper.readValue(responseBody, UpdateSegmentResponseSuccess.class);
+    }
+
+    /**
      * Deletes a segment based on the provided segment ID.
      *
      * @param id The unique identifier of the segment to delete.

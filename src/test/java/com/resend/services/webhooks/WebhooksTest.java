@@ -49,6 +49,17 @@ public class WebhooksTest {
     private static final String REMOVE_WEBHOOK_JSON =
             "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\",\"deleted\":true}";
 
+    private static final String EVENT_ID = "msg_1srOrx2ZWZBpBUvZwXKQmoEYga2";
+
+    private static final String LIST_WEBHOOK_EVENTS_JSON =
+            "{\"object\":\"list\",\"has_more\":true,\"data\":[{\"id\":\"" + EVENT_ID + "\",\"type\":\"email.sent\",\"created_at\":\"2026-08-22T15:28:00.000Z\",\"status\":\"success\"}]}";
+
+    private static final String GET_WEBHOOK_EVENT_JSON =
+            "{\"object\":\"webhook_event\",\"id\":\"" + EVENT_ID + "\",\"type\":\"email.sent\",\"created_at\":\"2026-08-22T15:28:00.000Z\",\"status\":\"success\",\"next_attempt_at\":null,\"payload\":{\"type\":\"email.sent\",\"data\":{\"email_id\":\"email_123\"}}}";
+
+    private static final String LIST_WEBHOOK_EVENT_ATTEMPTS_JSON =
+            "{\"object\":\"list\",\"has_more\":false,\"data\":[{\"id\":\"atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2\",\"http_status_code\":200,\"response\":\"{\\\"ok\\\":true}\",\"sent_at\":\"2026-08-22T15:33:12.000Z\"}]}";
+
     @Mock
     private IHttpClient httpClient;
 
@@ -152,6 +163,61 @@ public class WebhooksTest {
         assertNotNull(response);
         assertEquals(1, response.getData().size());
         assertTrue(response.hasMore());
+    }
+
+    @Test
+    public void testListWebhookEventsWithPagination_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_WEBHOOK_EVENTS_JSON, true);
+        ListWebhookEventsParams params = ListWebhookEventsParams.builder().limit(10).after("msg cursor").build();
+
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID + "/events?limit=10&after=msg+cursor"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListWebhookEventsResponseSuccess response = webhooks.listEvents(WEBHOOK_ID, params);
+
+        assertEquals("list", response.getObject());
+        assertTrue(response.hasMore());
+        assertEquals(EVENT_ID, response.getData().get(0).getId());
+        assertEquals("email.sent", response.getData().get(0).getType());
+        assertEquals("2026-08-22T15:28:00.000Z", response.getData().get(0).getCreatedAt());
+        assertEquals(WebhookEventStatus.SUCCESS, response.getData().get(0).getStatus());
+    }
+
+    @Test
+    public void testGetWebhookEvent_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, GET_WEBHOOK_EVENT_JSON, true);
+
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID + "/events/" + EVENT_ID), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        GetWebhookEventResponseSuccess response = webhooks.getEvent(WEBHOOK_ID, EVENT_ID);
+
+        assertEquals("webhook_event", response.getObject());
+        assertEquals(EVENT_ID, response.getId());
+        assertEquals("email.sent", response.getType());
+        assertEquals("2026-08-22T15:28:00.000Z", response.getCreatedAt());
+        assertEquals(WebhookEventStatus.SUCCESS, response.getStatus());
+        assertNull(response.getNextAttemptAt());
+        assertEquals("email.sent", response.getPayload().get("type"));
+        assertTrue(response.getPayload().get("data") instanceof java.util.Map);
+    }
+
+    @Test
+    public void testListWebhookEventAttemptsWithPagination_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_WEBHOOK_EVENT_ATTEMPTS_JSON, true);
+        ListWebhookEventAttemptsParams params = ListWebhookEventAttemptsParams.builder().limit(5).after("atmpt cursor").build();
+
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID + "/events/" + EVENT_ID + "/attempts?limit=5&after=atmpt+cursor"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ListWebhookEventAttemptsResponseSuccess response = webhooks.listEventAttempts(WEBHOOK_ID, EVENT_ID, params);
+
+        assertEquals("list", response.getObject());
+        assertFalse(response.hasMore());
+        assertEquals("atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2", response.getData().get(0).getId());
+        assertEquals(200, response.getData().get(0).getHttpStatusCode());
+        assertEquals("{\"ok\":true}", response.getData().get(0).getResponse());
+        assertEquals("2026-08-22T15:33:12.000Z", response.getData().get(0).getSentAt());
     }
 
     @Test

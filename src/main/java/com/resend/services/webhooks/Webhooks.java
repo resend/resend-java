@@ -19,6 +19,7 @@ import com.resend.services.webhooks.model.ListWebhookEventAttemptsParams;
 import com.resend.services.webhooks.model.ListWebhookEventAttemptsResponseSuccess;
 import com.resend.services.webhooks.model.ListWebhookEventsParams;
 import com.resend.services.webhooks.model.ListWebhookEventsResponseSuccess;
+import com.resend.services.webhooks.model.ReplayWebhookEventResponseSuccess;
 import com.resend.services.webhooks.model.VerifyWebhookOptions;
 import okhttp3.MediaType;
 import javax.crypto.Mac;
@@ -183,6 +184,24 @@ public final class Webhooks extends BaseService {
         }
 
         return resendMapper.readValue(response.getBody(), GetWebhookEventResponseSuccess.class);
+    }
+
+    /**
+     * Queues one more delivery of a webhook event to its webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @return A ReplayWebhookEventResponseSuccess containing the replayed event ID.
+     * @throws ResendException If an error occurs while replaying the event.
+     */
+    public ReplayWebhookEventResponseSuccess replayEvent(String webhookId, String eventId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId + "/replay", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        return resendMapper.readValue(response.getBody(), ReplayWebhookEventResponseSuccess.class);
     }
 
     /**

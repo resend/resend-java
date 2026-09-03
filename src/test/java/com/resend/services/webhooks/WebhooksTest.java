@@ -57,6 +57,9 @@ public class WebhooksTest {
     private static final String GET_WEBHOOK_EVENT_JSON =
             "{\"object\":\"webhook_event\",\"id\":\"" + EVENT_ID + "\",\"type\":\"email.sent\",\"created_at\":\"2026-08-22T15:28:00.000Z\",\"status\":\"success\",\"next_attempt_at\":null,\"payload\":{\"type\":\"email.sent\",\"data\":{\"email_id\":\"email_123\"}}}";
 
+    private static final String REPLAY_WEBHOOK_EVENT_JSON =
+            "{\"object\":\"webhook_event\",\"id\":\"" + EVENT_ID + "\"}";
+
     private static final String LIST_WEBHOOK_EVENT_ATTEMPTS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[{\"id\":\"atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2\",\"http_status_code\":200,\"response\":\"{\\\"ok\\\":true}\",\"sent_at\":\"2026-08-22T15:33:12.000Z\"}]}";
 
@@ -200,6 +203,19 @@ public class WebhooksTest {
         assertNull(response.getNextAttemptAt());
         assertEquals("email.sent", response.getPayload().get("type"));
         assertTrue(response.getPayload().get("data") instanceof java.util.Map);
+    }
+
+    @Test
+    public void testReplayWebhookEvent_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, REPLAY_WEBHOOK_EVENT_JSON, true);
+
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID + "/events/" + EVENT_ID + "/replay"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        ReplayWebhookEventResponseSuccess response = webhooks.replayEvent(WEBHOOK_ID, EVENT_ID);
+
+        assertEquals("webhook_event", response.getObject());
+        assertEquals(EVENT_ID, response.getId());
     }
 
     @Test

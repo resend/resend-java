@@ -60,6 +60,9 @@ public class WebhooksTest {
     private static final String REPLAY_WEBHOOK_EVENT_JSON =
             "{\"object\":\"webhook_event\",\"id\":\"" + EVENT_ID + "\"}";
 
+    private static final String ROTATE_WEBHOOK_SIGNING_SECRET_JSON =
+            "{\"object\":\"webhook\",\"id\":\"" + WEBHOOK_ID + "\",\"signing_secret\":\"whsec_rotated_secret\"}";
+
     private static final String LIST_WEBHOOK_EVENT_ATTEMPTS_JSON =
             "{\"object\":\"list\",\"has_more\":false,\"data\":[{\"id\":\"atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2\",\"http_status_code\":200,\"response\":\"{\\\"ok\\\":true}\",\"sent_at\":\"2026-08-22T15:33:12.000Z\"}]}";
 
@@ -216,6 +219,20 @@ public class WebhooksTest {
 
         assertEquals("webhook_event", response.getObject());
         assertEquals(EVENT_ID, response.getId());
+    }
+
+    @Test
+    public void testRotateWebhookSigningSecret_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, ROTATE_WEBHOOK_SIGNING_SECRET_JSON, true);
+
+        when(httpClient.perform(eq("/webhooks/" + WEBHOOK_ID + "/signing-secret/rotate"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        RotateWebhookSigningSecretResponseSuccess response = webhooks.rotateSigningSecret(WEBHOOK_ID);
+
+        assertEquals("webhook", response.getObject());
+        assertEquals(WEBHOOK_ID, response.getId());
+        assertEquals("whsec_rotated_secret", response.getSigningSecret());
     }
 
     @Test

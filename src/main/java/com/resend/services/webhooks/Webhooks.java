@@ -20,6 +20,7 @@ import com.resend.services.webhooks.model.ListWebhookEventAttemptsResponseSucces
 import com.resend.services.webhooks.model.ListWebhookEventsParams;
 import com.resend.services.webhooks.model.ListWebhookEventsResponseSuccess;
 import com.resend.services.webhooks.model.ReplayWebhookEventResponseSuccess;
+import com.resend.services.webhooks.model.RotateWebhookSigningSecretResponseSuccess;
 import com.resend.services.webhooks.model.VerifyWebhookOptions;
 import okhttp3.MediaType;
 import javax.crypto.Mac;
@@ -202,6 +203,23 @@ public final class Webhooks extends BaseService {
         }
 
         return resendMapper.readValue(response.getBody(), ReplayWebhookEventResponseSuccess.class);
+    }
+
+    /**
+     * Rotates the signing secret of a webhook. The previous secret keeps working for 24 hours.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @return A RotateWebhookSigningSecretResponseSuccess containing the webhook ID and the new signing secret.
+     * @throws ResendException If an error occurs while rotating the signing secret.
+     */
+    public RotateWebhookSigningSecretResponseSuccess rotateSigningSecret(String webhookId) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/signing-secret/rotate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        return resendMapper.readValue(response.getBody(), RotateWebhookSigningSecretResponseSuccess.class);
     }
 
     /**

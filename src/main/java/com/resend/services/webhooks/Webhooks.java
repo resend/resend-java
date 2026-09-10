@@ -206,7 +206,7 @@ public final class Webhooks extends BaseService {
     }
 
     /**
-     * Rotates the signing secret of a webhook. The previous secret stops verifying immediately.
+     * Rotates the signing secret of a webhook. The previous secret keeps working for 24 hours.
      *
      * @param webhookId The unique identifier of the webhook.
      * @return A RotateWebhookSigningSecretResponseSuccess containing the webhook ID and the new signing secret.

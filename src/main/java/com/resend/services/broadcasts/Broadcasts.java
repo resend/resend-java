@@ -105,6 +105,24 @@ public class Broadcasts extends BaseService  {
     }
 
     /**
+     * Duplicates a broadcast into a new draft.
+     *
+     * @param id The unique identifier of the broadcast to duplicate.
+     * @return The DuplicateBroadcastResponseSuccess with the identifier of the new draft.
+     * @throws ResendException If an error occurs during the broadcast duplication process.
+     */
+    public DuplicateBroadcastResponseSuccess duplicate(String id) throws ResendException {
+        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" + id + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
+
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
+        }
+
+        String responseBody = response.getBody();
+        return resendMapper.readValue(responseBody, DuplicateBroadcastResponseSuccess.class);
+    }
+
+    /**
      * Deletes a broadcast based on the provided broadcast ID.
      *
      * @param id The unique identifier of the broadcast to delete.

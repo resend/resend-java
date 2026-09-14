@@ -45,6 +45,11 @@ public class BroadcastsTest {
     private static final String CANCEL_RESPONSE_JSON =
             "{\"id\":\"" + GET_BROADCAST_ID + "\",\"object\":\"broadcast\"}";
 
+    private static final String DUPLICATED_BROADCAST_ID = "a1e7c2d4-5b3f-4e8a-9c1d-2f6b7a8e9d01";
+
+    private static final String DUPLICATE_RESPONSE_JSON =
+            "{\"id\":\"" + DUPLICATED_BROADCAST_ID + "\",\"object\":\"broadcast\"}";
+
     private static final String LIST_RESPONSE_JSON =
             "{\"object\":\"list\",\"has_more\":true,\"data\":[" +
             "{\"id\":\"1\",\"audience_id\":\"" + AUDIENCE_ID + "\",\"status\":\"draft\",\"created_at\":\"2024-12-01 19:32:22.98+00\"}," +
@@ -178,6 +183,20 @@ public class BroadcastsTest {
 
         assertNotNull(response);
         assertEquals(GET_BROADCAST_ID, response.getId());
+        assertEquals("broadcast", response.getObject());
+    }
+
+    @Test
+    public void testDuplicateBroadcast_Success() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(201, DUPLICATE_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/broadcasts/" + GET_BROADCAST_ID + "/duplicate"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        DuplicateBroadcastResponseSuccess response = broadcasts.duplicate(GET_BROADCAST_ID);
+
+        assertNotNull(response);
+        assertEquals(DUPLICATED_BROADCAST_ID, response.getId());
         assertEquals("broadcast", response.getObject());
     }
 

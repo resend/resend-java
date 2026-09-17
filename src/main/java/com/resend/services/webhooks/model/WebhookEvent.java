@@ -35,7 +35,11 @@ public enum WebhookEvent {
     /** Triggered when a domain is updated. */
     DOMAIN_UPDATED("domain.updated"),
     /** Triggered when a domain is deleted. */
-    DOMAIN_DELETED("domain.deleted");
+    DOMAIN_DELETED("domain.deleted"),
+    /** Triggered when an email address is added to the suppression list. */
+    SUPPRESSION_ADDED("suppression.added"),
+    /** Triggered when an email address is removed from the suppression list. */
+    SUPPRESSION_REMOVED("suppression.removed");
 
     private final String value;
 

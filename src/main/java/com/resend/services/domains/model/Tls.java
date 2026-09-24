@@ -1,5 +1,7 @@
 package com.resend.services.domains.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Enum representing the TLS settings for a domain.
  */
@@ -32,6 +34,7 @@ public enum Tls {
      *
      * @return The string representation of the TLS setting.
      */
+    @JsonValue
     public String getValue() {
         return value;
     }

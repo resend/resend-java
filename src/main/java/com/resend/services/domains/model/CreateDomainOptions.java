@@ -16,6 +16,18 @@ public class CreateDomainOptions {
     @JsonProperty("custom_return_path")
     private final String customReturnPath;
 
+    @JsonProperty("open_tracking")
+    private final Boolean openTracking;
+
+    @JsonProperty("click_tracking")
+    private final Boolean clickTracking;
+
+    @JsonProperty("tls")
+    private final Tls tls;
+
+    @JsonProperty("capabilities")
+    private final DomainCapabilities capabilities;
+
     @JsonProperty("tracking_subdomain")
     private final String trackingSubdomain;
 
@@ -28,6 +40,10 @@ public class CreateDomainOptions {
         this.name = builder.name;
         this.region = builder.region;
         this.customReturnPath = builder.customReturnPath;
+        this.openTracking = builder.openTracking;
+        this.clickTracking = builder.clickTracking;
+        this.tls = builder.tls;
+        this.capabilities = builder.capabilities;
         this.trackingSubdomain = builder.trackingSubdomain;
     }
 
@@ -56,6 +72,42 @@ public class CreateDomainOptions {
      */
     public String getCustomReturnPath() {
         return customReturnPath;
+    }
+
+    /**
+     * Get the openTracking state in the domain.
+     *
+     * @return The openTracking state in the domain.
+     */
+    public Boolean getOpenTracking() {
+        return openTracking;
+    }
+
+    /**
+     * Get the clickTracking state in the domain.
+     *
+     * @return The clickTracking state in the domain.
+     */
+    public Boolean getClickTracking() {
+        return clickTracking;
+    }
+
+    /**
+     * Get the TLS setting for the domain.
+     *
+     * @return The TLS setting for the domain.
+     */
+    public Tls getTls() {
+        return tls;
+    }
+
+    /**
+     * Get the sending and receiving capabilities of the domain.
+     *
+     * @return The capabilities of the domain.
+     */
+    public DomainCapabilities getCapabilities() {
+        return capabilities;
     }
 
     /**
@@ -89,6 +141,10 @@ public class CreateDomainOptions {
         private String name;
         private String region;
         private String customReturnPath;
+        private Boolean openTracking;
+        private Boolean clickTracking;
+        private Tls tls;
+        private DomainCapabilities capabilities;
         private String trackingSubdomain;
 
         /**
@@ -121,6 +177,50 @@ public class CreateDomainOptions {
          */
         public Builder customReturnPath(String customReturnPath) {
             this.customReturnPath = customReturnPath;
+            return this;
+        }
+
+        /**
+         * Set the openTracking state in the domain.
+         *
+         * @param openTracking The openTracking state in the domain.
+         * @return The builder instance.
+         */
+        public Builder openTracking(Boolean openTracking) {
+            this.openTracking = openTracking;
+            return this;
+        }
+
+        /**
+         * Set the clickTracking state in the domain.
+         *
+         * @param clickTracking The clickTracking state in the domain.
+         * @return The builder instance.
+         */
+        public Builder clickTracking(Boolean clickTracking) {
+            this.clickTracking = clickTracking;
+            return this;
+        }
+
+        /**
+         * Set the TLS setting for the domain.
+         *
+         * @param tls The TLS setting for the domain.
+         * @return The builder instance.
+         */
+        public Builder tls(Tls tls) {
+            this.tls = tls;
+            return this;
+        }
+
+        /**
+         * Set the sending and receiving capabilities of the domain.
+         *
+         * @param capabilities The capabilities of the domain.
+         * @return The builder instance.
+         */
+        public Builder capabilities(DomainCapabilities capabilities) {
+            this.capabilities = capabilities;
             return this;
         }
 

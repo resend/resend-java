@@ -1,5 +1,6 @@
 package com.resend.services.domains;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -9,11 +10,15 @@ import com.resend.services.util.DomainsUtil;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
@@ -228,5 +233,98 @@ public class DomainsTest {
 
         assertNotNull(response);
         assertEquals(3, response.getData().size());
+    }
+
+    @Test
+    public void testCreateDomainWithTrackingTlsAndCapabilities_SendsFields() throws Exception {
+        CreateDomainOptions request = CreateDomainOptions.builder()
+                .name("resend.dev")
+                .openTracking(true)
+                .clickTracking(false)
+                .tls(Tls.ENFORCED)
+                .capabilities(DomainCapabilities.builder()
+                        .sending(DomainCapabilityStatus.ENABLED)
+                        .receiving(DomainCapabilityStatus.DISABLED)
+                        .build())
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.create(request);
+
+        verify(httpClient).perform(eq("/domains"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertEquals(true, body.get("open_tracking"));
+        assertEquals(false, body.get("click_tracking"));
+        assertEquals("enforced", body.get("tls"));
+        Map<String, Object> capabilities = (Map<String, Object>) body.get("capabilities");
+        assertEquals("enabled", capabilities.get("sending"));
+        assertEquals("disabled", capabilities.get("receiving"));
+    }
+
+    @Test
+    public void testCreateDomainWithoutOptionalFields_OmitsFields() throws Exception {
+        CreateDomainOptions request = CreateDomainOptions.builder()
+                .name("resend.dev")
+                .capabilities(DomainCapabilities.builder()
+                        .receiving(DomainCapabilityStatus.ENABLED)
+                        .build())
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.create(request);
+
+        verify(httpClient).perform(eq("/domains"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertFalse(body.containsKey("open_tracking"));
+        assertFalse(body.containsKey("click_tracking"));
+        assertFalse(body.containsKey("tls"));
+        Map<String, Object> capabilities = (Map<String, Object>) body.get("capabilities");
+        assertFalse(capabilities.containsKey("sending"));
+        assertEquals("enabled", capabilities.get("receiving"));
+    }
+
+    @Test
+    public void testCreateDomainWithoutCapabilities_OmitsField() throws Exception {
+        CreateDomainOptions request = CreateDomainOptions.builder()
+                .name("resend.dev")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.create(request);
+
+        verify(httpClient).perform(eq("/domains"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertFalse(body.containsKey("capabilities"));
+    }
+
+    @Test
+    public void testUpdateDomainTls_SendsLowercaseValue() throws Exception {
+        UpdateDomainOptions request = UpdateDomainOptions.builder()
+                .id(DOMAIN_ID)
+                .tls(Tls.OPPORTUNISTIC)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.update(request);
+
+        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertEquals("opportunistic", body.get("tls"));
     }
 }

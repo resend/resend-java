@@ -1,5 +1,6 @@
 package com.resend.services.contacts;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -10,11 +11,16 @@ import com.resend.services.util.ContactsUtil;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
@@ -376,5 +382,111 @@ public class ContactsTest {
 
         assertNotNull(res);
         assertEquals("123", res.getId());
+    }
+
+    @Test
+    public void testCreateContactWithProperties_Success() throws Exception {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("company_name", "Acme Corp");
+        properties.put("seats", 42);
+        properties.put("nickname", null);
+        CreateContactOptions param = CreateContactOptions.builder()
+                .email("user@example.com")
+                .properties(properties)
+                .property("plan", "pro")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_CONTACT_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/contacts"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        CreateContactResponseSuccess response = contacts.create(param);
+
+        assertNotNull(response);
+        verify(httpClient).perform(eq("/contacts"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        Map<String, Object> sent = (Map<String, Object>) body.get("properties");
+        assertEquals("Acme Corp", sent.get("company_name"));
+        assertEquals(42, sent.get("seats"));
+        assertEquals("pro", sent.get("plan"));
+        assertTrue(sent.containsKey("nickname"));
+        assertNull(sent.get("nickname"));
+        assertFalse(properties.containsKey("plan"));
+    }
+
+    @Test
+    public void testCreateContactWithoutProperties_OmitsField() throws Exception {
+        CreateContactOptions param = CreateContactOptions.builder()
+                .email("user@example.com")
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_CONTACT_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/contacts"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        contacts.create(param);
+
+        verify(httpClient).perform(eq("/contacts"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertFalse(body.containsKey("properties"));
+    }
+
+    @Test
+    public void testUpdateContactWithProperties_Success() throws Exception {
+        UpdateContactOptions params = UpdateContactOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .property("company_name", "Acme Corp")
+                .property("active", true)
+                .property("nickname", null)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_CONTACT_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        UpdateContactResponseSuccess res = contacts.update(params);
+
+        assertNotNull(res);
+        verify(httpClient).perform(eq("/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3"), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        Map<String, Object> sent = (Map<String, Object>) body.get("properties");
+        assertEquals("Acme Corp", sent.get("company_name"));
+        assertEquals(true, sent.get("active"));
+        assertTrue(sent.containsKey("nickname"));
+        assertNull(sent.get("nickname"));
+    }
+
+    @Test
+    public void testUpdateContactWithPropertiesMap_Success() throws Exception {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("company_name", "Acme Corp");
+        properties.put("seats", 42);
+        properties.put("nickname", null);
+        UpdateContactOptions params = UpdateContactOptions.builder()
+                .id("e169aa45-1ecf-4183-9955-b1499d5701d3")
+                .properties(properties)
+                .property("active", true)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_CONTACT_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        UpdateContactResponseSuccess res = contacts.update(params);
+
+        assertNotNull(res);
+        verify(httpClient).perform(eq("/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3"), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        Map<String, Object> sent = (Map<String, Object>) body.get("properties");
+        assertEquals("Acme Corp", sent.get("company_name"));
+        assertEquals(42, sent.get("seats"));
+        assertEquals(true, sent.get("active"));
+        assertTrue(sent.containsKey("nickname"));
+        assertNull(sent.get("nickname"));
+        assertFalse(properties.containsKey("active"));
     }
 }

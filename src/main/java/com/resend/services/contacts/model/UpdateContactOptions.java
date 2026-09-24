@@ -3,6 +3,9 @@ package com.resend.services.contacts.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents a request to update a global contact.
  *
@@ -35,6 +38,10 @@ public class UpdateContactOptions {
     @JsonProperty("last_name")
     private final String lastName;
 
+    @JsonProperty("properties")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL, content = JsonInclude.Include.ALWAYS)
+    private final Map<String, Object> properties;
+
     /**
      * Constructs a Contact object using the provided builder.
      *
@@ -48,6 +55,7 @@ public class UpdateContactOptions {
         this.unsubscribed = builder.unsubscribed;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
+        this.properties = builder.properties;
     }
 
     /**
@@ -118,6 +126,15 @@ public class UpdateContactOptions {
     }
 
     /**
+     * Get the custom properties of the contact.
+     *
+     * @return The custom properties of the contact.
+     */
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    /**
      * Create a new builder instance for constructing UpdateContactOptions objects.
      *
      * @return A new builder instance.
@@ -143,6 +160,7 @@ public class UpdateContactOptions {
         private Boolean unsubscribed;
         private String firstName;
         private String lastName;
+        private Map<String, Object> properties;
 
         /**
          * Set the audience ID of the contact.
@@ -222,6 +240,32 @@ public class UpdateContactOptions {
          */
         public Builder lastName(String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        /**
+         * Set the custom properties of the contact.
+         *
+         * @param properties A map of custom property keys to their values.
+         * @return The builder instance.
+         */
+        public Builder properties(Map<String, Object> properties) {
+            this.properties = properties == null ? null : new HashMap<>(properties);
+            return this;
+        }
+
+        /**
+         * Set a single custom property of the contact.
+         *
+         * @param key   The custom property key.
+         * @param value The custom property value.
+         * @return The builder instance.
+         */
+        public Builder property(String key, Object value) {
+            if (this.properties == null) {
+                this.properties = new HashMap<>();
+            }
+            this.properties.put(key, value);
             return this;
         }
 

@@ -18,6 +18,7 @@ import com.resend.services.events.Events;
 import com.resend.services.logs.Logs;
 import com.resend.services.oauthgrants.OAuthGrants;
 import com.resend.services.templates.Templates;
+import com.resend.services.usage.Usage;
 
 /**
  * The Resend class provides a facade for the Domains and Emails services.
@@ -200,5 +201,14 @@ public class Resend {
      */
     public OAuthGrants oauthGrants() {
         return new OAuthGrants(apiKey);
+    }
+
+    /**
+     * Returns a Usage object that can be used to interact with the Usage service.
+     *
+     * @return A Usage object.
+     */
+    public Usage usage() {
+        return new Usage(apiKey);
     }
 }

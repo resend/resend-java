@@ -22,7 +22,7 @@ public class UsageTest {
             "{\"object\":\"usage\"," +
             "\"emails\":{" +
             "\"daily\":{\"used\":258,\"limit\":null,\"sent\":57,\"received\":201,\"resets_at\":\"2026-07-17T00:00:00.000Z\"}," +
-            "\"monthly\":{\"used\":5422,\"limit\":10000,\"sent\":1000,\"received\":4442,\"resets_at\":\"2026-08-01T00:00:00.000Z\"}" +
+            "\"monthly\":{\"used\":5442,\"limit\":10000,\"sent\":1000,\"received\":4442,\"resets_at\":\"2026-08-01T00:00:00.000Z\"}" +
             "}," +
             "\"contacts\":{\"used\":85000,\"limit\":150000}," +
             "\"segments\":{\"used\":2,\"limit\":3}," +
@@ -60,9 +60,13 @@ public class UsageTest {
         assertNull(res.getEmails().getDaily().getLimit());
         assertEquals(57, (int) res.getEmails().getDaily().getSent());
         assertEquals(201, (int) res.getEmails().getDaily().getReceived());
+        assertEquals("2026-07-17T00:00:00.000Z", res.getEmails().getDaily().getResetsAt());
 
-        assertEquals(5422, (int) res.getEmails().getMonthly().getUsed());
+        assertEquals(5442, (int) res.getEmails().getMonthly().getUsed());
         assertEquals(10000, (int) res.getEmails().getMonthly().getLimit());
+        assertEquals(1000, (int) res.getEmails().getMonthly().getSent());
+        assertEquals(4442, (int) res.getEmails().getMonthly().getReceived());
+        assertEquals("2026-08-01T00:00:00.000Z", res.getEmails().getMonthly().getResetsAt());
 
         assertEquals(85000, (int) res.getContacts().getUsed());
         assertEquals(150000, (int) res.getContacts().getLimit());
@@ -79,6 +83,7 @@ public class UsageTest {
 
         assertEquals(0, (int) res.getAutomationRuns().getUsed());
         assertEquals(1000, (int) res.getAutomationRuns().getLimit());
+        assertEquals("2026-08-01T00:00:00.000Z", res.getAutomationRuns().getResetsAt());
 
         assertEquals(1, (int) res.getDomains().getUsed());
         assertEquals(1000, (int) res.getDomains().getLimit());

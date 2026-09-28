@@ -33,9 +33,10 @@ public abstract class BaseService {
     protected final String apiKey;
 
     /**
-     * HTTP client for making HTTP requests.
+     * HTTP client for making HTTP requests. Every {@link IHttpClient} implementation returns the response body
+     * as a {@code String}, so the client is typed accordingly here.
      */
-    protected final IHttpClient httpClient;
+    protected final IHttpClient<String> httpClient;
 
     /**
      * Mapper responsible for mapping data between different representations.
@@ -47,6 +48,7 @@ public abstract class BaseService {
      *
      * @param apiKey The apiKey to use.
      */
+    @SuppressWarnings("unchecked")
     public BaseService(final String apiKey) {
         this.apiKey = apiKey;
         this.httpClient = Defaults.HTTP_CLIENT;
@@ -59,6 +61,7 @@ public abstract class BaseService {
      * @param apiKey     The apiKey to use.
      * @param httpClient The HTTP client to use.
      */
+    @SuppressWarnings("unchecked")
     protected BaseService(final String apiKey, final IHttpClient httpClient) {
         this.apiKey = apiKey;
         this.httpClient = httpClient;
@@ -132,20 +135,18 @@ public abstract class BaseService {
     }
 
     /**
-     * Checks a raw response and deserializes its body.
+     * Checks a response and deserializes its body.
      *
-     * @param response     The raw HTTP response.
+     * @param response     The HTTP response.
      * @param responseType The class to deserialize the response body into.
      * @param <T>          The response type.
      * @return The deserialized response.
      * @throws ResendException If the response is not successful.
      */
-    @SuppressWarnings("unchecked")
-    protected <T> T handle(final AbstractHttpResponse response, final Class<T> responseType) throws ResendException {
-        AbstractHttpResponse<String> stringResponse = (AbstractHttpResponse<String>) response;
-        if (!stringResponse.isSuccessful()) {
-            throw new ResendException(stringResponse.getCode(), stringResponse.getBody());
+    protected <T> T handle(final AbstractHttpResponse<String> response, final Class<T> responseType) throws ResendException {
+        if (!response.isSuccessful()) {
+            throw new ResendException(response.getCode(), response.getBody());
         }
-        return resendMapper.readValue(stringResponse.getBody(), responseType);
+        return resendMapper.readValue(response.getBody(), responseType);
     }
 }

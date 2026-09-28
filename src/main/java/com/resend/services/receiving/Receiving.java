@@ -2,7 +2,6 @@ package com.resend.services.receiving;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -36,20 +35,7 @@ public final class Receiving extends BaseService {
      * @throws ResendException If an error occurs while retrieving the email.
      */
     public ReceivedEmail get(String emailId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/emails/receiving/" + emailId,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ReceivedEmail.class);
+        return execute("/emails/receiving/" + emailId, HttpMethod.GET, null, MediaType.get("application/json"), ReceivedEmail.class);
     }
 
     /**
@@ -59,20 +45,7 @@ public final class Receiving extends BaseService {
      * @throws ResendException If an error occurs during the retrieval process.
      */
     public ListReceivedEmailsResponse list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/emails/receiving",
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListReceivedEmailsResponse.class);
+        return execute("/emails/receiving", HttpMethod.GET, null, MediaType.get("application/json"), ListReceivedEmailsResponse.class);
     }
 
     /**
@@ -84,20 +57,7 @@ public final class Receiving extends BaseService {
      */
     public ListReceivedEmailsResponse list(ListParams params) throws ResendException {
         String pathWithQuery = "/emails/receiving" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                pathWithQuery,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListReceivedEmailsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListReceivedEmailsResponse.class);
     }
 
     /**
@@ -109,20 +69,7 @@ public final class Receiving extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attachment.
      */
     public AttachmentDetails getAttachment(String emailId, String attachmentId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/emails/receiving/" + emailId + "/attachments/" + attachmentId,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, AttachmentDetails.class);
+        return execute("/emails/receiving/" + emailId + "/attachments/" + attachmentId, HttpMethod.GET, null, MediaType.get("application/json"), AttachmentDetails.class);
     }
 
     /**
@@ -133,20 +80,7 @@ public final class Receiving extends BaseService {
      * @throws ResendException If an error occurs during the retrieval process.
      */
     public ListAttachmentsResponse listAttachments(String emailId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/emails/receiving/" + emailId + "/attachments",
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAttachmentsResponse.class);
+        return execute("/emails/receiving/" + emailId + "/attachments", HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
     }
 
     /**
@@ -159,19 +93,6 @@ public final class Receiving extends BaseService {
      */
     public ListAttachmentsResponse listAttachments(String emailId, ListParams params) throws ResendException {
         String pathWithQuery = "/emails/receiving/" + emailId + "/attachments" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                pathWithQuery,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json")
-        );
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAttachmentsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
     }
 }

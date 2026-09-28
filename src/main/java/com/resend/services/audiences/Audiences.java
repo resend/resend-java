@@ -2,7 +2,6 @@ package com.resend.services.audiences;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -39,14 +38,7 @@ public class Audiences extends BaseService {
     @Deprecated
     public CreateAudienceResponseSuccess create(CreateAudienceOptions createAudienceOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createAudienceOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateAudienceResponseSuccess.class);
+        return execute("/audiences", HttpMethod.POST, payload, MediaType.get("application/json"), CreateAudienceResponseSuccess.class);
     }
 
     /**
@@ -58,15 +50,7 @@ public class Audiences extends BaseService {
      */
     @Deprecated
     public ListAudiencesResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListAudiencesResponseSuccess.class);
+        return execute("/audiences", HttpMethod.GET, null, MediaType.get("application/json"), ListAudiencesResponseSuccess.class);
     }
 
     /**
@@ -80,15 +64,7 @@ public class Audiences extends BaseService {
     @Deprecated
     public ListAudiencesResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListAudiencesResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAudiencesResponseSuccess.class);
     }
 
     /**
@@ -101,15 +77,7 @@ public class Audiences extends BaseService {
      */
     @Deprecated
     public GetAudienceResponseSuccess get(String id) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, GetAudienceResponseSuccess.class);
+        return execute("/audiences/" +id, HttpMethod.GET, null, MediaType.get("application/json"), GetAudienceResponseSuccess.class);
     }
 
     /**
@@ -122,14 +90,6 @@ public class Audiences extends BaseService {
      */
     @Deprecated
     public RemoveAudienceResponseSuccess remove(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/audiences/" +id, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveAudienceResponseSuccess.class);
+        return execute("/audiences/" +id, HttpMethod.DELETE, "", null, RemoveAudienceResponseSuccess.class);
     }
 }

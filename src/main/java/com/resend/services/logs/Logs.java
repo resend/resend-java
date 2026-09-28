@@ -2,7 +2,6 @@ package com.resend.services.logs;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -37,13 +36,7 @@ public class Logs extends BaseService {
      * @throws ResendException If an error occurs while retrieving the log.
      */
     public GetLogResponseSuccess get(String logId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/logs/" + logId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), GetLogResponseSuccess.class);
+        return execute("/logs/" + logId, HttpMethod.GET, null, MediaType.get("application/json"), GetLogResponseSuccess.class);
     }
 
     /**
@@ -53,13 +46,7 @@ public class Logs extends BaseService {
      * @throws ResendException If an error occurs during the logs list retrieval process.
      */
     public ListLogsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/logs", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListLogsResponseSuccess.class);
+        return execute("/logs", HttpMethod.GET, null, MediaType.get("application/json"), ListLogsResponseSuccess.class);
     }
 
     /**
@@ -71,12 +58,6 @@ public class Logs extends BaseService {
      */
     public ListLogsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/logs" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListLogsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListLogsResponseSuccess.class);
     }
 }

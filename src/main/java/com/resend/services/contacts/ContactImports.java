@@ -109,11 +109,7 @@ public class ContactImports extends BaseService {
                     requestOptions);
         }
 
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), CreateContactImportResponseSuccess.class);
+        return handle(response, CreateContactImportResponseSuccess.class);
     }
 
     /**
@@ -128,18 +124,7 @@ public class ContactImports extends BaseService {
             throw new IllegalArgumentException("Contact import ID must be provided");
         }
 
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/contacts/imports/" + contactImportId,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), GetContactImportResponseSuccess.class);
+        return execute("/contacts/imports/" + contactImportId, HttpMethod.GET, null, MediaType.get("application/json"), GetContactImportResponseSuccess.class);
     }
 
     /**
@@ -149,18 +134,7 @@ public class ContactImports extends BaseService {
      * @throws ResendException If an error occurs during the contact imports list retrieval process.
      */
     public ListContactImportsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                "/contacts/imports",
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListContactImportsResponseSuccess.class);
+        return execute("/contacts/imports", HttpMethod.GET, null, MediaType.get("application/json"), ListContactImportsResponseSuccess.class);
     }
 
     /**
@@ -172,18 +146,7 @@ public class ContactImports extends BaseService {
      */
     public ListContactImportsResponseSuccess list(ListContactImportsParams params) throws ResendException {
         String pathWithQuery = "/contacts/imports" + buildQueryString(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(
-                pathWithQuery,
-                super.apiKey,
-                HttpMethod.GET,
-                null,
-                MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListContactImportsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactImportsResponseSuccess.class);
     }
 
     private static String buildQueryString(ListContactImportsParams params) {

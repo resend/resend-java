@@ -2,6 +2,7 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the mapping for a single custom contact property in a contact import.
@@ -13,10 +14,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactImportPropertyMapping {
 
     @JsonProperty("column")
-    private final String column;
+    private final @Nullable String column;
 
     @JsonProperty("type")
-    private final String type;
+    private final @Nullable String type;
 
     /**
      * Constructs a ContactImportPropertyMapping object using the provided builder.
@@ -33,7 +34,7 @@ public class ContactImportPropertyMapping {
      *
      * @return The CSV column name.
      */
-    public String getColumn() {
+    public @Nullable String getColumn() {
         return column;
     }
 
@@ -42,7 +43,7 @@ public class ContactImportPropertyMapping {
      *
      * @return The property value type, or {@code null} when defaulted by the API.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -65,8 +66,8 @@ public class ContactImportPropertyMapping {
         public Builder() {
         }
 
-        private String column;
-        private String type;
+        private @Nullable String column;
+        private @Nullable String type;
 
         /**
          * Sets the CSV column that contains the custom property value.

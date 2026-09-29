@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for removing a contact.
@@ -11,7 +12,7 @@ public class RemoveContactResponseSuccess extends BaseContact {
     private boolean deleted;
 
     @JsonProperty("contact")
-    private String contact;
+    private @Nullable String contact;
 
     /**
      * Default constructor
@@ -28,7 +29,7 @@ public class RemoveContactResponseSuccess extends BaseContact {
      * @param deleted The state of the removed contact.
      * @param contact The contact of the removed contact.
      */
-    public RemoveContactResponseSuccess(final String id, final String object, final boolean deleted, final String contact) {
+    public RemoveContactResponseSuccess(final @Nullable String id, final @Nullable String object, final boolean deleted, final @Nullable String contact) {
         super(id, object);
         this.deleted = deleted;
     }
@@ -47,7 +48,7 @@ public class RemoveContactResponseSuccess extends BaseContact {
      *
      * @return The contact of the removed item.
      */
-    public String getContact() {
+    public @Nullable String getContact() {
         return contact;
     }
 }

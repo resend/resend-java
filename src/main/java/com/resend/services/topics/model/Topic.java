@@ -1,5 +1,8 @@
 package com.resend.services.topics.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a topic in a list response.
  * This class is used when topics are returned as part of a collection.
@@ -22,7 +25,7 @@ public class Topic extends AbstractTopic {
      * @param defaultSubscription The default subscription preference.
      * @param createdAt The creation timestamp.
      */
-    public Topic(String id, String name, String description, String defaultSubscription, String createdAt) {
+    public Topic(@Nullable String id, @Nullable String name, @Nullable String description, @Nullable String defaultSubscription, @Nullable String createdAt) {
         super(id, name, description, defaultSubscription, createdAt);
     }
 }

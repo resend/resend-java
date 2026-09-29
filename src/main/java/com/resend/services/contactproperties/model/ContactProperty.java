@@ -1,6 +1,7 @@
 package com.resend.services.contactproperties.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a contact property item.
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactProperty {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("key")
-    private String key;
+    private @Nullable String key;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     @JsonProperty("fallback_value")
-    private Object fallbackValue;
+    private @Nullable Object fallbackValue;
 
     /**
      * Default constructor
@@ -38,7 +39,7 @@ public class ContactProperty {
      * @param type            The type of the contact property.
      * @param fallbackValue   The fallback value of the contact property.
      */
-    public ContactProperty(final String id, final String key, final String createdAt, final String type, final Object fallbackValue) {
+    public ContactProperty(final @Nullable String id, final @Nullable String key, final @Nullable String createdAt, final @Nullable String type, final @Nullable Object fallbackValue) {
         this.id = id;
         this.key = key;
         this.createdAt = createdAt;
@@ -51,7 +52,7 @@ public class ContactProperty {
      *
      * @return The ID of the contact property.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -60,7 +61,7 @@ public class ContactProperty {
      *
      * @return The key of the contact property.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -69,7 +70,7 @@ public class ContactProperty {
      *
      * @return The creation timestamp of the contact property.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -78,7 +79,7 @@ public class ContactProperty {
      *
      * @return The type of the contact property.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -87,7 +88,7 @@ public class ContactProperty {
      *
      * @return The fallback value of the contact property.
      */
-    public Object getFallbackValue() {
+    public @Nullable Object getFallbackValue() {
         return fallbackValue;
     }
 }

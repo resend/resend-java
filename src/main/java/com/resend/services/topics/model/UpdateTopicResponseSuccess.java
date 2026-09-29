@@ -1,6 +1,7 @@
 package com.resend.services.topics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a response after updating a topic.
@@ -11,7 +12,7 @@ public class UpdateTopicResponseSuccess {
      * The unique identifier associated with the topic.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Constructs a new instance of {@code UpdateTopicResponse}.
@@ -24,7 +25,7 @@ public class UpdateTopicResponseSuccess {
      *
      * @param id The ID associated with the updated topic.
      */
-    public UpdateTopicResponseSuccess(String id) {
+    public UpdateTopicResponseSuccess(@Nullable String id) {
         this.id = id;
     }
 
@@ -33,7 +34,7 @@ public class UpdateTopicResponseSuccess {
      *
      * @return The ID of the updated topic.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -42,7 +43,7 @@ public class UpdateTopicResponseSuccess {
      *
      * @param id The ID to be set.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 }

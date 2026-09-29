@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListSegmentsResponseSuccess {
 
     @JsonProperty("data")
-    private List<Segment> data;
+    private @Nullable List<Segment> data;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -31,7 +32,7 @@ public class ListSegmentsResponseSuccess {
      * @param object The object of the segments.
      * @param hasMore Indicate if there are more items to be returned.
      */
-    public ListSegmentsResponseSuccess(List<Segment> data, String object, Boolean hasMore) {
+    public ListSegmentsResponseSuccess(@Nullable List<Segment> data, @Nullable String object, @Nullable Boolean hasMore) {
         this.data = data;
         this.object = object;
         this.hasMore = hasMore;
@@ -42,7 +43,7 @@ public class ListSegmentsResponseSuccess {
      *
      * @return The list of segments.
      */
-    public List<Segment> getData() {
+    public @Nullable List<Segment> getData() {
         return data;
     }
 
@@ -51,7 +52,7 @@ public class ListSegmentsResponseSuccess {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -60,7 +61,7 @@ public class ListSegmentsResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 }

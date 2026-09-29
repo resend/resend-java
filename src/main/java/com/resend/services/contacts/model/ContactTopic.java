@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a contact topic subscription.
@@ -8,16 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactTopic {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("description")
-    private String description;
+    private @Nullable String description;
 
     @JsonProperty("subscription")
-    private String subscription;
+    private @Nullable String subscription;
 
     /**
      * Default constructor
@@ -33,7 +34,7 @@ public class ContactTopic {
      * @param description   The description of the topic.
      * @param subscription  The subscription status (opt_in or opt_out).
      */
-    public ContactTopic(final String id, final String name, final String description, final String subscription) {
+    public ContactTopic(final @Nullable String id, final @Nullable String name, final @Nullable String description, final @Nullable String subscription) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,7 +46,7 @@ public class ContactTopic {
      *
      * @return The ID of the topic.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -54,7 +55,7 @@ public class ContactTopic {
      *
      * @return The name of the topic.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -63,7 +64,7 @@ public class ContactTopic {
      *
      * @return The description of the topic.
      */
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 
@@ -72,7 +73,7 @@ public class ContactTopic {
      *
      * @return The subscription status (opt_in or opt_out).
      */
-    public String getSubscription() {
+    public @Nullable String getSubscription() {
         return subscription;
     }
 }

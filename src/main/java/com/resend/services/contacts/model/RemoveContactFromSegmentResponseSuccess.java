@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the successful response from removing a contact from a segment.
@@ -17,20 +18,20 @@ public class RemoveContactFromSegmentResponseSuccess {
      * The segment ID.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Indicates whether the contact was successfully removed from the segment.
      */
     @JsonProperty("deleted")
-    private Boolean deleted;
+    private @Nullable Boolean deleted;
 
     /**
      * Gets the segment ID.
      *
      * @return The segment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -39,7 +40,7 @@ public class RemoveContactFromSegmentResponseSuccess {
      *
      * @param id The segment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -48,7 +49,7 @@ public class RemoveContactFromSegmentResponseSuccess {
      *
      * @return True if the contact was successfully removed from the segment.
      */
-    public Boolean getDeleted() {
+    public @Nullable Boolean getDeleted() {
         return deleted;
     }
 
@@ -57,7 +58,7 @@ public class RemoveContactFromSegmentResponseSuccess {
      *
      * @param deleted True if the contact was successfully removed from the segment.
      */
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(@Nullable Boolean deleted) {
         this.deleted = deleted;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.topics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create a topic.
@@ -11,19 +12,19 @@ public class CreateTopicOptions {
      * The topic name.
      */
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * The default subscription preference for new contacts.
      */
     @JsonProperty("default_subscription")
-    private final String defaultSubscription;
+    private final @Nullable String defaultSubscription;
 
     /**
      * The topic description.
      */
     @JsonProperty("description")
-    private final String description;
+    private final @Nullable String description;
 
     /**
      * Private constructor used by the Builder.
@@ -41,7 +42,7 @@ public class CreateTopicOptions {
      *
      * @return The topic name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -50,7 +51,7 @@ public class CreateTopicOptions {
      *
      * @return The default subscription preference.
      */
-    public String getDefaultSubscription() {
+    public @Nullable String getDefaultSubscription() {
         return defaultSubscription;
     }
 
@@ -59,7 +60,7 @@ public class CreateTopicOptions {
      *
      * @return The topic description.
      */
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 
@@ -82,9 +83,9 @@ public class CreateTopicOptions {
         public Builder() {
         }
 
-        private String name;
-        private String defaultSubscription;
-        private String description;
+        private @Nullable String name;
+        private @Nullable String defaultSubscription;
+        private @Nullable String description;
 
         /**
          * Set the topic name.

@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create a segment with options.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateSegmentOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * Constructs a Segment Options object using the provided builder.
@@ -24,7 +25,7 @@ public class CreateSegmentOptions {
      *
      * @return The name of the Segment Options.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -47,7 +48,7 @@ public class CreateSegmentOptions {
         public Builder() {
         }
 
-        private String name;
+        private @Nullable String name;
 
         /**
          * Set the name of the Segment Options.

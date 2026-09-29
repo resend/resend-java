@@ -1,16 +1,17 @@
 package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an audience.
  */
 public abstract class BaseAudience {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public abstract class BaseAudience {
      * @param id          The ID of the audience.
      * @param name        The name of the audience.
      */
-    public BaseAudience(final String id, final String name) {
+    public BaseAudience(final @Nullable String id, final @Nullable String name) {
         this.id = id;
         this.name = name;
     }
@@ -35,7 +36,7 @@ public abstract class BaseAudience {
      *
      * @return The ID of the audience.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public abstract class BaseAudience {
      *
      * @return The name of the audience.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 }

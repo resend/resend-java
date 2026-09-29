@@ -2,6 +2,7 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,27 +22,27 @@ public class CreateContactOptions {
 
     @JsonProperty("audience_id")
     @Deprecated
-    private final String audienceId;
+    private final @Nullable String audienceId;
 
     @JsonProperty("segment_id")
     @Deprecated
-    private final String segmentId;
+    private final @Nullable String segmentId;
 
     @JsonProperty("email")
-    private final String email;
+    private final @Nullable String email;
 
     @JsonProperty("unsubscribed")
-    private final Boolean unsubscribed;
+    private final @Nullable Boolean unsubscribed;
 
     @JsonProperty("first_name")
-    private final String firstName;
+    private final @Nullable String firstName;
 
     @JsonProperty("last_name")
-    private final String lastName;
+    private final @Nullable String lastName;
 
     @JsonProperty("properties")
     @JsonInclude(value = JsonInclude.Include.NON_NULL, content = JsonInclude.Include.ALWAYS)
-    private final Map<String, Object> properties;
+    private final @Nullable Map<String, @Nullable Object> properties;
 
     /**
      * Constructs a Contact object using the provided builder.
@@ -65,7 +66,7 @@ public class CreateContactOptions {
      * @deprecated Use {@link #getSegmentId()} instead.
      */
     @Deprecated
-    public String getAudienceId() {
+    public @Nullable String getAudienceId() {
         return audienceId;
     }
 
@@ -77,7 +78,7 @@ public class CreateContactOptions {
      *             Use {@code resend.contacts().segments().add(options)} to add contacts to segments.
      */
     @Deprecated
-    public String getSegmentId() {
+    public @Nullable String getSegmentId() {
         return segmentId;
     }
 
@@ -86,7 +87,7 @@ public class CreateContactOptions {
      *
      * @return The email of the contact.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -95,7 +96,7 @@ public class CreateContactOptions {
      *
      * @return The unsubscribed status of the contact.
      */
-    public Boolean getUnsubscribed() {
+    public @Nullable Boolean getUnsubscribed() {
         return unsubscribed;
     }
 
@@ -104,7 +105,7 @@ public class CreateContactOptions {
      *
      * @return The first name of the contact.
      */
-    public String getFirstName() {
+    public @Nullable String getFirstName() {
         return firstName;
     }
 
@@ -113,7 +114,7 @@ public class CreateContactOptions {
      *
      * @return The last name of the contact.
      */
-    public String getLastName() {
+    public @Nullable String getLastName() {
         return lastName;
     }
 
@@ -122,7 +123,7 @@ public class CreateContactOptions {
      *
      * @return The custom properties of the contact.
      */
-    public Map<String, Object> getProperties() {
+    public @Nullable Map<String, @Nullable Object> getProperties() {
         return properties;
     }
 
@@ -145,13 +146,13 @@ public class CreateContactOptions {
         public Builder() {
         }
 
-        private String audienceId;
-        private String segmentId;
-        private String email;
-        private Boolean unsubscribed;
-        private String firstName;
-        private String lastName;
-        private Map<String, Object> properties;
+        private @Nullable String audienceId;
+        private @Nullable String segmentId;
+        private @Nullable String email;
+        private @Nullable Boolean unsubscribed;
+        private @Nullable String firstName;
+        private @Nullable String lastName;
+        private @Nullable Map<String, @Nullable Object> properties;
 
         /**
          * Set the audience ID of the contact.
@@ -230,7 +231,7 @@ public class CreateContactOptions {
          * @param properties A map of custom property keys to their values.
          * @return The builder instance.
          */
-        public Builder properties(Map<String, Object> properties) {
+        public Builder properties(@Nullable Map<String, @Nullable Object> properties) {
             this.properties = properties == null ? null : new HashMap<>(properties);
             return this;
         }

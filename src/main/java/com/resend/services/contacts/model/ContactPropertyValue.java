@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a custom property value on a contact, returned as an object
@@ -9,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactPropertyValue {
 
     @JsonProperty("value")
-    private Object value;
+    private @Nullable Object value;
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     /**
      * Default constructor
@@ -27,7 +28,7 @@ public class ContactPropertyValue {
      * @param value The property value, a String, Number, or Boolean depending on type.
      * @param type  The property type ("string", "number", or "boolean").
      */
-    public ContactPropertyValue(final Object value, final String type) {
+    public ContactPropertyValue(final @Nullable Object value, final @Nullable String type) {
         this.value = value;
         this.type = type;
     }
@@ -37,7 +38,7 @@ public class ContactPropertyValue {
      *
      * @return The property value, a String, Number, or Boolean depending on type.
      */
-    public Object getValue() {
+    public @Nullable Object getValue() {
         return value;
     }
 
@@ -46,7 +47,7 @@ public class ContactPropertyValue {
      *
      * @return The property type ("string", "number", or "boolean").
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 }

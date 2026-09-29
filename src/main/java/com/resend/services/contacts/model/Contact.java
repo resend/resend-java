@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a contact item.
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Contact {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("email")
-    private String email;
+    private @Nullable String email;
 
     @JsonProperty("first_name")
-    private String firstName;
+    private @Nullable String firstName;
 
     @JsonProperty("last_name")
-    private String lastName;
+    private @Nullable String lastName;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("unsubscribed")
     private boolean unsubscribed;
@@ -42,7 +43,7 @@ public class Contact {
      * @param createdAt     The creation timestamp of the contact item.
      * @param unsubscribed  The subscription state contact item.
      */
-    public Contact(final String id, final String email, final String firstName, final String lastName, final String createdAt, final boolean unsubscribed) {
+    public Contact(final @Nullable String id, final @Nullable String email, final @Nullable String firstName, final @Nullable String lastName, final @Nullable String createdAt, final boolean unsubscribed) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -56,7 +57,7 @@ public class Contact {
      *
      * @return The ID of the contact item.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -65,7 +66,7 @@ public class Contact {
      *
      * @return The name of the contact item.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -74,7 +75,7 @@ public class Contact {
      *
      * @return The first name of the contact.
      */
-    public String getFirstName() {
+    public @Nullable String getFirstName() {
         return firstName;
     }
 
@@ -83,7 +84,7 @@ public class Contact {
      *
      * @return The last name of the contact.
      */
-    public String getLastName() {
+    public @Nullable String getLastName() {
         return lastName;
     }
 
@@ -92,7 +93,7 @@ public class Contact {
      *
      * @return The creation timestamp of the contact item.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 

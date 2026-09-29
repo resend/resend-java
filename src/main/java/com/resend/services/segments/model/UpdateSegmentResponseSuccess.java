@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for updating a segment.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateSegmentResponseSuccess {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -26,7 +27,7 @@ public class UpdateSegmentResponseSuccess {
      * @param id        The ID of the segment.
      * @param object    The object of the segment.
      */
-    public UpdateSegmentResponseSuccess(String id, String object) {
+    public UpdateSegmentResponseSuccess(@Nullable String id, @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -36,7 +37,7 @@ public class UpdateSegmentResponseSuccess {
      *
      * @return The ID of the segment.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -45,7 +46,7 @@ public class UpdateSegmentResponseSuccess {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for creating a segment.
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateSegmentResponseSuccess extends BaseSegment {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public class CreateSegmentResponseSuccess extends BaseSegment {
      * @param name      The name of the segment.
      * @param object    The object of the segment.
      */
-    public CreateSegmentResponseSuccess(String id, String name, String object) {
+    public CreateSegmentResponseSuccess(@Nullable String id, @Nullable String name, @Nullable String object) {
         super(id, name);
         this.object = object;
     }
@@ -35,7 +36,7 @@ public class CreateSegmentResponseSuccess extends BaseSegment {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

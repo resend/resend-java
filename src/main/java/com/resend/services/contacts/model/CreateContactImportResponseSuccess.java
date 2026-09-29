@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for creating a contact import.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateContactImportResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class CreateContactImportResponseSuccess {
      * @param object The object type (e.g. {@code "contact_import"}).
      * @param id     The ID of the created contact import.
      */
-    public CreateContactImportResponseSuccess(final String object, final String id) {
+    public CreateContactImportResponseSuccess(final @Nullable String object, final @Nullable String id) {
         this.object = object;
         this.id = id;
     }
@@ -35,7 +36,7 @@ public class CreateContactImportResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -44,7 +45,7 @@ public class CreateContactImportResponseSuccess {
      *
      * @return The contact import ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

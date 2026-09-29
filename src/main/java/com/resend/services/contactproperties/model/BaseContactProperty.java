@@ -1,16 +1,17 @@
 package com.resend.services.contactproperties.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base contact property with common properties
  */
 public abstract class BaseContactProperty {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -24,7 +25,7 @@ public abstract class BaseContactProperty {
      * @param id        The ID of the contact property.
      * @param object    The object type of the contact property.
      */
-    public BaseContactProperty(final String id, final String object) {
+    public BaseContactProperty(final @Nullable String id, final @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -34,7 +35,7 @@ public abstract class BaseContactProperty {
      *
      * @return The ID of the contact property.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -43,7 +44,7 @@ public abstract class BaseContactProperty {
      *
      * @return The object type of the contact property.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 

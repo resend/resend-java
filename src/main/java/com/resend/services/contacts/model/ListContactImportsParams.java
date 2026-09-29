@@ -1,5 +1,8 @@
 package com.resend.services.contacts.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents the query parameters for listing contact imports.
  *
@@ -8,13 +11,13 @@ package com.resend.services.contacts.model;
  */
 public class ListContactImportsParams {
 
-    private final Integer limit;
+    private final @Nullable Integer limit;
 
-    private final String after;
+    private final @Nullable String after;
 
-    private final String before;
+    private final @Nullable String before;
 
-    private final String status;
+    private final @Nullable String status;
 
     /**
      * Constructs a ListContactImportsParams object using the provided builder.
@@ -33,7 +36,7 @@ public class ListContactImportsParams {
      *
      * @return The pagination limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -42,7 +45,7 @@ public class ListContactImportsParams {
      *
      * @return The {@code after} cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -51,7 +54,7 @@ public class ListContactImportsParams {
      *
      * @return The {@code before} cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -61,7 +64,7 @@ public class ListContactImportsParams {
      *
      * @return The status filter.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -84,10 +87,10 @@ public class ListContactImportsParams {
         public Builder() {
         }
 
-        private Integer limit;
-        private String after;
-        private String before;
-        private String status;
+        private @Nullable Integer limit;
+        private @Nullable String after;
+        private @Nullable String before;
+        private @Nullable String status;
 
         /**
          * Sets the maximum number of contact imports to return (1-100, default 10).

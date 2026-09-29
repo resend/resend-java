@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents options for a topic subscription update.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactTopicOptions {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("subscription")
-    private String subscription;
+    private @Nullable String subscription;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public class ContactTopicOptions {
      * @param id            The topic ID.
      * @param subscription  The subscription action (opt_in or opt_out).
      */
-    public ContactTopicOptions(final String id, final String subscription) {
+    public ContactTopicOptions(final @Nullable String id, final @Nullable String subscription) {
         this.id = id;
         this.subscription = subscription;
     }
@@ -35,7 +36,7 @@ public class ContactTopicOptions {
      *
      * @return The topic ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class ContactTopicOptions {
      *
      * @param id The topic ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -53,7 +54,7 @@ public class ContactTopicOptions {
      *
      * @return The subscription action (opt_in or opt_out).
      */
-    public String getSubscription() {
+    public @Nullable String getSubscription() {
         return subscription;
     }
 
@@ -62,7 +63,7 @@ public class ContactTopicOptions {
      *
      * @param subscription The subscription action (opt_in or opt_out).
      */
-    public void setSubscription(String subscription) {
+    public void setSubscription(@Nullable String subscription) {
         this.subscription = subscription;
     }
 
@@ -85,8 +86,8 @@ public class ContactTopicOptions {
         public Builder() {
         }
 
-        private String id;
-        private String subscription;
+        private @Nullable String id;
+        private @Nullable String subscription;
 
         /**
          * Sets the topic ID.

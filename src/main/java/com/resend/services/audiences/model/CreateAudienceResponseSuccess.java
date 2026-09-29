@@ -1,6 +1,7 @@
 package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for creating an audience.
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateAudienceResponseSuccess extends BaseAudience {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public class CreateAudienceResponseSuccess extends BaseAudience {
      * @param name      The name of the audience.
      * @param object    The object of the audience.
      */
-    public CreateAudienceResponseSuccess(String id, String name, String object) {
+    public CreateAudienceResponseSuccess(@Nullable String id, @Nullable String name, @Nullable String object) {
         super(id, name);
         this.object = object;
     }
@@ -35,7 +36,7 @@ public class CreateAudienceResponseSuccess extends BaseAudience {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.topics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -12,19 +13,19 @@ public class ListTopicsResponseSuccess {
      * The object type of the response.
      */
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * The list of topics.
      */
     @JsonProperty("data")
-    private List<Topic> data;
+    private @Nullable List<Topic> data;
 
     /**
      * Indicates whether there are more topics available for pagination.
      */
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -39,7 +40,7 @@ public class ListTopicsResponseSuccess {
      * @param data The list of topics.
      * @param hasMore Whether there are more topics available for pagination.
      */
-    public ListTopicsResponseSuccess(String object, List<Topic> data, Boolean hasMore) {
+    public ListTopicsResponseSuccess(@Nullable String object, @Nullable List<Topic> data, @Nullable Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;
@@ -50,7 +51,7 @@ public class ListTopicsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -59,7 +60,7 @@ public class ListTopicsResponseSuccess {
      *
      * @param object The object type to set.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -68,7 +69,7 @@ public class ListTopicsResponseSuccess {
      *
      * @return The list of topics.
      */
-    public List<Topic> getData() {
+    public @Nullable List<Topic> getData() {
         return data;
     }
 
@@ -77,7 +78,7 @@ public class ListTopicsResponseSuccess {
      *
      * @param data The list of topics to set.
      */
-    public void setData(List<Topic> data) {
+    public void setData(@Nullable List<Topic> data) {
         this.data = data;
     }
 
@@ -86,7 +87,7 @@ public class ListTopicsResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -95,7 +96,7 @@ public class ListTopicsResponseSuccess {
      *
      * @param hasMore Whether there are more items available for pagination.
      */
-    public void setHasMore(Boolean hasMore) {
+    public void setHasMore(@Nullable Boolean hasMore) {
         this.hasMore = hasMore;
     }
 }

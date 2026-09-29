@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the options for removing a contact from a segment.
@@ -11,19 +12,19 @@ public class RemoveContactFromSegmentOptions {
      * The contact ID (either id or email must be provided, but not both).
      */
     @JsonIgnore
-    private String id;
+    private @Nullable String id;
 
     /**
      * The contact email address (either id or email must be provided, but not both).
      */
     @JsonIgnore
-    private String email;
+    private @Nullable String email;
 
     /**
      * The segment ID to remove the contact from (required).
      */
     @JsonIgnore
-    private String segmentId;
+    private @Nullable String segmentId;
 
     /**
      * Constructs a new RemoveContactFromSegmentOptions using the builder.
@@ -41,7 +42,7 @@ public class RemoveContactFromSegmentOptions {
      *
      * @return The contact ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -50,7 +51,7 @@ public class RemoveContactFromSegmentOptions {
      *
      * @return The contact email.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -59,7 +60,7 @@ public class RemoveContactFromSegmentOptions {
      *
      * @return The segment ID.
      */
-    public String getSegmentId() {
+    public @Nullable String getSegmentId() {
         return segmentId;
     }
 
@@ -82,9 +83,9 @@ public class RemoveContactFromSegmentOptions {
         public Builder() {
         }
 
-        private String id;
-        private String email;
-        private String segmentId;
+        private @Nullable String id;
+        private @Nullable String email;
+        private @Nullable String segmentId;
 
         /**
          * Sets the contact ID.

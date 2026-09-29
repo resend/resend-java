@@ -1,6 +1,7 @@
 package com.resend.services.contactproperties.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
 public class ListContactPropertiesResponseSuccess {
 
     @JsonProperty("data")
-    private List<ContactProperty> data;
+    private @Nullable List<ContactProperty> data;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -30,7 +31,7 @@ public class ListContactPropertiesResponseSuccess {
      * @param object    The object type.
      * @param hasMore   Indicate if there are more items to be returned.
      */
-    public ListContactPropertiesResponseSuccess(final List<ContactProperty> data, final String object, final Boolean hasMore) {
+    public ListContactPropertiesResponseSuccess(final @Nullable List<ContactProperty> data, final @Nullable String object, final @Nullable Boolean hasMore) {
         this.data = data;
         this.object = object;
         this.hasMore = hasMore;
@@ -41,7 +42,7 @@ public class ListContactPropertiesResponseSuccess {
      *
      * @return The list of contact properties.
      */
-    public List<ContactProperty> getData() {
+    public @Nullable List<ContactProperty> getData() {
         return data;
     }
 
@@ -50,7 +51,7 @@ public class ListContactPropertiesResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -59,7 +60,7 @@ public class ListContactPropertiesResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 

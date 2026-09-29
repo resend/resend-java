@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for updating contact topics.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateContactTopicsResponse {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor
@@ -21,7 +22,7 @@ public class UpdateContactTopicsResponse {
      *
      * @param id The contact ID.
      */
-    public UpdateContactTopicsResponse(final String id) {
+    public UpdateContactTopicsResponse(final @Nullable String id) {
         this.id = id;
     }
 
@@ -30,7 +31,7 @@ public class UpdateContactTopicsResponse {
      *
      * @return The contact ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

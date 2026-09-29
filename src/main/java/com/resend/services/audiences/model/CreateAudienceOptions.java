@@ -1,6 +1,7 @@
 package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create an audience with options.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateAudienceOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * Constructs an Audience Options object using the provided builder.
@@ -24,7 +25,7 @@ public class CreateAudienceOptions {
      *
      * @return The name of the Audience Options.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -47,7 +48,7 @@ public class CreateAudienceOptions {
         public Builder() {
         }
 
-        private String name;
+        private @Nullable String name;
 
         /**
          * Set the name of the Audience Options.

@@ -2,6 +2,7 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +14,13 @@ import java.util.List;
 public class UpdateContactTopicsOptions {
 
     @JsonIgnore
-    private final String id;
+    private final @Nullable String id;
 
     @JsonIgnore
-    private final String email;
+    private final @Nullable String email;
 
     @JsonProperty("topics")
-    private final List<ContactTopicOptions> topics;
+    private final @Nullable List<ContactTopicOptions> topics;
 
     /**
      * Constructs an UpdateContactTopicsOptions object using the provided builder.
@@ -37,7 +38,7 @@ public class UpdateContactTopicsOptions {
      *
      * @return The contact ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -46,7 +47,7 @@ public class UpdateContactTopicsOptions {
      *
      * @return The contact email.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -55,7 +56,7 @@ public class UpdateContactTopicsOptions {
      *
      * @return The list of topic subscription updates.
      */
-    public List<ContactTopicOptions> getTopics() {
+    public @Nullable List<ContactTopicOptions> getTopics() {
         return topics;
     }
 
@@ -78,9 +79,9 @@ public class UpdateContactTopicsOptions {
         public Builder() {
         }
 
-        private String id;
-        private String email;
-        private List<ContactTopicOptions> topics;
+        private @Nullable String id;
+        private @Nullable String email;
+        private @Nullable List<ContactTopicOptions> topics;
 
         /**
          * Sets the contact ID.

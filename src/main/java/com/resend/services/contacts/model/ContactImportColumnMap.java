@@ -2,6 +2,7 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,19 +17,19 @@ import java.util.Map;
 public class ContactImportColumnMap {
 
     @JsonProperty("email")
-    private final String email;
+    private final @Nullable String email;
 
     @JsonProperty("first_name")
-    private final String firstName;
+    private final @Nullable String firstName;
 
     @JsonProperty("last_name")
-    private final String lastName;
+    private final @Nullable String lastName;
 
     @JsonProperty("unsubscribed")
-    private final String unsubscribed;
+    private final @Nullable String unsubscribed;
 
     @JsonProperty("properties")
-    private final Map<String, ContactImportPropertyMapping> properties;
+    private final @Nullable Map<String, ContactImportPropertyMapping> properties;
 
     /**
      * Constructs a ContactImportColumnMap object using the provided builder.
@@ -48,7 +49,7 @@ public class ContactImportColumnMap {
      *
      * @return The CSV column name for emails.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -57,7 +58,7 @@ public class ContactImportColumnMap {
      *
      * @return The CSV column name for first names.
      */
-    public String getFirstName() {
+    public @Nullable String getFirstName() {
         return firstName;
     }
 
@@ -66,7 +67,7 @@ public class ContactImportColumnMap {
      *
      * @return The CSV column name for last names.
      */
-    public String getLastName() {
+    public @Nullable String getLastName() {
         return lastName;
     }
 
@@ -75,7 +76,7 @@ public class ContactImportColumnMap {
      *
      * @return The CSV column name for the unsubscribed status.
      */
-    public String getUnsubscribed() {
+    public @Nullable String getUnsubscribed() {
         return unsubscribed;
     }
 
@@ -84,7 +85,7 @@ public class ContactImportColumnMap {
      *
      * @return The custom property mappings.
      */
-    public Map<String, ContactImportPropertyMapping> getProperties() {
+    public @Nullable Map<String, ContactImportPropertyMapping> getProperties() {
         return properties;
     }
 
@@ -107,11 +108,11 @@ public class ContactImportColumnMap {
         public Builder() {
         }
 
-        private String email;
-        private String firstName;
-        private String lastName;
-        private String unsubscribed;
-        private Map<String, ContactImportPropertyMapping> properties;
+        private @Nullable String email;
+        private @Nullable String firstName;
+        private @Nullable String lastName;
+        private @Nullable String unsubscribed;
+        private @Nullable Map<String, ContactImportPropertyMapping> properties;
 
         /**
          * Sets the CSV column that contains contact email addresses.
@@ -163,7 +164,7 @@ public class ContactImportColumnMap {
          * @param properties A map of custom property keys to their column mapping.
          * @return The builder instance.
          */
-        public Builder properties(Map<String, ContactImportPropertyMapping> properties) {
+        public Builder properties(@Nullable Map<String, ContactImportPropertyMapping> properties) {
             this.properties = properties == null ? null : new HashMap<>(properties);
             return this;
         }

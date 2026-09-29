@@ -1,6 +1,7 @@
 package com.resend.services.contactproperties.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create a contact property.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateContactPropertyOptions {
 
     @JsonProperty("key")
-    private final String key;
+    private final @Nullable String key;
 
     @JsonProperty("type")
-    private final String type;
+    private final @Nullable String type;
 
     @JsonProperty("fallback_value")
-    private final Object fallbackValue;
+    private final @Nullable Object fallbackValue;
 
     /**
      * Constructs a CreateContactPropertyOptions object using the provided builder.
@@ -32,7 +33,7 @@ public class CreateContactPropertyOptions {
      *
      * @return The key of the contact property.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -41,7 +42,7 @@ public class CreateContactPropertyOptions {
      *
      * @return The type of the contact property.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -50,7 +51,7 @@ public class CreateContactPropertyOptions {
      *
      * @return The fallback value of the contact property.
      */
-    public Object getFallbackValue() {
+    public @Nullable Object getFallbackValue() {
         return fallbackValue;
     }
 
@@ -73,9 +74,9 @@ public class CreateContactPropertyOptions {
         public Builder() {
         }
 
-        private String key;
-        private String type;
-        private Object fallbackValue;
+        private @Nullable String key;
+        private @Nullable String type;
+        private @Nullable Object fallbackValue;
 
         /**
          * Set the key of the contact property.

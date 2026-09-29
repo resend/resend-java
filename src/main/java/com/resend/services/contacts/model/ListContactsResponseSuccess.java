@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListContactsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("data")
-    private List<Contact> data;
+    private @Nullable List<Contact> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -30,7 +31,7 @@ public class ListContactsResponseSuccess {
      * @param data The list of contacts.
      * @param object The object of the list contacts.
      */
-    public ListContactsResponseSuccess(final List<Contact> data, final String object) {
+    public ListContactsResponseSuccess(final @Nullable List<Contact> data, final @Nullable String object) {
         this.data = data;
         this.object = object;
         this.hasMore = hasMore;
@@ -41,7 +42,7 @@ public class ListContactsResponseSuccess {
      *
      * @return The list of contacts.
      */
-    public List<Contact> getData() {
+    public @Nullable List<Contact> getData() {
         return data;
     }
 
@@ -50,7 +51,7 @@ public class ListContactsResponseSuccess {
      *
      * @return The list of contacts object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -59,7 +60,7 @@ public class ListContactsResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 }

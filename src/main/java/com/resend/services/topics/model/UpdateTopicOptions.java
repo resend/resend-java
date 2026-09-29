@@ -1,6 +1,7 @@
 package com.resend.services.topics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update a topic.
@@ -11,13 +12,13 @@ public class UpdateTopicOptions {
      * The topic name.
      */
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * The topic description.
      */
     @JsonProperty("description")
-    private final String description;
+    private final @Nullable String description;
 
     /**
      * Private constructor used by the Builder.
@@ -34,7 +35,7 @@ public class UpdateTopicOptions {
      *
      * @return The topic name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -43,7 +44,7 @@ public class UpdateTopicOptions {
      *
      * @return The topic description.
      */
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 
@@ -66,8 +67,8 @@ public class UpdateTopicOptions {
         public Builder() {
         }
 
-        private String name;
-        private String description;
+        private @Nullable String name;
+        private @Nullable String description;
 
         /**
          * Set the topic name.

@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the successful response from adding a contact to a segment.
@@ -17,14 +18,14 @@ public class AddContactToSegmentResponseSuccess {
      * The segment ID.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Gets the segment ID.
      *
      * @return The segment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -33,7 +34,7 @@ public class AddContactToSegmentResponseSuccess {
      *
      * @param id The segment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 }

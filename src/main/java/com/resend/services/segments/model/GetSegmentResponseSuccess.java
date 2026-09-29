@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for retrieving a segment.
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GetSegmentResponseSuccess extends Segment {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -26,7 +27,7 @@ public class GetSegmentResponseSuccess extends Segment {
      * @param created_at The creation timestamp of the segment.
      * @param object    Additional information about the segment.
      */
-    public GetSegmentResponseSuccess(final String id, final String name, final String created_at, final String object) {
+    public GetSegmentResponseSuccess(final @Nullable String id, final @Nullable String name, final @Nullable String created_at, final @Nullable String object) {
         super(id, name, created_at);
         this.object = object;
     }
@@ -36,7 +37,7 @@ public class GetSegmentResponseSuccess extends Segment {
      *
      * @return The additional information about the segment.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

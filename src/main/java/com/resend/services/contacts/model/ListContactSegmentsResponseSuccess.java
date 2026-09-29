@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -13,19 +14,19 @@ public class ListContactSegmentsResponseSuccess {
      * The object type.
      */
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * The list of segments.
      */
     @JsonProperty("data")
-    private List<ContactSegment> data;
+    private @Nullable List<ContactSegment> data;
 
     /**
      * Indicates whether there are more segments to retrieve.
      */
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor.
@@ -40,7 +41,7 @@ public class ListContactSegmentsResponseSuccess {
      * @param data    The list of segments.
      * @param hasMore Whether there are more segments to retrieve.
      */
-    public ListContactSegmentsResponseSuccess(String object, List<ContactSegment> data, Boolean hasMore) {
+    public ListContactSegmentsResponseSuccess(@Nullable String object, @Nullable List<ContactSegment> data, @Nullable Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;
@@ -51,7 +52,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -60,7 +61,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -69,7 +70,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @return The list of segments.
      */
-    public List<ContactSegment> getData() {
+    public @Nullable List<ContactSegment> getData() {
         return data;
     }
 
@@ -78,7 +79,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @param data The list of segments.
      */
-    public void setData(List<ContactSegment> data) {
+    public void setData(@Nullable List<ContactSegment> data) {
         this.data = data;
     }
 
@@ -87,7 +88,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @return True if there are more segments, false otherwise.
      */
-    public Boolean getHasMore() {
+    public @Nullable Boolean getHasMore() {
         return hasMore;
     }
 
@@ -96,7 +97,7 @@ public class ListContactSegmentsResponseSuccess {
      *
      * @param hasMore True if there are more segments, false otherwise.
      */
-    public void setHasMore(Boolean hasMore) {
+    public void setHasMore(@Nullable Boolean hasMore) {
         this.hasMore = hasMore;
     }
 }

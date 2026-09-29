@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a segment that a contact belongs to.
@@ -11,19 +12,19 @@ public class ContactSegment {
      * The segment ID.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * The segment name.
      */
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     /**
      * The segment creation timestamp.
      */
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor.
@@ -38,7 +39,7 @@ public class ContactSegment {
      * @param name      The segment name.
      * @param createdAt The segment creation timestamp.
      */
-    public ContactSegment(String id, String name, String createdAt) {
+    public ContactSegment(@Nullable String id, @Nullable String name, @Nullable String createdAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -49,7 +50,7 @@ public class ContactSegment {
      *
      * @return The segment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -58,7 +59,7 @@ public class ContactSegment {
      *
      * @param id The segment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -67,7 +68,7 @@ public class ContactSegment {
      *
      * @return The segment name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -76,7 +77,7 @@ public class ContactSegment {
      *
      * @param name The segment name.
      */
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
@@ -85,7 +86,7 @@ public class ContactSegment {
      *
      * @return The segment creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -94,7 +95,7 @@ public class ContactSegment {
      *
      * @param createdAt The segment creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the per-status row counts for a contact import.
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactImportCounts {
 
     @JsonProperty("total")
-    private Integer total;
+    private @Nullable Integer total;
 
     @JsonProperty("created")
-    private Integer created;
+    private @Nullable Integer created;
 
     @JsonProperty("updated")
-    private Integer updated;
+    private @Nullable Integer updated;
 
     @JsonProperty("skipped")
-    private Integer skipped;
+    private @Nullable Integer skipped;
 
     @JsonProperty("failed")
-    private Integer failed;
+    private @Nullable Integer failed;
 
     /**
      * Default constructor.
@@ -37,7 +38,7 @@ public class ContactImportCounts {
      * @param skipped The number of contacts skipped.
      * @param failed  The number of contacts that failed to import.
      */
-    public ContactImportCounts(final Integer total, final Integer created, final Integer updated, final Integer skipped, final Integer failed) {
+    public ContactImportCounts(final @Nullable Integer total, final @Nullable Integer created, final @Nullable Integer updated, final @Nullable Integer skipped, final @Nullable Integer failed) {
         this.total = total;
         this.created = created;
         this.updated = updated;
@@ -50,7 +51,7 @@ public class ContactImportCounts {
      *
      * @return The total row count.
      */
-    public Integer getTotal() {
+    public @Nullable Integer getTotal() {
         return total;
     }
 
@@ -59,7 +60,7 @@ public class ContactImportCounts {
      *
      * @return The created count.
      */
-    public Integer getCreated() {
+    public @Nullable Integer getCreated() {
         return created;
     }
 
@@ -68,7 +69,7 @@ public class ContactImportCounts {
      *
      * @return The updated count.
      */
-    public Integer getUpdated() {
+    public @Nullable Integer getUpdated() {
         return updated;
     }
 
@@ -77,7 +78,7 @@ public class ContactImportCounts {
      *
      * @return The skipped count.
      */
-    public Integer getSkipped() {
+    public @Nullable Integer getSkipped() {
         return skipped;
     }
 
@@ -86,7 +87,7 @@ public class ContactImportCounts {
      *
      * @return The failed count.
      */
-    public Integer getFailed() {
+    public @Nullable Integer getFailed() {
         return failed;
     }
 }

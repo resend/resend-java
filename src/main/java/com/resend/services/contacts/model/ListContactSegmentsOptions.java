@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the options for listing segments a contact belongs to.
@@ -11,13 +12,13 @@ public class ListContactSegmentsOptions {
      * The contact ID (either id or email must be provided, but not both).
      */
     @JsonIgnore
-    private String id;
+    private @Nullable String id;
 
     /**
      * The contact email address (either id or email must be provided, but not both).
      */
     @JsonIgnore
-    private String email;
+    private @Nullable String email;
 
     /**
      * Constructs a new ListContactSegmentsOptions using the builder.
@@ -34,7 +35,7 @@ public class ListContactSegmentsOptions {
      *
      * @return The contact ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -43,7 +44,7 @@ public class ListContactSegmentsOptions {
      *
      * @return The contact email.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -66,8 +67,8 @@ public class ListContactSegmentsOptions {
         public Builder() {
         }
 
-        private String id;
-        private String email;
+        private @Nullable String id;
+        private @Nullable String email;
 
         /**
          * Sets the contact ID.

@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update a segment.
@@ -11,7 +12,7 @@ public class UpdateSegmentOptions {
      * The segment name.
      */
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * Private constructor used by the Builder.
@@ -27,7 +28,7 @@ public class UpdateSegmentOptions {
      *
      * @return The segment name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -50,7 +51,7 @@ public class UpdateSegmentOptions {
         public Builder() {
         }
 
-        private String name;
+        private @Nullable String name;
 
         /**
          * Set the segment name.

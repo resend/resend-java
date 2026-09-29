@@ -1,5 +1,8 @@
 package com.resend.services.contacts.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Options for listing contacts, optionally scoped to a segment.
  *
@@ -10,13 +13,13 @@ package com.resend.services.contacts.model;
  */
 public class ListContactsOptions {
 
-    private final String segmentId;
+    private final @Nullable String segmentId;
 
     /**
      * @deprecated Use {@link #segmentId} instead. Kept for backward compatibility.
      */
     @Deprecated
-    private final String audienceId;
+    private final @Nullable String audienceId;
 
     private ListContactsOptions(Builder builder) {
         this.segmentId = builder.segmentId;
@@ -28,7 +31,7 @@ public class ListContactsOptions {
      *
      * @return The resolved segment/audience ID, or {@code null} if neither is set.
      */
-    public String resolvedSegmentId() {
+    public @Nullable String resolvedSegmentId() {
         return segmentId != null ? segmentId : audienceId;
     }
 
@@ -37,7 +40,7 @@ public class ListContactsOptions {
      *
      * @return The segment ID.
      */
-    public String getSegmentId() {
+    public @Nullable String getSegmentId() {
         return segmentId;
     }
 
@@ -48,7 +51,7 @@ public class ListContactsOptions {
      * @deprecated Use {@link #getSegmentId()} instead.
      */
     @Deprecated
-    public String getAudienceId() {
+    public @Nullable String getAudienceId() {
         return audienceId;
     }
 
@@ -71,8 +74,8 @@ public class ListContactsOptions {
         public Builder() {
         }
 
-        private String segmentId;
-        private String audienceId;
+        private @Nullable String segmentId;
+        private @Nullable String audienceId;
 
         /**
          * Sets the segment ID to scope the contact list.

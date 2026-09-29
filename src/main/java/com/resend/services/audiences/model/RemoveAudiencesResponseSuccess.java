@@ -1,6 +1,7 @@
 package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for removing an audience.
@@ -8,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RemoveAudiencesResponseSuccess {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("deleted")
     private boolean deleted;
@@ -28,7 +29,7 @@ public class RemoveAudiencesResponseSuccess {
      * @param object The Object of the removed audience.
      * @param deleted The boolean indicating if the data was deleted.
      */
-    public RemoveAudiencesResponseSuccess(final String id, final String object, final boolean deleted) {
+    public RemoveAudiencesResponseSuccess(final @Nullable String id, final @Nullable String object, final boolean deleted) {
         this.id = id;
         this.object = object;
         this.deleted = deleted;
@@ -39,7 +40,7 @@ public class RemoveAudiencesResponseSuccess {
      *
      * @return The ID of the removed audience.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -48,7 +49,7 @@ public class RemoveAudiencesResponseSuccess {
      *
      * @return The Object of the removed audience.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 

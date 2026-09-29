@@ -1,6 +1,7 @@
 package com.resend.services.contactproperties.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update a contact property.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateContactPropertyOptions {
 
     @JsonProperty("id")
-    private final String id;
+    private final @Nullable String id;
 
     @JsonProperty("fallback_value")
-    private final Object fallbackValue;
+    private final @Nullable Object fallbackValue;
 
     /**
      * Constructs an UpdateContactPropertyOptions object using the provided builder.
@@ -28,7 +29,7 @@ public class UpdateContactPropertyOptions {
      *
      * @return The ID of the contact property.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -37,7 +38,7 @@ public class UpdateContactPropertyOptions {
      *
      * @return The fallback value of the contact property.
      */
-    public Object getFallbackValue() {
+    public @Nullable Object getFallbackValue() {
         return fallbackValue;
     }
 
@@ -60,8 +61,8 @@ public class UpdateContactPropertyOptions {
         public Builder() {
         }
 
-        private String id;
-        private Object fallbackValue;
+        private @Nullable String id;
+        private @Nullable Object fallbackValue;
 
         /**
          * Set the ID of the contact property.

@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListContactImportsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<ContactImport> data;
+    private @Nullable List<ContactImport> data;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class ListContactImportsResponseSuccess {
      * @param hasMore Whether there are more items available for pagination.
      * @param data    The list of contact imports.
      */
-    public ListContactImportsResponseSuccess(final String object, final Boolean hasMore, final List<ContactImport> data) {
+    public ListContactImportsResponseSuccess(final @Nullable String object, final @Nullable Boolean hasMore, final @Nullable List<ContactImport> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,7 +43,7 @@ public class ListContactImportsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListContactImportsResponseSuccess {
      *
      * @return {@code true} if more items are available, otherwise {@code false}.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -60,7 +61,7 @@ public class ListContactImportsResponseSuccess {
      *
      * @return The list of contact imports.
      */
-    public List<ContactImport> getData() {
+    public @Nullable List<ContactImport> getData() {
         return data;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a topic subscription to apply to all contacts in an import.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactImportTopicSubscription {
 
     @JsonProperty("id")
-    private final String id;
+    private final @Nullable String id;
 
     @JsonProperty("subscription")
-    private final String subscription;
+    private final @Nullable String subscription;
 
     /**
      * Constructs a ContactImportTopicSubscription with the provided values.
@@ -20,8 +21,8 @@ public class ContactImportTopicSubscription {
      * @param subscription The subscription status ({@code "opt_in"} or {@code "opt_out"}).
      */
     public ContactImportTopicSubscription(
-            @JsonProperty("id") final String id,
-            @JsonProperty("subscription") final String subscription) {
+            @JsonProperty("id") final @Nullable String id,
+            @JsonProperty("subscription") final @Nullable String subscription) {
         this.id = id;
         this.subscription = subscription;
     }
@@ -31,7 +32,7 @@ public class ContactImportTopicSubscription {
      *
      * @return The Topic UUID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -40,7 +41,7 @@ public class ContactImportTopicSubscription {
      *
      * @return The subscription status ({@code "opt_in"} or {@code "opt_out"}).
      */
-    public String getSubscription() {
+    public @Nullable String getSubscription() {
         return subscription;
     }
 
@@ -63,8 +64,8 @@ public class ContactImportTopicSubscription {
         public Builder() {
         }
 
-        private String id;
-        private String subscription;
+        private @Nullable String id;
+        private @Nullable String subscription;
 
         /**
          * Sets the Topic UUID.

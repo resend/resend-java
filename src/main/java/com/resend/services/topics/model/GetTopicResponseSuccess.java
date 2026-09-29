@@ -1,5 +1,8 @@
 package com.resend.services.topics.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a successful response when getting a single topic.
  */
@@ -21,7 +24,7 @@ public class GetTopicResponseSuccess extends AbstractTopic {
      * @param defaultSubscription The default subscription preference.
      * @param createdAt The creation timestamp.
      */
-    public GetTopicResponseSuccess(String id, String name, String description, String defaultSubscription, String createdAt) {
+    public GetTopicResponseSuccess(@Nullable String id, @Nullable String name, @Nullable String description, @Nullable String defaultSubscription, @Nullable String createdAt) {
         super(id, name, description, defaultSubscription, createdAt);
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.audiences.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an audience.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Audience extends BaseAudience {
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor
@@ -24,7 +25,7 @@ public class Audience extends BaseAudience {
      * @param id          The ID of the audience.
      * @param name        The name of the audience.
      */
-    public Audience(final String id, final String name, final String createdAt) {
+    public Audience(final @Nullable String id, final @Nullable String name, final @Nullable String createdAt) {
         super(id, name);
         this.createdAt = createdAt;
     }
@@ -34,7 +35,7 @@ public class Audience extends BaseAudience {
      *
      * @return The creation timestamp of the audience.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.topics.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Abstract base class representing common topic attributes.
@@ -12,31 +13,31 @@ public abstract class AbstractTopic {
      * The unique identifier of the topic.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * The name of the topic.
      */
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     /**
      * The description of the topic.
      */
     @JsonProperty("description")
-    private String description;
+    private @Nullable String description;
 
     /**
      * The default subscription preference for new contacts.
      */
     @JsonProperty("default_subscription")
-    private String defaultSubscription;
+    private @Nullable String defaultSubscription;
 
     /**
      * The creation timestamp of the topic.
      */
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor for creating an empty AbstractTopic object.
@@ -53,7 +54,7 @@ public abstract class AbstractTopic {
      * @param defaultSubscription The default subscription preference.
      * @param createdAt The creation timestamp.
      */
-    public AbstractTopic(String id, String name, String description, String defaultSubscription, String createdAt) {
+    public AbstractTopic(@Nullable String id, @Nullable String name, @Nullable String description, @Nullable String defaultSubscription, @Nullable String createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,7 +67,7 @@ public abstract class AbstractTopic {
      *
      * @return The topic ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -75,7 +76,7 @@ public abstract class AbstractTopic {
      *
      * @param id The topic ID to set.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -84,7 +85,7 @@ public abstract class AbstractTopic {
      *
      * @return The topic name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -93,7 +94,7 @@ public abstract class AbstractTopic {
      *
      * @param name The topic name to set.
      */
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
@@ -102,7 +103,7 @@ public abstract class AbstractTopic {
      *
      * @return The topic description.
      */
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 
@@ -111,7 +112,7 @@ public abstract class AbstractTopic {
      *
      * @param description The topic description to set.
      */
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
 
@@ -120,7 +121,7 @@ public abstract class AbstractTopic {
      *
      * @return The default subscription preference.
      */
-    public String getDefaultSubscription() {
+    public @Nullable String getDefaultSubscription() {
         return defaultSubscription;
     }
 
@@ -129,7 +130,7 @@ public abstract class AbstractTopic {
      *
      * @param defaultSubscription The default subscription preference to set.
      */
-    public void setDefaultSubscription(String defaultSubscription) {
+    public void setDefaultSubscription(@Nullable String defaultSubscription) {
         this.defaultSubscription = defaultSubscription;
     }
 
@@ -138,7 +139,7 @@ public abstract class AbstractTopic {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -147,7 +148,7 @@ public abstract class AbstractTopic {
      *
      * @param createdAt The creation timestamp to set.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 }

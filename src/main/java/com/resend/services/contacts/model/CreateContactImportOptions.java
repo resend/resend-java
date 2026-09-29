@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jspecify.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,25 +32,25 @@ public class CreateContactImportOptions {
     public static final int MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024;
 
     @JsonIgnore
-    private final File file;
+    private final @Nullable File file;
 
     @JsonIgnore
-    private final byte[] fileBytes;
+    private final byte @Nullable [] fileBytes;
 
     @JsonIgnore
-    private final String fileName;
+    private final @Nullable String fileName;
 
     @JsonIgnore
-    private final ContactImportColumnMap columnMap;
+    private final @Nullable ContactImportColumnMap columnMap;
 
     @JsonIgnore
-    private final String onConflict;
+    private final @Nullable String onConflict;
 
     @JsonIgnore
-    private final List<ContactImportSegmentReference> segments;
+    private final @Nullable List<ContactImportSegmentReference> segments;
 
     @JsonIgnore
-    private final List<ContactImportTopicSubscription> topics;
+    private final @Nullable List<ContactImportTopicSubscription> topics;
 
     /**
      * Constructs a CreateContactImportOptions object using the provided builder.
@@ -71,7 +72,7 @@ public class CreateContactImportOptions {
      *
      * @return The CSV file, or {@code null} if the file was supplied as bytes / stream.
      */
-    public File getFile() {
+    public @Nullable File getFile() {
         return file;
     }
 
@@ -80,7 +81,7 @@ public class CreateContactImportOptions {
      *
      * @return The file bytes, or {@code null} if the file was supplied as a {@link File}.
      */
-    public byte[] getFileBytes() {
+    public byte @Nullable [] getFileBytes() {
         return fileBytes == null ? null : fileBytes.clone();
     }
 
@@ -91,7 +92,7 @@ public class CreateContactImportOptions {
      *
      * @return The file name.
      */
-    public String getFileName() {
+    public @Nullable String getFileName() {
         if (fileName != null) {
             return fileName;
         }
@@ -103,7 +104,7 @@ public class CreateContactImportOptions {
      *
      * @return The column map, or {@code null} if none.
      */
-    public ContactImportColumnMap getColumnMap() {
+    public @Nullable ContactImportColumnMap getColumnMap() {
         return columnMap;
     }
 
@@ -112,7 +113,7 @@ public class CreateContactImportOptions {
      *
      * @return The conflict-handling strategy, or {@code null} if defaulted by the API.
      */
-    public String getOnConflict() {
+    public @Nullable String getOnConflict() {
         return onConflict;
     }
 
@@ -121,7 +122,7 @@ public class CreateContactImportOptions {
      *
      * @return The list of segment references, or {@code null} if none.
      */
-    public List<ContactImportSegmentReference> getSegments() {
+    public @Nullable List<ContactImportSegmentReference> getSegments() {
         return segments;
     }
 
@@ -130,7 +131,7 @@ public class CreateContactImportOptions {
      *
      * @return The list of topic subscriptions, or {@code null} if none.
      */
-    public List<ContactImportTopicSubscription> getTopics() {
+    public @Nullable List<ContactImportTopicSubscription> getTopics() {
         return topics;
     }
 
@@ -153,13 +154,13 @@ public class CreateContactImportOptions {
         public Builder() {
         }
 
-        private File file;
-        private byte[] fileBytes;
-        private String fileName;
-        private ContactImportColumnMap columnMap;
-        private String onConflict;
-        private List<ContactImportSegmentReference> segments;
-        private List<ContactImportTopicSubscription> topics;
+        private @Nullable File file;
+        private byte @Nullable [] fileBytes;
+        private @Nullable String fileName;
+        private @Nullable ContactImportColumnMap columnMap;
+        private @Nullable String onConflict;
+        private @Nullable List<ContactImportSegmentReference> segments;
+        private @Nullable List<ContactImportTopicSubscription> topics;
 
         /**
          * Sets the CSV file to import. Maximum size 50MB.
@@ -167,7 +168,7 @@ public class CreateContactImportOptions {
          * @param file The CSV file on disk.
          * @return The builder instance.
          */
-        public Builder file(File file) {
+        public Builder file(@Nullable File file) {
             if (file != null && file.exists()) {
                 ensureUnderMaxSize(file.length());
             }
@@ -184,7 +185,7 @@ public class CreateContactImportOptions {
          * @param fileName  The file name to use for the multipart part (e.g. {@code "contacts.csv"}).
          * @return The builder instance.
          */
-        public Builder file(byte[] fileBytes, String fileName) {
+        public Builder file(byte @Nullable [] fileBytes, String fileName) {
             if (fileBytes != null) {
                 ensureUnderMaxSize(fileBytes.length);
             }

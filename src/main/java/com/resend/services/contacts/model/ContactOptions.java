@@ -2,6 +2,7 @@ package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Common superclass for contact options.
@@ -16,7 +17,7 @@ public abstract class ContactOptions {
      * The id of the contact options
      */
     @JsonProperty("id")
-    protected final String id;
+    protected final @Nullable String id;
 
     /**
      * The audience_id of the contact options
@@ -24,7 +25,7 @@ public abstract class ContactOptions {
      */
     @Deprecated
     @JsonProperty("audience_id")
-    protected final String audienceId;
+    protected final @Nullable String audienceId;
 
     /**
      * The segment_id of the contact options
@@ -32,13 +33,13 @@ public abstract class ContactOptions {
      */
     @Deprecated
     @JsonProperty("segment_id")
-    protected final String segmentId;
+    protected final @Nullable String segmentId;
 
     /**
      * The email of the contact options
      */
     @JsonProperty("email")
-    protected final String email;
+    protected final @Nullable String email;
 
     /**
      * Constructs a ContactOptions object using the provided builder.
@@ -57,7 +58,7 @@ public abstract class ContactOptions {
      *
      * @return The id of the ContactOptions.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -68,7 +69,7 @@ public abstract class ContactOptions {
      * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
     @Deprecated
-    public String getAudienceId() {
+    public @Nullable String getAudienceId() {
         return audienceId;
     }
 
@@ -79,7 +80,7 @@ public abstract class ContactOptions {
      * @deprecated This field is ignored. Use ContactSegments service for segment operations.
      */
     @Deprecated
-    public String getSegmentId() {
+    public @Nullable String getSegmentId() {
         return segmentId;
     }
 
@@ -88,7 +89,7 @@ public abstract class ContactOptions {
      *
      * @return The email of the ContactOptions.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -109,24 +110,24 @@ public abstract class ContactOptions {
         /**
          * The id of the contact options builder
          */
-        protected String id;
+        protected @Nullable String id;
 
         /**
          * The audienceId of the contact options builder
          * @deprecated Use {@link #segmentId} instead.
          */
         @Deprecated
-        protected String audienceId;
+        protected @Nullable String audienceId;
 
         /**
          * The segmentId of the contact options builder
          */
-        protected String segmentId;
+        protected @Nullable String segmentId;
 
         /**
          * The email of the contact options builder
          */
-        protected String email;
+        protected @Nullable String email;
 
         /**
          * Set the id of the ContactOptions.

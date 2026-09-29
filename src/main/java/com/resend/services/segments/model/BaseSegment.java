@@ -1,16 +1,17 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a segment.
  */
 public abstract class BaseSegment {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public abstract class BaseSegment {
      * @param id          The ID of the segment.
      * @param name        The name of the segment.
      */
-    public BaseSegment(final String id, final String name) {
+    public BaseSegment(final @Nullable String id, final @Nullable String name) {
         this.id = id;
         this.name = name;
     }
@@ -35,7 +36,7 @@ public abstract class BaseSegment {
      *
      * @return The ID of the segment.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public abstract class BaseSegment {
      *
      * @return The name of the segment.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 }

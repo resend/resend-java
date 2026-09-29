@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a contact import record.
@@ -8,22 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactImport {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("completed_at")
-    private String completedAt;
+    private @Nullable String completedAt;
 
     @JsonProperty("counts")
-    private ContactImportCounts counts;
+    private @Nullable ContactImportCounts counts;
 
     /**
      * Default constructor.
@@ -41,7 +42,7 @@ public class ContactImport {
      * @param completedAt The completion timestamp, or {@code null} if not yet completed.
      * @param counts      The per-status row counts.
      */
-    public ContactImport(final String object, final String id, final String status, final String createdAt, final String completedAt, final ContactImportCounts counts) {
+    public ContactImport(final @Nullable String object, final @Nullable String id, final @Nullable String status, final @Nullable String createdAt, final @Nullable String completedAt, final @Nullable ContactImportCounts counts) {
         this.object = object;
         this.id = id;
         this.status = status;
@@ -55,7 +56,7 @@ public class ContactImport {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -64,7 +65,7 @@ public class ContactImport {
      *
      * @return The contact import ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -73,7 +74,7 @@ public class ContactImport {
      *
      * @return The status ({@code queued}, {@code in_progress}, {@code completed}, or {@code failed}).
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -82,7 +83,7 @@ public class ContactImport {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -91,7 +92,7 @@ public class ContactImport {
      *
      * @return The completion timestamp, or {@code null} if the import is not yet completed.
      */
-    public String getCompletedAt() {
+    public @Nullable String getCompletedAt() {
         return completedAt;
     }
 
@@ -100,7 +101,7 @@ public class ContactImport {
      *
      * @return The row counts.
      */
-    public ContactImportCounts getCounts() {
+    public @Nullable ContactImportCounts getCounts() {
         return counts;
     }
 }

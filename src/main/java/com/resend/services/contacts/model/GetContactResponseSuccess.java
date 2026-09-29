@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -11,10 +12,10 @@ import java.util.Map;
 public class GetContactResponseSuccess extends Contact {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("properties")
-    private Map<String, ContactPropertyValue> properties;
+    private @Nullable Map<String, ContactPropertyValue> properties;
 
     /**
      * Default constructor
@@ -34,7 +35,7 @@ public class GetContactResponseSuccess extends Contact {
      * @param createdAt     The creation timestamp of the contact item.
      * @param unsubscribed  The subscription state contact item.
      */
-    public GetContactResponseSuccess(final String object, final String id, final String email, final String firstName, final String lastName, final String createdAt, final boolean unsubscribed) {
+    public GetContactResponseSuccess(final @Nullable String object, final @Nullable String id, final @Nullable String email, final @Nullable String firstName, final @Nullable String lastName, final @Nullable String createdAt, final boolean unsubscribed) {
         super(id, email, firstName, lastName, createdAt, unsubscribed);
         this.object = object;
     }
@@ -44,7 +45,7 @@ public class GetContactResponseSuccess extends Contact {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -53,7 +54,7 @@ public class GetContactResponseSuccess extends Contact {
      *
      * @return The custom properties of the contact.
      */
-    public Map<String, ContactPropertyValue> getProperties() {
+    public @Nullable Map<String, ContactPropertyValue> getProperties() {
         return properties;
     }
 }

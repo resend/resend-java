@@ -1,6 +1,7 @@
 package com.resend.services.segments.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a segment.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Segment extends BaseSegment {
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor
@@ -24,7 +25,7 @@ public class Segment extends BaseSegment {
      * @param id          The ID of the segment.
      * @param name        The name of the segment.
      */
-    public Segment(final String id, final String name, final String createdAt) {
+    public Segment(final @Nullable String id, final @Nullable String name, final @Nullable String createdAt) {
         super(id, name);
         this.createdAt = createdAt;
     }
@@ -34,7 +35,7 @@ public class Segment extends BaseSegment {
      *
      * @return The creation timestamp of the segment.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 }

@@ -1,5 +1,8 @@
 package com.resend.services.contacts.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a UpdateContactResponseSuccess class.
  */
@@ -17,7 +20,7 @@ public class UpdateContactResponseSuccess extends BaseContact {
      * @param id        The ID of the contact.
      * @param object      The object of the contact.
      */
-    public UpdateContactResponseSuccess(final String id, final String object) {
+    public UpdateContactResponseSuccess(final @Nullable String id, final @Nullable String object) {
         super(id, object);
     }
 

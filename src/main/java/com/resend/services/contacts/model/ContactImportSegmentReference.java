@@ -1,6 +1,7 @@
 package com.resend.services.contacts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a reference to a segment that imported contacts should be added to.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ContactImportSegmentReference {
 
     @JsonProperty("id")
-    private final String id;
+    private final @Nullable String id;
 
     /**
      * Constructs a ContactImportSegmentReference object using the provided builder.
@@ -24,7 +25,7 @@ public class ContactImportSegmentReference {
      *
      * @param id The segment UUID.
      */
-    public ContactImportSegmentReference(@JsonProperty("id") final String id) {
+    public ContactImportSegmentReference(@JsonProperty("id") final @Nullable String id) {
         this.id = id;
     }
 
@@ -33,7 +34,7 @@ public class ContactImportSegmentReference {
      *
      * @return The segment UUID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -56,7 +57,7 @@ public class ContactImportSegmentReference {
         public Builder() {
         }
 
-        private String id;
+        private @Nullable String id;
 
         /**
          * Sets the segment UUID.

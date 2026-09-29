@@ -116,4 +116,18 @@ Resend resend = Resend.builder()
 
 A custom `httpClient` can't be combined with `baseUrl`, the timeouts or `proxy`; configure those on your client.
 
+## Nullability
+
+The SDK is annotated with [JSpecify](https://jspecify.dev) (`@NullMarked` / `@Nullable`), so Kotlin and null checkers
+see precise types:
+
+- Service methods never return `null`: they return a response or throw `ResendException`.
+- Response fields are nullable, because the API may omit them.
+- Required parameters are non-null; optional ones (such as list parameters and `RequestOptions`) accept `null`.
+
+```kotlin
+val response = resend.emails().send(options)  // CreateEmailResponse
+val id: String? = response.id                 // String?
+```
+
 You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-example)

@@ -41,16 +41,7 @@ public final class ApiKeys extends BaseService {
      */
     public CreateApiKeyResponse create(CreateApiKeyOptions createApiKeyOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createApiKeyOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/api-keys", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        CreateApiKeyResponse createApiKeyResponseResponse = resendMapper.readValue(responseBody, CreateApiKeyResponse.class);
-
-        return createApiKeyResponseResponse;
+        return execute("/api-keys", HttpMethod.POST, payload, MediaType.get("application/json"), CreateApiKeyResponse.class);
     }
 
     /**
@@ -60,16 +51,7 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api keys list retrieval process.
      */
     public ListApiKeysResponse list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/api-keys", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        ListApiKeysResponse listApiKeysResponse = resendMapper.readValue(responseBody, ListApiKeysResponse.class);
-        return listApiKeysResponse;
+        return execute("/api-keys", HttpMethod.GET, null, MediaType.get("application/json"), ListApiKeysResponse.class);
     }
 
     /**
@@ -81,16 +63,7 @@ public final class ApiKeys extends BaseService {
      */
     public ListApiKeysResponse list(ListParams params) throws ResendException {
         String pathWithQuery = "/api-keys" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        ListApiKeysResponse listApiKeysResponse = resendMapper.readValue(responseBody, ListApiKeysResponse.class);
-        return listApiKeysResponse;
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListApiKeysResponse.class);
     }
 
     /**
@@ -103,14 +76,7 @@ public final class ApiKeys extends BaseService {
      */
     public UpdateApiKeyResponseSuccess update(String apiKeyId, UpdateApiKeyOptions updateApiKeyOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateApiKeyOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/api-keys/" + apiKeyId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateApiKeyResponseSuccess.class);
+        return execute("/api-keys/" + apiKeyId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateApiKeyResponseSuccess.class);
     }
 
     /**

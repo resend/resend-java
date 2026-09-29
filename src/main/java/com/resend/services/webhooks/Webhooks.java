@@ -2,7 +2,6 @@ package com.resend.services.webhooks;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -55,14 +54,7 @@ public final class Webhooks extends BaseService {
      */
     public CreateWebhookResponseSuccess create(CreateWebhookOptions createWebhookOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createWebhookOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateWebhookResponseSuccess.class);
+        return execute("/webhooks", HttpMethod.POST, payload, MediaType.get("application/json"), CreateWebhookResponseSuccess.class);
     }
 
     /**
@@ -75,14 +67,7 @@ public final class Webhooks extends BaseService {
      */
     public UpdateWebhookResponseSuccess update(String webhookId, UpdateWebhookOptions updateWebhookOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateWebhookOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateWebhookResponseSuccess.class);
+        return execute("/webhooks/" + webhookId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateWebhookResponseSuccess.class);
     }
 
     /**
@@ -93,14 +78,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook retrieval process.
      */
     public GetWebhookResponseSuccess get(String webhookId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, GetWebhookResponseSuccess.class);
+        return execute("/webhooks/" + webhookId, HttpMethod.GET, null, MediaType.get("application/json"), GetWebhookResponseSuccess.class);
     }
 
     /**
@@ -110,14 +88,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook list retrieval process.
      */
     public ListWebhooksResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/webhooks", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListWebhooksResponseSuccess.class);
+        return execute("/webhooks", HttpMethod.GET, null, MediaType.get("application/json"), ListWebhooksResponseSuccess.class);
     }
 
     /**
@@ -129,14 +100,7 @@ public final class Webhooks extends BaseService {
      */
     public ListWebhooksResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/webhooks" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListWebhooksResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhooksResponseSuccess.class);
     }
 
     /**
@@ -160,13 +124,7 @@ public final class Webhooks extends BaseService {
      */
     public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListWebhookEventsResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventsResponseSuccess.class);
     }
 
     /**
@@ -178,13 +136,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the event.
      */
     public GetWebhookEventResponseSuccess getEvent(String webhookId, String eventId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), GetWebhookEventResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events/" + eventId, HttpMethod.GET, null, MediaType.get("application/json"), GetWebhookEventResponseSuccess.class);
     }
 
     /**
@@ -196,13 +148,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while replaying the event.
      */
     public ReplayWebhookEventResponseSuccess replayEvent(String webhookId, String eventId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId + "/replay", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ReplayWebhookEventResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/replay", HttpMethod.POST, "", MediaType.get("application/json"), ReplayWebhookEventResponseSuccess.class);
     }
 
     /**
@@ -213,13 +159,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while rotating the signing secret.
      */
     public RotateWebhookSigningSecretResponseSuccess rotateSigningSecret(String webhookId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/signing-secret/rotate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), RotateWebhookSigningSecretResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/signing-secret/rotate", HttpMethod.POST, "", MediaType.get("application/json"), RotateWebhookSigningSecretResponseSuccess.class);
     }
 
     /**
@@ -245,13 +185,7 @@ public final class Webhooks extends BaseService {
      */
     public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), ListWebhookEventAttemptsResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventAttemptsResponseSuccess.class);
     }
 
     /**
@@ -262,14 +196,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook deletion process.
      */
     public RemoveWebhookResponseSuccess remove(String webhookId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/webhooks/" + webhookId, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, RemoveWebhookResponseSuccess.class);
+        return execute("/webhooks/" + webhookId, HttpMethod.DELETE, "", null, RemoveWebhookResponseSuccess.class);
     }
 
     /**

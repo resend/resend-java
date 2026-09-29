@@ -1,7 +1,6 @@
 package com.resend.services.batch;
 
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.RequestOptions;
@@ -40,15 +39,7 @@ public class Batch extends BaseService {
     public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails) throws ResendException {
 
         String payload = super.resendMapper.writeValue(emails);
-        AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
+        return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), CreateBatchEmailsResponse.class);
     }
 
     /**
@@ -62,15 +53,7 @@ public class Batch extends BaseService {
     public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, RequestOptions requestOptions) throws ResendException {
 
         String payload = super.resendMapper.writeValue(emails);
-        AbstractHttpResponse<String> response = super.httpClient.perform("/emails/batch", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, CreateBatchEmailsResponse.class);
+        return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateBatchEmailsResponse.class);
     }
 
     /**

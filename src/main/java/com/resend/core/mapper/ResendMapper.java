@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jspecify.annotations.Nullable;
 
 import java.io.UncheckedIOException;
 
@@ -49,7 +50,7 @@ public class ResendMapper implements IMapper {
      * @throws UncheckedIOException If the value isn't valid JSON for the specified class.
      */
     @Override
-    public <T> T readValue(String value, Class<T> clazz)  {
+    public <T> @Nullable T readValue(String value, Class<T> clazz)  {
         try {
             return mapper.readValue(value, clazz);
         } catch (JsonProcessingException e) {

@@ -7,6 +7,7 @@ import com.resend.core.net.IHttpClient;
 
 import com.resend.core.net.RequestOptions;
 import okhttp3.*;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,7 +111,7 @@ public class HttpClient implements IHttpClient<String> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse<String> perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
+    public AbstractHttpResponse<String> perform(final String path, final String apiKey, final HttpMethod method, final @Nullable String payload, @Nullable MediaType mediaType) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -144,9 +145,9 @@ public class HttpClient implements IHttpClient<String> {
             final String path,
             final String apiKey,
             final HttpMethod method,
-            final String payload,
-            final MediaType mediaType,
-            final Map<String,String> additionalHeaders) {
+            final @Nullable String payload,
+            final @Nullable MediaType mediaType,
+            final @Nullable Map<String, String> additionalHeaders) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -187,9 +188,9 @@ public class HttpClient implements IHttpClient<String> {
             final String path,
             final String apiKey,
             final HttpMethod method,
-            final String payload,
-            final MediaType mediaType,
-            final RequestOptions requestOptions) {
+            final @Nullable String payload,
+            final @Nullable MediaType mediaType,
+            final @Nullable RequestOptions requestOptions) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -240,7 +241,7 @@ public class HttpClient implements IHttpClient<String> {
             final HttpMethod method,
             final File file,
             final MediaType fileMediaType,
-            final Map<String, String> formFields) {
+            final @Nullable Map<String, String> formFields) {
 
         return performMultipart(path, apiKey, method, file, fileMediaType, formFields, null);
     }
@@ -252,8 +253,8 @@ public class HttpClient implements IHttpClient<String> {
             final HttpMethod method,
             final File file,
             final MediaType fileMediaType,
-            final Map<String, String> formFields,
-            final RequestOptions requestOptions) {
+            final @Nullable Map<String, String> formFields,
+            final @Nullable RequestOptions requestOptions) {
 
         return executeMultipart(path, apiKey, method,
                 RequestBody.create(file, fileMediaType),
@@ -281,9 +282,9 @@ public class HttpClient implements IHttpClient<String> {
             final String apiKey,
             final HttpMethod method,
             final byte[] fileBytes,
-            final String fileName,
+            final @Nullable String fileName,
             final MediaType fileMediaType,
-            final Map<String, String> formFields) {
+            final @Nullable Map<String, String> formFields) {
 
         return performMultipart(path, apiKey, method, fileBytes, fileName, fileMediaType, formFields, null);
     }
@@ -294,10 +295,10 @@ public class HttpClient implements IHttpClient<String> {
             final String apiKey,
             final HttpMethod method,
             final byte[] fileBytes,
-            final String fileName,
+            final @Nullable String fileName,
             final MediaType fileMediaType,
-            final Map<String, String> formFields,
-            final RequestOptions requestOptions) {
+            final @Nullable Map<String, String> formFields,
+            final @Nullable RequestOptions requestOptions) {
 
         return executeMultipart(path, apiKey, method,
                 RequestBody.create(fileBytes, fileMediaType),
@@ -311,9 +312,9 @@ public class HttpClient implements IHttpClient<String> {
             final String apiKey,
             final HttpMethod method,
             final RequestBody fileBody,
-            final String fileName,
-            final Map<String, String> formFields,
-            final RequestOptions requestOptions) {
+            final @Nullable String fileName,
+            final @Nullable Map<String, String> formFields,
+            final @Nullable RequestOptions requestOptions) {
 
         if (method == HttpMethod.GET) {
             throw new IllegalArgumentException(
@@ -361,9 +362,9 @@ public class HttpClient implements IHttpClient<String> {
         }
     }
 
-    private static String normalizeBaseUrl(final String baseUrl) {
+    private static String normalizeBaseUrl(final @Nullable String baseUrl) {
         HttpUrl parsed = baseUrl == null ? null : HttpUrl.parse(baseUrl);
-        if (parsed == null) {
+        if (baseUrl == null || parsed == null) {
             throw new IllegalArgumentException("baseUrl must be a valid http or https URL, got: " + baseUrl);
         }
         // Endpoint paths (which may carry their own query string) are appended to the base URL as-is, so a

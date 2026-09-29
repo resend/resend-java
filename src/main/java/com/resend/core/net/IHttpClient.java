@@ -2,6 +2,7 @@ package com.resend.core.net;
 
 import com.resend.core.exception.ResendException;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 import java.io.File;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface IHttpClient<T> {
      * @param mediaType The media type of the request.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload, final MediaType mediaType);
+    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final @Nullable String payload, final @Nullable MediaType mediaType);
 
     /**
      * Perform an HTTP request with the specified path, method, and payload.
@@ -36,7 +37,7 @@ public interface IHttpClient<T> {
      * @param additionalHeaders A map of header-name → header-value to add.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload, final MediaType mediaType, final Map<String,String> additionalHeaders);
+    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final @Nullable String payload, final @Nullable MediaType mediaType, final @Nullable Map<String, String> additionalHeaders);
 
     /**
      * Perform an HTTP request with the specified path, method, and payload.
@@ -49,7 +50,7 @@ public interface IHttpClient<T> {
      * @param requestOptions The object containing the request options
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final String payload, final MediaType mediaType, final RequestOptions requestOptions);
+    AbstractHttpResponse<T> perform(final String path, final String apiKey, final HttpMethod method, final @Nullable String payload, final @Nullable MediaType mediaType, final @Nullable RequestOptions requestOptions);
 
     /**
      * Perform an HTTP request with a {@code multipart/form-data} body containing a file and
@@ -64,7 +65,7 @@ public interface IHttpClient<T> {
      * @param formFields     A map of additional form field name &rarr; value pairs.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final Map<String, String> formFields);
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final @Nullable Map<String, String> formFields);
 
     /**
      * Perform a multipart HTTP request with support for {@link RequestOptions} (idempotency
@@ -79,7 +80,7 @@ public interface IHttpClient<T> {
      * @param requestOptions The request options (can be null).
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final Map<String, String> formFields, final RequestOptions requestOptions);
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final File file, final MediaType fileMediaType, final @Nullable Map<String, String> formFields, final @Nullable RequestOptions requestOptions);
 
     /**
      * Perform an HTTP request with a {@code multipart/form-data} body, providing the file
@@ -94,7 +95,7 @@ public interface IHttpClient<T> {
      * @param formFields     A map of additional form field name &rarr; value pairs.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final String fileName, final MediaType fileMediaType, final Map<String, String> formFields);
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final @Nullable String fileName, final MediaType fileMediaType, final @Nullable Map<String, String> formFields);
 
     /**
      * Perform a multipart HTTP request using raw bytes, with support for {@link RequestOptions}.
@@ -109,5 +110,5 @@ public interface IHttpClient<T> {
      * @param requestOptions The request options (can be null).
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final String fileName, final MediaType fileMediaType, final Map<String, String> formFields, final RequestOptions requestOptions);
+    AbstractHttpResponse<T> performMultipart(final String path, final String apiKey, final HttpMethod method, final byte[] fileBytes, final @Nullable String fileName, final MediaType fileMediaType, final @Nullable Map<String, String> formFields, final @Nullable RequestOptions requestOptions);
 }

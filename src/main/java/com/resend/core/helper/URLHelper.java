@@ -1,6 +1,7 @@
 package com.resend.core.helper;
 
 import com.resend.core.net.ListParams;
+import org.jspecify.annotations.Nullable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -27,7 +28,7 @@ public class URLHelper {
      * @param params The {@link ListParams} instance (can be null).
      * @return A query string starting with "?" if parameters exist, or an empty string otherwise.
      */
-    public static String parse(ListParams params) {
+    public static String parse(@Nullable ListParams params) {
         return parse(params, Collections.emptyMap());
     }
 
@@ -41,7 +42,7 @@ public class URLHelper {
      * @param extras Additional query parameters to include (can be empty/null).
      * @return A query string starting with "?" if parameters exist, or an empty string otherwise.
      */
-    public static String parse(ListParams params, Map<String, String> extras) {
+    public static String parse(@Nullable ListParams params, @Nullable Map<String, ? extends @Nullable String> extras) {
         Map<String, String> queryParams = new LinkedHashMap<>();
 
         if (params != null) {
@@ -57,7 +58,7 @@ public class URLHelper {
         }
 
         if (extras != null) {
-            for (Map.Entry<String, String> entry : extras.entrySet()) {
+            for (Map.Entry<String, ? extends @Nullable String> entry : extras.entrySet()) {
                 if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     queryParams.put(entry.getKey(), entry.getValue());
                 }

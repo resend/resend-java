@@ -8,6 +8,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.net.RequestOptions;
 import com.resend.core.net.impl.HttpClient;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 import java.io.UncheckedIOException;
 import java.util.Map;
@@ -87,8 +88,8 @@ public abstract class BaseService {
      * @return The deserialized response.
      * @throws ResendException If the response is not successful.
      */
-    protected <T> T execute(final String path, final HttpMethod method, final String payload,
-                            final MediaType mediaType, final Class<T> responseType) throws ResendException {
+    protected <T> T execute(final String path, final HttpMethod method, final @Nullable String payload,
+                            final @Nullable MediaType mediaType, final Class<T> responseType) throws ResendException {
         return handle(httpClient.perform(path, apiKey, method, payload, mediaType), responseType);
     }
 
@@ -105,8 +106,8 @@ public abstract class BaseService {
      * @return The deserialized response.
      * @throws ResendException If the response is not successful.
      */
-    protected <T> T execute(final String path, final HttpMethod method, final String payload,
-                            final MediaType mediaType, final RequestOptions requestOptions,
+    protected <T> T execute(final String path, final HttpMethod method, final @Nullable String payload,
+                            final @Nullable MediaType mediaType, final @Nullable RequestOptions requestOptions,
                             final Class<T> responseType) throws ResendException {
         return handle(httpClient.perform(path, apiKey, method, payload, mediaType, requestOptions), responseType);
     }
@@ -126,8 +127,8 @@ public abstract class BaseService {
      * @deprecated Use {@link #execute(String, HttpMethod, String, MediaType, RequestOptions, Class)} instead.
      */
     @Deprecated
-    protected <T> T execute(final String path, final HttpMethod method, final String payload,
-                            final MediaType mediaType, final Map<String, String> additionalHeaders,
+    protected <T> T execute(final String path, final HttpMethod method, final @Nullable String payload,
+                            final @Nullable MediaType mediaType, final @Nullable Map<String, String> additionalHeaders,
                             final Class<T> responseType) throws ResendException {
         return handle(httpClient.perform(path, apiKey, method, payload, mediaType, additionalHeaders), responseType);
     }
@@ -159,7 +160,7 @@ public abstract class BaseService {
     }
 
     private static ResendException unparseableResponse(final AbstractHttpResponse<String> response,
-                                                       final Class<?> responseType, final Throwable cause) {
+                                                       final Class<?> responseType, final @Nullable Throwable cause) {
         ResendException exception = new ResendException(
                 "Failed to parse the response body as " + responseType.getSimpleName(),
                 response.getCode(), response.getBody());

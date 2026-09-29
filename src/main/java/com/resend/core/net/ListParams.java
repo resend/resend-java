@@ -1,6 +1,7 @@
 package com.resend.core.net;
 
 import com.resend.services.broadcasts.model.SendBroadcastOptions;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a class that wraps the parameters for the list method.
@@ -10,17 +11,17 @@ public class ListParams {
     /**
      *  The maximum number of emails to return. Defaults to 10, maximum 100.
      */
-    private final Integer limit;
+    private final @Nullable Integer limit;
 
     /**
      * Return emails after this cursor for pagination.
      */
-    private final String after;
+    private final @Nullable String after;
 
     /**
      * Return emails before this cursor for pagination.
      */
-    private final String before;
+    private final @Nullable String before;
 
     /**
      * Constructs a ListParams object using the provided builder.
@@ -38,7 +39,7 @@ public class ListParams {
      *
      * @return pagination limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -46,7 +47,7 @@ public class ListParams {
      * Get emails after this cursor for pagination.
      * @return email after this cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -54,7 +55,7 @@ public class ListParams {
      * Get emails before this cursor for pagination.
      * @return email before this cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -68,11 +69,11 @@ public class ListParams {
         public Builder() {
         }
 
-        private Integer limit;
+        private @Nullable Integer limit;
 
-        private String before;
+        private @Nullable String before;
 
-        private String after;
+        private @Nullable String after;
 
 
         /**
@@ -81,7 +82,7 @@ public class ListParams {
          * @param limit The maximum number of emails.
          * @return The builder instance.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -92,7 +93,7 @@ public class ListParams {
          * @param before The emails after this cursor for pagination.
          * @return The builder instance.
          */
-        public Builder before(String before) {
+        public Builder before(@Nullable String before) {
             this.before = before;
             return this;
         }
@@ -103,7 +104,7 @@ public class ListParams {
          * @param after The emails after this cursor for pagination.
          * @return The builder instance.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }

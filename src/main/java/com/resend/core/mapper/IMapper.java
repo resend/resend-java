@@ -1,5 +1,7 @@
 package com.resend.core.mapper;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * An interface for mapping between JSON representation and Java objects using ObjectMapper.
  */
@@ -23,7 +25,7 @@ public interface IMapper {
      * @return An instance of the specified class with values from the JSON value.
      * @throws java.io.UncheckedIOException If the value isn't valid JSON for the specified class.
      */
-    <T> T readValue(String value, Class<T> clazz);
+    <T> @Nullable T readValue(String value, Class<T> clazz);
 
 }
 

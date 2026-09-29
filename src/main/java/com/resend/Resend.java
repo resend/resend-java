@@ -22,6 +22,7 @@ import com.resend.services.oauthgrants.OAuthGrants;
 import com.resend.services.templates.Templates;
 import com.resend.services.usage.Usage;
 import okhttp3.OkHttpClient;
+import org.jspecify.annotations.Nullable;
 
 import java.net.Proxy;
 import java.time.Duration;
@@ -262,14 +263,14 @@ public class Resend {
      */
     public static final class Builder {
 
-        private String apiKey;
-        private String baseUrl;
-        private Duration connectTimeout;
-        private Duration readTimeout;
-        private Duration writeTimeout;
-        private Duration callTimeout;
-        private Proxy proxy;
-        private IHttpClient<String> httpClient;
+        private @Nullable String apiKey;
+        private @Nullable String baseUrl;
+        private @Nullable Duration connectTimeout;
+        private @Nullable Duration readTimeout;
+        private @Nullable Duration writeTimeout;
+        private @Nullable Duration callTimeout;
+        private @Nullable Proxy proxy;
+        private @Nullable IHttpClient<String> httpClient;
 
         private Builder() {
         }
@@ -292,7 +293,7 @@ public class Resend {
          *                fragment is rejected by {@link #build()}.
          * @return This builder.
          */
-        public Builder baseUrl(final String baseUrl) {
+        public Builder baseUrl(final @Nullable String baseUrl) {
             this.baseUrl = baseUrl;
             return this;
         }
@@ -304,7 +305,7 @@ public class Resend {
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
-        public Builder connectTimeout(final Duration connectTimeout) {
+        public Builder connectTimeout(final @Nullable Duration connectTimeout) {
             this.connectTimeout = requireNonNegative("connectTimeout", connectTimeout);
             return this;
         }
@@ -316,7 +317,7 @@ public class Resend {
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
-        public Builder readTimeout(final Duration readTimeout) {
+        public Builder readTimeout(final @Nullable Duration readTimeout) {
             this.readTimeout = requireNonNegative("readTimeout", readTimeout);
             return this;
         }
@@ -328,7 +329,7 @@ public class Resend {
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
-        public Builder writeTimeout(final Duration writeTimeout) {
+        public Builder writeTimeout(final @Nullable Duration writeTimeout) {
             this.writeTimeout = requireNonNegative("writeTimeout", writeTimeout);
             return this;
         }
@@ -341,7 +342,7 @@ public class Resend {
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
-        public Builder callTimeout(final Duration callTimeout) {
+        public Builder callTimeout(final @Nullable Duration callTimeout) {
             this.callTimeout = requireNonNegative("callTimeout", callTimeout);
             return this;
         }
@@ -354,7 +355,7 @@ public class Resend {
          * @param proxy The proxy, or {@link Proxy#NO_PROXY} to connect directly.
          * @return This builder.
          */
-        public Builder proxy(final Proxy proxy) {
+        public Builder proxy(final @Nullable Proxy proxy) {
             this.proxy = proxy;
             return this;
         }
@@ -369,7 +370,7 @@ public class Resend {
          * @param httpClient The HTTP client.
          * @return This builder.
          */
-        public Builder httpClient(final IHttpClient<String> httpClient) {
+        public Builder httpClient(final @Nullable IHttpClient<String> httpClient) {
             this.httpClient = httpClient;
             return this;
         }
@@ -434,7 +435,7 @@ public class Resend {
             return new HttpClient(client, baseUrl != null ? baseUrl : HttpClient.BASE_API);
         }
 
-        private static Duration requireNonNegative(final String name, final Duration timeout) {
+        private static @Nullable Duration requireNonNegative(final String name, final @Nullable Duration timeout) {
             if (timeout != null && timeout.isNegative()) {
                 throw new IllegalArgumentException(name + " must not be negative, got: " + timeout);
             }

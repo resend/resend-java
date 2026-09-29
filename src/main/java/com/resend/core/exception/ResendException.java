@@ -2,6 +2,7 @@ package com.resend.core.exception;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Exception class for representing errors related to the Resend API.
@@ -13,17 +14,17 @@ public class ResendException extends Exception {
     /**
      * The HTTP status code of the response that triggered this exception.
      */
-    private Integer statusCode;
+    private @Nullable Integer statusCode;
 
     /**
      * The error name/type returned.
      */
-    private String errorName;
+    private @Nullable String errorName;
 
     /**
      * The raw response body from the API.
      */
-    private String responseBody;
+    private @Nullable String responseBody;
 
     /**
      * Constructs a new `ResendException` with the specified error message.
@@ -40,7 +41,7 @@ public class ResendException extends Exception {
      * @param message The error message describing the exception.
      * @param cause   The cause of the exception.
      */
-    public ResendException(String message, Throwable cause) {
+    public ResendException(String message, @Nullable Throwable cause) {
         super(message, cause);
     }
 
@@ -51,7 +52,7 @@ public class ResendException extends Exception {
      * @param statusCode   The HTTP status code.
      * @param responseBody The raw response body from the API.
      */
-    public ResendException(int statusCode, String responseBody) {
+    public ResendException(int statusCode, @Nullable String responseBody) {
         super(parseMessage(responseBody));
         this.statusCode = statusCode;
         this.responseBody = responseBody;
@@ -65,7 +66,7 @@ public class ResendException extends Exception {
      * @param statusCode   The HTTP status code.
      * @param responseBody The raw response body from the API.
      */
-    public ResendException(String message, int statusCode, String responseBody) {
+    public ResendException(String message, int statusCode, @Nullable String responseBody) {
         super(message);
         this.statusCode = statusCode;
         this.responseBody = responseBody;
@@ -79,7 +80,7 @@ public class ResendException extends Exception {
      * @param responseBody The raw response body.
      * @return The parsed error message or the raw response body.
      */
-    private static String parseMessage(String responseBody) {
+    private static String parseMessage(@Nullable String responseBody) {
         if (responseBody == null || responseBody.isEmpty()) {
             return "Unknown error";
         }
@@ -102,7 +103,7 @@ public class ResendException extends Exception {
      * @param responseBody The raw response body.
      * @return The error name if found, null otherwise.
      */
-    private static String parseErrorName(String responseBody) {
+    private static @Nullable String parseErrorName(@Nullable String responseBody) {
         if (responseBody == null || responseBody.isEmpty()) {
             return null;
         }
@@ -124,7 +125,7 @@ public class ResendException extends Exception {
      *
      * @return the HTTP status code, or null if not set.
      */
-    public Integer getStatusCode() {
+    public @Nullable Integer getStatusCode() {
         return statusCode;
     }
 
@@ -133,7 +134,7 @@ public class ResendException extends Exception {
      *
      * @return the error name (e.g., "validation_error"), or null if not set.
      */
-    public String getErrorName() {
+    public @Nullable String getErrorName() {
         return errorName;
     }
 
@@ -142,7 +143,7 @@ public class ResendException extends Exception {
      *
      * @return the response body, or null if not set.
      */
-    public String getResponseBody() {
+    public @Nullable String getResponseBody() {
         return responseBody;
     }
 

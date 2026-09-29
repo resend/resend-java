@@ -1,5 +1,7 @@
 package com.resend.core.net;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,7 @@ import java.util.Map;
  * Represents a request to create a request options.
  */
 public class RequestOptions {
-    private final String idempotencyKey;
+    private final @Nullable String idempotencyKey;
     private final Map<String, String> additionalHeaders;
 
     /**
@@ -26,7 +28,7 @@ public class RequestOptions {
      *
      * @return The idempotency key.
      */
-    public String getIdempotencyKey() {
+    public @Nullable String getIdempotencyKey() {
         return idempotencyKey;
     }
 
@@ -52,7 +54,7 @@ public class RequestOptions {
      * Builder class for constructing RequestOptions objects.
      */
     public static class Builder {
-        private String idempotencyKey;
+        private @Nullable String idempotencyKey;
         private final Map<String, String> additionalHeaders;
 
         /**

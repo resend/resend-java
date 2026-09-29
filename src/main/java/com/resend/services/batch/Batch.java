@@ -25,7 +25,13 @@ public class Batch extends BaseService {
         super(apiKey);
     }
 
-    Batch(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code Batch} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public Batch(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 

@@ -61,12 +61,7 @@ public class HttpClient implements IHttpClient<String> {
                 .method(method.name(), requestBody)
                 .build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -110,12 +105,7 @@ public class HttpClient implements IHttpClient<String> {
 
         Request request = requestBuilder.build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -162,12 +152,7 @@ public class HttpClient implements IHttpClient<String> {
 
         Request request = requestBuilder.build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -301,8 +286,11 @@ public class HttpClient implements IHttpClient<String> {
             }
         }
 
-        try {
-            Response response = httpClient.newCall(requestBuilder.build()).execute();
+        return execute(requestBuilder.build());
+    }
+
+    private AbstractHttpResponse<String> execute(final Request request) {
+        try (Response response = httpClient.newCall(request).execute()) {
             return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);

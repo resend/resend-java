@@ -30,6 +30,8 @@ public enum WebhookEvent {
     CONTACT_UPDATED("contact.updated"),
     /** Triggered when a contact is deleted. */
     CONTACT_DELETED("contact.deleted"),
+    /** Triggered when a contact's topic subscriptions change. */
+    CONTACT_TOPICS_UPDATED("contact.topics.updated"),
     /** Triggered when a domain is created. */
     DOMAIN_CREATED("domain.created"),
     /** Triggered when a domain is updated. */
@@ -39,7 +41,13 @@ public enum WebhookEvent {
     /** Triggered when an email address is added to the suppression list. */
     SUPPRESSION_ADDED("suppression.added"),
     /** Triggered when an email address is removed from the suppression list. */
-    SUPPRESSION_REMOVED("suppression.removed");
+    SUPPRESSION_REMOVED("suppression.removed"),
+    /** Triggered when a topic is created. */
+    TOPIC_CREATED("topic.created"),
+    /** Triggered when a topic is updated. */
+    TOPIC_UPDATED("topic.updated"),
+    /** Triggered when a topic is deleted. */
+    TOPIC_DELETED("topic.deleted");
 
     private final String value;
 

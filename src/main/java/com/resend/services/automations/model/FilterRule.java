@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,10 +11,10 @@ import java.util.Map;
  */
 public class FilterRule {
 
-    private final Map<String, Object> rule;
+    private final Map<String, @Nullable Object> rule;
 
-    private FilterRule(Map<String, Object> rule) {
-        this.rule = Collections.unmodifiableMap(new HashMap<>(rule));
+    private FilterRule(Map<String, ? extends @Nullable Object> rule) {
+        this.rule = Collections.<String, @Nullable Object>unmodifiableMap(new HashMap<>(rule));
     }
 
     /**
@@ -20,7 +22,7 @@ public class FilterRule {
      *
      * @return An unmodifiable copy of the filter rule map.
      */
-    public Map<String, Object> toMap() {
+    public Map<String, @Nullable Object> toMap() {
         return rule;
     }
 
@@ -38,10 +40,10 @@ public class FilterRule {
      */
     public static class Builder {
 
-        private String type = "rule";
-        private String field;
-        private String operator;
-        private Object value;
+        private @Nullable String type = "rule";
+        private @Nullable String field;
+        private @Nullable String operator;
+        private @Nullable Object value;
 
         /**
          * Constructs a new Builder instance.

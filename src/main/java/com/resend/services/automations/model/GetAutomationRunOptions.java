@@ -1,12 +1,15 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents options for retrieving a specific automation run.
  */
 public class GetAutomationRunOptions {
 
-    private final String automationId;
-    private final String runId;
+    private final @Nullable String automationId;
+    private final @Nullable String runId;
 
     /**
      * Constructs GetAutomationRunOptions using the provided builder.
@@ -23,7 +26,7 @@ public class GetAutomationRunOptions {
      *
      * @return The automation ID.
      */
-    public String getAutomationId() {
+    public @Nullable String getAutomationId() {
         return automationId;
     }
 
@@ -32,7 +35,7 @@ public class GetAutomationRunOptions {
      *
      * @return The run ID.
      */
-    public String getRunId() {
+    public @Nullable String getRunId() {
         return runId;
     }
 
@@ -54,8 +57,8 @@ public class GetAutomationRunOptions {
          */
         public Builder() {}
 
-        private String automationId;
-        private String runId;
+        private @Nullable String automationId;
+        private @Nullable String runId;
 
         /**
          * Sets the automation ID.

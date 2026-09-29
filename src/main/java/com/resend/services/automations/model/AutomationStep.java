@@ -2,6 +2,7 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +14,13 @@ import java.util.Map;
 public class AutomationStep {
 
     @JsonProperty("key")
-    private final String key;
+    private final @Nullable String key;
 
     @JsonProperty("type")
-    private final StepType type;
+    private final @Nullable StepType type;
 
     @JsonProperty("config")
-    private final Map<String, Object> config;
+    private final @Nullable Map<String, @Nullable Object> config;
 
     /**
      * Constructs an AutomationStep using the provided builder.
@@ -37,7 +38,7 @@ public class AutomationStep {
      *
      * @return The step key.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -46,7 +47,7 @@ public class AutomationStep {
      *
      * @return The step type.
      */
-    public StepType getType() {
+    public @Nullable StepType getType() {
         return type;
     }
 
@@ -55,7 +56,7 @@ public class AutomationStep {
      *
      * @return The configuration as a map of key-value pairs.
      */
-    public Map<String, Object> getConfig() {
+    public @Nullable Map<String, @Nullable Object> getConfig() {
         return config;
     }
 
@@ -157,9 +158,9 @@ public class AutomationStep {
          */
         public Builder() {}
 
-        private String key;
-        private StepType type;
-        private Map<String, Object> config = new HashMap<>();
+        private @Nullable String key;
+        private @Nullable StepType type;
+        private Map<String, @Nullable Object> config = new HashMap<>();
 
         /**
          * Sets the step key identifier.
@@ -189,7 +190,7 @@ public class AutomationStep {
          * @param config The configuration map.
          * @return The builder instance.
          */
-        public Builder config(Map<String, Object> config) {
+        public Builder config(Map<String, @Nullable Object> config) {
             this.config = config;
             return this;
         }

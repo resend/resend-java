@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -10,13 +11,13 @@ import java.util.Map;
 public class AutomationStepResponse {
 
     @JsonProperty("key")
-    private String key;
+    private @Nullable String key;
 
     @JsonProperty("type")
-    private StepType type;
+    private @Nullable StepType type;
 
     @JsonProperty("config")
-    private Map<String, Object> config;
+    private @Nullable Map<String, @Nullable Object> config;
 
     /**
      * Default constructor for deserialization.
@@ -31,7 +32,7 @@ public class AutomationStepResponse {
      * @param type The step type.
      * @param config The step configuration.
      */
-    public AutomationStepResponse(String key, StepType type, Map<String, Object> config) {
+    public AutomationStepResponse(@Nullable String key, @Nullable StepType type, @Nullable Map<String, @Nullable Object> config) {
         this.key = key;
         this.type = type;
         this.config = config;
@@ -42,7 +43,7 @@ public class AutomationStepResponse {
      *
      * @return The step key.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -51,7 +52,7 @@ public class AutomationStepResponse {
      *
      * @return The step type.
      */
-    public StepType getType() {
+    public @Nullable StepType getType() {
         return type;
     }
 
@@ -60,7 +61,7 @@ public class AutomationStepResponse {
      *
      * @return The configuration as a map of key-value pairs.
      */
-    public Map<String, Object> getConfig() {
+    public @Nullable Map<String, @Nullable Object> getConfig() {
         return config;
     }
 }

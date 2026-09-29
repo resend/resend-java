@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,10 +13,10 @@ import java.util.Map;
  */
 public class ConditionRule {
 
-    private final Map<String, Object> rule;
+    private final Map<String, @Nullable Object> rule;
 
-    private ConditionRule(Map<String, Object> rule) {
-        this.rule = Collections.unmodifiableMap(new HashMap<>(rule));
+    private ConditionRule(Map<String, ? extends @Nullable Object> rule) {
+        this.rule = Collections.<String, @Nullable Object>unmodifiableMap(new HashMap<>(rule));
     }
 
     /**
@@ -22,7 +24,7 @@ public class ConditionRule {
      *
      * @return An unmodifiable copy of the condition rule map.
      */
-    public Map<String, Object> toMap() {
+    public Map<String, @Nullable Object> toMap() {
         return rule;
     }
 
@@ -223,9 +225,9 @@ public class ConditionRule {
      */
     public static class Builder {
 
-        private String field;
-        private ConditionOperator operator;
-        private Object value;
+        private @Nullable String field;
+        private @Nullable ConditionOperator operator;
+        private @Nullable Object value;
 
         /**
          * Constructs a new Builder instance.

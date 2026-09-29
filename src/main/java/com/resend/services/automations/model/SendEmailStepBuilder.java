@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +10,8 @@ import java.util.Map;
  */
 public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuilder> {
 
-    private String templateId;
-    private Map<String, Object> templateVariables;
+    private @Nullable String templateId;
+    private @Nullable Map<String, @Nullable Object> templateVariables;
 
     /**
      * Constructs a SendEmailStepBuilder with the specified key.
@@ -42,7 +44,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
      * @param variables The template variables map.
      * @return The builder instance.
      */
-    public SendEmailStepBuilder templateVariables(Map<String, Object> variables) {
+    public SendEmailStepBuilder templateVariables(@Nullable Map<String, @Nullable Object> variables) {
         this.templateVariables = variables != null ? new HashMap<>(variables) : null;
         return this;
     }

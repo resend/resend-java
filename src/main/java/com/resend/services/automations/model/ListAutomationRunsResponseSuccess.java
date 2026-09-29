@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListAutomationRunsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<AutomationRunListItem> data;
+    private @Nullable List<AutomationRunListItem> data;
 
     /**
      * Default constructor for deserialization.
@@ -31,7 +32,7 @@ public class ListAutomationRunsResponseSuccess {
      * @param hasMore Whether more results are available.
      * @param data The list of automation runs.
      */
-    public ListAutomationRunsResponseSuccess(String object, Boolean hasMore, List<AutomationRunListItem> data) {
+    public ListAutomationRunsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<AutomationRunListItem> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,7 +43,7 @@ public class ListAutomationRunsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListAutomationRunsResponseSuccess {
      *
      * @return True if more runs are available, false otherwise.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -60,7 +61,7 @@ public class ListAutomationRunsResponseSuccess {
      *
      * @return The list of run summaries.
      */
-    public List<AutomationRunListItem> getData() {
+    public @Nullable List<AutomationRunListItem> getData() {
         return data;
     }
 }

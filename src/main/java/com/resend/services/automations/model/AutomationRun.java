@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,25 +11,25 @@ import java.util.List;
 public class AutomationRun {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("status")
-    private RunStatus status;
+    private @Nullable RunStatus status;
 
     @JsonProperty("started_at")
-    private String startedAt;
+    private @Nullable String startedAt;
 
     @JsonProperty("completed_at")
-    private String completedAt;
+    private @Nullable String completedAt;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("steps")
-    private List<AutomationRunStep> steps;
+    private @Nullable List<AutomationRunStep> steps;
 
     /**
      * Default constructor for deserialization.
@@ -47,8 +48,8 @@ public class AutomationRun {
      * @param createdAt The creation timestamp.
      * @param steps The list of run steps.
      */
-    public AutomationRun(String object, String id, RunStatus status, String startedAt,
-                         String completedAt, String createdAt, List<AutomationRunStep> steps) {
+    public AutomationRun(@Nullable String object, @Nullable String id, @Nullable RunStatus status, @Nullable String startedAt,
+                         @Nullable String completedAt, @Nullable String createdAt, @Nullable List<AutomationRunStep> steps) {
         this.object = object;
         this.id = id;
         this.status = status;
@@ -63,7 +64,7 @@ public class AutomationRun {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -72,7 +73,7 @@ public class AutomationRun {
      *
      * @return The run ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -81,7 +82,7 @@ public class AutomationRun {
      *
      * @return The run status.
      */
-    public RunStatus getStatus() {
+    public @Nullable RunStatus getStatus() {
         return status;
     }
 
@@ -90,7 +91,7 @@ public class AutomationRun {
      *
      * @return The start timestamp.
      */
-    public String getStartedAt() {
+    public @Nullable String getStartedAt() {
         return startedAt;
     }
 
@@ -99,7 +100,7 @@ public class AutomationRun {
      *
      * @return The completion timestamp.
      */
-    public String getCompletedAt() {
+    public @Nullable String getCompletedAt() {
         return completedAt;
     }
 
@@ -108,7 +109,7 @@ public class AutomationRun {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -117,7 +118,7 @@ public class AutomationRun {
      *
      * @return The list of run steps.
      */
-    public List<AutomationRunStep> getSteps() {
+    public @Nullable List<AutomationRunStep> getSteps() {
         return steps;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an automation run summary in list responses.
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AutomationRunListItem {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("status")
-    private RunStatus status;
+    private @Nullable RunStatus status;
 
     @JsonProperty("started_at")
-    private String startedAt;
+    private @Nullable String startedAt;
 
     @JsonProperty("completed_at")
-    private String completedAt;
+    private @Nullable String completedAt;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor for deserialization.
@@ -37,8 +38,8 @@ public class AutomationRunListItem {
      * @param completedAt The completion timestamp.
      * @param createdAt The creation timestamp.
      */
-    public AutomationRunListItem(String id, RunStatus status, String startedAt,
-                                 String completedAt, String createdAt) {
+    public AutomationRunListItem(@Nullable String id, @Nullable RunStatus status, @Nullable String startedAt,
+                                 @Nullable String completedAt, @Nullable String createdAt) {
         this.id = id;
         this.status = status;
         this.startedAt = startedAt;
@@ -51,7 +52,7 @@ public class AutomationRunListItem {
      *
      * @return The run ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -60,7 +61,7 @@ public class AutomationRunListItem {
      *
      * @return The run status.
      */
-    public RunStatus getStatus() {
+    public @Nullable RunStatus getStatus() {
         return status;
     }
 
@@ -69,7 +70,7 @@ public class AutomationRunListItem {
      *
      * @return The start timestamp.
      */
-    public String getStartedAt() {
+    public @Nullable String getStartedAt() {
         return startedAt;
     }
 
@@ -78,7 +79,7 @@ public class AutomationRunListItem {
      *
      * @return The completion timestamp.
      */
-    public String getCompletedAt() {
+    public @Nullable String getCompletedAt() {
         return completedAt;
     }
 
@@ -87,7 +88,7 @@ public class AutomationRunListItem {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 }

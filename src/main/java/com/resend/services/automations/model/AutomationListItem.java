@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an automation summary in list responses.
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AutomationListItem {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("status")
-    private AutomationStatus status;
+    private @Nullable AutomationStatus status;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     /**
      * Default constructor for deserialization.
@@ -37,7 +38,7 @@ public class AutomationListItem {
      * @param createdAt The creation timestamp.
      * @param updatedAt The last update timestamp.
      */
-    public AutomationListItem(String id, String name, AutomationStatus status, String createdAt, String updatedAt) {
+    public AutomationListItem(@Nullable String id, @Nullable String name, @Nullable AutomationStatus status, @Nullable String createdAt, @Nullable String updatedAt) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -50,7 +51,7 @@ public class AutomationListItem {
      *
      * @return The automation ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -59,7 +60,7 @@ public class AutomationListItem {
      *
      * @return The automation name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -68,7 +69,7 @@ public class AutomationListItem {
      *
      * @return The automation status.
      */
-    public AutomationStatus getStatus() {
+    public @Nullable AutomationStatus getStatus() {
         return status;
     }
 
@@ -77,7 +78,7 @@ public class AutomationListItem {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -86,7 +87,7 @@ public class AutomationListItem {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 }

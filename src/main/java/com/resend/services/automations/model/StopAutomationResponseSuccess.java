@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response from stopping an automation.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class StopAutomationResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("status")
-    private AutomationStatus status;
+    private @Nullable AutomationStatus status;
 
     /**
      * Default constructor for deserialization.
@@ -29,7 +30,7 @@ public class StopAutomationResponseSuccess {
      * @param id The automation ID.
      * @param status The automation status.
      */
-    public StopAutomationResponseSuccess(String object, String id, AutomationStatus status) {
+    public StopAutomationResponseSuccess(@Nullable String object, @Nullable String id, @Nullable AutomationStatus status) {
         this.object = object;
         this.id = id;
         this.status = status;
@@ -40,7 +41,7 @@ public class StopAutomationResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -49,7 +50,7 @@ public class StopAutomationResponseSuccess {
      *
      * @return The automation ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -58,7 +59,7 @@ public class StopAutomationResponseSuccess {
      *
      * @return The automation status.
      */
-    public AutomationStatus getStatus() {
+    public @Nullable AutomationStatus getStatus() {
         return status;
     }
 }

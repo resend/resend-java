@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -12,10 +14,10 @@ import java.util.stream.Collectors;
  */
 public class ListAutomationRunsParams {
 
-    private final List<RunStatus> status;
-    private final Integer limit;
-    private final String after;
-    private final String before;
+    private final @Nullable List<RunStatus> status;
+    private final @Nullable Integer limit;
+    private final @Nullable String after;
+    private final @Nullable String before;
 
     /**
      * Constructs ListAutomationRunsParams using the provided builder.
@@ -34,7 +36,7 @@ public class ListAutomationRunsParams {
      *
      * @return The list of run status filters.
      */
-    public List<RunStatus> getStatus() {
+    public @Nullable List<RunStatus> getStatus() {
         return status;
     }
 
@@ -43,7 +45,7 @@ public class ListAutomationRunsParams {
      *
      * @return The limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -52,7 +54,7 @@ public class ListAutomationRunsParams {
      *
      * @return The after cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -61,7 +63,7 @@ public class ListAutomationRunsParams {
      *
      * @return The before cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -116,10 +118,10 @@ public class ListAutomationRunsParams {
          */
         public Builder() {}
 
-        private List<RunStatus> status;
-        private Integer limit;
-        private String after;
-        private String before;
+        private @Nullable List<RunStatus> status;
+        private @Nullable Integer limit;
+        private @Nullable String after;
+        private @Nullable String before;
 
         /**
          * Adds status filters.

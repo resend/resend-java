@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,10 +11,10 @@ import java.util.stream.Collectors;
  */
 public class ListAutomationsParams {
 
-    private final AutomationStatus status;
-    private final Integer limit;
-    private final String after;
-    private final String before;
+    private final @Nullable AutomationStatus status;
+    private final @Nullable Integer limit;
+    private final @Nullable String after;
+    private final @Nullable String before;
 
     /**
      * Constructs ListAutomationsParams using the provided builder.
@@ -31,7 +33,7 @@ public class ListAutomationsParams {
      *
      * @return The automation status filter.
      */
-    public AutomationStatus getStatus() {
+    public @Nullable AutomationStatus getStatus() {
         return status;
     }
 
@@ -40,7 +42,7 @@ public class ListAutomationsParams {
      *
      * @return The limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -49,7 +51,7 @@ public class ListAutomationsParams {
      *
      * @return The after cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -58,7 +60,7 @@ public class ListAutomationsParams {
      *
      * @return The before cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -110,10 +112,10 @@ public class ListAutomationsParams {
          */
         public Builder() {}
 
-        private AutomationStatus status;
-        private Integer limit;
-        private String after;
-        private String before;
+        private @Nullable AutomationStatus status;
+        private @Nullable Integer limit;
+        private @Nullable String after;
+        private @Nullable String before;
 
         /**
          * Sets the status filter.

@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public abstract class AbstractStepBuilder<T extends AbstractStepBuilder<T>> {
     protected final String key;
 
     /** The step configuration map. */
-    protected final Map<String, Object> config = new HashMap<>();
+    protected final Map<String, @Nullable Object> config = new HashMap<>();
 
     /**
      * Constructs an AbstractStepBuilder with the specified key.
@@ -49,7 +51,7 @@ public abstract class AbstractStepBuilder<T extends AbstractStepBuilder<T>> {
      * @param value The configuration value.
      * @return This builder instance.
      */
-    protected T addConfig(String name, Object value) {
+    protected T addConfig(String name, @Nullable Object value) {
         config.put(name, value);
         return self();
     }

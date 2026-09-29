@@ -1,11 +1,14 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Builder for creating condition automation steps.
  */
 public class ConditionStepBuilder extends AbstractStepBuilder<ConditionStepBuilder> {
 
-    private ConditionRule rule;
+    private @Nullable ConditionRule rule;
 
     /**
      * Constructs a ConditionStepBuilder with the specified key.

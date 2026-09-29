@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,28 +11,28 @@ import java.util.List;
 public class Automation {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("status")
-    private AutomationStatus status;
+    private @Nullable AutomationStatus status;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     @JsonProperty("steps")
-    private List<AutomationStepResponse> steps;
+    private @Nullable List<AutomationStepResponse> steps;
 
     @JsonProperty("connections")
-    private List<AutomationConnection> connections;
+    private @Nullable List<AutomationConnection> connections;
 
     /**
      * Default constructor for deserialization.
@@ -51,9 +52,9 @@ public class Automation {
      * @param steps The list of steps.
      * @param connections The list of connections.
      */
-    public Automation(String object, String id, String name, AutomationStatus status,
-                      String createdAt, String updatedAt,
-                      List<AutomationStepResponse> steps, List<AutomationConnection> connections) {
+    public Automation(@Nullable String object, @Nullable String id, @Nullable String name, @Nullable AutomationStatus status,
+                      @Nullable String createdAt, @Nullable String updatedAt,
+                      @Nullable List<AutomationStepResponse> steps, @Nullable List<AutomationConnection> connections) {
         this.object = object;
         this.id = id;
         this.name = name;
@@ -69,7 +70,7 @@ public class Automation {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -78,7 +79,7 @@ public class Automation {
      *
      * @return The automation ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -87,7 +88,7 @@ public class Automation {
      *
      * @return The automation name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -96,7 +97,7 @@ public class Automation {
      *
      * @return The automation status.
      */
-    public AutomationStatus getStatus() {
+    public @Nullable AutomationStatus getStatus() {
         return status;
     }
 
@@ -105,7 +106,7 @@ public class Automation {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -114,7 +115,7 @@ public class Automation {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -123,7 +124,7 @@ public class Automation {
      *
      * @return The list of steps.
      */
-    public List<AutomationStepResponse> getSteps() {
+    public @Nullable List<AutomationStepResponse> getSteps() {
         return steps;
     }
 
@@ -132,7 +133,7 @@ public class Automation {
      *
      * @return The list of connections.
      */
-    public List<AutomationConnection> getConnections() {
+    public @Nullable List<AutomationConnection> getConnections() {
         return connections;
     }
 }

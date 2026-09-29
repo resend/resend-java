@@ -2,6 +2,7 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a connection between steps in an automation workflow.
@@ -10,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AutomationConnection {
 
     @JsonProperty("from")
-    private String from;
+    private @Nullable String from;
 
     @JsonProperty("to")
-    private String to;
+    private @Nullable String to;
 
     @JsonProperty("type")
-    private ConnectionType type;
+    private @Nullable ConnectionType type;
 
     /**
      * Default constructor for deserialization.
@@ -42,7 +43,7 @@ public class AutomationConnection {
      * @param to The target step key.
      * @param type The connection type.
      */
-    public AutomationConnection(String from, String to, ConnectionType type) {
+    public AutomationConnection(@Nullable String from, @Nullable String to, @Nullable ConnectionType type) {
         this.from = from;
         this.to = to;
         this.type = type;
@@ -53,7 +54,7 @@ public class AutomationConnection {
      *
      * @return The source step key.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -62,7 +63,7 @@ public class AutomationConnection {
      *
      * @return The target step key.
      */
-    public String getTo() {
+    public @Nullable String getTo() {
         return to;
     }
 
@@ -71,7 +72,7 @@ public class AutomationConnection {
      *
      * @return The connection type.
      */
-    public ConnectionType getType() {
+    public @Nullable ConnectionType getType() {
         return type;
     }
 
@@ -93,9 +94,9 @@ public class AutomationConnection {
          */
         public Builder() {}
 
-        private String from;
-        private String to;
-        private ConnectionType type;
+        private @Nullable String from;
+        private @Nullable String to;
+        private @Nullable ConnectionType type;
 
         /**
          * Sets the source step key.

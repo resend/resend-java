@@ -1,5 +1,7 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,7 @@ import java.util.Map;
  */
 public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateStepBuilder> {
 
-    private Map<String, Object> properties;
+    private @Nullable Map<String, @Nullable Object> properties;
 
     /**
      * Constructs a ContactUpdateStepBuilder with the specified key.
@@ -60,7 +62,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
      * @param properties The properties map.
      * @return The builder instance.
      */
-    public ContactUpdateStepBuilder properties(Map<String, Object> properties) {
+    public ContactUpdateStepBuilder properties(@Nullable Map<String, @Nullable Object> properties) {
         this.properties = properties != null ? new HashMap<>(properties) : null;
         return this;
     }

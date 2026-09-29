@@ -1,5 +1,8 @@
 package com.resend.services.automations.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Builder for creating wait_for_event automation steps.
  */
@@ -45,7 +48,7 @@ public class WaitForEventStepBuilder extends AbstractStepBuilder<WaitForEventSte
      * @param filterRule The filter rule.
      * @return The builder instance.
      */
-    public WaitForEventStepBuilder filterRule(FilterRule filterRule) {
+    public WaitForEventStepBuilder filterRule(@Nullable FilterRule filterRule) {
         config.put("filter_rule", filterRule != null ? filterRule.toMap() : null);
         return this;
     }

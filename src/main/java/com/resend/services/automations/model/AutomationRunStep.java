@@ -1,6 +1,7 @@
 package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a step execution within an automation run.
@@ -8,28 +9,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AutomationRunStep {
 
     @JsonProperty("key")
-    private String key;
+    private @Nullable String key;
 
     @JsonProperty("type")
-    private StepType type;
+    private @Nullable StepType type;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("started_at")
-    private String startedAt;
+    private @Nullable String startedAt;
 
     @JsonProperty("completed_at")
-    private String completedAt;
+    private @Nullable String completedAt;
 
     @JsonProperty("output")
-    private Object output;
+    private @Nullable Object output;
 
     @JsonProperty("error")
-    private Object error;
+    private @Nullable Object error;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor for deserialization.
@@ -49,8 +50,8 @@ public class AutomationRunStep {
      * @param error The step error.
      * @param createdAt The creation timestamp.
      */
-    public AutomationRunStep(String key, StepType type, String status, String startedAt, String completedAt,
-                             Object output, Object error, String createdAt) {
+    public AutomationRunStep(@Nullable String key, @Nullable StepType type, @Nullable String status, @Nullable String startedAt, @Nullable String completedAt,
+                             @Nullable Object output, @Nullable Object error, @Nullable String createdAt) {
         this.key = key;
         this.type = type;
         this.status = status;
@@ -66,7 +67,7 @@ public class AutomationRunStep {
      *
      * @return The step key.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -75,7 +76,7 @@ public class AutomationRunStep {
      *
      * @return The step type.
      */
-    public StepType getType() {
+    public @Nullable StepType getType() {
         return type;
     }
 
@@ -84,7 +85,7 @@ public class AutomationRunStep {
      *
      * @return The step status.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -93,7 +94,7 @@ public class AutomationRunStep {
      *
      * @return The start timestamp.
      */
-    public String getStartedAt() {
+    public @Nullable String getStartedAt() {
         return startedAt;
     }
 
@@ -102,7 +103,7 @@ public class AutomationRunStep {
      *
      * @return The completion timestamp.
      */
-    public String getCompletedAt() {
+    public @Nullable String getCompletedAt() {
         return completedAt;
     }
 
@@ -111,7 +112,7 @@ public class AutomationRunStep {
      *
      * @return The step output.
      */
-    public Object getOutput() {
+    public @Nullable Object getOutput() {
         return output;
     }
 
@@ -120,7 +121,7 @@ public class AutomationRunStep {
      *
      * @return The step error.
      */
-    public Object getError() {
+    public @Nullable Object getError() {
         return error;
     }
 
@@ -129,7 +130,7 @@ public class AutomationRunStep {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 }

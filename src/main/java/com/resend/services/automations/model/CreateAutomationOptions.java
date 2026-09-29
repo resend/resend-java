@@ -2,6 +2,7 @@ package com.resend.services.automations.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,16 +15,16 @@ import java.util.List;
 public class CreateAutomationOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("status")
-    private final AutomationStatus status;
+    private final @Nullable AutomationStatus status;
 
     @JsonProperty("steps")
-    private final List<AutomationStep> steps;
+    private final @Nullable List<AutomationStep> steps;
 
     @JsonProperty("connections")
-    private final List<AutomationConnection> connections;
+    private final @Nullable List<AutomationConnection> connections;
 
     /**
      * Constructs CreateAutomationOptions using the provided builder.
@@ -42,7 +43,7 @@ public class CreateAutomationOptions {
      *
      * @return The automation name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -51,7 +52,7 @@ public class CreateAutomationOptions {
      *
      * @return The automation status.
      */
-    public AutomationStatus getStatus() {
+    public @Nullable AutomationStatus getStatus() {
         return status;
     }
 
@@ -60,7 +61,7 @@ public class CreateAutomationOptions {
      *
      * @return The list of steps.
      */
-    public List<AutomationStep> getSteps() {
+    public @Nullable List<AutomationStep> getSteps() {
         return steps;
     }
 
@@ -69,7 +70,7 @@ public class CreateAutomationOptions {
      *
      * @return The list of connections.
      */
-    public List<AutomationConnection> getConnections() {
+    public @Nullable List<AutomationConnection> getConnections() {
         return connections;
     }
 
@@ -91,10 +92,10 @@ public class CreateAutomationOptions {
          */
         public Builder() {}
 
-        private String name;
-        private AutomationStatus status;
-        private List<AutomationStep> steps;
-        private List<AutomationConnection> connections;
+        private @Nullable String name;
+        private @Nullable AutomationStatus status;
+        private @Nullable List<AutomationStep> steps;
+        private @Nullable List<AutomationConnection> connections;
 
         /**
          * Sets the automation name.

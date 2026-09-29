@@ -181,8 +181,8 @@ public class ResendTest {
 
     @Test
     public void testBuilder_ErrorResponseThrowsResendException() {
-        StubInterceptor stub = new StubInterceptor(422,
-                "{\"statusCode\":422,\"name\":\"validation_error\",\"message\":\"Invalid `to` field.\"}");
+        String errorBody = "{\"statusCode\":422,\"name\":\"validation_error\",\"message\":\"Invalid `to` field.\"}";
+        StubInterceptor stub = new StubInterceptor(422, errorBody);
         Resend resend = Resend.builder()
                 .apiKey("re_test")
                 .httpClient(new HttpClient(new OkHttpClient.Builder().addInterceptor(stub).build()))
@@ -192,6 +192,9 @@ public class ResendTest {
                 () -> resend.emails().send(EmailsUtil.createEmailOptions()));
 
         assertEquals(422, exception.getStatusCode());
+        assertEquals("Invalid `to` field.", exception.getMessage());
+        assertEquals("validation_error", exception.getErrorName());
+        assertEquals(errorBody, exception.getResponseBody());
         assertEquals(HttpClient.BASE_API + "/emails", stub.requests.get(0).url().toString());
     }
 

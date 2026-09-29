@@ -18,11 +18,10 @@ import java.util.Map;
 public abstract class BaseService {
 
     /**
-     * Lazily-initialized defaults shared by every service instance, so that repeated calls such as
-     * {@code resend.emails()} reuse one OkHttp connection pool and one Jackson mapper.
+     * Lazily-initialized mapper shared by every service instance. The shared default HTTP client lives in
+     * {@link HttpClient#getDefault()}.
      */
     private static final class Defaults {
-        static final IHttpClient<String> HTTP_CLIENT = new HttpClient();
         static final ResendMapper MAPPER = new ResendMapper();
     }
 
@@ -49,7 +48,7 @@ public abstract class BaseService {
      */
     public BaseService(final String apiKey) {
         this.apiKey = apiKey;
-        this.httpClient = Defaults.HTTP_CLIENT;
+        this.httpClient = HttpClient.getDefault();
         this.resendMapper = Defaults.MAPPER;
     }
 

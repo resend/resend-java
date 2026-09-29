@@ -24,15 +24,76 @@ public class HttpClient implements IHttpClient<String> {
     /** The User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
 
+    /**
+     * Lazily-initialized client shared by every service that isn't given one explicitly, so the whole SDK
+     * reuses one OkHttp connection pool and dispatcher by default.
+     */
+    private static final class DefaultHolder {
+        static final HttpClient INSTANCE = new HttpClient();
+    }
+
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;
 
+    /** The base URL requests are sent to, without a trailing slash. */
+    private final String baseUrl;
+
     /**
-     * Constructs an instance of the HttpClient with the provided API key.
-     *
+     * Constructs an HttpClient with a new {@link OkHttpClient} that sends requests to {@link #BASE_API}.
      */
     public HttpClient() {
-        this.httpClient = new OkHttpClient();
+        this(new OkHttpClient());
+    }
+
+    /**
+     * Constructs an HttpClient that sends requests to {@link #BASE_API} through the given {@link OkHttpClient}.
+     *
+     * @param okHttpClient The OkHttp client used to execute requests.
+     */
+    public HttpClient(final OkHttpClient okHttpClient) {
+        this(okHttpClient, BASE_API);
+    }
+
+    /**
+     * Constructs an HttpClient that sends requests to the given base URL through the given {@link OkHttpClient}.
+     *
+     * @param okHttpClient The OkHttp client used to execute requests.
+     * @param baseUrl      The base URL of the Resend API, e.g. {@code https://api.resend.com}.
+     * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL.
+     */
+    public HttpClient(final OkHttpClient okHttpClient, final String baseUrl) {
+        if (okHttpClient == null) {
+            throw new IllegalArgumentException("okHttpClient must not be null");
+        }
+        this.httpClient = okHttpClient;
+        this.baseUrl = normalizeBaseUrl(baseUrl);
+    }
+
+    /**
+     * Returns the client shared by every service that isn't configured with its own.
+     *
+     * @return The shared default HttpClient.
+     */
+    public static HttpClient getDefault() {
+        return DefaultHolder.INSTANCE;
+    }
+
+    /**
+     * Gets the underlying OkHttp client.
+     *
+     * @return The OkHttp client.
+     */
+    public OkHttpClient getOkHttpClient() {
+        return httpClient;
+    }
+
+    /**
+     * Gets the base URL requests are sent to.
+     *
+     * @return The base URL, without a trailing slash.
+     */
+    public String getBaseUrl() {
+        return baseUrl;
     }
 
     /**
@@ -54,7 +115,7 @@ public class HttpClient implements IHttpClient<String> {
         }
 
         Request request = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -90,7 +151,7 @@ public class HttpClient implements IHttpClient<String> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -133,7 +194,7 @@ public class HttpClient implements IHttpClient<String> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -269,7 +330,7 @@ public class HttpClient implements IHttpClient<String> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -295,6 +356,17 @@ public class HttpClient implements IHttpClient<String> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String normalizeBaseUrl(final String baseUrl) {
+        if (baseUrl == null || HttpUrl.parse(baseUrl) == null) {
+            throw new IllegalArgumentException("baseUrl must be a valid http or https URL, got: " + baseUrl);
+        }
+        String normalized = baseUrl;
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
     }
 }
 

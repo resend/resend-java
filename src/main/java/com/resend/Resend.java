@@ -288,7 +288,8 @@ public class Resend {
         /**
          * Sets the base URL requests are sent to. Defaults to {@value HttpClient#BASE_API}.
          *
-         * @param baseUrl The base URL, e.g. {@code https://api.resend.com}. A trailing slash is ignored.
+         * @param baseUrl The base URL, e.g. {@code https://api.resend.com}. A trailing slash is ignored; a query or
+         *                fragment is rejected by {@link #build()}.
          * @return This builder.
          */
         public Builder baseUrl(final String baseUrl) {

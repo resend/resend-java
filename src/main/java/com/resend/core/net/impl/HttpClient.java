@@ -62,7 +62,7 @@ public class HttpClient implements IHttpClient<String> {
      *
      * @param okHttpClient The OkHttp client used to execute requests.
      * @param baseUrl      The base URL of the Resend API, e.g. {@code https://api.resend.com}.
-     * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL.
+     * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL, or has a query or fragment.
      */
     public HttpClient(final OkHttpClient okHttpClient, final String baseUrl) {
         if (okHttpClient == null) {
@@ -362,8 +362,14 @@ public class HttpClient implements IHttpClient<String> {
     }
 
     private static String normalizeBaseUrl(final String baseUrl) {
-        if (baseUrl == null || HttpUrl.parse(baseUrl) == null) {
+        HttpUrl parsed = baseUrl == null ? null : HttpUrl.parse(baseUrl);
+        if (parsed == null) {
             throw new IllegalArgumentException("baseUrl must be a valid http or https URL, got: " + baseUrl);
+        }
+        // Endpoint paths (which may carry their own query string) are appended to the base URL as-is, so a
+        // query or fragment here would swallow them.
+        if (parsed.query() != null || parsed.fragment() != null) {
+            throw new IllegalArgumentException("baseUrl must not contain a query or fragment, got: " + baseUrl);
         }
         String normalized = baseUrl;
         while (normalized.endsWith("/")) {

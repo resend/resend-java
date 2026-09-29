@@ -38,6 +38,16 @@ public class HttpClientTest {
     }
 
     @Test
+    public void testBaseUrl_RejectsQueryAndFragment() {
+        OkHttpClient okHttp = new OkHttpClient();
+
+        // Endpoint paths are appended to the base URL, so these would end up inside the query or the fragment.
+        assertThrows(IllegalArgumentException.class, () -> new HttpClient(okHttp, "https://proxy.example.com/api?tenant=x"));
+        assertThrows(IllegalArgumentException.class, () -> new HttpClient(okHttp, "https://proxy.example.com/api?"));
+        assertThrows(IllegalArgumentException.class, () -> new HttpClient(okHttp, "https://proxy.example.com/api#frag"));
+    }
+
+    @Test
     public void testConstructor_RejectsNullOkHttpClient() {
         assertThrows(IllegalArgumentException.class, () -> new HttpClient(null));
     }

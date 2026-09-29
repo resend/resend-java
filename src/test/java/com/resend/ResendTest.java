@@ -199,6 +199,10 @@ public class ResendTest {
     public void testBuilder_RejectsInvalidBaseUrl() {
         assertThrows(IllegalArgumentException.class,
                 () -> Resend.builder().apiKey("re_test").baseUrl("not a url").build());
+        assertThrows(IllegalArgumentException.class,
+                () -> Resend.builder().apiKey("re_test").baseUrl("https://proxy.example.com/api?tenant=x").build());
+        assertThrows(IllegalArgumentException.class,
+                () -> Resend.builder().apiKey("re_test").baseUrl("https://proxy.example.com/api#frag").build());
     }
 
     @Test

@@ -64,4 +64,53 @@ public class Main {
 
 ```
 
+## Configuration
+
+`new Resend("re_123")` uses sensible defaults. Use `Resend.builder()` to set a proxy, timeouts or a custom base URL:
+
+```java
+import com.resend.Resend;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.time.Duration;
+
+// 1. Configure the proxy server
+Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("your.proxy.host", 8080));
+
+// 2. Add the proxy and any other options to the builder, then build the client
+Resend resend = Resend.builder()
+    .apiKey("re_123")
+    .proxy(proxy)
+    .connectTimeout(Duration.ofSeconds(5))
+    .readTimeout(Duration.ofSeconds(30))
+    .build();
+```
+
+Create one `Resend` instance and reuse it: every service it returns shares the same HTTP client.
+
+### Custom HTTP client
+
+To take full control of the HTTP layer, pass your own `IHttpClient` with `.httpClient(...)`. For example, to use
+your own `OkHttpClient` (interceptors, TLS settings, a shared connection pool), add the
+`com.squareup.okhttp3:okhttp-jvm` dependency to your build and wrap it in the built-in `HttpClient`:
+
+```java
+import com.resend.Resend;
+import com.resend.core.net.impl.HttpClient;
+import okhttp3.OkHttpClient;
+
+// 1. Configure your OkHttpClient
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    .addInterceptor(myInterceptor)
+    .build();
+
+// 2. Wrap it in the built-in HttpClient and build the client
+Resend resend = Resend.builder()
+    .apiKey("re_123")
+    .httpClient(new HttpClient(okHttpClient, "https://api.resend.com"))
+    .build();
+```
+
+A custom `httpClient` can't be combined with `baseUrl`, the timeouts or `proxy`; configure those on your client.
+
 You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-example)

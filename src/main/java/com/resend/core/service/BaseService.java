@@ -53,7 +53,8 @@ public abstract class BaseService {
     }
 
     /**
-     * Constructs a BaseService instance with a provided HTTP client, intended for testing.
+     * Constructs a BaseService instance with a provided HTTP client, e.g. one configured through
+     * {@code Resend.builder()} or a mock in tests.
      *
      * @param apiKey     The apiKey to use.
      * @param httpClient The HTTP client to use.

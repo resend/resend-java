@@ -13,8 +13,11 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * An implementation of the {@link IHttpClient} interface for performing HTTP requests.
- * This implementation utilizes the OkHttp library for handling HTTP communication.
+ * The built-in {@link IHttpClient}, backed by OkHttp.
+ *
+ * <p>To use your own {@code OkHttpClient} (interceptors, TLS settings, a shared connection pool), pass one to
+ * {@link #HttpClient(OkHttpClient, String)} and hand the result to {@code Resend.builder().httpClient(...)}. That
+ * requires declaring the {@code com.squareup.okhttp3:okhttp-jvm} dependency in your own build.</p>
  */
 public class HttpClient implements IHttpClient<String> {
 

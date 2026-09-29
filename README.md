@@ -99,9 +99,12 @@ import com.resend.Resend;
 import com.resend.core.net.impl.HttpClient;
 import okhttp3.OkHttpClient;
 
-// 1. Configure your OkHttpClient
+// 1. Configure your OkHttpClient, e.g. with an interceptor that logs every request
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-    .addInterceptor(myInterceptor)
+    .addInterceptor(chain -> {
+        System.out.println(chain.request().method() + " " + chain.request().url());
+        return chain.proceed(chain.request());
+    })
     .build();
 
 // 2. Wrap it in the built-in HttpClient and build the client

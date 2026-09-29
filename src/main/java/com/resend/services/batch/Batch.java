@@ -9,6 +9,7 @@ import com.resend.core.service.BaseService;
 import com.resend.services.batch.model.CreateBatchEmailsResponse;
 import com.resend.services.emails.model.CreateEmailOptions;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class Batch extends BaseService {
      * @return The emails ids.
      * @throws ResendException If an error occurs while sending batch emails.
      */
-    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, RequestOptions requestOptions) throws ResendException {
+    public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, @Nullable RequestOptions requestOptions) throws ResendException {
 
         String payload = super.resendMapper.writeValue(emails);
         return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateBatchEmailsResponse.class);

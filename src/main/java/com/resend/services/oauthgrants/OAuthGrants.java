@@ -9,6 +9,7 @@ import com.resend.core.service.BaseService;
 import com.resend.services.oauthgrants.model.ListOAuthGrantsResponseSuccess;
 import com.resend.services.oauthgrants.model.RevokeOAuthGrantResponseSuccess;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend OAuth Grants module.
@@ -51,7 +52,7 @@ public class OAuthGrants extends BaseService {
      * @return A ListOAuthGrantsResponseSuccess containing the paginated list of OAuth grants.
      * @throws ResendException If an error occurs during the OAuth grants list retrieval process.
      */
-    public ListOAuthGrantsResponseSuccess list(ListParams params) throws ResendException {
+    public ListOAuthGrantsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/oauth/grants" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListOAuthGrantsResponseSuccess.class);
     }

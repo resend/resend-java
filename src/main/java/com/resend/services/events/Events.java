@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.events.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend Events module.
@@ -73,7 +74,7 @@ public class Events extends BaseService {
      * @return The response containing the list of events.
      * @throws ResendException If an error occurs while listing the events.
      */
-    public ListEventsResponseSuccess list(ListParams params) throws ResendException {
+    public ListEventsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/events" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListEventsResponseSuccess.class);
     }

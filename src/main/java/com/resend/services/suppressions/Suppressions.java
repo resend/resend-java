@@ -6,6 +6,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
 import com.resend.services.suppressions.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend Suppressions module.
@@ -91,7 +92,7 @@ public class Suppressions extends BaseService {
      * @return A ListSuppressionsResponseSuccess containing the paginated list of suppressions.
      * @throws ResendException If an error occurs during the suppressions list retrieval process.
      */
-    public ListSuppressionsResponseSuccess list(ListSuppressionsParams params) throws ResendException {
+    public ListSuppressionsResponseSuccess list(@Nullable ListSuppressionsParams params) throws ResendException {
         String pathWithQuery = "/suppressions" + (params != null ? params.toQueryString() : "");
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSuppressionsResponseSuccess.class);
     }

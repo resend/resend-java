@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.domains.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend Emails module.
@@ -85,7 +86,7 @@ public final class Domains extends BaseService {
      * @return A ListDomainsResponse containing the paginated list of domains.
      * @throws ResendException If an error occurs during the domain list retrieval process.
      */
-    public ListDomainsResponse list(ListParams params) throws ResendException {
+    public ListDomainsResponse list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/domains" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListDomainsResponse.class);
     }

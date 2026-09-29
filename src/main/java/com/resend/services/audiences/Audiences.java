@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.audiences.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend Audiences module.
@@ -68,7 +69,7 @@ public class Audiences extends BaseService {
      * @deprecated Use {@link com.resend.services.segments.Segments#list(ListParams)} instead.
      */
     @Deprecated
-    public ListAudiencesResponseSuccess list(ListParams params) throws ResendException {
+    public ListAudiencesResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAudiencesResponseSuccess.class);
     }

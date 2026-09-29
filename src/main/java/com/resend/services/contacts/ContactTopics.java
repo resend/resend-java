@@ -10,6 +10,7 @@ import com.resend.services.contacts.model.ListContactTopicsResponse;
 import com.resend.services.contacts.model.UpdateContactTopicsOptions;
 import com.resend.services.contacts.model.UpdateContactTopicsResponse;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Contact Topics sub-service.
@@ -59,7 +60,7 @@ public class ContactTopics extends BaseService {
      * @return A ListContactTopicsResponse containing the paginated list of topic subscriptions.
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
-    public ListContactTopicsResponse list(String contactIdOrEmail, ListParams params) throws ResendException {
+    public ListContactTopicsResponse list(String contactIdOrEmail, @Nullable ListParams params) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }

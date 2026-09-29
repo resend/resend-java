@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.receiving.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend Receiving module for inbound emails.
@@ -61,7 +62,7 @@ public final class Receiving extends BaseService {
      * @return A ListReceivedEmailsResponse containing the paginated list of received emails.
      * @throws ResendException If an error occurs during the retrieval process.
      */
-    public ListReceivedEmailsResponse list(ListParams params) throws ResendException {
+    public ListReceivedEmailsResponse list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/emails/receiving" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListReceivedEmailsResponse.class);
     }
@@ -97,7 +98,7 @@ public final class Receiving extends BaseService {
      * @return A ListAttachmentsResponse containing the paginated list of attachments.
      * @throws ResendException If an error occurs during the retrieval process.
      */
-    public ListAttachmentsResponse listAttachments(String emailId, ListParams params) throws ResendException {
+    public ListAttachmentsResponse listAttachments(String emailId, @Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/emails/receiving/" + emailId + "/attachments" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
     }

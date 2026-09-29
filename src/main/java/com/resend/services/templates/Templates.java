@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.templates.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend Templates module.
@@ -73,7 +74,7 @@ public final class Templates extends BaseService {
      * @return A ListTemplatesResponse containing the paginated list of templates.
      * @throws ResendException If an error occurs during the templates list retrieval process.
      */
-    public ListTemplatesResponseSuccess list(ListParams params) throws ResendException {
+    public ListTemplatesResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/templates" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListTemplatesResponseSuccess.class);
     }

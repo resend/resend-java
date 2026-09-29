@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.broadcasts.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend Broadcasts module.
@@ -119,7 +120,7 @@ public class Broadcasts extends BaseService  {
      * @return A ListBroadcastsResponseSuccess containing the paginated list of broadcasts.
      * @throws ResendException If an error occurs during the broadcasts list retrieval process.
      */
-    public ListBroadcastsResponseSuccess list(ListParams params) throws ResendException {
+    public ListBroadcastsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/broadcasts" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastsResponseSuccess.class);
     }
@@ -158,7 +159,7 @@ public class Broadcasts extends BaseService  {
      * @return A ListBroadcastClickedLinksResponseSuccess containing the paginated list of clicked links.
      * @throws ResendException If an error occurs during the clicked links retrieval process.
      */
-    public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id, ListParams params) throws ResendException {
+    public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id, @Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/broadcasts/" + id + "/clicked-links" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastClickedLinksResponseSuccess.class);
     }

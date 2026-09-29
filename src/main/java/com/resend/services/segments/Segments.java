@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.segments.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend Segments module.
@@ -62,7 +63,7 @@ public class Segments extends BaseService {
      * @return A ListSegmentsResponseSuccess containing the paginated list of segments.
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
-    public ListSegmentsResponseSuccess list(ListParams params) throws ResendException {
+    public ListSegmentsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
     }

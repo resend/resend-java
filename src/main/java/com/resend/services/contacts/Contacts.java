@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend Contacts module.
@@ -36,9 +37,9 @@ import okhttp3.MediaType;
  */
 public class Contacts extends BaseService {
 
-    private ContactSegments contactSegments;
-    private ContactTopics contactTopics;
-    private ContactImports contactImports;
+    private @Nullable ContactSegments contactSegments;
+    private @Nullable ContactTopics contactTopics;
+    private @Nullable ContactImports contactImports;
 
     /**
      * Constructs an instance of the {@code Contacts} class.
@@ -148,7 +149,7 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     @Deprecated
-    public ListContactsResponseSuccess list(String segmentId, ListParams params) throws ResendException {
+    public ListContactsResponseSuccess list(String segmentId, @Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/segments/" + segmentId + "/contacts" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
     }
@@ -164,7 +165,7 @@ public class Contacts extends BaseService {
      * @return A ListContactsResponseSuccess containing the list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(ListContactsOptions options) throws ResendException {
+    public ListContactsResponseSuccess list(@Nullable ListContactsOptions options) throws ResendException {
         String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String path = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
         return execute(path, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
@@ -182,7 +183,7 @@ public class Contacts extends BaseService {
      * @return A ListContactsResponseSuccess containing the paginated list of contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(ListContactsOptions options, ListParams params) throws ResendException {
+    public ListContactsResponseSuccess list(@Nullable ListContactsOptions options, @Nullable ListParams params) throws ResendException {
         String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String basePath = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
         String pathWithQuery = basePath + URLHelper.parse(params);
@@ -206,7 +207,7 @@ public class Contacts extends BaseService {
      * @return A ListContactsResponseSuccess containing the paginated list of global contacts.
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
-    public ListContactsResponseSuccess list(ListParams params) throws ResendException {
+    public ListContactsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/contacts" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
     }
@@ -347,7 +348,7 @@ public class Contacts extends BaseService {
      * @return A ListContactTopicsResponse containing the paginated list of topic subscriptions.
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
-    public ListContactTopicsResponse getTopics(String contactIdOrEmail, ListParams params) throws ResendException {
+    public ListContactTopicsResponse getTopics(String contactIdOrEmail, @Nullable ListParams params) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }

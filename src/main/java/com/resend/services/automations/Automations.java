@@ -6,6 +6,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
 import com.resend.services.automations.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 
 /**
@@ -72,7 +73,7 @@ public class Automations extends BaseService {
      * @return The response containing the list of automations.
      * @throws ResendException If an error occurs while listing the automations.
      */
-    public ListAutomationsResponseSuccess list(ListAutomationsParams params) throws ResendException {
+    public ListAutomationsResponseSuccess list(@Nullable ListAutomationsParams params) throws ResendException {
         String pathWithQuery = "/automations" + (params != null ? params.toQueryString() : "");
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationsResponseSuccess.class);
     }
@@ -141,7 +142,7 @@ public class Automations extends BaseService {
      * @return The response containing the list of automation runs.
      * @throws ResendException If an error occurs while listing the runs.
      */
-    public ListAutomationRunsResponseSuccess listRuns(String automationId, ListAutomationRunsParams params) throws ResendException {
+    public ListAutomationRunsResponseSuccess listRuns(String automationId, @Nullable ListAutomationRunsParams params) throws ResendException {
         String pathWithQuery = "/automations/" + automationId + "/runs" + (params != null ? params.toQueryString() : "");
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationRunsResponseSuccess.class);
     }

@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Contact Segments sub-service.
@@ -104,7 +105,7 @@ public class ContactSegments extends BaseService {
      * @return The ListContactSegmentsResponseSuccess with the paginated list of segments.
      * @throws ResendException If an error occurs during the segment list retrieval process.
      */
-    public ListContactSegmentsResponseSuccess list(String contactId, ListParams params) throws ResendException {
+    public ListContactSegmentsResponseSuccess list(String contactId, @Nullable ListParams params) throws ResendException {
         if (contactId == null || contactId.isEmpty()) {
             throw new IllegalArgumentException("Contact ID must be provided");
         }

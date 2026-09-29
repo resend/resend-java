@@ -8,6 +8,7 @@ import com.resend.core.net.ListParams;
 import com.resend.core.service.BaseService;
 import com.resend.services.topics.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the Resend Topics module.
@@ -97,7 +98,7 @@ public final class Topics extends BaseService {
      * @return A ListTopicsResponse containing the paginated list of topics.
      * @throws ResendException If an error occurs during the topics list retrieval process.
      */
-    public ListTopicsResponseSuccess list(ListParams params) throws ResendException {
+    public ListTopicsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/topics" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListTopicsResponseSuccess.class);
     }

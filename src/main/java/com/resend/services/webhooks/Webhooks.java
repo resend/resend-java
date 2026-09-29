@@ -22,6 +22,7 @@ import com.resend.services.webhooks.model.ReplayWebhookEventResponseSuccess;
 import com.resend.services.webhooks.model.RotateWebhookSigningSecretResponseSuccess;
 import com.resend.services.webhooks.model.VerifyWebhookOptions;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
@@ -104,7 +105,7 @@ public final class Webhooks extends BaseService {
      * @return A ListWebhooksResponseSuccess containing the paginated list of webhooks.
      * @throws ResendException If an error occurs during the webhook list retrieval process.
      */
-    public ListWebhooksResponseSuccess list(ListParams params) throws ResendException {
+    public ListWebhooksResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/webhooks" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhooksResponseSuccess.class);
     }
@@ -128,7 +129,7 @@ public final class Webhooks extends BaseService {
      * @return A ListWebhookEventsResponseSuccess containing the webhook events.
      * @throws ResendException If an error occurs while retrieving the events.
      */
-    public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params) throws ResendException {
+    public ListWebhookEventsResponseSuccess listEvents(String webhookId, @Nullable ListWebhookEventsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
         return execute("/webhooks/" + webhookId + "/events" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventsResponseSuccess.class);
     }
@@ -189,7 +190,7 @@ public final class Webhooks extends BaseService {
      * @return A ListWebhookEventAttemptsResponseSuccess containing the delivery attempts.
      * @throws ResendException If an error occurs while retrieving the attempts.
      */
-    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params) throws ResendException {
+    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, @Nullable ListWebhookEventAttemptsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
         return execute("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventAttemptsResponseSuccess.class);
     }

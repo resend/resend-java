@@ -14,6 +14,7 @@ import com.resend.services.contacts.model.GetContactImportResponseSuccess;
 import com.resend.services.contacts.model.ListContactImportsParams;
 import com.resend.services.contacts.model.ListContactImportsResponseSuccess;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -73,8 +74,8 @@ public class ContactImports extends BaseService {
      * @return The details of the created contact import.
      * @throws ResendException If an error occurs during the contact import creation process.
      */
-    public CreateContactImportResponseSuccess create(CreateContactImportOptions options, RequestOptions requestOptions) throws ResendException {
-        if (options == null || (options.getFile() == null && options.getFileBytes() == null)) {
+    public CreateContactImportResponseSuccess create(CreateContactImportOptions options, @Nullable RequestOptions requestOptions) throws ResendException {
+        if (options == null) {
             throw new IllegalArgumentException("file must be provided");
         }
 
@@ -103,7 +104,7 @@ public class ContactImports extends BaseService {
                     CSV_MEDIA_TYPE,
                     formFields,
                     requestOptions);
-        } else {
+        } else if (options.getFileBytes() != null) {
             response = httpClient.performMultipart(
                     "/contacts/imports",
                     super.apiKey,
@@ -113,6 +114,8 @@ public class ContactImports extends BaseService {
                     CSV_MEDIA_TYPE,
                     formFields,
                     requestOptions);
+        } else {
+            throw new IllegalArgumentException("file must be provided");
         }
 
         return handle(response, CreateContactImportResponseSuccess.class);
@@ -150,12 +153,12 @@ public class ContactImports extends BaseService {
      * @return The list of contact imports matching the supplied parameters.
      * @throws ResendException If an error occurs during the contact imports list retrieval process.
      */
-    public ListContactImportsResponseSuccess list(ListContactImportsParams params) throws ResendException {
+    public ListContactImportsResponseSuccess list(@Nullable ListContactImportsParams params) throws ResendException {
         String pathWithQuery = "/contacts/imports" + buildQueryString(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactImportsResponseSuccess.class);
     }
 
-    private static String buildQueryString(ListContactImportsParams params) {
+    private static String buildQueryString(@Nullable ListContactImportsParams params) {
         if (params == null) {
             return "";
         }

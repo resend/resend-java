@@ -13,6 +13,7 @@ import com.resend.services.apikeys.model.ListApiKeysResponse;
 import com.resend.services.apikeys.model.UpdateApiKeyOptions;
 import com.resend.services.apikeys.model.UpdateApiKeyResponseSuccess;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 /**
  *  Represents the Resend ApiKeys module.
@@ -67,7 +68,7 @@ public final class ApiKeys extends BaseService {
      * @return A ListApiKeysResponse containing the paginated list of api keys.
      * @throws ResendException If an error occurs during the api keys list retrieval process.
      */
-    public ListApiKeysResponse list(ListParams params) throws ResendException {
+    public ListApiKeysResponse list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/api-keys" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListApiKeysResponse.class);
     }

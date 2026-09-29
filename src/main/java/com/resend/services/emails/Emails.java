@@ -10,6 +10,7 @@ import com.resend.core.service.BaseService;
 import com.resend.services.broadcasts.model.ListBroadcastsResponseSuccess;
 import com.resend.services.emails.model.*;
 import okhttp3.MediaType;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public final class Emails extends BaseService {
      * @return The response indicating the status of the email sending.
      * @throws ResendException If an error occurs while sending the email.
      */
-    public CreateEmailResponse send(CreateEmailOptions createEmailOptions, RequestOptions requestOptions) throws ResendException {
+    public CreateEmailResponse send(CreateEmailOptions createEmailOptions, @Nullable RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createEmailOptions);
 
         return execute("/emails", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateEmailResponse.class);
@@ -160,7 +161,7 @@ public final class Emails extends BaseService {
      * @return A ListEmailsResponseSuccess containing the paginated list of emails.
      * @throws ResendException If an error occurs during the emails list retrieval process.
      */
-    public ListEmailsResponseSuccess list(ListParams params) throws ResendException {
+    public ListEmailsResponseSuccess list(@Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/emails" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListEmailsResponseSuccess.class);
     }
@@ -196,7 +197,7 @@ public final class Emails extends BaseService {
      * @return A ListAttachmentsResponse containing the paginated list of attachments.
      * @throws ResendException If an error occurs while retrieving the attachments.
      */
-    public ListAttachmentsResponse listAttachments(String emailId, ListParams params) throws ResendException {
+    public ListAttachmentsResponse listAttachments(String emailId, @Nullable ListParams params) throws ResendException {
         String pathWithQuery = "/emails/" + emailId + "/attachments" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
     }
@@ -220,7 +221,7 @@ public final class Emails extends BaseService {
      * @return The emails metrics.
      * @throws ResendException If an error occurs while retrieving the metrics.
      */
-    public EmailsMetricsResponse metrics(GetEmailsMetricsOptions options) throws ResendException {
+    public EmailsMetricsResponse metrics(@Nullable GetEmailsMetricsOptions options) throws ResendException {
         String pathWithQuery = "/emails/metrics" + (options == null ? "" : options.toQueryString());
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), EmailsMetricsResponse.class);
     }

@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the {@code ai_credits} section of the usage response.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageAiCredits {
 
     @JsonProperty("used")
-    private Integer used;
+    private @Nullable Integer used;
 
     @JsonProperty("limit")
-    private Integer limit;
+    private @Nullable Integer limit;
 
     @JsonProperty("next_increase_at")
-    private String nextIncreaseAt;
+    private @Nullable String nextIncreaseAt;
 
     /**
      * Default constructor.
@@ -29,7 +30,7 @@ public class UsageAiCredits {
      * @param limit          The maximum allowed amount, or {@code null} when unlimited.
      * @param nextIncreaseAt The timestamp of the next scheduled credit increase, or {@code null} if none is scheduled.
      */
-    public UsageAiCredits(Integer used, Integer limit, String nextIncreaseAt) {
+    public UsageAiCredits(@Nullable Integer used, @Nullable Integer limit, @Nullable String nextIncreaseAt) {
         this.used = used;
         this.limit = limit;
         this.nextIncreaseAt = nextIncreaseAt;
@@ -40,19 +41,19 @@ public class UsageAiCredits {
      *
      * @return the amount used
      */
-    public Integer getUsed() { return used; }
+    public @Nullable Integer getUsed() { return used; }
 
     /**
      * Gets the maximum allowed amount.
      *
      * @return the limit, or {@code null} when unlimited
      */
-    public Integer getLimit() { return limit; }
+    public @Nullable Integer getLimit() { return limit; }
 
     /**
      * Gets the timestamp of the next scheduled credit increase.
      *
      * @return the next increase timestamp, or {@code null} if none is scheduled
      */
-    public String getNextIncreaseAt() { return nextIncreaseAt; }
+    public @Nullable String getNextIncreaseAt() { return nextIncreaseAt; }
 }

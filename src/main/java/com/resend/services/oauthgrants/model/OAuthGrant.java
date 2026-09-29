@@ -1,6 +1,7 @@
 package com.resend.services.oauthgrants.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,28 +11,28 @@ import java.util.List;
 public class OAuthGrant {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("client_id")
-    private String clientId;
+    private @Nullable String clientId;
 
     @JsonProperty("scopes")
-    private List<String> scopes;
+    private @Nullable List<String> scopes;
 
     @JsonProperty("resource")
-    private String resource;
+    private @Nullable String resource;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("revoked_at")
-    private String revokedAt;
+    private @Nullable String revokedAt;
 
     @JsonProperty("revoked_reason")
-    private String revokedReason;
+    private @Nullable String revokedReason;
 
     @JsonProperty("client")
-    private OAuthGrantClient client;
+    private @Nullable OAuthGrantClient client;
 
     /**
      * Default constructor.
@@ -51,8 +52,8 @@ public class OAuthGrant {
      * @param revokedReason The reason the OAuth grant was revoked, if revoked.
      * @param client        The OAuth client associated with the grant.
      */
-    public OAuthGrant(String id, String clientId, List<String> scopes, String resource, String createdAt,
-                       String revokedAt, String revokedReason, OAuthGrantClient client) {
+    public OAuthGrant(@Nullable String id, @Nullable String clientId, @Nullable List<String> scopes, @Nullable String resource, @Nullable String createdAt,
+                       @Nullable String revokedAt, @Nullable String revokedReason, @Nullable OAuthGrantClient client) {
         this.id = id;
         this.clientId = clientId;
         this.scopes = scopes;
@@ -68,7 +69,7 @@ public class OAuthGrant {
      *
      * @return the OAuth grant ID
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -77,7 +78,7 @@ public class OAuthGrant {
      *
      * @return the OAuth client ID
      */
-    public String getClientId() {
+    public @Nullable String getClientId() {
         return clientId;
     }
 
@@ -86,7 +87,7 @@ public class OAuthGrant {
      *
      * @return the granted scopes
      */
-    public List<String> getScopes() {
+    public @Nullable List<String> getScopes() {
         return scopes;
     }
 
@@ -95,7 +96,7 @@ public class OAuthGrant {
      *
      * @return the resource, or {@code null} if not limited
      */
-    public String getResource() {
+    public @Nullable String getResource() {
         return resource;
     }
 
@@ -104,7 +105,7 @@ public class OAuthGrant {
      *
      * @return the creation timestamp
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -113,7 +114,7 @@ public class OAuthGrant {
      *
      * @return the revocation timestamp, or {@code null} if still active
      */
-    public String getRevokedAt() {
+    public @Nullable String getRevokedAt() {
         return revokedAt;
     }
 
@@ -122,7 +123,7 @@ public class OAuthGrant {
      *
      * @return the revocation reason, or {@code null} if still active
      */
-    public String getRevokedReason() {
+    public @Nullable String getRevokedReason() {
         return revokedReason;
     }
 
@@ -131,7 +132,7 @@ public class OAuthGrant {
      *
      * @return the OAuth client
      */
-    public OAuthGrantClient getClient() {
+    public @Nullable OAuthGrantClient getClient() {
         return client;
     }
 }

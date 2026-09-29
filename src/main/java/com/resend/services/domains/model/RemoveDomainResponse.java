@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a response object for a domain deletion operation. This class extends the AbstractDomainAction class
@@ -27,7 +28,7 @@ public class RemoveDomainResponse extends AbstractDomainAction {
      * @param id      The unique identifier associated with the domain.
      * @param deleted A boolean flag indicating whether the domain was successfully deleted.
      */
-    public RemoveDomainResponse(String object, String id, boolean deleted) {
+    public RemoveDomainResponse(@Nullable String object, @Nullable String id, boolean deleted) {
         super(object, id);
         this.deleted = deleted;
     }

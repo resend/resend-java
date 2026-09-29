@@ -1,6 +1,7 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListApiKeysResponse {
 
     @JsonProperty("data")
-    private List<ApiKey> data;
+    private @Nullable List<ApiKey> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor. Creates an instance of ListApiKeysResponse with an empty data list.
@@ -31,7 +32,7 @@ public class ListApiKeysResponse {
      * @param hasMore Indicate if there are more items to be returned.
      * @param object the object type of the module.
      */
-    public ListApiKeysResponse(List<ApiKey> data, Boolean hasMore, String object) {
+    public ListApiKeysResponse(@Nullable List<ApiKey> data, @Nullable Boolean hasMore, @Nullable String object) {
         this.data = data;
         this.hasMore = hasMore;
         this.object = object;
@@ -42,7 +43,7 @@ public class ListApiKeysResponse {
      *
      * @return The list of API key items.
      */
-    public List<ApiKey> getData() {
+    public @Nullable List<ApiKey> getData() {
         return data;
     }
 
@@ -51,7 +52,7 @@ public class ListApiKeysResponse {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -60,7 +61,7 @@ public class ListApiKeysResponse {
      *
      * @return The type of the object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

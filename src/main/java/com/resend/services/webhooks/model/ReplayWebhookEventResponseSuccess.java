@@ -1,16 +1,17 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response from replaying a webhook event.
  */
 public class ReplayWebhookEventResponseSuccess {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Constructs an empty webhook event replay response.
@@ -23,7 +24,7 @@ public class ReplayWebhookEventResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -32,7 +33,7 @@ public class ReplayWebhookEventResponseSuccess {
      *
      * @return The webhook event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

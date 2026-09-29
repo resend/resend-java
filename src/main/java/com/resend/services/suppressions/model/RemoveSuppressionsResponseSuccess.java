@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class RemoveSuppressionsResponseSuccess {
 
     @JsonProperty("data")
-    private List<RemovedSuppression> data;
+    private @Nullable List<RemovedSuppression> data;
 
     /**
      * Default constructor
@@ -24,7 +25,7 @@ public class RemoveSuppressionsResponseSuccess {
      *
      * @param data The list of removed suppressions.
      */
-    public RemoveSuppressionsResponseSuccess(List<RemovedSuppression> data) {
+    public RemoveSuppressionsResponseSuccess(@Nullable List<RemovedSuppression> data) {
         this.data = data;
     }
 
@@ -33,7 +34,7 @@ public class RemoveSuppressionsResponseSuccess {
      *
      * @return The list of removed suppressions.
      */
-    public List<RemovedSuppression> getData() {
+    public @Nullable List<RemovedSuppression> getData() {
         return data;
     }
 }

@@ -2,22 +2,23 @@ package com.resend.services.webhooks.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.resend.services.webhooks.model.WebhookEventStatus;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Data Transfer Object for webhook event data in list responses.
  */
 public class WebhookEventDTO {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("status")
-    private WebhookEventStatus status;
+    private @Nullable WebhookEventStatus status;
 
     /**
      * Constructs an empty webhook event.
@@ -30,7 +31,7 @@ public class WebhookEventDTO {
      *
      * @return The webhook event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -39,7 +40,7 @@ public class WebhookEventDTO {
      *
      * @return The event type.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -48,7 +49,7 @@ public class WebhookEventDTO {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -57,7 +58,7 @@ public class WebhookEventDTO {
      *
      * @return The delivery status.
      */
-    public WebhookEventStatus getStatus() {
+    public @Nullable WebhookEventStatus getStatus() {
         return status;
     }
 }

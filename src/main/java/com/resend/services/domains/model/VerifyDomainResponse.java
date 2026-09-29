@@ -1,5 +1,8 @@
 package com.resend.services.domains.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a response object for a domain verification operation. This class extends the AbstractDomainAction class
  * and is used to indicate the result of the verification.
@@ -18,7 +21,7 @@ public class VerifyDomainResponse extends AbstractDomainAction {
      * @param object The object type of the response.
      * @param id     The unique identifier associated with the domain.
      */
-    public VerifyDomainResponse(String object, String id) {
+    public VerifyDomainResponse(@Nullable String object, @Nullable String id) {
         super(object, id);
     }
 }

@@ -2,6 +2,7 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to claim a domain already verified by another team.
@@ -10,22 +11,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ClaimDomainOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("region")
-    private final String region;
+    private final @Nullable String region;
 
     @JsonProperty("custom_return_path")
-    private final String customReturnPath;
+    private final @Nullable String customReturnPath;
 
     @JsonProperty("open_tracking")
-    private final Boolean openTracking;
+    private final @Nullable Boolean openTracking;
 
     @JsonProperty("click_tracking")
-    private final Boolean clickTracking;
+    private final @Nullable Boolean clickTracking;
 
     @JsonProperty("tracking_subdomain")
-    private final String trackingSubdomain;
+    private final @Nullable String trackingSubdomain;
 
     /**
      * Constructs a ClaimDomainOptions object using the provided builder.
@@ -46,7 +47,7 @@ public class ClaimDomainOptions {
      *
      * @return The domain name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -55,7 +56,7 @@ public class ClaimDomainOptions {
      *
      * @return The region.
      */
-    public String getRegion() {
+    public @Nullable String getRegion() {
         return region;
     }
 
@@ -64,7 +65,7 @@ public class ClaimDomainOptions {
      *
      * @return The custom return path.
      */
-    public String getCustomReturnPath() {
+    public @Nullable String getCustomReturnPath() {
         return customReturnPath;
     }
 
@@ -73,7 +74,7 @@ public class ClaimDomainOptions {
      *
      * @return The open tracking setting.
      */
-    public Boolean getOpenTracking() {
+    public @Nullable Boolean getOpenTracking() {
         return openTracking;
     }
 
@@ -82,7 +83,7 @@ public class ClaimDomainOptions {
      *
      * @return The click tracking setting.
      */
-    public Boolean getClickTracking() {
+    public @Nullable Boolean getClickTracking() {
         return clickTracking;
     }
 
@@ -91,7 +92,7 @@ public class ClaimDomainOptions {
      *
      * @return The tracking subdomain.
      */
-    public String getTrackingSubdomain() {
+    public @Nullable String getTrackingSubdomain() {
         return trackingSubdomain;
     }
 
@@ -115,12 +116,12 @@ public class ClaimDomainOptions {
         public Builder() {
         }
 
-        private String name;
-        private String region;
-        private String customReturnPath;
-        private Boolean openTracking;
-        private Boolean clickTracking;
-        private String trackingSubdomain;
+        private @Nullable String name;
+        private @Nullable String region;
+        private @Nullable String customReturnPath;
+        private @Nullable Boolean openTracking;
+        private @Nullable Boolean clickTracking;
+        private @Nullable String trackingSubdomain;
 
         /**
          * Set the domain name to claim.

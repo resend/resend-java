@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a DNS record associated with a domain.
@@ -13,22 +14,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Record {
 
     @JsonProperty("record")
-    private String record;
+    private @Nullable String record;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     @JsonProperty("ttl")
-    private String ttl;
+    private @Nullable String ttl;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("value")
-    private String value;
+    private @Nullable String value;
 
     @JsonProperty("priority")
     private int priority;
@@ -50,12 +51,12 @@ public class Record {
      * @param value The record value.
      * @param priority The priority of the record. (Optional)
      */
-    public Record(final String record,
-                  final String name,
-                  final String type,
-                  final String ttl,
-                  final String status,
-                  final String value,
+    public Record(final @Nullable String record,
+                  final @Nullable String name,
+                  final @Nullable String type,
+                  final @Nullable String ttl,
+                  final @Nullable String status,
+                  final @Nullable String value,
                   final int priority) {
         this.record = record;
         this.name = name;
@@ -71,7 +72,7 @@ public class Record {
      *
      * @return The record type.
      */
-    public String getRecord() {
+    public @Nullable String getRecord() {
         return record;
     }
 
@@ -80,7 +81,7 @@ public class Record {
      *
      * @return The record name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -89,7 +90,7 @@ public class Record {
      *
      * @return The record type.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -98,7 +99,7 @@ public class Record {
      *
      * @return The TTL value.
      */
-    public String getTtl() {
+    public @Nullable String getTtl() {
         return ttl;
     }
 
@@ -107,7 +108,7 @@ public class Record {
      *
      * @return The status of the record.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -116,7 +117,7 @@ public class Record {
      *
      * @return The record value.
      */
-    public String getValue() {
+    public @Nullable String getValue() {
         return value;
     }
 

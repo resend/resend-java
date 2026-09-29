@@ -1,6 +1,7 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create an api key.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateApiKeyOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("permission")
-    private final String permission;
+    private final @Nullable String permission;
 
     @JsonProperty("domain_id")
-    private final String domainId;
+    private final @Nullable String domainId;
 
     /**
      * Constructs an API Key object using the provided builder.
@@ -32,7 +33,7 @@ public class CreateApiKeyOptions {
      *
      * @return The name of the API Key.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -41,7 +42,7 @@ public class CreateApiKeyOptions {
      *
      * @return The permission of the API Key.
      */
-    public String getPermission() {
+    public @Nullable String getPermission() {
         return permission;
     }
 
@@ -50,7 +51,7 @@ public class CreateApiKeyOptions {
      *
      * @return The domain id of the API Key.
      */
-    public String getDomainId() {
+    public @Nullable String getDomainId() {
         return domainId;
     }
 
@@ -73,9 +74,9 @@ public class CreateApiKeyOptions {
         public Builder() {
         }
 
-        private String name;
-        private String permission;
-        private String domainId;
+        private @Nullable String name;
+        private @Nullable String permission;
+        private @Nullable String domainId;
 
         /**
          * Set the name of the Api Key.

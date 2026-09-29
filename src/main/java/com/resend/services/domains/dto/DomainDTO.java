@@ -1,6 +1,7 @@
 package com.resend.services.domains.dto;
 
 import com.resend.services.domains.model.AbstractDomain;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A Data Transfer Object (DTO) representing a domain. This class extends the AbstractDomain class
@@ -23,7 +24,7 @@ public class DomainDTO extends AbstractDomain {
      * @param status      The status of the domain.
      * @param region      The region of the domain.
      */
-    public DomainDTO(String id, String name, String createdAt, String status, String region) {
+    public DomainDTO(@Nullable String id, @Nullable String name, @Nullable String createdAt, @Nullable String status, @Nullable String region) {
         super(id, name, createdAt, status, region);
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class CreateDomainResponse extends AbstractDomain {
      * The list of records associated with the created domain.
      */
     @JsonProperty("records")
-    private List<Record> records;
+    private @Nullable List<Record> records;
 
     /**
      * The DNS provider of the domain.
      */
     @JsonProperty("dnsProvider")
-    private String dnsProvider;
+    private @Nullable String dnsProvider;
 
     /**
      * Default constructor for creating an empty CreateDomainResponse object.
@@ -40,13 +41,13 @@ public class CreateDomainResponse extends AbstractDomain {
      * @param dnsProvider The DNS provider of the domain.
      * @param records     The list of records associated with the created domain.
      */
-    public CreateDomainResponse(final String id,
-                                final String name,
-                                final String createdAt,
-                                final String status,
-                                final String region,
-                                final String dnsProvider,
-                                final List<Record> records) {
+    public CreateDomainResponse(final @Nullable String id,
+                                final @Nullable String name,
+                                final @Nullable String createdAt,
+                                final @Nullable String status,
+                                final @Nullable String region,
+                                final @Nullable String dnsProvider,
+                                final @Nullable List<Record> records) {
         super(id, name, createdAt, status, region);
         this.records = records;
         this.dnsProvider = dnsProvider;
@@ -57,7 +58,7 @@ public class CreateDomainResponse extends AbstractDomain {
      *
      * @return The list of records.
      */
-    public List<Record> getRecords() {
+    public @Nullable List<Record> getRecords() {
         return records;
     }
 
@@ -67,7 +68,7 @@ public class CreateDomainResponse extends AbstractDomain {
      *
      * @return The DNS provider.
      */
-    public String getDnsProvider() {
+    public @Nullable String getDnsProvider() {
         return dnsProvider;
     }
 }

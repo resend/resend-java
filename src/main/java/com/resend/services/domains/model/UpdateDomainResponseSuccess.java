@@ -1,16 +1,17 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for updating a domain.
  */
 public class UpdateDomainResponseSuccess {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -24,7 +25,7 @@ public class UpdateDomainResponseSuccess {
      * @param id          The ID of the domain.
      * @param object      The object of the domain.
      */
-    public UpdateDomainResponseSuccess(final String id, final String object) {
+    public UpdateDomainResponseSuccess(final @Nullable String id, final @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -34,7 +35,7 @@ public class UpdateDomainResponseSuccess {
      *
      * @return The ID of the domain item.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -43,7 +44,7 @@ public class UpdateDomainResponseSuccess {
      *
      * @return The object of the domain item.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 

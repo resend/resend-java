@@ -1,6 +1,7 @@
 package com.resend.services.logs.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a summary log entry returned in the list logs response.
@@ -9,22 +10,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LogEntry {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("endpoint")
-    private String endpoint;
+    private @Nullable String endpoint;
 
     @JsonProperty("method")
-    private String method;
+    private @Nullable String method;
 
     @JsonProperty("response_status")
-    private Integer responseStatus;
+    private @Nullable Integer responseStatus;
 
     @JsonProperty("user_agent")
-    private String userAgent;
+    private @Nullable String userAgent;
 
     /**
      * Default constructor.
@@ -42,7 +43,7 @@ public class LogEntry {
      * @param responseStatus The HTTP response status code.
      * @param userAgent      The user agent string.
      */
-    public LogEntry(String id, String createdAt, String endpoint, String method, Integer responseStatus, String userAgent) {
+    public LogEntry(@Nullable String id, @Nullable String createdAt, @Nullable String endpoint, @Nullable String method, @Nullable Integer responseStatus, @Nullable String userAgent) {
         this.id = id;
         this.createdAt = createdAt;
         this.endpoint = endpoint;
@@ -56,40 +57,40 @@ public class LogEntry {
      *
      * @return the log ID
      */
-    public String getId() { return id; }
+    public @Nullable String getId() { return id; }
 
     /**
      * Gets the creation timestamp of the log.
      *
      * @return the creation timestamp
      */
-    public String getCreatedAt() { return createdAt; }
+    public @Nullable String getCreatedAt() { return createdAt; }
 
     /**
      * Gets the API endpoint that was called.
      *
      * @return the endpoint path
      */
-    public String getEndpoint() { return endpoint; }
+    public @Nullable String getEndpoint() { return endpoint; }
 
     /**
      * Gets the HTTP method used.
      *
      * @return the HTTP method
      */
-    public String getMethod() { return method; }
+    public @Nullable String getMethod() { return method; }
 
     /**
      * Gets the HTTP response status code.
      *
      * @return the response status code
      */
-    public Integer getResponseStatus() { return responseStatus; }
+    public @Nullable Integer getResponseStatus() { return responseStatus; }
 
     /**
      * Gets the user agent string.
      *
      * @return the user agent
      */
-    public String getUserAgent() { return userAgent; }
+    public @Nullable String getUserAgent() { return userAgent; }
 }

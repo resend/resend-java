@@ -1,6 +1,7 @@
 package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListEventsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<EventSummary> data;
+    private @Nullable List<EventSummary> data;
 
     /**
      * Default constructor for deserialization.
@@ -31,7 +32,7 @@ public class ListEventsResponseSuccess {
      * @param hasMore Whether more results are available.
      * @param data The list of events.
      */
-    public ListEventsResponseSuccess(String object, Boolean hasMore, List<EventSummary> data) {
+    public ListEventsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<EventSummary> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,7 +43,7 @@ public class ListEventsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListEventsResponseSuccess {
      *
      * @return True if more events are available, false otherwise.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -60,7 +61,7 @@ public class ListEventsResponseSuccess {
      *
      * @return The list of event summaries.
      */
-    public List<EventSummary> getData() {
+    public @Nullable List<EventSummary> getData() {
         return data;
     }
 }

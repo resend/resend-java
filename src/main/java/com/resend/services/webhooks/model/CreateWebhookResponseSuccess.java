@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful webhook creation response.
@@ -14,20 +15,20 @@ public class CreateWebhookResponseSuccess {
     }
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("signing_secret")
-    private String signingSecret;
+    private @Nullable String signingSecret;
 
     /**
      * Gets the object type (should be "webhook").
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -36,7 +37,7 @@ public class CreateWebhookResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -45,7 +46,7 @@ public class CreateWebhookResponseSuccess {
      *
      * @return The webhook ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -54,7 +55,7 @@ public class CreateWebhookResponseSuccess {
      *
      * @param id The webhook ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -63,7 +64,7 @@ public class CreateWebhookResponseSuccess {
      *
      * @return The signing secret.
      */
-    public String getSigningSecret() {
+    public @Nullable String getSigningSecret() {
         return signingSecret;
     }
 
@@ -72,7 +73,7 @@ public class CreateWebhookResponseSuccess {
      *
      * @param signingSecret The signing secret.
      */
-    public void setSigningSecret(String signingSecret) {
+    public void setSigningSecret(@Nullable String signingSecret) {
         this.signingSecret = signingSecret;
     }
 }

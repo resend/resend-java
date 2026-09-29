@@ -1,6 +1,7 @@
 package com.resend.services.logs.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListLogsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<LogEntry> data;
+    private @Nullable List<LogEntry> data;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class ListLogsResponseSuccess {
      * @param hasMore Whether there are more items available for pagination.
      * @param data    The list of log entries.
      */
-    public ListLogsResponseSuccess(String object, Boolean hasMore, List<LogEntry> data) {
+    public ListLogsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<LogEntry> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,19 +43,19 @@ public class ListLogsResponseSuccess {
      *
      * @return the object type ("list")
      */
-    public String getObject() { return object; }
+    public @Nullable String getObject() { return object; }
 
     /**
      * Checks if there are more items available for pagination.
      *
      * @return true if more items are available, false otherwise
      */
-    public Boolean hasMore() { return hasMore; }
+    public @Nullable Boolean hasMore() { return hasMore; }
 
     /**
      * Gets the list of log entries.
      *
      * @return the list of log entries
      */
-    public List<LogEntry> getData() { return data; }
+    public @Nullable List<LogEntry> getData() { return data; }
 }

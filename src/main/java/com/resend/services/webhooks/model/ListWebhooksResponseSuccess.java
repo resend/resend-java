@@ -2,6 +2,7 @@ package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.resend.services.webhooks.dto.WebhookDTO;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListWebhooksResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<WebhookDTO> data;
+    private @Nullable List<WebhookDTO> data;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class ListWebhooksResponseSuccess {
      * @param hasMore Indicates if there are more items to be returned.
      * @param data The list of webhook data.
      */
-    public ListWebhooksResponseSuccess(String object, Boolean hasMore, List<WebhookDTO> data) {
+    public ListWebhooksResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<WebhookDTO> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,7 +43,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -60,7 +61,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @return Whether there are more items available.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -69,7 +70,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @param hasMore Whether there are more items available.
      */
-    public void setHasMore(Boolean hasMore) {
+    public void setHasMore(@Nullable Boolean hasMore) {
         this.hasMore = hasMore;
     }
 
@@ -78,7 +79,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @return The list of webhook data.
      */
-    public List<WebhookDTO> getData() {
+    public @Nullable List<WebhookDTO> getData() {
         return data;
     }
 
@@ -87,7 +88,7 @@ public class ListWebhooksResponseSuccess {
      *
      * @param data The list of webhook data.
      */
-    public void setData(List<WebhookDTO> data) {
+    public void setData(@Nullable List<WebhookDTO> data) {
         this.data = data;
     }
 }

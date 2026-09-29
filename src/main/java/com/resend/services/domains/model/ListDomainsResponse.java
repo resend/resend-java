@@ -2,6 +2,7 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.resend.services.domains.dto.DomainDTO;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class ListDomainsResponse {
      * The list of DomainDTO objects containing domain data.
      */
     @JsonProperty("data")
-    public List<DomainDTO> data;
+    public @Nullable List<DomainDTO> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor for creating an empty ListDomainsResponse object.
@@ -35,7 +36,7 @@ public class ListDomainsResponse {
      * @param hasMore Indicate if there are more items to be returned.
      * @param object the object type of the module.
      */
-    public ListDomainsResponse(List<DomainDTO> data, Boolean hasMore, String object) {
+    public ListDomainsResponse(@Nullable List<DomainDTO> data, @Nullable Boolean hasMore, @Nullable String object) {
         this.data = data;
         this.hasMore = hasMore;
         this.object = object;
@@ -46,7 +47,7 @@ public class ListDomainsResponse {
      *
      * @return The list of DomainDTO objects.
      */
-    public List<DomainDTO> getData() {
+    public @Nullable List<DomainDTO> getData() {
         return data;
     }
 
@@ -55,7 +56,7 @@ public class ListDomainsResponse {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -64,7 +65,7 @@ public class ListDomainsResponse {
      *
      * @return The type of the object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

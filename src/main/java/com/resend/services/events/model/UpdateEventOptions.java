@@ -3,6 +3,7 @@ package com.resend.services.events.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +15,10 @@ import java.util.Map;
 public class UpdateEventOptions {
 
     @JsonIgnore
-    private final String identifier;
+    private final @Nullable String identifier;
 
     @JsonProperty("schema")
-    private final Map<String, String> schema;
+    private final @Nullable Map<String, String> schema;
 
     /**
      * Constructs UpdateEventOptions using the provided builder.
@@ -34,7 +35,7 @@ public class UpdateEventOptions {
      *
      * @return The event identifier.
      */
-    public String getIdentifier() {
+    public @Nullable String getIdentifier() {
         return identifier;
     }
 
@@ -43,7 +44,7 @@ public class UpdateEventOptions {
      *
      * @return The event schema as a map of field names to types.
      */
-    public Map<String, String> getSchema() {
+    public @Nullable Map<String, String> getSchema() {
         return schema;
     }
 
@@ -65,8 +66,8 @@ public class UpdateEventOptions {
          */
         public Builder() {}
 
-        private String identifier;
-        private Map<String, String> schema;
+        private @Nullable String identifier;
+        private @Nullable Map<String, String> schema;
 
         /**
          * Sets the event identifier (UUID or name).

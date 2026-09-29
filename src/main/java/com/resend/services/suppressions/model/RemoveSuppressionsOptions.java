@@ -2,6 +2,7 @@ package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,10 @@ import java.util.List;
 public class RemoveSuppressionsOptions {
 
     @JsonProperty("emails")
-    private final List<String> emails;
+    private final @Nullable List<String> emails;
 
     @JsonProperty("ids")
-    private final List<String> ids;
+    private final @Nullable List<String> ids;
 
     /**
      * Constructs a Remove Suppressions Options object using the provided builder.
@@ -34,7 +35,7 @@ public class RemoveSuppressionsOptions {
      *
      * @return The email addresses to remove from the suppression list.
      */
-    public List<String> getEmails() {
+    public @Nullable List<String> getEmails() {
         return emails;
     }
 
@@ -43,7 +44,7 @@ public class RemoveSuppressionsOptions {
      *
      * @return The suppression IDs to remove from the suppression list.
      */
-    public List<String> getIds() {
+    public @Nullable List<String> getIds() {
         return ids;
     }
 
@@ -66,8 +67,8 @@ public class RemoveSuppressionsOptions {
         public Builder() {
         }
 
-        private List<String> emails;
-        private List<String> ids;
+        private @Nullable List<String> emails;
+        private @Nullable List<String> ids;
 
         /**
          * Set the email addresses to remove from the suppression list.

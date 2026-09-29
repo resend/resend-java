@@ -1,6 +1,7 @@
 package com.resend.services.logs.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 public class GetLogResponseSuccess extends Log {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class GetLogResponseSuccess extends Log {
      * @param responseBody   The response body.
      * @param object         The object type ("log").
      */
-    public GetLogResponseSuccess(String id, String createdAt, String endpoint, String method, Integer responseStatus, String userAgent, Map<String, Object> requestBody, Map<String, Object> responseBody, String object) {
+    public GetLogResponseSuccess(@Nullable String id, @Nullable String createdAt, @Nullable String endpoint, @Nullable String method, @Nullable Integer responseStatus, @Nullable String userAgent, @Nullable Map<String, @Nullable Object> requestBody, @Nullable Map<String, @Nullable Object> responseBody, @Nullable String object) {
         super(id, createdAt, endpoint, method, responseStatus, userAgent, requestBody, responseBody);
         this.object = object;
     }
@@ -41,7 +42,7 @@ public class GetLogResponseSuccess extends Log {
      *
      * @return The object type ("log").
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

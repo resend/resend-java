@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the TXT DNS record returned within a domain claim response.
@@ -8,16 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DomainClaimRecord {
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("value")
-    private String value;
+    private @Nullable String value;
 
     @JsonProperty("ttl")
-    private String ttl;
+    private @Nullable String ttl;
 
     /**
      * Default constructor.
@@ -33,10 +34,10 @@ public class DomainClaimRecord {
      * @param value The DNS record value.
      * @param ttl   The TTL for the DNS record.
      */
-    public DomainClaimRecord(final String type,
-                             final String name,
-                             final String value,
-                             final String ttl) {
+    public DomainClaimRecord(final @Nullable String type,
+                             final @Nullable String name,
+                             final @Nullable String value,
+                             final @Nullable String ttl) {
         this.type = type;
         this.name = name;
         this.value = value;
@@ -48,7 +49,7 @@ public class DomainClaimRecord {
      *
      * @return The DNS record type.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -57,7 +58,7 @@ public class DomainClaimRecord {
      *
      * @return The DNS record name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -66,7 +67,7 @@ public class DomainClaimRecord {
      *
      * @return The DNS record value.
      */
-    public String getValue() {
+    public @Nullable String getValue() {
         return value;
     }
 
@@ -75,7 +76,7 @@ public class DomainClaimRecord {
      *
      * @return The TTL.
      */
-    public String getTtl() {
+    public @Nullable String getTtl() {
         return ttl;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a suppression from the suppression list.
@@ -8,22 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Suppression {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("email")
-    private String email;
+    private @Nullable String email;
 
     @JsonProperty("origin")
-    private String origin;
+    private @Nullable String origin;
 
     @JsonProperty("source_id")
-    private String sourceId;
+    private @Nullable String sourceId;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * Default constructor
@@ -42,7 +43,7 @@ public class Suppression {
      * @param sourceId  The ID of the email that triggered the suppression.
      * @param createdAt The creation timestamp of the suppression.
      */
-    public Suppression(String object, String id, String email, String origin, String sourceId, String createdAt) {
+    public Suppression(@Nullable String object, @Nullable String id, @Nullable String email, @Nullable String origin, @Nullable String sourceId, @Nullable String createdAt) {
         this.object = object;
         this.id = id;
         this.email = email;
@@ -56,7 +57,7 @@ public class Suppression {
      *
      * @return The object type of the suppression.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -65,7 +66,7 @@ public class Suppression {
      *
      * @return The ID of the suppression.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -74,7 +75,7 @@ public class Suppression {
      *
      * @return The suppressed email address.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -83,7 +84,7 @@ public class Suppression {
      *
      * @return The origin of the suppression.
      */
-    public String getOrigin() {
+    public @Nullable String getOrigin() {
         return origin;
     }
 
@@ -93,7 +94,7 @@ public class Suppression {
      *
      * @return The ID of the email that triggered the suppression.
      */
-    public String getSourceId() {
+    public @Nullable String getSourceId() {
         return sourceId;
     }
 
@@ -102,7 +103,7 @@ public class Suppression {
      *
      * @return The creation timestamp of the suppression.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 }

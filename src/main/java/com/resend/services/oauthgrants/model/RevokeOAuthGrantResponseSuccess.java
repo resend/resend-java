@@ -1,6 +1,7 @@
 package com.resend.services.oauthgrants.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for revoking an OAuth grant.
@@ -8,16 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RevokeOAuthGrantResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("revoked_at")
-    private String revokedAt;
+    private @Nullable String revokedAt;
 
     @JsonProperty("revoked_reason")
-    private String revokedReason;
+    private @Nullable String revokedReason;
 
     /**
      * Default constructor.
@@ -33,7 +34,7 @@ public class RevokeOAuthGrantResponseSuccess {
      * @param revokedAt     The revocation timestamp of the OAuth grant.
      * @param revokedReason The reason the OAuth grant was revoked.
      */
-    public RevokeOAuthGrantResponseSuccess(String object, String id, String revokedAt, String revokedReason) {
+    public RevokeOAuthGrantResponseSuccess(@Nullable String object, @Nullable String id, @Nullable String revokedAt, @Nullable String revokedReason) {
         this.object = object;
         this.id = id;
         this.revokedAt = revokedAt;
@@ -45,7 +46,7 @@ public class RevokeOAuthGrantResponseSuccess {
      *
      * @return the object type ("oauth_grant")
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -54,7 +55,7 @@ public class RevokeOAuthGrantResponseSuccess {
      *
      * @return the OAuth grant ID
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -63,7 +64,7 @@ public class RevokeOAuthGrantResponseSuccess {
      *
      * @return the revocation timestamp
      */
-    public String getRevokedAt() {
+    public @Nullable String getRevokedAt() {
         return revokedAt;
     }
 
@@ -72,7 +73,7 @@ public class RevokeOAuthGrantResponseSuccess {
      *
      * @return the revocation reason
      */
-    public String getRevokedReason() {
+    public @Nullable String getRevokedReason() {
         return revokedReason;
     }
 }

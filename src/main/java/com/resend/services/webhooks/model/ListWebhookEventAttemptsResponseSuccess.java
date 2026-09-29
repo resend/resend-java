@@ -2,6 +2,7 @@ package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.resend.services.webhooks.dto.WebhookEventAttemptDTO;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public class ListWebhookEventAttemptsResponseSuccess {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<WebhookEventAttemptDTO> data;
+    private @Nullable List<WebhookEventAttemptDTO> data;
 
     /**
      * Constructs an empty webhook event attempt list response.
@@ -28,7 +29,7 @@ public class ListWebhookEventAttemptsResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -37,7 +38,7 @@ public class ListWebhookEventAttemptsResponseSuccess {
      *
      * @return True if more attempts are available, false otherwise.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -46,7 +47,7 @@ public class ListWebhookEventAttemptsResponseSuccess {
      *
      * @return The list of delivery attempts.
      */
-    public List<WebhookEventAttemptDTO> getData() {
+    public @Nullable List<WebhookEventAttemptDTO> getData() {
         return data;
     }
 }

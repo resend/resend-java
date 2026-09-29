@@ -1,6 +1,7 @@
 package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response from creating an event.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateEventResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor for deserialization.
@@ -25,7 +26,7 @@ public class CreateEventResponseSuccess {
      * @param object The object type.
      * @param id The event ID.
      */
-    public CreateEventResponseSuccess(String object, String id) {
+    public CreateEventResponseSuccess(@Nullable String object, @Nullable String id) {
         this.object = object;
         this.id = id;
     }
@@ -35,7 +36,7 @@ public class CreateEventResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -44,7 +45,7 @@ public class CreateEventResponseSuccess {
      *
      * @return The event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

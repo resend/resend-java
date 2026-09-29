@@ -1,6 +1,7 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response for updating an api key.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateApiKeyResponseSuccess {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -25,7 +26,7 @@ public class UpdateApiKeyResponseSuccess {
      * @param id     The ID of the api key.
      * @param object The object of the api key.
      */
-    public UpdateApiKeyResponseSuccess(final String id, final String object) {
+    public UpdateApiKeyResponseSuccess(final @Nullable String id, final @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -35,7 +36,7 @@ public class UpdateApiKeyResponseSuccess {
      *
      * @return The ID of the api key.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class UpdateApiKeyResponseSuccess {
      *
      * @return The object of the api key.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

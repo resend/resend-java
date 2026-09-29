@@ -2,6 +2,7 @@ package com.resend.services.webhooks.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.resend.services.webhooks.model.WebhookStatus;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -10,19 +11,19 @@ import java.util.List;
 public class WebhookDTO {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("status")
-    private WebhookStatus status;
+    private @Nullable WebhookStatus status;
 
     @JsonProperty("endpoint")
-    private String endpoint;
+    private @Nullable String endpoint;
 
     @JsonProperty("events")
-    private List<String> events;
+    private @Nullable List<String> events;
 
     /**
      * Default constructor.
@@ -39,7 +40,7 @@ public class WebhookDTO {
      * @param endpoint The webhook endpoint URL.
      * @param events The list of event names.
      */
-    public WebhookDTO(String id, String createdAt, WebhookStatus status, String endpoint, List<String> events) {
+    public WebhookDTO(@Nullable String id, @Nullable String createdAt, @Nullable WebhookStatus status, @Nullable String endpoint, @Nullable List<String> events) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -52,7 +53,7 @@ public class WebhookDTO {
      *
      * @return The webhook ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -61,7 +62,7 @@ public class WebhookDTO {
      *
      * @param id The webhook ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -70,7 +71,7 @@ public class WebhookDTO {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -79,7 +80,7 @@ public class WebhookDTO {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -88,7 +89,7 @@ public class WebhookDTO {
      *
      * @return The webhook status.
      */
-    public WebhookStatus getStatus() {
+    public @Nullable WebhookStatus getStatus() {
         return status;
     }
 
@@ -97,7 +98,7 @@ public class WebhookDTO {
      *
      * @param status The webhook status.
      */
-    public void setStatus(WebhookStatus status) {
+    public void setStatus(@Nullable WebhookStatus status) {
         this.status = status;
     }
 
@@ -106,7 +107,7 @@ public class WebhookDTO {
      *
      * @return The endpoint URL.
      */
-    public String getEndpoint() {
+    public @Nullable String getEndpoint() {
         return endpoint;
     }
 
@@ -115,7 +116,7 @@ public class WebhookDTO {
      *
      * @param endpoint The endpoint URL.
      */
-    public void setEndpoint(String endpoint) {
+    public void setEndpoint(@Nullable String endpoint) {
         this.endpoint = endpoint;
     }
 
@@ -124,7 +125,7 @@ public class WebhookDTO {
      *
      * @return The list of event names.
      */
-    public List<String> getEvents() {
+    public @Nullable List<String> getEvents() {
         return events;
     }
 
@@ -133,7 +134,7 @@ public class WebhookDTO {
      *
      * @param events The list of event names.
      */
-    public void setEvents(List<String> events) {
+    public void setEvents(@Nullable List<String> events) {
         this.events = events;
     }
 }

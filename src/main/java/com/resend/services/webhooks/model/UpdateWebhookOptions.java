@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
 public class UpdateWebhookOptions {
 
     @JsonProperty("endpoint")
-    private final String endpoint;
+    private final @Nullable String endpoint;
 
     @JsonProperty("events")
-    private final List<WebhookEvent> events;
+    private final @Nullable List<WebhookEvent> events;
 
     @JsonProperty("status")
-    private final WebhookStatus status;
+    private final @Nullable WebhookStatus status;
 
     private UpdateWebhookOptions(Builder builder) {
         this.endpoint = builder.endpoint;
@@ -28,7 +29,7 @@ public class UpdateWebhookOptions {
      *
      * @return The endpoint URL.
      */
-    public String getEndpoint() {
+    public @Nullable String getEndpoint() {
         return endpoint;
     }
 
@@ -37,7 +38,7 @@ public class UpdateWebhookOptions {
      *
      * @return The list of webhook events.
      */
-    public List<WebhookEvent> getEvents() {
+    public @Nullable List<WebhookEvent> getEvents() {
         return events;
     }
 
@@ -46,7 +47,7 @@ public class UpdateWebhookOptions {
      *
      * @return The webhook status.
      */
-    public WebhookStatus getStatus() {
+    public @Nullable WebhookStatus getStatus() {
         return status;
     }
 
@@ -69,9 +70,9 @@ public class UpdateWebhookOptions {
         public Builder() {
         }
 
-        private String endpoint;
-        private List<WebhookEvent> events;
-        private WebhookStatus status;
+        private @Nullable String endpoint;
+        private @Nullable List<WebhookEvent> events;
+        private @Nullable WebhookStatus status;
 
         /**
          * Sets the webhook endpoint URL.

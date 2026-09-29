@@ -2,6 +2,7 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update a domain.
@@ -10,18 +11,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateDomainOptions {
 
     @JsonProperty("id")
-    private final String id;
+    private final @Nullable String id;
     @JsonProperty("click_tracking")
-    private final Boolean clickTracking;
+    private final @Nullable Boolean clickTracking;
 
     @JsonProperty("open_tracking")
-    private final Boolean openTracking;
+    private final @Nullable Boolean openTracking;
 
     @JsonProperty("tls")
-    private final Tls tls;
+    private final @Nullable Tls tls;
 
     @JsonProperty("tracking_subdomain")
-    private final String trackingSubdomain;
+    private final @Nullable String trackingSubdomain;
 
     /**
      * Constructs a UpdateDomainOptions object using the provided builder.
@@ -41,7 +42,7 @@ public class UpdateDomainOptions {
      *
      * @return The id of the domain.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -50,7 +51,7 @@ public class UpdateDomainOptions {
      *
      * @return The clickTracking state in the domain.
      */
-    public Boolean getClickTracking() {
+    public @Nullable Boolean getClickTracking() {
         return clickTracking;
     }
 
@@ -59,7 +60,7 @@ public class UpdateDomainOptions {
      *
      * @return The openTracking state in the domain.
      */
-    public Boolean getOpenTracking() {
+    public @Nullable Boolean getOpenTracking() {
         return openTracking;
     }
 
@@ -68,7 +69,7 @@ public class UpdateDomainOptions {
      *
      * @return The TLS setting for the domain.
      */
-    public Tls getTls() {
+    public @Nullable Tls getTls() {
         return tls;
     }
 
@@ -77,7 +78,7 @@ public class UpdateDomainOptions {
      *
      * @return The subdomain used for click and open tracking.
      */
-    public String getTrackingSubdomain() {
+    public @Nullable String getTrackingSubdomain() {
         return trackingSubdomain;
     }
 
@@ -100,11 +101,11 @@ public class UpdateDomainOptions {
         public Builder() {
         }
 
-        private String id;
-        private Boolean clickTracking;
-        private Boolean openTracking;
-        private Tls tls;
-        private String trackingSubdomain;
+        private @Nullable String id;
+        private @Nullable Boolean clickTracking;
+        private @Nullable Boolean openTracking;
+        private @Nullable Tls tls;
+        private @Nullable String trackingSubdomain;
 
         /**
          * Set the id of the domain.

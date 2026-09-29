@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the email usage for a single period (daily or monthly).
@@ -8,19 +9,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageEmailsPeriod {
 
     @JsonProperty("used")
-    private Integer used;
+    private @Nullable Integer used;
 
     @JsonProperty("limit")
-    private Integer limit;
+    private @Nullable Integer limit;
 
     @JsonProperty("sent")
-    private Integer sent;
+    private @Nullable Integer sent;
 
     @JsonProperty("received")
-    private Integer received;
+    private @Nullable Integer received;
 
     @JsonProperty("resets_at")
-    private String resetsAt;
+    private @Nullable String resetsAt;
 
     /**
      * Default constructor.
@@ -37,7 +38,7 @@ public class UsageEmailsPeriod {
      * @param received The number of emails received in this period.
      * @param resetsAt The timestamp at which this period's usage resets.
      */
-    public UsageEmailsPeriod(Integer used, Integer limit, Integer sent, Integer received, String resetsAt) {
+    public UsageEmailsPeriod(@Nullable Integer used, @Nullable Integer limit, @Nullable Integer sent, @Nullable Integer received, @Nullable String resetsAt) {
         this.used = used;
         this.limit = limit;
         this.sent = sent;
@@ -50,33 +51,33 @@ public class UsageEmailsPeriod {
      *
      * @return the amount used
      */
-    public Integer getUsed() { return used; }
+    public @Nullable Integer getUsed() { return used; }
 
     /**
      * Gets the maximum allowed amount.
      *
      * @return the limit, or {@code null} when unlimited
      */
-    public Integer getLimit() { return limit; }
+    public @Nullable Integer getLimit() { return limit; }
 
     /**
      * Gets the number of emails sent in this period.
      *
      * @return the number sent
      */
-    public Integer getSent() { return sent; }
+    public @Nullable Integer getSent() { return sent; }
 
     /**
      * Gets the number of emails received in this period.
      *
      * @return the number received
      */
-    public Integer getReceived() { return received; }
+    public @Nullable Integer getReceived() { return received; }
 
     /**
      * Gets the timestamp at which this period's usage resets.
      *
      * @return the reset timestamp
      */
-    public String getResetsAt() { return resetsAt; }
+    public @Nullable String getResetsAt() { return resetsAt; }
 }

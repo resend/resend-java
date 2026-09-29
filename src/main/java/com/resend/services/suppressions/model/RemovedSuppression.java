@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a suppression removed from the suppression list.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RemovedSuppression {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("deleted")
-    private Boolean deleted;
+    private @Nullable Boolean deleted;
 
     /**
      * Default constructor
@@ -30,7 +31,7 @@ public class RemovedSuppression {
      * @param id      The ID of the suppression.
      * @param deleted Whether the suppression was deleted.
      */
-    public RemovedSuppression(String object, String id, Boolean deleted) {
+    public RemovedSuppression(@Nullable String object, @Nullable String id, @Nullable Boolean deleted) {
         this.object = object;
         this.id = id;
         this.deleted = deleted;
@@ -41,7 +42,7 @@ public class RemovedSuppression {
      *
      * @return The object type of the suppression.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -50,7 +51,7 @@ public class RemovedSuppression {
      *
      * @return The ID of the suppression.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -59,7 +60,7 @@ public class RemovedSuppression {
      *
      * @return Whether the suppression was deleted.
      */
-    public Boolean getDeleted() {
+    public @Nullable Boolean getDeleted() {
         return deleted;
     }
 }

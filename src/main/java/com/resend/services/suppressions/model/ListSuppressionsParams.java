@@ -2,6 +2,7 @@ package com.resend.services.suppressions.model;
 
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.ListParams;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -11,10 +12,10 @@ import java.util.Map;
  */
 public class ListSuppressionsParams {
 
-    private final Integer limit;
-    private final String after;
-    private final String before;
-    private final SuppressionOrigin origin;
+    private final @Nullable Integer limit;
+    private final @Nullable String after;
+    private final @Nullable String before;
+    private final @Nullable SuppressionOrigin origin;
 
     /**
      * Constructs ListSuppressionsParams using the provided builder.
@@ -33,7 +34,7 @@ public class ListSuppressionsParams {
      *
      * @return The limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -42,7 +43,7 @@ public class ListSuppressionsParams {
      *
      * @return The after cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -51,7 +52,7 @@ public class ListSuppressionsParams {
      *
      * @return The before cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -60,7 +61,7 @@ public class ListSuppressionsParams {
      *
      * @return The suppression origin filter.
      */
-    public SuppressionOrigin getOrigin() {
+    public @Nullable SuppressionOrigin getOrigin() {
         return origin;
     }
 
@@ -102,10 +103,10 @@ public class ListSuppressionsParams {
         public Builder() {
         }
 
-        private Integer limit;
-        private String after;
-        private String before;
-        private SuppressionOrigin origin;
+        private @Nullable Integer limit;
+        private @Nullable String after;
+        private @Nullable String before;
+        private @Nullable SuppressionOrigin origin;
 
         /**
          * Sets the maximum number of results.

@@ -2,6 +2,7 @@ package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the sending and receiving capabilities of a domain.
@@ -10,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DomainCapabilities {
 
     @JsonProperty("sending")
-    private final DomainCapabilityStatus sending;
+    private final @Nullable DomainCapabilityStatus sending;
 
     @JsonProperty("receiving")
-    private final DomainCapabilityStatus receiving;
+    private final @Nullable DomainCapabilityStatus receiving;
 
     /**
      * Constructs a DomainCapabilities object using the provided builder.
@@ -30,7 +31,7 @@ public class DomainCapabilities {
      *
      * @return The sending capability of the domain.
      */
-    public DomainCapabilityStatus getSending() {
+    public @Nullable DomainCapabilityStatus getSending() {
         return sending;
     }
 
@@ -39,7 +40,7 @@ public class DomainCapabilities {
      *
      * @return The receiving capability of the domain.
      */
-    public DomainCapabilityStatus getReceiving() {
+    public @Nullable DomainCapabilityStatus getReceiving() {
         return receiving;
     }
 
@@ -62,8 +63,8 @@ public class DomainCapabilities {
         public Builder() {
         }
 
-        private DomainCapabilityStatus sending;
-        private DomainCapabilityStatus receiving;
+        private @Nullable DomainCapabilityStatus sending;
+        private @Nullable DomainCapabilityStatus receiving;
 
         /**
          * Set the sending capability of the domain.

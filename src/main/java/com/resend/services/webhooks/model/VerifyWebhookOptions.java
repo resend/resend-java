@@ -1,5 +1,7 @@
 package com.resend.services.webhooks.model;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +10,9 @@ import java.util.Map;
  */
 public class VerifyWebhookOptions {
 
-    private final String payload;
+    private final @Nullable String payload;
     private final Map<String, String> headers;
-    private final String secret;
+    private final @Nullable String secret;
 
     private VerifyWebhookOptions(Builder builder) {
         this.payload = builder.payload;
@@ -23,7 +25,7 @@ public class VerifyWebhookOptions {
      *
      * @return The payload string.
      */
-    public String getPayload() {
+    public @Nullable String getPayload() {
         return payload;
     }
 
@@ -41,7 +43,7 @@ public class VerifyWebhookOptions {
      *
      * @return The secret string (including whsec_ prefix).
      */
-    public String getSecret() {
+    public @Nullable String getSecret() {
         return secret;
     }
 
@@ -64,9 +66,9 @@ public class VerifyWebhookOptions {
         public Builder() {
         }
 
-        private String payload;
+        private @Nullable String payload;
         private Map<String, String> headers = new HashMap<String, String>();
-        private String secret;
+        private @Nullable String secret;
 
         /**
          * Sets the raw webhook payload (request body).
@@ -97,7 +99,7 @@ public class VerifyWebhookOptions {
          * @param headers A map of header names to values.
          * @return This builder instance.
          */
-        public Builder addHeaders(Map<String, String> headers) {
+        public Builder addHeaders(@Nullable Map<String, String> headers) {
             if (headers != null) {
                 this.headers.putAll(headers);
             }

@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a simple used/limit quota, shared by several sections of the usage response
@@ -9,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageQuota {
 
     @JsonProperty("used")
-    private Integer used;
+    private @Nullable Integer used;
 
     @JsonProperty("limit")
-    private Integer limit;
+    private @Nullable Integer limit;
 
     /**
      * Default constructor.
@@ -26,7 +27,7 @@ public class UsageQuota {
      * @param used  The amount currently used.
      * @param limit The maximum allowed amount, or {@code null} when unlimited.
      */
-    public UsageQuota(Integer used, Integer limit) {
+    public UsageQuota(@Nullable Integer used, @Nullable Integer limit) {
         this.used = used;
         this.limit = limit;
     }
@@ -36,12 +37,12 @@ public class UsageQuota {
      *
      * @return the amount used
      */
-    public Integer getUsed() { return used; }
+    public @Nullable Integer getUsed() { return used; }
 
     /**
      * Gets the maximum allowed amount.
      *
      * @return the limit, or {@code null} when unlimited
      */
-    public Integer getLimit() { return limit; }
+    public @Nullable Integer getLimit() { return limit; }
 }

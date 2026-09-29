@@ -1,6 +1,7 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update an api key.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateApiKeyOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * Constructs an UpdateApiKeyOptions object using the provided builder.
@@ -24,7 +25,7 @@ public class UpdateApiKeyOptions {
      *
      * @return The name of the API Key.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -47,7 +48,7 @@ public class UpdateApiKeyOptions {
         public Builder() {
         }
 
-        private String name;
+        private @Nullable String name;
 
         /**
          * Set the name of the Api Key.

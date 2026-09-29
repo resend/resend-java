@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a domain claim response returned by the claim, get, and verify claim endpoints.
@@ -8,22 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DomainClaimResponseSuccess extends AbstractDomain {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("domain_id")
-    private String domainId;
+    private @Nullable String domainId;
 
     @JsonProperty("record")
-    private DomainClaimRecord record;
+    private @Nullable DomainClaimRecord record;
 
     @JsonProperty("blocked_reason")
-    private String blockedReason;
+    private @Nullable String blockedReason;
 
     @JsonProperty("failure_reason")
-    private String failureReason;
+    private @Nullable String failureReason;
 
     @JsonProperty("expires_at")
-    private String expiresAt;
+    private @Nullable String expiresAt;
 
     /**
      * Default constructor.
@@ -46,17 +47,17 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      * @param createdAt     The creation timestamp.
      * @param expiresAt     The expiration timestamp.
      */
-    public DomainClaimResponseSuccess(final String object,
-                                      final String id,
-                                      final String name,
-                                      final String status,
-                                      final String domainId,
-                                      final String region,
-                                      final DomainClaimRecord record,
-                                      final String blockedReason,
-                                      final String failureReason,
-                                      final String createdAt,
-                                      final String expiresAt) {
+    public DomainClaimResponseSuccess(final @Nullable String object,
+                                      final @Nullable String id,
+                                      final @Nullable String name,
+                                      final @Nullable String status,
+                                      final @Nullable String domainId,
+                                      final @Nullable String region,
+                                      final @Nullable DomainClaimRecord record,
+                                      final @Nullable String blockedReason,
+                                      final @Nullable String failureReason,
+                                      final @Nullable String createdAt,
+                                      final @Nullable String expiresAt) {
         super(id, name, createdAt, status, region);
         this.object = object;
         this.domainId = domainId;
@@ -71,7 +72,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -80,7 +81,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The domain ID.
      */
-    public String getDomainId() {
+    public @Nullable String getDomainId() {
         return domainId;
     }
 
@@ -89,7 +90,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The DNS record.
      */
-    public DomainClaimRecord getRecord() {
+    public @Nullable DomainClaimRecord getRecord() {
         return record;
     }
 
@@ -98,7 +99,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The blocked reason.
      */
-    public String getBlockedReason() {
+    public @Nullable String getBlockedReason() {
         return blockedReason;
     }
 
@@ -107,7 +108,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The failure reason.
      */
-    public String getFailureReason() {
+    public @Nullable String getFailureReason() {
         return failureReason;
     }
 
@@ -116,7 +117,7 @@ public class DomainClaimResponseSuccess extends AbstractDomain {
      *
      * @return The expiration timestamp.
      */
-    public String getExpiresAt() {
+    public @Nullable String getExpiresAt() {
         return expiresAt;
     }
 }

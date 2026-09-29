@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful webhook update response.
@@ -14,17 +15,17 @@ public class UpdateWebhookResponseSuccess {
     }
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Gets the object type (should be "webhook").
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -33,7 +34,7 @@ public class UpdateWebhookResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -42,7 +43,7 @@ public class UpdateWebhookResponseSuccess {
      *
      * @return The webhook ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -51,7 +52,7 @@ public class UpdateWebhookResponseSuccess {
      *
      * @param id The webhook ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 }

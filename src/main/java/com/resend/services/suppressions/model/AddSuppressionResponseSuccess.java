@@ -1,5 +1,8 @@
 package com.resend.services.suppressions.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a successful response for adding an email address to the suppression list.
  * Extends the AddedSuppression class.
@@ -19,7 +22,7 @@ public class AddSuppressionResponseSuccess extends AddedSuppression {
      * @param object The object type of the suppression.
      * @param id     The ID of the suppression.
      */
-    public AddSuppressionResponseSuccess(String object, String id) {
+    public AddSuppressionResponseSuccess(@Nullable String object, @Nullable String id) {
         super(object, id);
     }
 }

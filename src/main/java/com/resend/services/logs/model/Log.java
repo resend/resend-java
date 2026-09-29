@@ -1,6 +1,7 @@
 package com.resend.services.logs.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -10,28 +11,28 @@ import java.util.Map;
 public class Log {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("endpoint")
-    private String endpoint;
+    private @Nullable String endpoint;
 
     @JsonProperty("method")
-    private String method;
+    private @Nullable String method;
 
     @JsonProperty("response_status")
-    private Integer responseStatus;
+    private @Nullable Integer responseStatus;
 
     @JsonProperty("user_agent")
-    private String userAgent;
+    private @Nullable String userAgent;
 
     @JsonProperty("request_body")
-    private Map<String, Object> requestBody;
+    private @Nullable Map<String, @Nullable Object> requestBody;
 
     @JsonProperty("response_body")
-    private Map<String, Object> responseBody;
+    private @Nullable Map<String, @Nullable Object> responseBody;
 
     /**
      * Default constructor.
@@ -51,7 +52,7 @@ public class Log {
      * @param requestBody    The request body.
      * @param responseBody   The response body.
      */
-    public Log(String id, String createdAt, String endpoint, String method, Integer responseStatus, String userAgent, Map<String, Object> requestBody, Map<String, Object> responseBody) {
+    public Log(@Nullable String id, @Nullable String createdAt, @Nullable String endpoint, @Nullable String method, @Nullable Integer responseStatus, @Nullable String userAgent, @Nullable Map<String, @Nullable Object> requestBody, @Nullable Map<String, @Nullable Object> responseBody) {
         this.id = id;
         this.createdAt = createdAt;
         this.endpoint = endpoint;
@@ -67,54 +68,54 @@ public class Log {
      *
      * @return the log ID
      */
-    public String getId() { return id; }
+    public @Nullable String getId() { return id; }
 
     /**
      * Gets the creation timestamp of the log.
      *
      * @return the creation timestamp
      */
-    public String getCreatedAt() { return createdAt; }
+    public @Nullable String getCreatedAt() { return createdAt; }
 
     /**
      * Gets the API endpoint that was called.
      *
      * @return the endpoint path
      */
-    public String getEndpoint() { return endpoint; }
+    public @Nullable String getEndpoint() { return endpoint; }
 
     /**
      * Gets the HTTP method used.
      *
      * @return the HTTP method
      */
-    public String getMethod() { return method; }
+    public @Nullable String getMethod() { return method; }
 
     /**
      * Gets the HTTP response status code.
      *
      * @return the response status code
      */
-    public Integer getResponseStatus() { return responseStatus; }
+    public @Nullable Integer getResponseStatus() { return responseStatus; }
 
     /**
      * Gets the user agent string.
      *
      * @return the user agent
      */
-    public String getUserAgent() { return userAgent; }
+    public @Nullable String getUserAgent() { return userAgent; }
 
     /**
      * Gets the request body.
      *
      * @return the request body as a map
      */
-    public Map<String, Object> getRequestBody() { return requestBody; }
+    public @Nullable Map<String, @Nullable Object> getRequestBody() { return requestBody; }
 
     /**
      * Gets the response body.
      *
      * @return the response body as a map
      */
-    public Map<String, Object> getResponseBody() { return responseBody; }
+    public @Nullable Map<String, @Nullable Object> getResponseBody() { return responseBody; }
 }

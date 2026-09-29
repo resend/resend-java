@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create a domain.
@@ -8,28 +9,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateDomainOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("region")
-    private final String region;
+    private final @Nullable String region;
 
     @JsonProperty("custom_return_path")
-    private final String customReturnPath;
+    private final @Nullable String customReturnPath;
 
     @JsonProperty("open_tracking")
-    private final Boolean openTracking;
+    private final @Nullable Boolean openTracking;
 
     @JsonProperty("click_tracking")
-    private final Boolean clickTracking;
+    private final @Nullable Boolean clickTracking;
 
     @JsonProperty("tls")
-    private final Tls tls;
+    private final @Nullable Tls tls;
 
     @JsonProperty("capabilities")
-    private final DomainCapabilities capabilities;
+    private final @Nullable DomainCapabilities capabilities;
 
     @JsonProperty("tracking_subdomain")
-    private final String trackingSubdomain;
+    private final @Nullable String trackingSubdomain;
 
     /**
      * Constructs a CreateDomainOptions object using the provided builder.
@@ -52,7 +53,7 @@ public class CreateDomainOptions {
      *
      * @return The name of the domain.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -61,7 +62,7 @@ public class CreateDomainOptions {
      *
      * @return The region of the domain.
      */
-    public String getRegion() {
+    public @Nullable String getRegion() {
         return region;
     }
 
@@ -70,7 +71,7 @@ public class CreateDomainOptions {
      *
      * @return The customReturnPath of the domain.
      */
-    public String getCustomReturnPath() {
+    public @Nullable String getCustomReturnPath() {
         return customReturnPath;
     }
 
@@ -79,7 +80,7 @@ public class CreateDomainOptions {
      *
      * @return The openTracking state in the domain.
      */
-    public Boolean getOpenTracking() {
+    public @Nullable Boolean getOpenTracking() {
         return openTracking;
     }
 
@@ -88,7 +89,7 @@ public class CreateDomainOptions {
      *
      * @return The clickTracking state in the domain.
      */
-    public Boolean getClickTracking() {
+    public @Nullable Boolean getClickTracking() {
         return clickTracking;
     }
 
@@ -97,7 +98,7 @@ public class CreateDomainOptions {
      *
      * @return The TLS setting for the domain.
      */
-    public Tls getTls() {
+    public @Nullable Tls getTls() {
         return tls;
     }
 
@@ -106,7 +107,7 @@ public class CreateDomainOptions {
      *
      * @return The capabilities of the domain.
      */
-    public DomainCapabilities getCapabilities() {
+    public @Nullable DomainCapabilities getCapabilities() {
         return capabilities;
     }
 
@@ -115,7 +116,7 @@ public class CreateDomainOptions {
      *
      * @return The trackingSubdomain of the domain.
      */
-    public String getTrackingSubdomain() {
+    public @Nullable String getTrackingSubdomain() {
         return trackingSubdomain;
     }
 
@@ -138,14 +139,14 @@ public class CreateDomainOptions {
         public Builder() {
         }
 
-        private String name;
-        private String region;
-        private String customReturnPath;
-        private Boolean openTracking;
-        private Boolean clickTracking;
-        private Tls tls;
-        private DomainCapabilities capabilities;
-        private String trackingSubdomain;
+        private @Nullable String name;
+        private @Nullable String region;
+        private @Nullable String customReturnPath;
+        private @Nullable Boolean openTracking;
+        private @Nullable Boolean clickTracking;
+        private @Nullable Tls tls;
+        private @Nullable DomainCapabilities capabilities;
+        private @Nullable String trackingSubdomain;
 
         /**
          * Set the name of the domain.

@@ -2,6 +2,7 @@ package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +14,10 @@ import java.util.Map;
 public class CreateEventOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("schema")
-    private final Map<String, String> schema;
+    private final @Nullable Map<String, String> schema;
 
     /**
      * Constructs CreateEventOptions using the provided builder.
@@ -33,7 +34,7 @@ public class CreateEventOptions {
      *
      * @return The event name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -42,7 +43,7 @@ public class CreateEventOptions {
      *
      * @return The event schema as a map of field names to types.
      */
-    public Map<String, String> getSchema() {
+    public @Nullable Map<String, String> getSchema() {
         return schema;
     }
 
@@ -64,8 +65,8 @@ public class CreateEventOptions {
          */
         public Builder() {}
 
-        private String name;
-        private Map<String, String> schema;
+        private @Nullable String name;
+        private @Nullable Map<String, String> schema;
 
         /**
          * Sets the event name.

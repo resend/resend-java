@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 /**
@@ -8,25 +9,25 @@ import java.util.Map;
  */
 public class GetWebhookEventResponseSuccess {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("type")
-    private String type;
+    private @Nullable String type;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("status")
-    private WebhookEventStatus status;
+    private @Nullable WebhookEventStatus status;
 
     @JsonProperty("next_attempt_at")
-    private String nextAttemptAt;
+    private @Nullable String nextAttemptAt;
 
     @JsonProperty("payload")
-    private Map<String, Object> payload;
+    private @Nullable Map<String, @Nullable Object> payload;
 
     /**
      * Constructs an empty webhook event response.
@@ -39,7 +40,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -48,7 +49,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The webhook event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -57,7 +58,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The event type.
      */
-    public String getType() {
+    public @Nullable String getType() {
         return type;
     }
 
@@ -66,7 +67,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -75,7 +76,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The delivery status.
      */
-    public WebhookEventStatus getStatus() {
+    public @Nullable WebhookEventStatus getStatus() {
         return status;
     }
 
@@ -84,7 +85,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The next attempt timestamp, or null when no attempt is scheduled.
      */
-    public String getNextAttemptAt() {
+    public @Nullable String getNextAttemptAt() {
         return nextAttemptAt;
     }
 
@@ -93,7 +94,7 @@ public class GetWebhookEventResponseSuccess {
      *
      * @return The event payload.
      */
-    public Map<String, Object> getPayload() {
+    public @Nullable Map<String, @Nullable Object> getPayload() {
         return payload;
     }
 }

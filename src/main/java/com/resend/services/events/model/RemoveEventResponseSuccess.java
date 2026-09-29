@@ -1,6 +1,7 @@
 package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response from removing an event.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RemoveEventResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("deleted")
-    private Boolean deleted;
+    private @Nullable Boolean deleted;
 
     /**
      * Default constructor for deserialization.
@@ -29,7 +30,7 @@ public class RemoveEventResponseSuccess {
      * @param id The event ID.
      * @param deleted Whether the event was deleted.
      */
-    public RemoveEventResponseSuccess(String object, String id, Boolean deleted) {
+    public RemoveEventResponseSuccess(@Nullable String object, @Nullable String id, @Nullable Boolean deleted) {
         this.object = object;
         this.id = id;
         this.deleted = deleted;
@@ -40,7 +41,7 @@ public class RemoveEventResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -49,7 +50,7 @@ public class RemoveEventResponseSuccess {
      *
      * @return The event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -58,7 +59,7 @@ public class RemoveEventResponseSuccess {
      *
      * @return True if deleted, false otherwise.
      */
-    public Boolean getDeleted() {
+    public @Nullable Boolean getDeleted() {
         return deleted;
     }
 }

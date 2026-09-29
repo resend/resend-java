@@ -1,6 +1,7 @@
 package com.resend.services.apikeys.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the API key response.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateApiKeyResponse {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("token")
-    private String token;
+    private @Nullable String token;
 
     /**
      * Default constructor. Creates an instance of CreateApiKeyResponse with default values for id and token.
@@ -25,7 +26,7 @@ public class CreateApiKeyResponse {
      * @param id    The ID of the API key.
      * @param token The token of the API key.
      */
-    public CreateApiKeyResponse(String id, String token) {
+    public CreateApiKeyResponse(@Nullable String id, @Nullable String token) {
         this.id = id;
         this.token = token;
     }
@@ -35,7 +36,7 @@ public class CreateApiKeyResponse {
      *
      * @return The ID of the API key.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class CreateApiKeyResponse {
      *
      * @return The token of the API key.
      */
-    public String getToken() {
+    public @Nullable String getToken() {
         return token;
     }
 }

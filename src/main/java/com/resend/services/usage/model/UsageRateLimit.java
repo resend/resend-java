@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the {@code rate_limit} section of the usage response.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageRateLimit {
 
     @JsonProperty("limit")
-    private Integer limit;
+    private @Nullable Integer limit;
 
     @JsonProperty("duration")
-    private String duration;
+    private @Nullable String duration;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class UsageRateLimit {
      * @param limit    The maximum number of requests allowed per duration window.
      * @param duration The duration of the rate limit window (e.g. {@code "1000ms"}).
      */
-    public UsageRateLimit(Integer limit, String duration) {
+    public UsageRateLimit(@Nullable Integer limit, @Nullable String duration) {
         this.limit = limit;
         this.duration = duration;
     }
@@ -35,12 +36,12 @@ public class UsageRateLimit {
      *
      * @return the rate limit
      */
-    public Integer getLimit() { return limit; }
+    public @Nullable Integer getLimit() { return limit; }
 
     /**
      * Gets the duration of the rate limit window.
      *
      * @return the duration (e.g. {@code "1000ms"})
      */
-    public String getDuration() { return duration; }
+    public @Nullable String getDuration() { return duration; }
 }

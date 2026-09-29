@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -15,32 +16,32 @@ public class GetWebhookResponseSuccess {
     }
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("status")
-    private WebhookStatus status;
+    private @Nullable WebhookStatus status;
 
     @JsonProperty("endpoint")
-    private String endpoint;
+    private @Nullable String endpoint;
 
     @JsonProperty("events")
-    private List<String> events;
+    private @Nullable List<String> events;
 
     @JsonProperty("signing_secret")
-    private String signingSecret;
+    private @Nullable String signingSecret;
 
     /**
      * Gets the object type (should be "webhook").
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -49,7 +50,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -58,7 +59,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The webhook ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -67,7 +68,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param id The webhook ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -76,7 +77,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -85,7 +86,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -94,7 +95,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The webhook status.
      */
-    public WebhookStatus getStatus() {
+    public @Nullable WebhookStatus getStatus() {
         return status;
     }
 
@@ -103,7 +104,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param status The webhook status.
      */
-    public void setStatus(WebhookStatus status) {
+    public void setStatus(@Nullable WebhookStatus status) {
         this.status = status;
     }
 
@@ -112,7 +113,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The endpoint URL.
      */
-    public String getEndpoint() {
+    public @Nullable String getEndpoint() {
         return endpoint;
     }
 
@@ -121,7 +122,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param endpoint The endpoint URL.
      */
-    public void setEndpoint(String endpoint) {
+    public void setEndpoint(@Nullable String endpoint) {
         this.endpoint = endpoint;
     }
 
@@ -130,7 +131,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The list of event names.
      */
-    public List<String> getEvents() {
+    public @Nullable List<String> getEvents() {
         return events;
     }
 
@@ -139,7 +140,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param events The list of event names.
      */
-    public void setEvents(List<String> events) {
+    public void setEvents(@Nullable List<String> events) {
         this.events = events;
     }
 
@@ -148,7 +149,7 @@ public class GetWebhookResponseSuccess {
      *
      * @return The signing secret.
      */
-    public String getSigningSecret() {
+    public @Nullable String getSigningSecret() {
         return signingSecret;
     }
 
@@ -157,7 +158,7 @@ public class GetWebhookResponseSuccess {
      *
      * @param signingSecret The signing secret.
      */
-    public void setSigningSecret(String signingSecret) {
+    public void setSigningSecret(@Nullable String signingSecret) {
         this.signingSecret = signingSecret;
     }
 }

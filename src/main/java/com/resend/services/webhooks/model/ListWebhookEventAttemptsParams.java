@@ -2,13 +2,14 @@ package com.resend.services.webhooks.model;
 
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.ListParams;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the pagination parameters for listing webhook event attempts.
  */
 public class ListWebhookEventAttemptsParams {
-    private final Integer limit;
-    private final String after;
+    private final @Nullable Integer limit;
+    private final @Nullable String after;
 
     /**
      * Constructs the parameters from a builder.
@@ -25,7 +26,7 @@ public class ListWebhookEventAttemptsParams {
      *
      * @return The result limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -34,7 +35,7 @@ public class ListWebhookEventAttemptsParams {
      *
      * @return The pagination cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -60,8 +61,8 @@ public class ListWebhookEventAttemptsParams {
      * Builds parameters for listing webhook event attempts.
      */
     public static class Builder {
-        private Integer limit;
-        private String after;
+        private @Nullable Integer limit;
+        private @Nullable String after;
 
         /**
          * Constructs an empty webhook event attempt list parameters builder.

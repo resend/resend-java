@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to add an email address to the suppression list.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AddSuppressionOptions {
 
     @JsonProperty("email")
-    private final String email;
+    private final @Nullable String email;
 
     /**
      * Constructs an Add Suppression Options object using the provided builder.
@@ -24,7 +25,7 @@ public class AddSuppressionOptions {
      *
      * @return The email address to suppress.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -47,7 +48,7 @@ public class AddSuppressionOptions {
         public Builder() {
         }
 
-        private String email;
+        private @Nullable String email;
 
         /**
          * Set the email address to suppress.

@@ -1,6 +1,7 @@
 package com.resend.services.oauthgrants.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListOAuthGrantsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<OAuthGrant> data;
+    private @Nullable List<OAuthGrant> data;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class ListOAuthGrantsResponseSuccess {
      * @param hasMore Whether there are more items available for pagination.
      * @param data    The list of OAuth grants.
      */
-    public ListOAuthGrantsResponseSuccess(String object, Boolean hasMore, List<OAuthGrant> data) {
+    public ListOAuthGrantsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<OAuthGrant> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -42,7 +43,7 @@ public class ListOAuthGrantsResponseSuccess {
      *
      * @return the object type ("list")
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListOAuthGrantsResponseSuccess {
      *
      * @return true if more items are available, false otherwise
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -60,7 +61,7 @@ public class ListOAuthGrantsResponseSuccess {
      *
      * @return the list of OAuth grants
      */
-    public List<OAuthGrant> getData() {
+    public @Nullable List<OAuthGrant> getData() {
         return data;
     }
 }

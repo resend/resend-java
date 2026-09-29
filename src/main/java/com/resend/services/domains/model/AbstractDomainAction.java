@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a response object for a domain action. This class is typically used to
@@ -11,13 +12,13 @@ public abstract class AbstractDomainAction {
      * The object type of the response.
      */
     @JsonProperty("object")
-    public String object;
+    public @Nullable String object;
 
     /**
      * The unique identifier associated with the verified domain.
      */
     @JsonProperty("id")
-    public String id;
+    public @Nullable String id;
 
     /**
      * Default constructor for creating an empty AbstractDomainAction object.
@@ -31,7 +32,7 @@ public abstract class AbstractDomainAction {
      * @param object The object type of the response.
      * @param id     The unique identifier associated with the verified domain.
      */
-    public AbstractDomainAction(String object, String id) {
+    public AbstractDomainAction(@Nullable String object, @Nullable String id) {
         this.object = object;
         this.id = id;
     }
@@ -41,7 +42,7 @@ public abstract class AbstractDomainAction {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -50,7 +51,7 @@ public abstract class AbstractDomainAction {
      *
      * @return The unique identifier.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

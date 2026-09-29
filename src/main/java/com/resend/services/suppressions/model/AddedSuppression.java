@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a suppression added to the suppression list.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AddedSuppression {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor
@@ -26,7 +27,7 @@ public class AddedSuppression {
      * @param object The object type of the suppression.
      * @param id     The ID of the suppression.
      */
-    public AddedSuppression(String object, String id) {
+    public AddedSuppression(@Nullable String object, @Nullable String id) {
         this.object = object;
         this.id = id;
     }
@@ -36,7 +37,7 @@ public class AddedSuppression {
      *
      * @return The object type of the suppression.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -45,7 +46,7 @@ public class AddedSuppression {
      *
      * @return The ID of the suppression.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

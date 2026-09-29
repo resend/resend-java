@@ -1,6 +1,7 @@
 package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -10,19 +11,19 @@ import java.util.Map;
 public class EventSummary {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("schema")
-    private Map<String, String> schema;
+    private @Nullable Map<String, String> schema;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     /**
      * Default constructor for deserialization.
@@ -39,8 +40,8 @@ public class EventSummary {
      * @param createdAt The creation timestamp.
      * @param updatedAt The last update timestamp.
      */
-    public EventSummary(String id, String name, Map<String, String> schema,
-                        String createdAt, String updatedAt) {
+    public EventSummary(@Nullable String id, @Nullable String name, @Nullable Map<String, String> schema,
+                        @Nullable String createdAt, @Nullable String updatedAt) {
         this.id = id;
         this.name = name;
         this.schema = schema;
@@ -53,7 +54,7 @@ public class EventSummary {
      *
      * @return The event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -62,7 +63,7 @@ public class EventSummary {
      *
      * @return The event name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -71,7 +72,7 @@ public class EventSummary {
      *
      * @return The event schema as a map of field names to types.
      */
-    public Map<String, String> getSchema() {
+    public @Nullable Map<String, String> getSchema() {
         return schema;
     }
 
@@ -80,7 +81,7 @@ public class EventSummary {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -89,7 +90,7 @@ public class EventSummary {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 }

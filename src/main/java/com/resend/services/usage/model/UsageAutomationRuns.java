@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the {@code automation_runs} section of the usage response.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageAutomationRuns {
 
     @JsonProperty("used")
-    private Integer used;
+    private @Nullable Integer used;
 
     @JsonProperty("limit")
-    private Integer limit;
+    private @Nullable Integer limit;
 
     @JsonProperty("resets_at")
-    private String resetsAt;
+    private @Nullable String resetsAt;
 
     /**
      * Default constructor.
@@ -29,7 +30,7 @@ public class UsageAutomationRuns {
      * @param limit    The maximum allowed amount.
      * @param resetsAt The timestamp at which this usage resets.
      */
-    public UsageAutomationRuns(Integer used, Integer limit, String resetsAt) {
+    public UsageAutomationRuns(@Nullable Integer used, @Nullable Integer limit, @Nullable String resetsAt) {
         this.used = used;
         this.limit = limit;
         this.resetsAt = resetsAt;
@@ -40,19 +41,19 @@ public class UsageAutomationRuns {
      *
      * @return the amount used
      */
-    public Integer getUsed() { return used; }
+    public @Nullable Integer getUsed() { return used; }
 
     /**
      * Gets the maximum allowed amount.
      *
      * @return the limit
      */
-    public Integer getLimit() { return limit; }
+    public @Nullable Integer getLimit() { return limit; }
 
     /**
      * Gets the timestamp at which this usage resets.
      *
      * @return the reset timestamp
      */
-    public String getResetsAt() { return resetsAt; }
+    public @Nullable String getResetsAt() { return resetsAt; }
 }

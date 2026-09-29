@@ -1,6 +1,7 @@
 package com.resend.services.suppressions.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListSuppressionsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<Suppression> data;
+    private @Nullable List<Suppression> data;
 
     /**
      * Default constructor
@@ -32,7 +33,7 @@ public class ListSuppressionsResponseSuccess {
      * @param hasMore Whether there are more suppressions available for pagination.
      * @param data    The list of suppressions.
      */
-    public ListSuppressionsResponseSuccess(String object, Boolean hasMore, List<Suppression> data) {
+    public ListSuppressionsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<Suppression> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -43,7 +44,7 @@ public class ListSuppressionsResponseSuccess {
      *
      * @return The object type of the list.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -52,7 +53,7 @@ public class ListSuppressionsResponseSuccess {
      *
      * @return Whether there are more suppressions available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -61,7 +62,7 @@ public class ListSuppressionsResponseSuccess {
      *
      * @return The list of suppressions.
      */
-    public List<Suppression> getData() {
+    public @Nullable List<Suppression> getData() {
         return data;
     }
 }

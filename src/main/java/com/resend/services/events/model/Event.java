@@ -1,6 +1,7 @@
 package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -10,22 +11,22 @@ import java.util.Map;
 public class Event {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("schema")
-    private Map<String, String> schema;
+    private @Nullable Map<String, String> schema;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     /**
      * Default constructor for deserialization.
@@ -43,8 +44,8 @@ public class Event {
      * @param createdAt The creation timestamp.
      * @param updatedAt The last update timestamp.
      */
-    public Event(String object, String id, String name, Map<String, String> schema,
-                 String createdAt, String updatedAt) {
+    public Event(@Nullable String object, @Nullable String id, @Nullable String name, @Nullable Map<String, String> schema,
+                 @Nullable String createdAt, @Nullable String updatedAt) {
         this.object = object;
         this.id = id;
         this.name = name;
@@ -58,7 +59,7 @@ public class Event {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -67,7 +68,7 @@ public class Event {
      *
      * @return The event ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -76,7 +77,7 @@ public class Event {
      *
      * @return The event name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -85,7 +86,7 @@ public class Event {
      *
      * @return The event schema as a map of field names to types.
      */
-    public Map<String, String> getSchema() {
+    public @Nullable Map<String, String> getSchema() {
         return schema;
     }
 
@@ -94,7 +95,7 @@ public class Event {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -103,7 +104,7 @@ public class Event {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 }

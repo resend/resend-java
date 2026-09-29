@@ -1,5 +1,8 @@
 package com.resend.services.suppressions.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a successful response for retrieving a suppression.
  * Extends the Suppression class.
@@ -23,7 +26,7 @@ public class GetSuppressionResponseSuccess extends Suppression {
      * @param sourceId  The ID of the email that triggered the suppression.
      * @param createdAt The creation timestamp of the suppression.
      */
-    public GetSuppressionResponseSuccess(String object, String id, String email, String origin, String sourceId, String createdAt) {
+    public GetSuppressionResponseSuccess(@Nullable String object, @Nullable String id, @Nullable String email, @Nullable String origin, @Nullable String sourceId, @Nullable String createdAt) {
         super(object, id, email, origin, sourceId, createdAt);
     }
 }

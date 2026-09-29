@@ -1,22 +1,23 @@
 package com.resend.services.webhooks.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Data Transfer Object for a webhook event delivery attempt.
  */
 public class WebhookEventAttemptDTO {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("http_status_code")
-    private Integer httpStatusCode;
+    private @Nullable Integer httpStatusCode;
 
     @JsonProperty("response")
-    private String response;
+    private @Nullable String response;
 
     @JsonProperty("sent_at")
-    private String sentAt;
+    private @Nullable String sentAt;
 
     /**
      * Constructs an empty webhook event attempt.
@@ -29,7 +30,7 @@ public class WebhookEventAttemptDTO {
      *
      * @return The attempt ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -38,7 +39,7 @@ public class WebhookEventAttemptDTO {
      *
      * @return The HTTP status code.
      */
-    public Integer getHttpStatusCode() {
+    public @Nullable Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
@@ -47,7 +48,7 @@ public class WebhookEventAttemptDTO {
      *
      * @return The response body.
      */
-    public String getResponse() {
+    public @Nullable String getResponse() {
         return response;
     }
 
@@ -56,7 +57,7 @@ public class WebhookEventAttemptDTO {
      *
      * @return The sent timestamp.
      */
-    public String getSentAt() {
+    public @Nullable String getSentAt() {
         return sentAt;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,10 +10,10 @@ import java.util.List;
 public class CreateWebhookOptions {
 
     @JsonProperty("endpoint")
-    private final String endpoint;
+    private final @Nullable String endpoint;
 
     @JsonProperty("events")
-    private final List<WebhookEvent> events;
+    private final @Nullable List<WebhookEvent> events;
 
     private CreateWebhookOptions(Builder builder) {
         this.endpoint = builder.endpoint;
@@ -24,7 +25,7 @@ public class CreateWebhookOptions {
      *
      * @return The endpoint URL.
      */
-    public String getEndpoint() {
+    public @Nullable String getEndpoint() {
         return endpoint;
     }
 
@@ -33,7 +34,7 @@ public class CreateWebhookOptions {
      *
      * @return The list of webhook events.
      */
-    public List<WebhookEvent> getEvents() {
+    public @Nullable List<WebhookEvent> getEvents() {
         return events;
     }
 
@@ -56,8 +57,8 @@ public class CreateWebhookOptions {
         public Builder() {
         }
 
-        private String endpoint;
-        private List<WebhookEvent> events;
+        private @Nullable String endpoint;
+        private @Nullable List<WebhookEvent> events;
 
         /**
          * Sets the webhook endpoint URL.

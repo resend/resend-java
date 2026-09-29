@@ -1,19 +1,20 @@
 package com.resend.services.webhooks.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a successful response from rotating a webhook signing secret.
  */
 public class RotateWebhookSigningSecretResponseSuccess {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("signing_secret")
-    private String signingSecret;
+    private @Nullable String signingSecret;
 
     /**
      * Constructs an empty webhook signing secret rotation response.
@@ -26,7 +27,7 @@ public class RotateWebhookSigningSecretResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -35,7 +36,7 @@ public class RotateWebhookSigningSecretResponseSuccess {
      *
      * @return The webhook ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class RotateWebhookSigningSecretResponseSuccess {
      *
      * @return The signing secret.
      */
-    public String getSigningSecret() {
+    public @Nullable String getSigningSecret() {
         return signingSecret;
     }
 }

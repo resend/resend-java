@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -13,19 +14,19 @@ public class Domain extends AbstractDomain {
      * The object of the domain.
      */
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * The records of the domain.
      */
     @JsonProperty("records")
-    private List<Record> records;
+    private @Nullable List<Record> records;
 
     /**
      * The DNS provider of the domain.
      */
     @JsonProperty("dnsProvider")
-    private String dnsProvider;
+    private @Nullable String dnsProvider;
 
     /**
      * Empty constructor.
@@ -46,14 +47,14 @@ public class Domain extends AbstractDomain {
      * @param object The type of the object (e.g., "domain").
      * @param records The list of DNS records associated with the domain.
      */
-    public Domain(String id,
-                  String name,
-                  String createdAt,
-                  String status,
-                  String region,
-                  String dnsProvider,
-                  String object,
-                  List<Record> records) {
+    public Domain(@Nullable String id,
+                  @Nullable String name,
+                  @Nullable String createdAt,
+                  @Nullable String status,
+                  @Nullable String region,
+                  @Nullable String dnsProvider,
+                  @Nullable String object,
+                  @Nullable List<Record> records) {
         super(id, name, createdAt, status, region);
         this.object = object;
         this.records = records;
@@ -65,7 +66,7 @@ public class Domain extends AbstractDomain {
      *
      * @return The type of the object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -74,7 +75,7 @@ public class Domain extends AbstractDomain {
      *
      * @return The records of the domain.
      */
-    public List<Record> getRecords() {
+    public @Nullable List<Record> getRecords() {
         return records;
     }
 
@@ -83,7 +84,7 @@ public class Domain extends AbstractDomain {
      *
      * @return The DNS provider.
      */
-    public String getDnsProvider() {
+    public @Nullable String getDnsProvider() {
         return dnsProvider;
     }
 }

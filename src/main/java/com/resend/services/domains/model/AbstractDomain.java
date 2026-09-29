@@ -1,6 +1,7 @@
 package com.resend.services.domains.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * An abstract class representing a domain entity with common attributes.
@@ -11,49 +12,49 @@ public abstract class AbstractDomain {
      * The ID of the domain.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * The name of the domain.
      */
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     /**
      * The creation timestamp of the domain.
      */
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     /**
      * The status of the domain.
      */
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     /**
      * The region of the domain.
      */
     @JsonProperty("region")
-    private String region;
+    private @Nullable String region;
 
     /**
      * Whether open tracking is enabled for this domain.
      */
     @JsonProperty("open_tracking")
-    private Boolean openTracking;
+    private @Nullable Boolean openTracking;
 
     /**
      * Whether click tracking is enabled for this domain.
      */
     @JsonProperty("click_tracking")
-    private Boolean clickTracking;
+    private @Nullable Boolean clickTracking;
 
     /**
      * The subdomain used for click and open tracking.
      */
     @JsonProperty("tracking_subdomain")
-    private String trackingSubdomain;
+    private @Nullable String trackingSubdomain;
 
     /**
      * Default constructor for creating an AbstractDomain instance with uninitialized fields.
@@ -70,11 +71,11 @@ public abstract class AbstractDomain {
      * @param status      The status of the domain.
      * @param region      The region of the domain.
      */
-    public AbstractDomain(final String id,
-                          final String name,
-                          final String createdAt,
-                          final String status,
-                          final String region) {
+    public AbstractDomain(final @Nullable String id,
+                          final @Nullable String name,
+                          final @Nullable String createdAt,
+                          final @Nullable String status,
+                          final @Nullable String region) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -87,7 +88,7 @@ public abstract class AbstractDomain {
      *
      * @return The ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -96,7 +97,7 @@ public abstract class AbstractDomain {
      *
      * @return The name.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -105,7 +106,7 @@ public abstract class AbstractDomain {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -114,7 +115,7 @@ public abstract class AbstractDomain {
      *
      * @return The status.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -123,7 +124,7 @@ public abstract class AbstractDomain {
      *
      * @return The region.
      */
-    public String getRegion() {
+    public @Nullable String getRegion() {
         return region;
     }
 
@@ -132,7 +133,7 @@ public abstract class AbstractDomain {
      *
      * @return Whether open tracking is enabled.
      */
-    public Boolean getOpenTracking() {
+    public @Nullable Boolean getOpenTracking() {
         return openTracking;
     }
 
@@ -141,7 +142,7 @@ public abstract class AbstractDomain {
      *
      * @return Whether click tracking is enabled.
      */
-    public Boolean getClickTracking() {
+    public @Nullable Boolean getClickTracking() {
         return clickTracking;
     }
 
@@ -150,7 +151,7 @@ public abstract class AbstractDomain {
      *
      * @return The tracking subdomain.
      */
-    public String getTrackingSubdomain() {
+    public @Nullable String getTrackingSubdomain() {
         return trackingSubdomain;
     }
 }

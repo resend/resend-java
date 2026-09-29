@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the {@code emails} section of the usage response, broken down by daily and monthly periods.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageEmails {
 
     @JsonProperty("daily")
-    private UsageEmailsPeriod daily;
+    private @Nullable UsageEmailsPeriod daily;
 
     @JsonProperty("monthly")
-    private UsageEmailsPeriod monthly;
+    private @Nullable UsageEmailsPeriod monthly;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class UsageEmails {
      * @param daily   The daily email usage.
      * @param monthly The monthly email usage.
      */
-    public UsageEmails(UsageEmailsPeriod daily, UsageEmailsPeriod monthly) {
+    public UsageEmails(@Nullable UsageEmailsPeriod daily, @Nullable UsageEmailsPeriod monthly) {
         this.daily = daily;
         this.monthly = monthly;
     }
@@ -35,12 +36,12 @@ public class UsageEmails {
      *
      * @return the daily usage
      */
-    public UsageEmailsPeriod getDaily() { return daily; }
+    public @Nullable UsageEmailsPeriod getDaily() { return daily; }
 
     /**
      * Gets the monthly email usage.
      *
      * @return the monthly usage
      */
-    public UsageEmailsPeriod getMonthly() { return monthly; }
+    public @Nullable UsageEmailsPeriod getMonthly() { return monthly; }
 }

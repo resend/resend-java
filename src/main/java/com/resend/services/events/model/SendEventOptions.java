@@ -2,6 +2,7 @@ package com.resend.services.events.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,16 +14,16 @@ import java.util.Map;
 public class SendEventOptions {
 
     @JsonProperty("event")
-    private final String event;
+    private final @Nullable String event;
 
     @JsonProperty("contact_id")
-    private final String contactId;
+    private final @Nullable String contactId;
 
     @JsonProperty("email")
-    private final String email;
+    private final @Nullable String email;
 
     @JsonProperty("payload")
-    private final Map<String, Object> payload;
+    private final @Nullable Map<String, @Nullable Object> payload;
 
     /**
      * Constructs SendEventOptions using the provided builder.
@@ -41,7 +42,7 @@ public class SendEventOptions {
      *
      * @return The event name or identifier.
      */
-    public String getEvent() {
+    public @Nullable String getEvent() {
         return event;
     }
 
@@ -50,7 +51,7 @@ public class SendEventOptions {
      *
      * @return The contact ID.
      */
-    public String getContactId() {
+    public @Nullable String getContactId() {
         return contactId;
     }
 
@@ -59,7 +60,7 @@ public class SendEventOptions {
      *
      * @return The contact email address.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -68,7 +69,7 @@ public class SendEventOptions {
      *
      * @return The payload as a map of key-value pairs.
      */
-    public Map<String, Object> getPayload() {
+    public @Nullable Map<String, @Nullable Object> getPayload() {
         return payload;
     }
 
@@ -90,10 +91,10 @@ public class SendEventOptions {
          */
         public Builder() {}
 
-        private String event;
-        private String contactId;
-        private String email;
-        private Map<String, Object> payload;
+        private @Nullable String event;
+        private @Nullable String contactId;
+        private @Nullable String email;
+        private @Nullable Map<String, @Nullable Object> payload;
 
         /**
          * Sets the event name or identifier.
@@ -134,7 +135,7 @@ public class SendEventOptions {
          * @param payload The payload map.
          * @return The builder instance.
          */
-        public Builder payload(Map<String, Object> payload) {
+        public Builder payload(Map<String, @Nullable Object> payload) {
             this.payload = payload;
             return this;
         }

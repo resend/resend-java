@@ -1,6 +1,7 @@
 package com.resend.services.usage.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response from {@code GET /usage}, the caller's account-level usage and quota data.
@@ -8,31 +9,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UsageResponse {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("emails")
-    private UsageEmails emails;
+    private @Nullable UsageEmails emails;
 
     @JsonProperty("contacts")
-    private UsageQuota contacts;
+    private @Nullable UsageQuota contacts;
 
     @JsonProperty("segments")
-    private UsageQuota segments;
+    private @Nullable UsageQuota segments;
 
     @JsonProperty("broadcasts")
-    private UsageQuota broadcasts;
+    private @Nullable UsageQuota broadcasts;
 
     @JsonProperty("ai_credits")
-    private UsageAiCredits aiCredits;
+    private @Nullable UsageAiCredits aiCredits;
 
     @JsonProperty("automation_runs")
-    private UsageAutomationRuns automationRuns;
+    private @Nullable UsageAutomationRuns automationRuns;
 
     @JsonProperty("domains")
-    private UsageQuota domains;
+    private @Nullable UsageQuota domains;
 
     @JsonProperty("rate_limit")
-    private UsageRateLimit rateLimit;
+    private @Nullable UsageRateLimit rateLimit;
 
     /**
      * Default constructor for deserialization.
@@ -45,7 +46,7 @@ public class UsageResponse {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -54,7 +55,7 @@ public class UsageResponse {
      *
      * @return The email usage.
      */
-    public UsageEmails getEmails() {
+    public @Nullable UsageEmails getEmails() {
         return emails;
     }
 
@@ -63,7 +64,7 @@ public class UsageResponse {
      *
      * @return The contacts usage.
      */
-    public UsageQuota getContacts() {
+    public @Nullable UsageQuota getContacts() {
         return contacts;
     }
 
@@ -72,7 +73,7 @@ public class UsageResponse {
      *
      * @return The segments usage.
      */
-    public UsageQuota getSegments() {
+    public @Nullable UsageQuota getSegments() {
         return segments;
     }
 
@@ -81,7 +82,7 @@ public class UsageResponse {
      *
      * @return The broadcasts usage.
      */
-    public UsageQuota getBroadcasts() {
+    public @Nullable UsageQuota getBroadcasts() {
         return broadcasts;
     }
 
@@ -90,7 +91,7 @@ public class UsageResponse {
      *
      * @return The AI credits usage.
      */
-    public UsageAiCredits getAiCredits() {
+    public @Nullable UsageAiCredits getAiCredits() {
         return aiCredits;
     }
 
@@ -99,7 +100,7 @@ public class UsageResponse {
      *
      * @return The automation runs usage.
      */
-    public UsageAutomationRuns getAutomationRuns() {
+    public @Nullable UsageAutomationRuns getAutomationRuns() {
         return automationRuns;
     }
 
@@ -108,7 +109,7 @@ public class UsageResponse {
      *
      * @return The domains usage.
      */
-    public UsageQuota getDomains() {
+    public @Nullable UsageQuota getDomains() {
         return domains;
     }
 
@@ -117,7 +118,7 @@ public class UsageResponse {
      *
      * @return The rate limit.
      */
-    public UsageRateLimit getRateLimit() {
+    public @Nullable UsageRateLimit getRateLimit() {
         return rateLimit;
     }
 }

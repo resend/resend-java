@@ -1,6 +1,7 @@
 package com.resend.services.receiving.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an attachment in a received email (summary view).
@@ -8,22 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ReceivedEmailAttachment {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("filename")
-    private String filename;
+    private @Nullable String filename;
 
     @JsonProperty("content_type")
-    private String contentType;
+    private @Nullable String contentType;
 
     @JsonProperty("content_disposition")
-    private String contentDisposition;
+    private @Nullable String contentDisposition;
 
     @JsonProperty("content_id")
-    private String contentId;
+    private @Nullable String contentId;
 
     @JsonProperty("size")
-    private Integer size;
+    private @Nullable Integer size;
 
     /**
      * Default constructor.
@@ -36,7 +37,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The attachment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -45,7 +46,7 @@ public class ReceivedEmailAttachment {
      *
      * @param id The attachment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -54,7 +55,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The filename.
      */
-    public String getFilename() {
+    public @Nullable String getFilename() {
         return filename;
     }
 
@@ -63,7 +64,7 @@ public class ReceivedEmailAttachment {
      *
      * @param filename The filename.
      */
-    public void setFilename(String filename) {
+    public void setFilename(@Nullable String filename) {
         this.filename = filename;
     }
 
@@ -72,7 +73,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The content type.
      */
-    public String getContentType() {
+    public @Nullable String getContentType() {
         return contentType;
     }
 
@@ -81,7 +82,7 @@ public class ReceivedEmailAttachment {
      *
      * @param contentType The content type.
      */
-    public void setContentType(String contentType) {
+    public void setContentType(@Nullable String contentType) {
         this.contentType = contentType;
     }
 
@@ -90,7 +91,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The content disposition.
      */
-    public String getContentDisposition() {
+    public @Nullable String getContentDisposition() {
         return contentDisposition;
     }
 
@@ -99,7 +100,7 @@ public class ReceivedEmailAttachment {
      *
      * @param contentDisposition The content disposition.
      */
-    public void setContentDisposition(String contentDisposition) {
+    public void setContentDisposition(@Nullable String contentDisposition) {
         this.contentDisposition = contentDisposition;
     }
 
@@ -108,7 +109,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The content ID.
      */
-    public String getContentId() {
+    public @Nullable String getContentId() {
         return contentId;
     }
 
@@ -117,7 +118,7 @@ public class ReceivedEmailAttachment {
      *
      * @param contentId The content ID.
      */
-    public void setContentId(String contentId) {
+    public void setContentId(@Nullable String contentId) {
         this.contentId = contentId;
     }
 
@@ -126,7 +127,7 @@ public class ReceivedEmailAttachment {
      *
      * @return The attachment size.
      */
-    public Integer getSize() {
+    public @Nullable Integer getSize() {
         return size;
     }
 
@@ -135,7 +136,7 @@ public class ReceivedEmailAttachment {
      *
      * @param size The attachment size in bytes.
      */
-    public void setSize(Integer size) {
+    public void setSize(@Nullable Integer size) {
         this.size = size;
     }
 }

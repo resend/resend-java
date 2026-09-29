@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response for a successful broadcast cancellation.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CancelBroadcastResponseSuccess extends BaseBroadcastResponse {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -23,7 +24,7 @@ public class CancelBroadcastResponseSuccess extends BaseBroadcastResponse {
      * @param id        The ID of the broadcast.
      * @param object    The object of the broadcast.
      */
-    public CancelBroadcastResponseSuccess(String id, String object) {
+    public CancelBroadcastResponseSuccess(@Nullable String id, @Nullable String object) {
         super(id);
         this.object = object;
     }
@@ -33,7 +34,7 @@ public class CancelBroadcastResponseSuccess extends BaseBroadcastResponse {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

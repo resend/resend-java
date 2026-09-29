@@ -1,6 +1,7 @@
 package com.resend.services.receiving.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
 public class ListReceivedEmailsResponse {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<ReceivedEmailSummary> data;
+    private @Nullable List<ReceivedEmailSummary> data;
 
     /**
      * Default constructor.
@@ -30,7 +31,7 @@ public class ListReceivedEmailsResponse {
      * @param hasMore Whether there are more items.
      * @param data The list of received emails.
      */
-    public ListReceivedEmailsResponse(String object, Boolean hasMore, List<ReceivedEmailSummary> data) {
+    public ListReceivedEmailsResponse(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<ReceivedEmailSummary> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -41,7 +42,7 @@ public class ListReceivedEmailsResponse {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -50,7 +51,7 @@ public class ListReceivedEmailsResponse {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -59,7 +60,7 @@ public class ListReceivedEmailsResponse {
      *
      * @return True if there are more items.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -68,7 +69,7 @@ public class ListReceivedEmailsResponse {
      *
      * @param hasMore Whether there are more items.
      */
-    public void setHasMore(Boolean hasMore) {
+    public void setHasMore(@Nullable Boolean hasMore) {
         this.hasMore = hasMore;
     }
 
@@ -77,7 +78,7 @@ public class ListReceivedEmailsResponse {
      *
      * @return The list of received emails.
      */
-    public List<ReceivedEmailSummary> getData() {
+    public @Nullable List<ReceivedEmailSummary> getData() {
         return data;
     }
 
@@ -86,7 +87,7 @@ public class ListReceivedEmailsResponse {
      *
      * @param data The list of received emails.
      */
-    public void setData(List<ReceivedEmailSummary> data) {
+    public void setData(@Nullable List<ReceivedEmailSummary> data) {
         this.data = data;
     }
 }

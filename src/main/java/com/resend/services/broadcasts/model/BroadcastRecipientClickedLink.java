@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a link clicked by a broadcast recipient.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BroadcastRecipientClickedLink {
 
     @JsonProperty("url")
-    private String url;
+    private @Nullable String url;
 
     @JsonProperty("clicks")
-    private Integer clicks;
+    private @Nullable Integer clicks;
 
     /**
      * Default constructor
@@ -26,7 +27,7 @@ public class BroadcastRecipientClickedLink {
      * @param url The clicked URL.
      * @param clicks The number of times this recipient clicked this URL.
      */
-    public BroadcastRecipientClickedLink(String url, Integer clicks) {
+    public BroadcastRecipientClickedLink(@Nullable String url, @Nullable Integer clicks) {
         this.url = url;
         this.clicks = clicks;
     }
@@ -36,7 +37,7 @@ public class BroadcastRecipientClickedLink {
      *
      * @return the clicked URL
      */
-    public String getUrl() {
+    public @Nullable String getUrl() {
         return url;
     }
 
@@ -45,7 +46,7 @@ public class BroadcastRecipientClickedLink {
      *
      * @return the number of clicks
      */
-    public Integer getClicks() {
+    public @Nullable Integer getClicks() {
         return clicks;
     }
 }

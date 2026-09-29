@@ -1,5 +1,8 @@
 package com.resend.services.emails.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents the cancel email response
  */
@@ -16,7 +19,7 @@ public class CancelEmailResponse extends EmailResponse {
      * @param id The ID associated with the sent email.
      * @param object The resource object.
      */
-    public CancelEmailResponse(String id, String object) {
+    public CancelEmailResponse(@Nullable String id, @Nullable String object) {
         super(id, object);
     }
 }

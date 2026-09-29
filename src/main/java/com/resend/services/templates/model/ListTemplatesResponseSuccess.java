@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListTemplatesResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("data")
-    private List<TemplateListItem> data;
+    private @Nullable List<TemplateListItem> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public class ListTemplatesResponseSuccess {
      * @param data    The list of templates.
      * @param hasMore Whether there are more templates available.
      */
-    public ListTemplatesResponseSuccess(String object, List<TemplateListItem> data, Boolean hasMore) {
+    public ListTemplatesResponseSuccess(@Nullable String object, @Nullable List<TemplateListItem> data, @Nullable Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;
@@ -42,7 +43,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -60,7 +61,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @return The list of templates.
      */
-    public List<TemplateListItem> getData() {
+    public @Nullable List<TemplateListItem> getData() {
         return data;
     }
 
@@ -69,7 +70,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @param data The list of templates.
      */
-    public void setData(List<TemplateListItem> data) {
+    public void setData(@Nullable List<TemplateListItem> data) {
         this.data = data;
     }
 
@@ -78,7 +79,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @return Whether there are more templates available.
      */
-    public Boolean getHasMore() {
+    public @Nullable Boolean getHasMore() {
         return hasMore;
     }
 
@@ -87,7 +88,7 @@ public class ListTemplatesResponseSuccess {
      *
      * @param hasMore Whether there are more templates available.
      */
-    public void setHasMore(Boolean hasMore) {
+    public void setHasMore(@Nullable Boolean hasMore) {
         this.hasMore = hasMore;
     }
 }

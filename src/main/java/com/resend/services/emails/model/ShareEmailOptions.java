@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to create a shareable link for an email.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ShareEmailOptions {
 
     @JsonProperty("expires_in")
-    private final String expiresIn;
+    private final @Nullable String expiresIn;
 
     private ShareEmailOptions(Builder builder) {
 
@@ -21,7 +22,7 @@ public class ShareEmailOptions {
      *
      * @return The expiration duration of the shareable link.
      */
-    public String getExpiresIn() {
+    public @Nullable String getExpiresIn() {
         return expiresIn;
     }
 
@@ -44,7 +45,7 @@ public class ShareEmailOptions {
         public Builder() {
         }
 
-        private String expiresIn;
+        private @Nullable String expiresIn;
 
         /**
          * Set how long the shareable link stays valid for.

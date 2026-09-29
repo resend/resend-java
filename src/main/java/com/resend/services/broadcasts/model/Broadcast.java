@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a broadcast with its metadata and delivery status.
@@ -8,22 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Broadcast {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("audience_id")
-    private String audienceId;
+    private @Nullable String audienceId;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("scheduled_at")
-    private String scheduledAt;
+    private @Nullable String scheduledAt;
 
     @JsonProperty("sent_at")
-    private String sentAt;
+    private @Nullable String sentAt;
 
     /**
      * Default constructor
@@ -42,8 +43,8 @@ public class Broadcast {
      * @param scheduledAt Scheduled timestamp for sending the broadcast.
      * @param sentAt Timestamp when the broadcast was sent.
      */
-    public Broadcast(String id, String audienceId,
-                     String status, String createdAt, String scheduledAt, String sentAt) {
+    public Broadcast(@Nullable String id, @Nullable String audienceId,
+                     @Nullable String status, @Nullable String createdAt, @Nullable String scheduledAt, @Nullable String sentAt) {
         this.id = id;
         this.audienceId = audienceId;
         this.status = status;
@@ -57,7 +58,7 @@ public class Broadcast {
      *
      * @return the broadcast ID
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -66,7 +67,7 @@ public class Broadcast {
      *
      * @return the audience ID
      */
-    public String getAudienceId() {
+    public @Nullable String getAudienceId() {
         return audienceId;
     }
 
@@ -75,7 +76,7 @@ public class Broadcast {
      *
      * @return the status (e.g., draft, sent, queued)
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -84,7 +85,7 @@ public class Broadcast {
      *
      * @return the creation timestamp
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -93,7 +94,7 @@ public class Broadcast {
      *
      * @return the scheduled timestamp
      */
-    public String getScheduledAt() {
+    public @Nullable String getScheduledAt() {
         return scheduledAt;
     }
 
@@ -102,7 +103,7 @@ public class Broadcast {
      *
      * @return the sent timestamp
      */
-    public String getSentAt() {
+    public @Nullable String getSentAt() {
         return sentAt;
     }
 }

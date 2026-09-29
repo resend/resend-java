@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
@@ -10,28 +11,28 @@ import java.util.*;
 public class BroadcastOptions {
     @JsonProperty("audience_id")
     @Deprecated
-    private final String audienceId;
+    private final @Nullable String audienceId;
 
     @JsonProperty("segment_id")
-    private final String segmentId;
+    private final @Nullable String segmentId;
 
     @JsonProperty("from")
-    private final String from;
+    private final @Nullable String from;
 
     @JsonProperty("subject")
-    private final String subject;
+    private final @Nullable String subject;
 
     @JsonProperty("reply_to")
-    private final List<String> replyTo;
+    private final @Nullable List<String> replyTo;
 
     @JsonProperty("html")
-    private final String html;
+    private final @Nullable String html;
 
     @JsonProperty("text")
-    private final String text;
+    private final @Nullable String text;
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     /**
      * Private constructor to enforce the use of the builder.
@@ -56,7 +57,7 @@ public class BroadcastOptions {
      * @deprecated Use {@link #getSegmentId()} instead.
      */
     @Deprecated
-    public String getAudienceId() {
+    public @Nullable String getAudienceId() {
         return audienceId;
     }
 
@@ -65,7 +66,7 @@ public class BroadcastOptions {
      *
      * @return the unique identifier of the segment.
      */
-    public String getSegmentId() {
+    public @Nullable String getSegmentId() {
         return segmentId;
     }
 
@@ -74,7 +75,7 @@ public class BroadcastOptions {
      *
      * @return the sender's email address.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -83,7 +84,7 @@ public class BroadcastOptions {
      *
      * @return the subject line.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -92,7 +93,7 @@ public class BroadcastOptions {
      *
      * @return the list of reply-to email addresses.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -101,7 +102,7 @@ public class BroadcastOptions {
      *
      * @return the HTML content.
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -110,7 +111,7 @@ public class BroadcastOptions {
      *
      * @return the plain text content.
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -119,7 +120,7 @@ public class BroadcastOptions {
      *
      * @return the name of the broadcast.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -142,42 +143,42 @@ public class BroadcastOptions {
          * @deprecated Use {@link #segmentId} instead.
          */
         @Deprecated
-        protected String audienceId;
+        protected @Nullable String audienceId;
 
         /**
          * The ID of the segment targeted by the broadcast.
          */
-        protected String segmentId;
+        protected @Nullable String segmentId;
 
         /**
          * The email address of the sender.
          */
-        protected String from;
+        protected @Nullable String from;
 
         /**
          * The subject line of the email.
          */
-        protected String subject;
+        protected @Nullable String subject;
 
         /**
          * A list of email addresses for reply-to responses.
          */
-        protected List<String> replyTo;
+        protected @Nullable List<String> replyTo;
 
         /**
          * The HTML content of the email.
          */
-        protected String html;
+        protected @Nullable String html;
 
         /**
          * The plain text content of the email.
          */
-        protected String text;
+        protected @Nullable String text;
 
         /**
          * The name of the broadcast.
          */
-        protected String name;
+        protected @Nullable String name;
 
         /**
          * Sets the audience ID.

@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,22 +11,22 @@ import java.util.List;
 public class BroadcastRecipient {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("contact_id")
-    private String contactId;
+    private @Nullable String contactId;
 
     @JsonProperty("email")
-    private String email;
+    private @Nullable String email;
 
     @JsonProperty("count")
-    private Integer count;
+    private @Nullable Integer count;
 
     @JsonProperty("bounce_type")
-    private String bounceType;
+    private @Nullable String bounceType;
 
     @JsonProperty("clicked_links")
-    private List<BroadcastRecipientClickedLink> clickedLinks;
+    private @Nullable List<BroadcastRecipientClickedLink> clickedLinks;
 
     /**
      * Default constructor
@@ -46,8 +47,8 @@ public class BroadcastRecipient {
      * @param clickedLinks The links this recipient clicked. Only present when {@code type} is
      *                     {@code clicked}.
      */
-    public BroadcastRecipient(String id, String contactId, String email, Integer count,
-                               String bounceType, List<BroadcastRecipientClickedLink> clickedLinks) {
+    public BroadcastRecipient(@Nullable String id, @Nullable String contactId, @Nullable String email, @Nullable Integer count,
+                               @Nullable String bounceType, @Nullable List<BroadcastRecipientClickedLink> clickedLinks) {
         this.id = id;
         this.contactId = contactId;
         this.email = email;
@@ -61,7 +62,7 @@ public class BroadcastRecipient {
      *
      * @return the row cursor
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -70,7 +71,7 @@ public class BroadcastRecipient {
      *
      * @return the contact ID, or null if none
      */
-    public String getContactId() {
+    public @Nullable String getContactId() {
         return contactId;
     }
 
@@ -79,7 +80,7 @@ public class BroadcastRecipient {
      *
      * @return the recipient email
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -89,7 +90,7 @@ public class BroadcastRecipient {
      *
      * @return the event count, or null if not applicable
      */
-    public Integer getCount() {
+    public @Nullable Integer getCount() {
         return count;
     }
 
@@ -98,7 +99,7 @@ public class BroadcastRecipient {
      *
      * @return the bounce type, or null if not applicable
      */
-    public String getBounceType() {
+    public @Nullable String getBounceType() {
         return bounceType;
     }
 
@@ -107,7 +108,7 @@ public class BroadcastRecipient {
      *
      * @return the clicked links, or null if not applicable
      */
-    public List<BroadcastRecipientClickedLink> getClickedLinks() {
+    public @Nullable List<BroadcastRecipientClickedLink> getClickedLinks() {
         return clickedLinks;
     }
 }

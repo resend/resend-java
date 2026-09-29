@@ -3,6 +3,7 @@ package com.resend.services.emails.model;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,24 +22,24 @@ import java.util.Map;
 public class EmailsMetricsDataRow {
 
     @JsonProperty("period")
-    private String period;
+    private @Nullable String period;
 
     @JsonProperty("domain_id")
-    private String domainId;
+    private @Nullable String domainId;
 
     @JsonProperty("domain_name")
-    private String domainName;
+    private @Nullable String domainName;
 
     @JsonProperty("email_id")
-    private String emailId;
+    private @Nullable String emailId;
 
     @JsonProperty("broadcast_id")
-    private String broadcastId;
+    private @Nullable String broadcastId;
 
     @JsonProperty("broadcast_name")
-    private String broadcastName;
+    private @Nullable String broadcastName;
 
-    private final Map<String, Object> metrics = new LinkedHashMap<>();
+    private final Map<String, @Nullable Object> metrics = new LinkedHashMap<>();
 
     /**
      * Default constructor for deserialization.
@@ -51,7 +52,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The period bucket (e.g. {@code 2026-07-01}), or {@code null}.
      */
-    public String getPeriod() {
+    public @Nullable String getPeriod() {
         return period;
     }
 
@@ -61,7 +62,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The domain ID, or {@code null}.
      */
-    public String getDomainId() {
+    public @Nullable String getDomainId() {
         return domainId;
     }
 
@@ -71,7 +72,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The domain name, or {@code null}.
      */
-    public String getDomainName() {
+    public @Nullable String getDomainName() {
         return domainName;
     }
 
@@ -80,7 +81,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The email ID, or {@code null}.
      */
-    public String getEmailId() {
+    public @Nullable String getEmailId() {
         return emailId;
     }
 
@@ -90,7 +91,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The broadcast ID, or {@code null}.
      */
-    public String getBroadcastId() {
+    public @Nullable String getBroadcastId() {
         return broadcastId;
     }
 
@@ -100,7 +101,7 @@ public class EmailsMetricsDataRow {
      *
      * @return The broadcast name, or {@code null}.
      */
-    public String getBroadcastName() {
+    public @Nullable String getBroadcastName() {
         return broadcastName;
     }
 
@@ -111,12 +112,12 @@ public class EmailsMetricsDataRow {
      * @return The metric values for this row.
      */
     @JsonAnyGetter
-    public Map<String, Object> getMetrics() {
+    public Map<String, @Nullable Object> getMetrics() {
         return metrics;
     }
 
     @JsonAnySetter
-    void setMetric(String name, Object value) {
+    void setMetric(String name, @Nullable Object value) {
         metrics.put(name, value);
     }
 }

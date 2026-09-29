@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListBroadcastClickedLinksResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("data")
-    private List<BroadcastClickedLink> data;
+    private @Nullable List<BroadcastClickedLink> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -32,7 +33,7 @@ public class ListBroadcastClickedLinksResponseSuccess {
      * @param data List of BroadcastClickedLink objects.
      * @param hasMore Indicate if there are more items to be returned.
      */
-    public ListBroadcastClickedLinksResponseSuccess(String object, List<BroadcastClickedLink> data, Boolean hasMore) {
+    public ListBroadcastClickedLinksResponseSuccess(@Nullable String object, @Nullable List<BroadcastClickedLink> data, @Nullable Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;
@@ -43,7 +44,7 @@ public class ListBroadcastClickedLinksResponseSuccess {
      *
      * @return the object type (e.g., "list")
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -52,7 +53,7 @@ public class ListBroadcastClickedLinksResponseSuccess {
      *
      * @return the list of clicked links
      */
-    public List<BroadcastClickedLink> getData() {
+    public @Nullable List<BroadcastClickedLink> getData() {
         return data;
     }
 
@@ -61,7 +62,7 @@ public class ListBroadcastClickedLinksResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 }

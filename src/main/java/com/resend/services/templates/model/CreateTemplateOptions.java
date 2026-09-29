@@ -2,6 +2,7 @@ package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,28 +14,28 @@ import java.util.List;
 public class CreateTemplateOptions {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("alias")
-    private final String alias;
+    private final @Nullable String alias;
 
     @JsonProperty("from")
-    private final String from;
+    private final @Nullable String from;
 
     @JsonProperty("subject")
-    private final String subject;
+    private final @Nullable String subject;
 
     @JsonProperty("reply_to")
-    private final List<String> replyTo;
+    private final @Nullable List<String> replyTo;
 
     @JsonProperty("html")
-    private final String html;
+    private final @Nullable String html;
 
     @JsonProperty("text")
-    private final String text;
+    private final @Nullable String text;
 
     @JsonProperty("variables")
-    private final List<Variable> variables;
+    private final @Nullable List<Variable> variables;
 
     private CreateTemplateOptions(Builder builder) {
         this.name = builder.name;
@@ -52,7 +53,7 @@ public class CreateTemplateOptions {
      *
      * @return The name of the template.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -61,7 +62,7 @@ public class CreateTemplateOptions {
      *
      * @return The alias of the template.
      */
-    public String getAlias() {
+    public @Nullable String getAlias() {
         return alias;
     }
 
@@ -70,7 +71,7 @@ public class CreateTemplateOptions {
      *
      * @return The sender email address.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -79,7 +80,7 @@ public class CreateTemplateOptions {
      *
      * @return The email subject.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -88,7 +89,7 @@ public class CreateTemplateOptions {
      *
      * @return The reply-to email addresses.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -97,7 +98,7 @@ public class CreateTemplateOptions {
      *
      * @return The HTML version of the template.
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -106,7 +107,7 @@ public class CreateTemplateOptions {
      *
      * @return The plain text version of the template.
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -115,7 +116,7 @@ public class CreateTemplateOptions {
      *
      * @return The list of variables.
      */
-    public List<Variable> getVariables() {
+    public @Nullable List<Variable> getVariables() {
         return variables;
     }
 
@@ -138,14 +139,14 @@ public class CreateTemplateOptions {
         public Builder() {
         }
 
-        private String name;
-        private String alias;
-        private String from;
-        private String subject;
-        private List<String> replyTo;
-        private String html;
-        private String text;
-        private List<Variable> variables;
+        private @Nullable String name;
+        private @Nullable String alias;
+        private @Nullable String from;
+        private @Nullable String subject;
+        private @Nullable List<String> replyTo;
+        private @Nullable String html;
+        private @Nullable String text;
+        private @Nullable List<Variable> variables;
 
         /**
          * Sets the name of the template.

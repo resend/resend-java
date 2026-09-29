@@ -1,6 +1,7 @@
 package com.resend.services.batch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a batch email entity.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BatchEmail {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor.
@@ -21,7 +22,7 @@ public class BatchEmail {
      *
      * @param id The ID of the batch email.
      */
-    public BatchEmail(final String id) {
+    public BatchEmail(final @Nullable String id) {
         this.id = id;
     }
 
@@ -30,7 +31,7 @@ public class BatchEmail {
      *
      * @return The ID of the batch email.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

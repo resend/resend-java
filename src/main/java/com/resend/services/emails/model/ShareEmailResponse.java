@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the share email response.
@@ -11,7 +12,7 @@ public class ShareEmailResponse extends EmailResponse {
      * The shareable link URL for the email.
      */
     @JsonProperty("url")
-    private String url;
+    private @Nullable String url;
 
     /**
      * Constructs a new instance of {@code ShareEmailResponse}.
@@ -26,7 +27,7 @@ public class ShareEmailResponse extends EmailResponse {
      * @param object The resource object.
      * @param url The shareable link URL for the email.
      */
-    public ShareEmailResponse(String id, String object, String url) {
+    public ShareEmailResponse(@Nullable String id, @Nullable String object, @Nullable String url) {
         super(id, object);
         this.url = url;
     }
@@ -36,7 +37,7 @@ public class ShareEmailResponse extends EmailResponse {
      *
      * @return The shareable link URL.
      */
-    public String getUrl() {
+    public @Nullable String getUrl() {
         return url;
     }
 
@@ -45,7 +46,7 @@ public class ShareEmailResponse extends EmailResponse {
      *
      * @param url The shareable link URL to be set.
      */
-    public void setUrl(String url) {
+    public void setUrl(@Nullable String url) {
         this.url = url;
     }
 }

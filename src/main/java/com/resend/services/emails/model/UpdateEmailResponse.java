@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a response after updating an email.
@@ -18,7 +19,7 @@ public class UpdateEmailResponse extends EmailResponse {
      * @param id The ID associated with the sent email.
      * @param object The resource object.
      */
-    public UpdateEmailResponse(String id, String object) {
+    public UpdateEmailResponse(@Nullable String id, @Nullable String object) {
         super(id, object);
     }
 }

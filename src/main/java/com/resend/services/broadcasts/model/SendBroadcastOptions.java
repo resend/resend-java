@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the options for sending a broadcast email, including scheduling.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SendBroadcastOptions {
 
     @JsonProperty("scheduled_at")
-    private String scheduledAt;
+    private @Nullable String scheduledAt;
 
     /**
      * Constructs a Broadcast Options object using the provided builder.
@@ -24,7 +25,7 @@ public class SendBroadcastOptions {
      *
      * @return the scheduled time in natural language or ISO 8601 format
      */
-    public String getScheduledAt() {
+    public @Nullable String getScheduledAt() {
         return scheduledAt;
     }
 
@@ -38,7 +39,7 @@ public class SendBroadcastOptions {
         public Builder() {
         }
 
-        private String scheduledAt;
+        private @Nullable String scheduledAt;
 
         /**
          * Sets the scheduled time for sending the email.

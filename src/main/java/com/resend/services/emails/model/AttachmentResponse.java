@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response when retrieving an attachment from a sent email.
@@ -17,61 +18,61 @@ public class AttachmentResponse {
      * The object type, always "attachment".
      */
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * The unique identifier of the attachment.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * The filename of the attachment.
      */
     @JsonProperty("filename")
-    private String filename;
+    private @Nullable String filename;
 
     /**
      * The size of the attachment in bytes.
      */
     @JsonProperty("size")
-    private Integer size;
+    private @Nullable Integer size;
 
     /**
      * The MIME content type of the attachment.
      */
     @JsonProperty("content_type")
-    private String contentType;
+    private @Nullable String contentType;
 
     /**
      * The content disposition (inline or attachment).
      */
     @JsonProperty("content_disposition")
-    private String contentDisposition;
+    private @Nullable String contentDisposition;
 
     /**
      * The content ID for inline attachments.
      */
     @JsonProperty("content_id")
-    private String contentId;
+    private @Nullable String contentId;
 
     /**
      * The download URL for the attachment.
      */
     @JsonProperty("download_url")
-    private String downloadUrl;
+    private @Nullable String downloadUrl;
 
     /**
      * The expiration timestamp of the download URL.
      */
     @JsonProperty("expires_at")
-    private String expiresAt;
+    private @Nullable String expiresAt;
 
     /**
      * Get the object type.
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -79,7 +80,7 @@ public class AttachmentResponse {
      * Set the object type.
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -87,7 +88,7 @@ public class AttachmentResponse {
      * Get the attachment ID.
      * @return The attachment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -95,7 +96,7 @@ public class AttachmentResponse {
      * Set the attachment ID.
      * @param id The attachment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -103,7 +104,7 @@ public class AttachmentResponse {
      * Get the filename.
      * @return The filename.
      */
-    public String getFilename() {
+    public @Nullable String getFilename() {
         return filename;
     }
 
@@ -111,7 +112,7 @@ public class AttachmentResponse {
      * Set the filename.
      * @param filename The filename.
      */
-    public void setFilename(String filename) {
+    public void setFilename(@Nullable String filename) {
         this.filename = filename;
     }
 
@@ -119,7 +120,7 @@ public class AttachmentResponse {
      * Get the size in bytes.
      * @return The size.
      */
-    public Integer getSize() {
+    public @Nullable Integer getSize() {
         return size;
     }
 
@@ -127,7 +128,7 @@ public class AttachmentResponse {
      * Set the size.
      * @param size The size in bytes.
      */
-    public void setSize(Integer size) {
+    public void setSize(@Nullable Integer size) {
         this.size = size;
     }
 
@@ -135,7 +136,7 @@ public class AttachmentResponse {
      * Get the content type.
      * @return The content type.
      */
-    public String getContentType() {
+    public @Nullable String getContentType() {
         return contentType;
     }
 
@@ -143,7 +144,7 @@ public class AttachmentResponse {
      * Set the content type.
      * @param contentType The content type.
      */
-    public void setContentType(String contentType) {
+    public void setContentType(@Nullable String contentType) {
         this.contentType = contentType;
     }
 
@@ -151,7 +152,7 @@ public class AttachmentResponse {
      * Get the content disposition.
      * @return The content disposition.
      */
-    public String getContentDisposition() {
+    public @Nullable String getContentDisposition() {
         return contentDisposition;
     }
 
@@ -159,7 +160,7 @@ public class AttachmentResponse {
      * Set the content disposition.
      * @param contentDisposition The content disposition.
      */
-    public void setContentDisposition(String contentDisposition) {
+    public void setContentDisposition(@Nullable String contentDisposition) {
         this.contentDisposition = contentDisposition;
     }
 
@@ -167,7 +168,7 @@ public class AttachmentResponse {
      * Get the content ID.
      * @return The content ID.
      */
-    public String getContentId() {
+    public @Nullable String getContentId() {
         return contentId;
     }
 
@@ -175,7 +176,7 @@ public class AttachmentResponse {
      * Set the content ID.
      * @param contentId The content ID.
      */
-    public void setContentId(String contentId) {
+    public void setContentId(@Nullable String contentId) {
         this.contentId = contentId;
     }
 
@@ -183,7 +184,7 @@ public class AttachmentResponse {
      * Get the download URL.
      * @return The download URL.
      */
-    public String getDownloadUrl() {
+    public @Nullable String getDownloadUrl() {
         return downloadUrl;
     }
 
@@ -191,7 +192,7 @@ public class AttachmentResponse {
      * Set the download URL.
      * @param downloadUrl The download URL.
      */
-    public void setDownloadUrl(String downloadUrl) {
+    public void setDownloadUrl(@Nullable String downloadUrl) {
         this.downloadUrl = downloadUrl;
     }
 
@@ -199,7 +200,7 @@ public class AttachmentResponse {
      * Get the expiration timestamp.
      * @return The expiration timestamp.
      */
-    public String getExpiresAt() {
+    public @Nullable String getExpiresAt() {
         return expiresAt;
     }
 
@@ -207,7 +208,7 @@ public class AttachmentResponse {
      * Set the expiration timestamp.
      * @param expiresAt The expiration timestamp.
      */
-    public void setExpiresAt(String expiresAt) {
+    public void setExpiresAt(@Nullable String expiresAt) {
         this.expiresAt = expiresAt;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a tag associated with an email.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Tag {
 
     @JsonProperty("name")
-    private final String name;
+    private final @Nullable String name;
 
     @JsonProperty("value")
-    private final String value;
+    private final @Nullable String value;
 
     private Tag(Builder builder) {
         this.name = builder.name;
@@ -23,7 +24,7 @@ public class Tag {
      *
      * @return The name of the tag.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -32,7 +33,7 @@ public class Tag {
      *
      * @return The value of the tag.
      */
-    public String getValue() {
+    public @Nullable String getValue() {
         return value;
     }
 
@@ -55,8 +56,8 @@ public class Tag {
         public Builder() {
         }
 
-        private String name;
-        private String value;
+        private @Nullable String name;
+        private @Nullable String value;
 
         /**
          * Set the name of the tag.

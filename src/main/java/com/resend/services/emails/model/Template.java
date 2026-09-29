@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,10 +11,10 @@ import java.util.Map;
 public class Template {
 
     @JsonProperty("id")
-    private final String id;
+    private final @Nullable String id;
 
     @JsonProperty("variables")
-    private final Map<String, Object> variables;
+    private final @Nullable Map<String, @Nullable Object> variables;
 
     /**
      * Constructs a Template using the provided builder.
@@ -30,7 +31,7 @@ public class Template {
      *
      * @return The template ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -39,7 +40,7 @@ public class Template {
      *
      * @return The template variables.
      */
-    public Map<String, Object> getVariables() {
+    public @Nullable Map<String, @Nullable Object> getVariables() {
         return variables;
     }
 
@@ -67,8 +68,8 @@ public class Template {
      * Represents a template variable with a key and value.
      */
     public static class Variable {
-        private final String key;
-        private final Object value;
+        private final @Nullable String key;
+        private final @Nullable Object value;
 
         /**
          * Constructs a Variable with the specified key and value.
@@ -76,7 +77,7 @@ public class Template {
          * @param key The variable key.
          * @param value The variable value.
          */
-        public Variable(String key, Object value) {
+        public Variable(@Nullable String key, @Nullable Object value) {
             this.key = key;
             this.value = value;
         }
@@ -86,7 +87,7 @@ public class Template {
          *
          * @return The variable key.
          */
-        public String getKey() {
+        public @Nullable String getKey() {
             return key;
         }
 
@@ -95,7 +96,7 @@ public class Template {
          *
          * @return The variable value.
          */
-        public Object getValue() {
+        public @Nullable Object getValue() {
             return value;
         }
     }
@@ -110,8 +111,8 @@ public class Template {
         public Builder() {
         }
 
-        private String id;
-        private Map<String, Object> variables;
+        private @Nullable String id;
+        private @Nullable Map<String, @Nullable Object> variables;
 
         /**
          * Set the template ID.
@@ -130,7 +131,7 @@ public class Template {
          * @param variables The template variables as key/value pairs.
          * @return The builder instance.
          */
-        public Builder variables(Map<String, Object> variables) {
+        public Builder variables(Map<String, @Nullable Object> variables) {
             this.variables = variables;
             return this;
         }

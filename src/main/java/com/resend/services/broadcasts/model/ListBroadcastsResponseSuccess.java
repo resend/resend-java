@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListBroadcastsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("data")
-    private List<Broadcast> data;
+    private @Nullable List<Broadcast> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -32,7 +33,7 @@ public class ListBroadcastsResponseSuccess {
      * @param data List of Broadcast objects.
      * @param hasMore Indicate if there are more items to be returned.
      */
-    public ListBroadcastsResponseSuccess(String object, List<Broadcast> data, Boolean hasMore) {
+    public ListBroadcastsResponseSuccess(@Nullable String object, @Nullable List<Broadcast> data, @Nullable Boolean hasMore) {
         this.object = object;
         this.data = data;
         this.hasMore = hasMore;
@@ -43,7 +44,7 @@ public class ListBroadcastsResponseSuccess {
      *
      * @return the object type (e.g., "list")
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -52,7 +53,7 @@ public class ListBroadcastsResponseSuccess {
      *
      * @return the list of broadcasts
      */
-    public List<Broadcast> getData() {
+    public @Nullable List<Broadcast> getData() {
         return data;
     }
 
@@ -61,7 +62,7 @@ public class ListBroadcastsResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 }

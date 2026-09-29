@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -8,43 +9,43 @@ import java.util.List;
  */
 public class Email {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("from")
-    private String from;
+    private @Nullable String from;
 
     @JsonProperty("to")
-    private List<String> to;
+    private @Nullable List<String> to;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("subject")
-    private String subject;
+    private @Nullable String subject;
 
     @JsonProperty("html")
-    private String html;
+    private @Nullable String html;
 
     @JsonProperty("text")
-    private String text;
+    private @Nullable String text;
 
     @JsonProperty("bcc")
-    private List<String> bcc;
+    private @Nullable List<String> bcc;
 
     @JsonProperty("cc")
-    private List<String> cc;
+    private @Nullable List<String> cc;
 
     @JsonProperty("reply_to")
-    private List<String> replyTo;
+    private @Nullable List<String> replyTo;
 
     @JsonProperty("last_event")
-    private String lastEvent;
+    private @Nullable String lastEvent;
 
     @JsonProperty("message_id")
-    private String messageId;
+    private @Nullable String messageId;
 
     /**
      * Default constructor.
@@ -68,8 +69,8 @@ public class Email {
      * @param replyTo    The reply_to attribute value.
      * @param lastEvent  The last_event attribute value.
      */
-    public Email(String object, String id, String from, List<String> to, String createdAt, String subject,
-                 String html, String text, List<String> bcc, List<String> cc, List<String> replyTo, String lastEvent) {
+    public Email(@Nullable String object, @Nullable String id, @Nullable String from, @Nullable List<String> to, @Nullable String createdAt, @Nullable String subject,
+                 @Nullable String html, @Nullable String text, @Nullable List<String> bcc, @Nullable List<String> cc, @Nullable List<String> replyTo, @Nullable String lastEvent) {
         this.object = object;
         this.id = id;
         this.from = from;
@@ -88,7 +89,7 @@ public class Email {
      * Get the "object" attribute of the email.
      * @return The object attribute.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -96,7 +97,7 @@ public class Email {
      * Set the "object" attribute of the email.
      * @param object The object attribute.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -104,7 +105,7 @@ public class Email {
      * Get the "id" attribute of the email.
      * @return The id attribute.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return this.id;
     }
 
@@ -112,7 +113,7 @@ public class Email {
      * Set the "id" attribute of the email.
      * @param id The id attribute.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -120,7 +121,7 @@ public class Email {
      * Get the "from" attribute of the email.
      * @return The from attribute.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -128,7 +129,7 @@ public class Email {
      * Set the "from" attribute of the email.
      * @param from The from attribute.
      */
-    public void setFrom(String from) {
+    public void setFrom(@Nullable String from) {
         this.from = from;
     }
 
@@ -136,7 +137,7 @@ public class Email {
      * Get the list of "to" recipients of the email.
      * @return The list of "to" recipients.
      */
-    public List<String> getTo() {
+    public @Nullable List<String> getTo() {
         return to;
     }
 
@@ -144,7 +145,7 @@ public class Email {
      * Set the list of "to" recipients of the email.
      * @param to The list of "to" recipients.
      */
-    public void setTo(List<String> to) {
+    public void setTo(@Nullable List<String> to) {
         this.to = to;
     }
 
@@ -152,7 +153,7 @@ public class Email {
      * Get the creation timestamp of the email.
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -160,7 +161,7 @@ public class Email {
      * Set the creation timestamp of the email.
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -168,7 +169,7 @@ public class Email {
      * Get the subject of the email.
      * @return The email subject.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -176,7 +177,7 @@ public class Email {
      * Set the subject of the email.
      * @param subject The email subject.
      */
-    public void setSubject(String subject) {
+    public void setSubject(@Nullable String subject) {
         this.subject = subject;
     }
 
@@ -184,7 +185,7 @@ public class Email {
      * Get the HTML content of the email.
      * @return The HTML content.
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -192,7 +193,7 @@ public class Email {
      * Set the HTML content of the email.
      * @param html The HTML content.
      */
-    public void setHtml(String html) {
+    public void setHtml(@Nullable String html) {
         this.html = html;
     }
 
@@ -200,7 +201,7 @@ public class Email {
      * Get the plain text content of the email.
      * @return The plain text content.
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -208,7 +209,7 @@ public class Email {
      * Set the plain text content of the email.
      * @param text The plain text content.
      */
-    public void setText(String text) {
+    public void setText(@Nullable String text) {
         this.text = text;
     }
 
@@ -216,7 +217,7 @@ public class Email {
      * Get the list of "bcc" recipients of the email.
      * @return The list of "bcc" recipients.
      */
-    public List<String> getBcc() {
+    public @Nullable List<String> getBcc() {
         return bcc;
     }
 
@@ -224,7 +225,7 @@ public class Email {
      * Set the list of "bcc" recipients of the email.
      * @param bcc The list of "bcc" recipients.
      */
-    public void setBcc(List<String> bcc) {
+    public void setBcc(@Nullable List<String> bcc) {
         this.bcc = bcc;
     }
 
@@ -232,7 +233,7 @@ public class Email {
      * Get the list of "cc" recipients of the email.
      * @return The list of "cc" recipients.
      */
-    public List<String> getCc() {
+    public @Nullable List<String> getCc() {
         return cc;
     }
 
@@ -240,7 +241,7 @@ public class Email {
      * Set the list of "cc" recipients of the email.
      * @param cc The list of "cc" recipients.
      */
-    public void setCc(List<String> cc) {
+    public void setCc(@Nullable List<String> cc) {
         this.cc = cc;
     }
 
@@ -248,7 +249,7 @@ public class Email {
      * Get the list of "reply_to" recipients of the email.
      * @return The list of "reply_to" recipients.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -256,7 +257,7 @@ public class Email {
      * Set the list of "reply_to" recipients of the email.
      * @param replyTo The list of "reply_to" recipients.
      */
-    public void setReplyTo(List<String> replyTo) {
+    public void setReplyTo(@Nullable List<String> replyTo) {
         this.replyTo = replyTo;
     }
 
@@ -265,7 +266,7 @@ public class Email {
      * Get the "last_event" attribute of the email.
      * @return The last event attribute.
      */
-    public String getLastEvent() {
+    public @Nullable String getLastEvent() {
         return lastEvent;
     }
 
@@ -273,7 +274,7 @@ public class Email {
      * Set the "last_event" attribute of the email.
      * @param lastEvent The last event attribute.
      */
-    public void setLastEvent(String lastEvent) {
+    public void setLastEvent(@Nullable String lastEvent) {
         this.lastEvent = lastEvent;
     }
 
@@ -281,7 +282,7 @@ public class Email {
      * Get the message ID of the email.
      * @return The message ID.
      */
-    public String getMessageId() {
+    public @Nullable String getMessageId() {
         return messageId;
     }
 
@@ -289,7 +290,7 @@ public class Email {
      * Set the message ID of the email.
      * @param messageId The message ID.
      */
-    public void setMessageId(String messageId) {
+    public void setMessageId(@Nullable String messageId) {
         this.messageId = messageId;
     }
 }

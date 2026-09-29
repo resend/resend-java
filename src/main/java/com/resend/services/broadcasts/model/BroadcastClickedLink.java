@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a single clicked link row for a broadcast.
@@ -8,16 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BroadcastClickedLink {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("url")
-    private String url;
+    private @Nullable String url;
 
     @JsonProperty("clicks")
-    private Integer clicks;
+    private @Nullable Integer clicks;
 
     @JsonProperty("unique_clicks")
-    private Integer uniqueClicks;
+    private @Nullable Integer uniqueClicks;
 
     /**
      * Default constructor
@@ -34,7 +35,7 @@ public class BroadcastClickedLink {
      * @param clicks Total number of clicks on this URL.
      * @param uniqueClicks Number of unique clicks on this URL.
      */
-    public BroadcastClickedLink(String id, String url, Integer clicks, Integer uniqueClicks) {
+    public BroadcastClickedLink(@Nullable String id, @Nullable String url, @Nullable Integer clicks, @Nullable Integer uniqueClicks) {
         this.id = id;
         this.url = url;
         this.clicks = clicks;
@@ -46,7 +47,7 @@ public class BroadcastClickedLink {
      *
      * @return the pagination cursor
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -55,7 +56,7 @@ public class BroadcastClickedLink {
      *
      * @return the clicked URL
      */
-    public String getUrl() {
+    public @Nullable String getUrl() {
         return url;
     }
 
@@ -64,7 +65,7 @@ public class BroadcastClickedLink {
      *
      * @return the total click count
      */
-    public Integer getClicks() {
+    public @Nullable Integer getClicks() {
         return clicks;
     }
 
@@ -73,7 +74,7 @@ public class BroadcastClickedLink {
      *
      * @return the unique click count
      */
-    public Integer getUniqueClicks() {
+    public @Nullable Integer getUniqueClicks() {
         return uniqueClicks;
     }
 }

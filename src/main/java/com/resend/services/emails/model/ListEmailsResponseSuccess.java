@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -9,13 +10,13 @@ import java.util.List;
 public class ListEmailsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("data")
-    private List<Email> data;
+    private @Nullable List<Email> data;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     /**
      * Default constructor
@@ -30,7 +31,7 @@ public class ListEmailsResponseSuccess {
      * @param object The object of the list emails.
      * @param hasMore Whether there are more emails available for pagination.
      */
-    public ListEmailsResponseSuccess (final List<Email> data, final String object, final Boolean hasMore) {
+    public ListEmailsResponseSuccess (final @Nullable List<Email> data, final @Nullable String object, final @Nullable Boolean hasMore) {
         this.data = data;
         this.object = object;
         this.hasMore = hasMore;
@@ -41,7 +42,7 @@ public class ListEmailsResponseSuccess {
      *
      * @return The list of emails.
      */
-    public List<Email> getData() {
+    public @Nullable List<Email> getData() {
         return data;
     }
 
@@ -50,7 +51,7 @@ public class ListEmailsResponseSuccess {
      *
      * @return The list of emails object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -59,7 +60,7 @@ public class ListEmailsResponseSuccess {
      *
      * @return Whether there are more items available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 }

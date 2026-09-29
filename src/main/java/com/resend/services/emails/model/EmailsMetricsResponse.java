@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -14,28 +15,28 @@ import java.util.Map;
 public class EmailsMetricsResponse {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("start_date")
-    private String startDate;
+    private @Nullable String startDate;
 
     @JsonProperty("end_date")
-    private String endDate;
+    private @Nullable String endDate;
 
     @JsonProperty("metrics")
-    private List<MetricName> metrics;
+    private @Nullable List<MetricName> metrics;
 
     @JsonProperty("dimensions")
-    private List<MetricsDimension> dimensions;
+    private @Nullable List<MetricsDimension> dimensions;
 
     @JsonProperty("granularity")
-    private MetricsGranularity granularity;
+    private @Nullable MetricsGranularity granularity;
 
     @JsonProperty("totals")
-    private Map<String, Object> totals;
+    private @Nullable Map<String, @Nullable Object> totals;
 
     @JsonProperty("data")
-    private List<EmailsMetricsDataRow> data;
+    private @Nullable List<EmailsMetricsDataRow> data;
 
     /**
      * Default constructor for deserialization.
@@ -48,7 +49,7 @@ public class EmailsMetricsResponse {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -57,7 +58,7 @@ public class EmailsMetricsResponse {
      *
      * @return The start date.
      */
-    public String getStartDate() {
+    public @Nullable String getStartDate() {
         return startDate;
     }
 
@@ -66,7 +67,7 @@ public class EmailsMetricsResponse {
      *
      * @return The end date.
      */
-    public String getEndDate() {
+    public @Nullable String getEndDate() {
         return endDate;
     }
 
@@ -75,7 +76,7 @@ public class EmailsMetricsResponse {
      *
      * @return The returned metrics.
      */
-    public List<MetricName> getMetrics() {
+    public @Nullable List<MetricName> getMetrics() {
         return metrics;
     }
 
@@ -84,7 +85,7 @@ public class EmailsMetricsResponse {
      *
      * @return The dimensions used, empty when the response only contains {@code totals}.
      */
-    public List<MetricsDimension> getDimensions() {
+    public @Nullable List<MetricsDimension> getDimensions() {
         return dimensions;
     }
 
@@ -93,7 +94,7 @@ public class EmailsMetricsResponse {
      *
      * @return The granularity.
      */
-    public MetricsGranularity getGranularity() {
+    public @Nullable MetricsGranularity getGranularity() {
         return granularity;
     }
 
@@ -102,7 +103,7 @@ public class EmailsMetricsResponse {
      *
      * @return The totals, keyed by metric name.
      */
-    public Map<String, Object> getTotals() {
+    public @Nullable Map<String, @Nullable Object> getTotals() {
         return totals;
     }
 
@@ -111,7 +112,7 @@ public class EmailsMetricsResponse {
      *
      * @return The data rows, or {@code null} when no dimensions were requested.
      */
-    public List<EmailsMetricsDataRow> getData() {
+    public @Nullable List<EmailsMetricsDataRow> getData() {
         return data;
     }
 }

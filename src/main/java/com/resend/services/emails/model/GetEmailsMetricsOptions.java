@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.resend.core.helper.URLHelper;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,15 +19,15 @@ import java.util.stream.Collectors;
  */
 public class GetEmailsMetricsOptions {
 
-    private final String startDate;
-    private final String endDate;
-    private final String timezone;
-    private final MetricsGranularity granularity;
-    private final List<MetricName> metrics;
-    private final List<MetricsDimension> dimensions;
-    private final List<String> domainIds;
-    private final List<String> emailIds;
-    private final List<String> broadcastIds;
+    private final @Nullable String startDate;
+    private final @Nullable String endDate;
+    private final @Nullable String timezone;
+    private final @Nullable MetricsGranularity granularity;
+    private final @Nullable List<MetricName> metrics;
+    private final @Nullable List<MetricsDimension> dimensions;
+    private final @Nullable List<String> domainIds;
+    private final @Nullable List<String> emailIds;
+    private final @Nullable List<String> broadcastIds;
 
     /**
      * Constructs a GetEmailsMetricsOptions object using the provided builder.
@@ -50,7 +51,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The start date.
      */
-    public String getStartDate() {
+    public @Nullable String getStartDate() {
         return startDate;
     }
 
@@ -59,7 +60,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The end date.
      */
-    public String getEndDate() {
+    public @Nullable String getEndDate() {
         return endDate;
     }
 
@@ -68,7 +69,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The timezone.
      */
-    public String getTimezone() {
+    public @Nullable String getTimezone() {
         return timezone;
     }
 
@@ -77,7 +78,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The granularity.
      */
-    public MetricsGranularity getGranularity() {
+    public @Nullable MetricsGranularity getGranularity() {
         return granularity;
     }
 
@@ -86,7 +87,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The requested metrics.
      */
-    public List<MetricName> getMetrics() {
+    public @Nullable List<MetricName> getMetrics() {
         return metrics;
     }
 
@@ -96,7 +97,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The requested dimensions.
      */
-    public List<MetricsDimension> getDimensions() {
+    public @Nullable List<MetricsDimension> getDimensions() {
         return dimensions;
     }
 
@@ -105,7 +106,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The domain ID filter.
      */
-    public List<String> getDomainIds() {
+    public @Nullable List<String> getDomainIds() {
         return domainIds;
     }
 
@@ -114,7 +115,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The email ID filter.
      */
-    public List<String> getEmailIds() {
+    public @Nullable List<String> getEmailIds() {
         return emailIds;
     }
 
@@ -123,7 +124,7 @@ public class GetEmailsMetricsOptions {
      *
      * @return The broadcast ID filter.
      */
-    public List<String> getBroadcastIds() {
+    public @Nullable List<String> getBroadcastIds() {
         return broadcastIds;
     }
 
@@ -185,15 +186,15 @@ public class GetEmailsMetricsOptions {
         public Builder() {
         }
 
-        private String startDate;
-        private String endDate;
-        private String timezone;
-        private MetricsGranularity granularity;
-        private List<MetricName> metrics;
-        private List<MetricsDimension> dimensions;
-        private List<String> domainIds;
-        private List<String> emailIds;
-        private List<String> broadcastIds;
+        private @Nullable String startDate;
+        private @Nullable String endDate;
+        private @Nullable String timezone;
+        private @Nullable MetricsGranularity granularity;
+        private @Nullable List<MetricName> metrics;
+        private @Nullable List<MetricsDimension> dimensions;
+        private @Nullable List<String> domainIds;
+        private @Nullable List<String> emailIds;
+        private @Nullable List<String> broadcastIds;
 
         /**
          * Sets the start of the date range (ISO 8601 date or datetime). Defaults server-side

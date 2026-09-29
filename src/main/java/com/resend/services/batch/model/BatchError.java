@@ -1,6 +1,7 @@
 package com.resend.services.batch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a validation error for a batch email in permissive mode.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BatchError {
 
     @JsonProperty("index")
-    private Integer index;
+    private @Nullable Integer index;
 
     @JsonProperty("message")
-    private String message;
+    private @Nullable String message;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class BatchError {
      * @param index The index of the email in the batch request that failed validation.
      * @param message The error message identifying the validation error.
      */
-    public BatchError(final Integer index, final String message) {
+    public BatchError(final @Nullable Integer index, final @Nullable String message) {
         this.index = index;
         this.message = message;
     }
@@ -35,7 +36,7 @@ public class BatchError {
      *
      * @return The index of the failed email.
      */
-    public Integer getIndex() {
+    public @Nullable Integer getIndex() {
         return index;
     }
 
@@ -44,7 +45,7 @@ public class BatchError {
      *
      * @return The error message.
      */
-    public String getMessage() {
+    public @Nullable String getMessage() {
         return message;
     }
 }

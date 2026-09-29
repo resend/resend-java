@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents options for creating a broadcast.
@@ -9,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CreateBroadcastOptions extends BroadcastOptions {
 
     @JsonProperty("send")
-    private final Boolean send;
+    private final @Nullable Boolean send;
 
     @JsonProperty("scheduled_at")
-    private final String scheduledAt;
+    private final @Nullable String scheduledAt;
 
     /**
      * Constructs a CreateBroadcastOptions object using the provided builder.
@@ -30,7 +31,7 @@ public class CreateBroadcastOptions extends BroadcastOptions {
      *
      * @return true if the broadcast should be sent immediately, false or null for draft.
      */
-    public Boolean getSend() {
+    public @Nullable Boolean getSend() {
         return send;
     }
 
@@ -39,7 +40,7 @@ public class CreateBroadcastOptions extends BroadcastOptions {
      *
      * @return The scheduled time in ISO 8601 format, or null if not scheduled.
      */
-    public String getScheduledAt() {
+    public @Nullable String getScheduledAt() {
         return scheduledAt;
     }
 
@@ -62,8 +63,8 @@ public class CreateBroadcastOptions extends BroadcastOptions {
         public Builder() {
         }
 
-        private Boolean send;
-        private String scheduledAt;
+        private @Nullable Boolean send;
+        private @Nullable String scheduledAt;
 
         /**
          * Sets the send flag to immediately send the broadcast upon creation.

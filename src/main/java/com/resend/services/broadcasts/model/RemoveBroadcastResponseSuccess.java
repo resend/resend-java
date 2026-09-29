@@ -1,7 +1,7 @@
 package com.resend.services.broadcasts.model;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response for a successful broadcast removal.
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class RemoveBroadcastResponseSuccess extends BaseBroadcastResponse {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("deleted")
     private boolean deleted;
@@ -28,7 +28,7 @@ public class RemoveBroadcastResponseSuccess extends BaseBroadcastResponse {
      * @param object    The object of the broadcast.
      * @param deleted    The state of the broadcast.
      */
-    public RemoveBroadcastResponseSuccess(String id, String object, boolean deleted) {
+    public RemoveBroadcastResponseSuccess(@Nullable String id, @Nullable String object, boolean deleted) {
         super(id);
         this.object = object;
         this.deleted = deleted;
@@ -39,7 +39,7 @@ public class RemoveBroadcastResponseSuccess extends BaseBroadcastResponse {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 

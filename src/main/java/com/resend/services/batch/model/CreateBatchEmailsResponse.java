@@ -1,6 +1,7 @@
 package com.resend.services.batch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class CreateBatchEmailsResponse extends AbstractBatchEmailsResponse {
 
     @JsonProperty("errors")
-    private List<BatchError> errors;
+    private @Nullable List<BatchError> errors;
 
     /**
      * Default constructor.
@@ -26,7 +27,7 @@ public class CreateBatchEmailsResponse extends AbstractBatchEmailsResponse {
      * @param data A list of successfully created batch emails.
      * @param errors A list of validation errors.
      */
-    public CreateBatchEmailsResponse(final List<BatchEmail> data, final List<BatchError> errors) {
+    public CreateBatchEmailsResponse(final @Nullable List<BatchEmail> data, final @Nullable List<BatchError> errors) {
         super(data);
         this.errors = errors;
     }
@@ -36,7 +37,7 @@ public class CreateBatchEmailsResponse extends AbstractBatchEmailsResponse {
      *
      * @return A list of batch email errors, never null (but may be empty).
      */
-    public List<BatchError> getErrors() {
+    public @Nullable List<BatchError> getErrors() {
         return errors;
     }
 

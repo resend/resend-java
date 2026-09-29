@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a request to update emails.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateEmailOptions {
 
     @JsonProperty("scheduled_at")
-    private final String scheduledAt;
+    private final @Nullable String scheduledAt;
 
     private UpdateEmailOptions(Builder builder) {
 
@@ -21,7 +22,7 @@ public class UpdateEmailOptions {
      *
      * @return The schedule of the email.
      */
-    public String getScheduledAt() {
+    public @Nullable String getScheduledAt() {
         return scheduledAt;
     }
 
@@ -44,7 +45,7 @@ public class UpdateEmailOptions {
         public Builder() {
         }
 
-        private String scheduledAt;
+        private @Nullable String scheduledAt;
 
         /**
          * Set the schedule of the email.

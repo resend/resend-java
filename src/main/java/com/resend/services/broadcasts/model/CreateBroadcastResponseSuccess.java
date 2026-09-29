@@ -1,5 +1,8 @@
 package com.resend.services.broadcasts.model;
 
+import org.jspecify.annotations.Nullable;
+
+
 /**
  * Represents a broadcast response for creating a broadcast.
  * Extends the BaseBroadcastResponse class.
@@ -17,7 +20,7 @@ public class CreateBroadcastResponseSuccess extends BaseBroadcastResponse {
      *
      * @param id        The ID of the audience.
      */
-    public CreateBroadcastResponseSuccess(String id) {
+    public CreateBroadcastResponseSuccess(@Nullable String id) {
         super(id);
     }
 }

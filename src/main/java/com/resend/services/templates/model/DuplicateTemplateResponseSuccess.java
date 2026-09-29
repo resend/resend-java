@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response from duplicating a template.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DuplicateTemplateResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class DuplicateTemplateResponseSuccess {
      * @param object The object type.
      * @param id     The ID of the duplicated template.
      */
-    public DuplicateTemplateResponseSuccess(String object, String id) {
+    public DuplicateTemplateResponseSuccess(@Nullable String object, @Nullable String id) {
         this.object = object;
         this.id = id;
     }
@@ -35,7 +36,7 @@ public class DuplicateTemplateResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -44,7 +45,7 @@ public class DuplicateTemplateResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -53,7 +54,7 @@ public class DuplicateTemplateResponseSuccess {
      *
      * @return The ID of the duplicated template.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -62,7 +63,7 @@ public class DuplicateTemplateResponseSuccess {
      *
      * @param id The ID of the duplicated template.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 }

@@ -2,6 +2,7 @@ package com.resend.services.batch.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public abstract class AbstractBatchEmailsResponse {
      * The list of e-mail ids created.
      */
     @JsonProperty("data")
-    protected List<BatchEmail> data;
+    protected @Nullable List<BatchEmail> data;
 
     /**
      * Default constructor.
@@ -31,7 +32,7 @@ public abstract class AbstractBatchEmailsResponse {
      *
      * @param data A list of successfully created batch emails.
      */
-    public AbstractBatchEmailsResponse(final List<BatchEmail> data) {
+    public AbstractBatchEmailsResponse(final @Nullable List<BatchEmail> data) {
         this.data = data;
     }
 
@@ -40,7 +41,7 @@ public abstract class AbstractBatchEmailsResponse {
      *
      * @return A list of batch emails.
      */
-    public List<BatchEmail> getData() {
+    public @Nullable List<BatchEmail> getData() {
         return data;
     }
 

@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a base response for emails.
@@ -11,13 +12,13 @@ public abstract class EmailResponse {
      * The unique identifier associated with the email.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * The resource object.
      */
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Constructs a new instance of {@code EmailResponse}.
@@ -31,7 +32,7 @@ public abstract class EmailResponse {
      * @param id The ID associated with the sent email.
      * @param object The resource object.
      */
-    public EmailResponse(String id, String object) {
+    public EmailResponse(@Nullable String id, @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -41,7 +42,7 @@ public abstract class EmailResponse {
      *
      * @return The ID of the sent email.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -50,7 +51,7 @@ public abstract class EmailResponse {
      *
      * @param id The ID to be set.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -59,7 +60,7 @@ public abstract class EmailResponse {
      *
      * @return The resource of the object.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -68,7 +69,7 @@ public abstract class EmailResponse {
      *
      * @param object The Object to be set.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 }

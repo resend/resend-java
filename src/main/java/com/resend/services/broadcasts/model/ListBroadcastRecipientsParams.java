@@ -2,9 +2,11 @@ package com.resend.services.broadcasts.model;
 
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.ListParams;
+import org.jspecify.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Represents the query parameters for listing a broadcast's recipients.
@@ -17,15 +19,15 @@ public class ListBroadcastRecipientsParams {
 
     private final BroadcastRecipientEventType type;
 
-    private final String email;
+    private final @Nullable String email;
 
-    private final BroadcastRecipientBounceType bounceType;
+    private final @Nullable BroadcastRecipientBounceType bounceType;
 
-    private final Integer limit;
+    private final @Nullable Integer limit;
 
-    private final String after;
+    private final @Nullable String after;
 
-    private final String before;
+    private final @Nullable String before;
 
     /**
      * Constructs a ListBroadcastRecipientsParams object using the provided builder.
@@ -33,7 +35,7 @@ public class ListBroadcastRecipientsParams {
      * @param builder The builder to construct the params.
      */
     public ListBroadcastRecipientsParams(Builder builder) {
-        this.type = builder.type;
+        this.type = Objects.requireNonNull(builder.type, "type must be provided.");
         this.email = builder.email;
         this.bounceType = builder.bounceType;
         this.limit = builder.limit;
@@ -55,7 +57,7 @@ public class ListBroadcastRecipientsParams {
      *
      * @return The email filter.
      */
-    public String getEmail() {
+    public @Nullable String getEmail() {
         return email;
     }
 
@@ -64,7 +66,7 @@ public class ListBroadcastRecipientsParams {
      *
      * @return The bounce type filter.
      */
-    public BroadcastRecipientBounceType getBounceType() {
+    public @Nullable BroadcastRecipientBounceType getBounceType() {
         return bounceType;
     }
 
@@ -73,7 +75,7 @@ public class ListBroadcastRecipientsParams {
      *
      * @return The pagination limit.
      */
-    public Integer getLimit() {
+    public @Nullable Integer getLimit() {
         return limit;
     }
 
@@ -82,7 +84,7 @@ public class ListBroadcastRecipientsParams {
      *
      * @return The after cursor.
      */
-    public String getAfter() {
+    public @Nullable String getAfter() {
         return after;
     }
 
@@ -91,7 +93,7 @@ public class ListBroadcastRecipientsParams {
      *
      * @return The before cursor.
      */
-    public String getBefore() {
+    public @Nullable String getBefore() {
         return before;
     }
 
@@ -134,12 +136,12 @@ public class ListBroadcastRecipientsParams {
         public Builder() {
         }
 
-        private BroadcastRecipientEventType type;
-        private String email;
-        private BroadcastRecipientBounceType bounceType;
-        private Integer limit;
-        private String after;
-        private String before;
+        private @Nullable BroadcastRecipientEventType type;
+        private @Nullable String email;
+        private @Nullable BroadcastRecipientBounceType bounceType;
+        private @Nullable Integer limit;
+        private @Nullable String after;
+        private @Nullable String before;
 
         /**
          * Sets the event type to filter recipients by.

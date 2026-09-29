@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
@@ -9,43 +10,43 @@ import java.util.*;
  */
 public class CreateEmailOptions {
     @JsonProperty("from")
-    private final String from;
+    private final @Nullable String from;
 
     @JsonProperty("to")
-    private final List<String> to;
+    private final @Nullable List<String> to;
 
     @JsonProperty("subject")
-    private final String subject;
+    private final @Nullable String subject;
 
     @JsonProperty("text")
-    private final String text;
+    private final @Nullable String text;
 
     @JsonProperty("cc")
-    private final List<String> cc;
+    private final @Nullable List<String> cc;
 
     @JsonProperty("bcc")
-    private final List<String> bcc;
+    private final @Nullable List<String> bcc;
 
     @JsonProperty("reply_to")
-    private final List<String> replyTo;
+    private final @Nullable List<String> replyTo;
 
     @JsonProperty("html")
-    private final String html;
+    private final @Nullable String html;
 
     @JsonProperty("headers")
-    private final Map<String, String> headers;
+    private final @Nullable Map<String, String> headers;
 
     @JsonProperty("attachments")
-    private final List<Attachment> attachments;
+    private final @Nullable List<Attachment> attachments;
 
     @JsonProperty("tags")
-    private final List<Tag> tags;
+    private final @Nullable List<Tag> tags;
 
     @JsonProperty("scheduled_at")
-    private final String scheduledAt;
+    private final @Nullable String scheduledAt;
 
     @JsonProperty("template")
-    private final Template template;
+    private final @Nullable Template template;
 
     private CreateEmailOptions(Builder builder) {
         this.from = builder.from;
@@ -68,7 +69,7 @@ public class CreateEmailOptions {
      *
      * @return The sender's email address.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -77,7 +78,7 @@ public class CreateEmailOptions {
      *
      * @return The list of recipients' email addresses.
      */
-    public List<String> getTo() {
+    public @Nullable List<String> getTo() {
         return to;
     }
 
@@ -86,7 +87,7 @@ public class CreateEmailOptions {
      *
      * @return The plain text version of the message.
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -95,7 +96,7 @@ public class CreateEmailOptions {
      *
      * @return The email subject.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -104,7 +105,7 @@ public class CreateEmailOptions {
      *
      * @return The list of recipient email addresses.
      */
-    public List<String> getCc() {
+    public @Nullable List<String> getCc() {
         return cc;
     }
 
@@ -113,7 +114,7 @@ public class CreateEmailOptions {
      *
      * @return The list of recipient email addresses.
      */
-    public List<String> getBcc() {
+    public @Nullable List<String> getBcc() {
         return bcc;
     }
 
@@ -122,7 +123,7 @@ public class CreateEmailOptions {
      *
      * @return The plain text version of the message.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -131,7 +132,7 @@ public class CreateEmailOptions {
      *
      * @return The HTML version of the message.
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -140,7 +141,7 @@ public class CreateEmailOptions {
      *
      * @return The custom headers of the email.
      */
-    public Map<String, String> getHeaders() {
+    public @Nullable Map<String, String> getHeaders() {
         return headers;
     }
 
@@ -149,7 +150,7 @@ public class CreateEmailOptions {
      *
      * @return The list of attachments of the email.
      */
-    public List<Attachment> getAttachments() {
+    public @Nullable List<Attachment> getAttachments() {
         return attachments;
     }
 
@@ -158,7 +159,7 @@ public class CreateEmailOptions {
      *
      * @return The tags of the email.
      */
-    public List<Tag> getTags() {
+    public @Nullable List<Tag> getTags() {
         return tags;
     }
 
@@ -167,7 +168,7 @@ public class CreateEmailOptions {
      *
      * @return The schedule of the email.
      */
-    public String getScheduledAt() {
+    public @Nullable String getScheduledAt() {
         return scheduledAt;
     }
 
@@ -176,7 +177,7 @@ public class CreateEmailOptions {
      *
      * @return The template configuration of the email.
      */
-    public Template getTemplate() {
+    public @Nullable Template getTemplate() {
         return template;
     }
 
@@ -199,19 +200,19 @@ public class CreateEmailOptions {
         public Builder() {
         }
 
-        private String from;
-        private List<String> to;
-        private String text;
-        private String subject;
-        private List<String> cc;
-        private List<String> bcc;
-        private List<String> replyTo;
-        private String html;
-        private List<Attachment> attachments;
-        private List<Tag> tags;
-        private Map<String, String> headers;
-        private String scheduledAt;
-        private Template template;
+        private @Nullable String from;
+        private @Nullable List<String> to;
+        private @Nullable String text;
+        private @Nullable String subject;
+        private @Nullable List<String> cc;
+        private @Nullable List<String> bcc;
+        private @Nullable List<String> replyTo;
+        private @Nullable String html;
+        private @Nullable List<Attachment> attachments;
+        private @Nullable List<Tag> tags;
+        private @Nullable Map<String, String> headers;
+        private @Nullable String scheduledAt;
+        private @Nullable Template template;
 
         /**
          * Set the 'from' email address.

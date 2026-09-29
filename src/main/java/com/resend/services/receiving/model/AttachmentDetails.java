@@ -1,6 +1,7 @@
 package com.resend.services.receiving.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents detailed information about an attachment including download URL.
@@ -8,28 +9,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AttachmentDetails {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("filename")
-    private String filename;
+    private @Nullable String filename;
 
     @JsonProperty("content_type")
-    private String contentType;
+    private @Nullable String contentType;
 
     @JsonProperty("content_disposition")
-    private String contentDisposition;
+    private @Nullable String contentDisposition;
 
     @JsonProperty("content_id")
-    private String contentId;
+    private @Nullable String contentId;
 
     @JsonProperty("download_url")
-    private String downloadUrl;
+    private @Nullable String downloadUrl;
 
     @JsonProperty("expires_at")
-    private String expiresAt;
+    private @Nullable String expiresAt;
 
     /**
      * Default constructor.
@@ -42,7 +43,7 @@ public class AttachmentDetails {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -51,7 +52,7 @@ public class AttachmentDetails {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -60,7 +61,7 @@ public class AttachmentDetails {
      *
      * @return The attachment ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -69,7 +70,7 @@ public class AttachmentDetails {
      *
      * @param id The attachment ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -78,7 +79,7 @@ public class AttachmentDetails {
      *
      * @return The filename.
      */
-    public String getFilename() {
+    public @Nullable String getFilename() {
         return filename;
     }
 
@@ -87,7 +88,7 @@ public class AttachmentDetails {
      *
      * @param filename The filename.
      */
-    public void setFilename(String filename) {
+    public void setFilename(@Nullable String filename) {
         this.filename = filename;
     }
 
@@ -96,7 +97,7 @@ public class AttachmentDetails {
      *
      * @return The content type.
      */
-    public String getContentType() {
+    public @Nullable String getContentType() {
         return contentType;
     }
 
@@ -105,7 +106,7 @@ public class AttachmentDetails {
      *
      * @param contentType The content type.
      */
-    public void setContentType(String contentType) {
+    public void setContentType(@Nullable String contentType) {
         this.contentType = contentType;
     }
 
@@ -114,7 +115,7 @@ public class AttachmentDetails {
      *
      * @return The content disposition.
      */
-    public String getContentDisposition() {
+    public @Nullable String getContentDisposition() {
         return contentDisposition;
     }
 
@@ -123,7 +124,7 @@ public class AttachmentDetails {
      *
      * @param contentDisposition The content disposition.
      */
-    public void setContentDisposition(String contentDisposition) {
+    public void setContentDisposition(@Nullable String contentDisposition) {
         this.contentDisposition = contentDisposition;
     }
 
@@ -132,7 +133,7 @@ public class AttachmentDetails {
      *
      * @return The content ID.
      */
-    public String getContentId() {
+    public @Nullable String getContentId() {
         return contentId;
     }
 
@@ -141,7 +142,7 @@ public class AttachmentDetails {
      *
      * @param contentId The content ID.
      */
-    public void setContentId(String contentId) {
+    public void setContentId(@Nullable String contentId) {
         this.contentId = contentId;
     }
 
@@ -150,7 +151,7 @@ public class AttachmentDetails {
      *
      * @return The download URL.
      */
-    public String getDownloadUrl() {
+    public @Nullable String getDownloadUrl() {
         return downloadUrl;
     }
 
@@ -159,7 +160,7 @@ public class AttachmentDetails {
      *
      * @param downloadUrl The download URL.
      */
-    public void setDownloadUrl(String downloadUrl) {
+    public void setDownloadUrl(@Nullable String downloadUrl) {
         this.downloadUrl = downloadUrl;
     }
 
@@ -168,7 +169,7 @@ public class AttachmentDetails {
      *
      * @return The expiration timestamp.
      */
-    public String getExpiresAt() {
+    public @Nullable String getExpiresAt() {
         return expiresAt;
     }
 
@@ -177,7 +178,7 @@ public class AttachmentDetails {
      *
      * @param expiresAt The expiration timestamp.
      */
-    public void setExpiresAt(String expiresAt) {
+    public void setExpiresAt(@Nullable String expiresAt) {
         this.expiresAt = expiresAt;
     }
 }

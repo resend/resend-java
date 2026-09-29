@@ -1,6 +1,7 @@
 package com.resend.services.receiving.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -11,37 +12,37 @@ import java.util.List;
 public class ReceivedEmailSummary {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("to")
-    private List<String> to;
+    private @Nullable List<String> to;
 
     @JsonProperty("from")
-    private String from;
+    private @Nullable String from;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("subject")
-    private String subject;
+    private @Nullable String subject;
 
     @JsonProperty("bcc")
-    private List<String> bcc;
+    private @Nullable List<String> bcc;
 
     @JsonProperty("cc")
-    private List<String> cc;
+    private @Nullable List<String> cc;
 
     @JsonProperty("reply_to")
-    private List<String> replyTo;
+    private @Nullable List<String> replyTo;
 
     @JsonProperty("message_id")
-    private String messageId;
+    private @Nullable String messageId;
 
     @JsonProperty("attachments")
-    private List<ReceivedEmailAttachment> attachments;
+    private @Nullable List<ReceivedEmailAttachment> attachments;
 
     /**
      * Default constructor.
@@ -54,7 +55,7 @@ public class ReceivedEmailSummary {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -63,7 +64,7 @@ public class ReceivedEmailSummary {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -72,7 +73,7 @@ public class ReceivedEmailSummary {
      *
      * @return The email ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -81,7 +82,7 @@ public class ReceivedEmailSummary {
      *
      * @param id The email ID.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -90,7 +91,7 @@ public class ReceivedEmailSummary {
      *
      * @return The list of recipient addresses.
      */
-    public List<String> getTo() {
+    public @Nullable List<String> getTo() {
         return to;
     }
 
@@ -99,7 +100,7 @@ public class ReceivedEmailSummary {
      *
      * @param to The list of recipient addresses.
      */
-    public void setTo(List<String> to) {
+    public void setTo(@Nullable List<String> to) {
         this.to = to;
     }
 
@@ -108,7 +109,7 @@ public class ReceivedEmailSummary {
      *
      * @return The sender address.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -117,7 +118,7 @@ public class ReceivedEmailSummary {
      *
      * @param from The sender address.
      */
-    public void setFrom(String from) {
+    public void setFrom(@Nullable String from) {
         this.from = from;
     }
 
@@ -126,7 +127,7 @@ public class ReceivedEmailSummary {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -135,7 +136,7 @@ public class ReceivedEmailSummary {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -144,7 +145,7 @@ public class ReceivedEmailSummary {
      *
      * @return The email subject.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -153,7 +154,7 @@ public class ReceivedEmailSummary {
      *
      * @param subject The email subject.
      */
-    public void setSubject(String subject) {
+    public void setSubject(@Nullable String subject) {
         this.subject = subject;
     }
 
@@ -162,7 +163,7 @@ public class ReceivedEmailSummary {
      *
      * @return The list of BCC addresses.
      */
-    public List<String> getBcc() {
+    public @Nullable List<String> getBcc() {
         return bcc;
     }
 
@@ -171,7 +172,7 @@ public class ReceivedEmailSummary {
      *
      * @param bcc The list of BCC addresses.
      */
-    public void setBcc(List<String> bcc) {
+    public void setBcc(@Nullable List<String> bcc) {
         this.bcc = bcc;
     }
 
@@ -180,7 +181,7 @@ public class ReceivedEmailSummary {
      *
      * @return The list of CC addresses.
      */
-    public List<String> getCc() {
+    public @Nullable List<String> getCc() {
         return cc;
     }
 
@@ -189,7 +190,7 @@ public class ReceivedEmailSummary {
      *
      * @param cc The list of CC addresses.
      */
-    public void setCc(List<String> cc) {
+    public void setCc(@Nullable List<String> cc) {
         this.cc = cc;
     }
 
@@ -198,7 +199,7 @@ public class ReceivedEmailSummary {
      *
      * @return The list of reply-to addresses.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -207,7 +208,7 @@ public class ReceivedEmailSummary {
      *
      * @param replyTo The list of reply-to addresses.
      */
-    public void setReplyTo(List<String> replyTo) {
+    public void setReplyTo(@Nullable List<String> replyTo) {
         this.replyTo = replyTo;
     }
 
@@ -216,7 +217,7 @@ public class ReceivedEmailSummary {
      *
      * @return The message ID.
      */
-    public String getMessageId() {
+    public @Nullable String getMessageId() {
         return messageId;
     }
 
@@ -225,7 +226,7 @@ public class ReceivedEmailSummary {
      *
      * @param messageId The message ID.
      */
-    public void setMessageId(String messageId) {
+    public void setMessageId(@Nullable String messageId) {
         this.messageId = messageId;
     }
 
@@ -234,7 +235,7 @@ public class ReceivedEmailSummary {
      *
      * @return The list of attachments.
      */
-    public List<ReceivedEmailAttachment> getAttachments() {
+    public @Nullable List<ReceivedEmailAttachment> getAttachments() {
         return attachments;
     }
 
@@ -243,7 +244,7 @@ public class ReceivedEmailSummary {
      *
      * @param attachments The list of attachments.
      */
-    public void setAttachments(List<ReceivedEmailAttachment> attachments) {
+    public void setAttachments(@Nullable List<ReceivedEmailAttachment> attachments) {
         this.attachments = attachments;
     }
 }

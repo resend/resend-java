@@ -1,16 +1,17 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class representing options to update a broadcast.
  */
 public class UpdateBroadcastOptions extends BroadcastOptions {
 
-    private final String id;
+    private final @Nullable String id;
 
     @JsonProperty("preview_text")
-    private final String previewText;
+    private final @Nullable String previewText;
 
     /**
      * Constructs an UpdateBroadcastOptions object using the provided builder.
@@ -28,7 +29,7 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
      *
      * @return The broadcast ID.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -37,7 +38,7 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
      *
      * @return The broadcast preview text.
      */
-    public String getPreviewText() {
+    public @Nullable String getPreviewText() {
         return previewText;
     }
 
@@ -60,9 +61,9 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
         public Builder() {
         }
 
-        private String id;
+        private @Nullable String id;
 
-        private String previewText;
+        private @Nullable String previewText;
 
         /**
          * Set the ID of the broadcast.

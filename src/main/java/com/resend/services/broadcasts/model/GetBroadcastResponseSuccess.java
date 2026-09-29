@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,28 +11,28 @@ import java.util.List;
 public class GetBroadcastResponseSuccess extends Broadcast {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("from")
-    private String from;
+    private @Nullable String from;
 
     @JsonProperty("html")
-    private String html;
+    private @Nullable String html;
 
     @JsonProperty("subject")
-    private String subject;
+    private @Nullable String subject;
 
     @JsonProperty("reply_to")
-    private List<String> replyTo;
+    private @Nullable List<String> replyTo;
 
     @JsonProperty("preview_text")
-    private String previewText;
+    private @Nullable String previewText;
 
     @JsonProperty("text")
-    private String text;
+    private @Nullable String text;
 
     /**
      * Default constructor
@@ -58,20 +59,20 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      * @param text The plain text content of the broadcast.
      */
     public GetBroadcastResponseSuccess(
-            String id,
-            String audienceId,
-            String status,
-            String createdAt,
-            String scheduledAt,
-            String sentAt,
-            String object,
-            String name,
-            String from,
-            String html,
-            String subject,
-            List<String> replyTo,
-            String previewText,
-            String text
+            @Nullable String id,
+            @Nullable String audienceId,
+            @Nullable String status,
+            @Nullable String createdAt,
+            @Nullable String scheduledAt,
+            @Nullable String sentAt,
+            @Nullable String object,
+            @Nullable String name,
+            @Nullable String from,
+            @Nullable String html,
+            @Nullable String subject,
+            @Nullable List<String> replyTo,
+            @Nullable String previewText,
+            @Nullable String text
     ) {
         super(id, audienceId, status, createdAt, scheduledAt, sentAt);
         this.object = object;
@@ -89,7 +90,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the object type (e.g., "broadcast")
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -98,7 +99,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the broadcast name
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -107,7 +108,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the sender email address
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -116,7 +117,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the HTML content
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -125,7 +126,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the subject line
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -134,7 +135,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the list of reply-to addresses
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -143,7 +144,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the preview text
      */
-    public String getPreviewText() {
+    public @Nullable String getPreviewText() {
         return previewText;
     }
 
@@ -152,7 +153,7 @@ public class GetBroadcastResponseSuccess extends Broadcast {
      *
      * @return the plain text content
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 }

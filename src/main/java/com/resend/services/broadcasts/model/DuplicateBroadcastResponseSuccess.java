@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response for a successful broadcast duplication.
@@ -8,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class DuplicateBroadcastResponseSuccess extends BaseBroadcastResponse {
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor
@@ -23,7 +24,7 @@ public class DuplicateBroadcastResponseSuccess extends BaseBroadcastResponse {
      * @param id        The ID of the new draft broadcast.
      * @param object    The object of the broadcast.
      */
-    public DuplicateBroadcastResponseSuccess(String id, String object) {
+    public DuplicateBroadcastResponseSuccess(@Nullable String id, @Nullable String object) {
         super(id);
         this.object = object;
     }
@@ -33,7 +34,7 @@ public class DuplicateBroadcastResponseSuccess extends BaseBroadcastResponse {
      *
      * @return The type of the data.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 }

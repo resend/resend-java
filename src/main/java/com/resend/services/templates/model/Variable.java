@@ -2,6 +2,7 @@ package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a variable in a template.
@@ -10,22 +11,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Variable {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("key")
-    private String key;
+    private @Nullable String key;
 
     @JsonProperty("type")
-    private VariableType type;
+    private @Nullable VariableType type;
 
     @JsonProperty("fallback_value")
-    private Object fallbackValue;
+    private @Nullable Object fallbackValue;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     /**
      * Default constructor.
@@ -39,7 +40,7 @@ public class Variable {
      * @param key  The key of the variable.
      * @param type The type of the variable.
      */
-    public Variable(String key, VariableType type) {
+    public Variable(@Nullable String key, @Nullable VariableType type) {
         this.key = key;
         this.type = type;
     }
@@ -51,7 +52,7 @@ public class Variable {
      * @param type          The type of the variable.
      * @param fallbackValue The fallback value of the variable.
      */
-    public Variable(String key, VariableType type, Object fallbackValue) {
+    public Variable(@Nullable String key, @Nullable VariableType type, @Nullable Object fallbackValue) {
         this.key = key;
         this.type = type;
         this.fallbackValue = fallbackValue;
@@ -62,7 +63,7 @@ public class Variable {
      *
      * @return The ID of the variable.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -71,7 +72,7 @@ public class Variable {
      *
      * @param id The ID of the variable.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -80,7 +81,7 @@ public class Variable {
      *
      * @return The key of the variable.
      */
-    public String getKey() {
+    public @Nullable String getKey() {
         return key;
     }
 
@@ -89,7 +90,7 @@ public class Variable {
      *
      * @param key The key of the variable.
      */
-    public void setKey(String key) {
+    public void setKey(@Nullable String key) {
         this.key = key;
     }
 
@@ -98,7 +99,7 @@ public class Variable {
      *
      * @return The type of the variable.
      */
-    public VariableType getType() {
+    public @Nullable VariableType getType() {
         return type;
     }
 
@@ -107,7 +108,7 @@ public class Variable {
      *
      * @param type The type of the variable.
      */
-    public void setType(VariableType type) {
+    public void setType(@Nullable VariableType type) {
         this.type = type;
     }
 
@@ -116,7 +117,7 @@ public class Variable {
      *
      * @return The fallback value of the variable.
      */
-    public Object getFallbackValue() {
+    public @Nullable Object getFallbackValue() {
         return fallbackValue;
     }
 
@@ -125,7 +126,7 @@ public class Variable {
      *
      * @param fallbackValue The fallback value of the variable.
      */
-    public void setFallbackValue(Object fallbackValue) {
+    public void setFallbackValue(@Nullable Object fallbackValue) {
         this.fallbackValue = fallbackValue;
     }
 
@@ -134,7 +135,7 @@ public class Variable {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -143,7 +144,7 @@ public class Variable {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -152,7 +153,7 @@ public class Variable {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -161,7 +162,7 @@ public class Variable {
      *
      * @param updatedAt The last update timestamp.
      */
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(@Nullable String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -184,9 +185,9 @@ public class Variable {
         public Builder() {
         }
 
-        private String key;
-        private VariableType type;
-        private Object fallbackValue;
+        private @Nullable String key;
+        private @Nullable VariableType type;
+        private @Nullable Object fallbackValue;
 
         /**
          * Sets the key of the variable.

@@ -1,6 +1,7 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
 public class ListBroadcastRecipientsResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("has_more")
-    private Boolean hasMore;
+    private @Nullable Boolean hasMore;
 
     @JsonProperty("data")
-    private List<BroadcastRecipient> data;
+    private @Nullable List<BroadcastRecipient> data;
 
     /**
      * Default constructor
@@ -32,7 +33,7 @@ public class ListBroadcastRecipientsResponseSuccess {
      * @param hasMore Whether there are more recipients available for pagination.
      * @param data    The list of broadcast recipients.
      */
-    public ListBroadcastRecipientsResponseSuccess(String object, Boolean hasMore, List<BroadcastRecipient> data) {
+    public ListBroadcastRecipientsResponseSuccess(@Nullable String object, @Nullable Boolean hasMore, @Nullable List<BroadcastRecipient> data) {
         this.object = object;
         this.hasMore = hasMore;
         this.data = data;
@@ -43,7 +44,7 @@ public class ListBroadcastRecipientsResponseSuccess {
      *
      * @return The object type of the list.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -52,7 +53,7 @@ public class ListBroadcastRecipientsResponseSuccess {
      *
      * @return Whether there are more recipients available for pagination.
      */
-    public Boolean hasMore() {
+    public @Nullable Boolean hasMore() {
         return hasMore;
     }
 
@@ -61,7 +62,7 @@ public class ListBroadcastRecipientsResponseSuccess {
      *
      * @return The list of broadcast recipients.
      */
-    public List<BroadcastRecipient> getData() {
+    public @Nullable List<BroadcastRecipient> getData() {
         return data;
     }
 }

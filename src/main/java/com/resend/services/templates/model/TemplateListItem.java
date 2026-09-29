@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a template item in a list response.
@@ -8,25 +9,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TemplateListItem {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("published_at")
-    private String publishedAt;
+    private @Nullable String publishedAt;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     @JsonProperty("alias")
-    private String alias;
+    private @Nullable String alias;
 
     /**
      * Default constructor.
@@ -39,7 +40,7 @@ public class TemplateListItem {
      *
      * @return The ID of the template.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -48,7 +49,7 @@ public class TemplateListItem {
      *
      * @param id The ID of the template.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -57,7 +58,7 @@ public class TemplateListItem {
      *
      * @return The name of the template.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -66,7 +67,7 @@ public class TemplateListItem {
      *
      * @param name The name of the template.
      */
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
@@ -75,7 +76,7 @@ public class TemplateListItem {
      *
      * @return The status of the template.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -84,7 +85,7 @@ public class TemplateListItem {
      *
      * @param status The status of the template.
      */
-    public void setStatus(String status) {
+    public void setStatus(@Nullable String status) {
         this.status = status;
     }
 
@@ -93,7 +94,7 @@ public class TemplateListItem {
      *
      * @return The publication timestamp.
      */
-    public String getPublishedAt() {
+    public @Nullable String getPublishedAt() {
         return publishedAt;
     }
 
@@ -102,7 +103,7 @@ public class TemplateListItem {
      *
      * @param publishedAt The publication timestamp.
      */
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(@Nullable String publishedAt) {
         this.publishedAt = publishedAt;
     }
 
@@ -111,7 +112,7 @@ public class TemplateListItem {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -120,7 +121,7 @@ public class TemplateListItem {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -129,7 +130,7 @@ public class TemplateListItem {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -138,7 +139,7 @@ public class TemplateListItem {
      *
      * @param updatedAt The last update timestamp.
      */
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(@Nullable String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -147,7 +148,7 @@ public class TemplateListItem {
      *
      * @return The alias of the template.
      */
-    public String getAlias() {
+    public @Nullable String getAlias() {
         return alias;
     }
 
@@ -156,7 +157,7 @@ public class TemplateListItem {
      *
      * @param alias The alias of the template.
      */
-    public void setAlias(String alias) {
+    public void setAlias(@Nullable String alias) {
         this.alias = alias;
     }
 }

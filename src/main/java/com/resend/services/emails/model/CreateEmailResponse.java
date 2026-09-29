@@ -1,6 +1,7 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a response after sending an email.
@@ -11,7 +12,7 @@ public class CreateEmailResponse {
      * The unique identifier associated with the email.
      */
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Constructs a new instance of {@code CreateEmailResponse}.
@@ -24,7 +25,7 @@ public class CreateEmailResponse {
      *
      * @param id The ID associated with the sent email.
      */
-    public CreateEmailResponse(String id) {
+    public CreateEmailResponse(@Nullable String id) {
         this.id = id;
     }
 
@@ -33,7 +34,7 @@ public class CreateEmailResponse {
      *
      * @return The ID of the sent email.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -42,7 +43,7 @@ public class CreateEmailResponse {
      *
      * @param id The ID to be set.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 }

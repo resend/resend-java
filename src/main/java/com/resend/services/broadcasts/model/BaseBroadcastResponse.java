@@ -1,13 +1,14 @@
 package com.resend.services.broadcasts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a base response for a broadcast.
  */
 public abstract class BaseBroadcastResponse {
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     /**
      * Default constructor
@@ -21,7 +22,7 @@ public abstract class BaseBroadcastResponse {
      *
      * @param id        The ID of the broadcast.
      */
-    public BaseBroadcastResponse(String id) {
+    public BaseBroadcastResponse(@Nullable String id) {
         this.id = id;
     }
 
@@ -30,7 +31,7 @@ public abstract class BaseBroadcastResponse {
      *
      * @return The type of the data.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 }

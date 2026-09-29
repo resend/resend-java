@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response from publishing a template.
@@ -8,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PublishTemplateResponseSuccess {
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     /**
      * Default constructor.
@@ -25,7 +26,7 @@ public class PublishTemplateResponseSuccess {
      * @param id     The ID of the published template.
      * @param object The object type.
      */
-    public PublishTemplateResponseSuccess(String id, String object) {
+    public PublishTemplateResponseSuccess(@Nullable String id, @Nullable String object) {
         this.id = id;
         this.object = object;
     }
@@ -35,7 +36,7 @@ public class PublishTemplateResponseSuccess {
      *
      * @return The ID of the published template.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class PublishTemplateResponseSuccess {
      *
      * @param id The ID of the published template.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -53,7 +54,7 @@ public class PublishTemplateResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -62,7 +63,7 @@ public class PublishTemplateResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 }

@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents the response from deleting a template.
@@ -8,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DeleteTemplateResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("deleted")
-    private Boolean deleted;
+    private @Nullable Boolean deleted;
 
     /**
      * Default constructor.
@@ -29,7 +30,7 @@ public class DeleteTemplateResponseSuccess {
      * @param id      The ID of the deleted template.
      * @param deleted Whether the template was deleted.
      */
-    public DeleteTemplateResponseSuccess(String object, String id, Boolean deleted) {
+    public DeleteTemplateResponseSuccess(@Nullable String object, @Nullable String id, @Nullable Boolean deleted) {
         this.object = object;
         this.id = id;
         this.deleted = deleted;
@@ -40,7 +41,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -49,7 +50,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -58,7 +59,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @return The ID of the deleted template.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -67,7 +68,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @param id The ID of the deleted template.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -76,7 +77,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @return Whether the template was deleted.
      */
-    public Boolean getDeleted() {
+    public @Nullable Boolean getDeleted() {
         return deleted;
     }
 
@@ -85,7 +86,7 @@ public class DeleteTemplateResponseSuccess {
      *
      * @param deleted Whether the template was deleted.
      */
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(@Nullable Boolean deleted) {
         this.deleted = deleted;
     }
 }

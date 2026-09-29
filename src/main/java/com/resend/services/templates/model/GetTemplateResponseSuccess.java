@@ -1,6 +1,7 @@
 package com.resend.services.templates.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -10,46 +11,46 @@ import java.util.List;
 public class GetTemplateResponseSuccess {
 
     @JsonProperty("object")
-    private String object;
+    private @Nullable String object;
 
     @JsonProperty("id")
-    private String id;
+    private @Nullable String id;
 
     @JsonProperty("alias")
-    private String alias;
+    private @Nullable String alias;
 
     @JsonProperty("name")
-    private String name;
+    private @Nullable String name;
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private @Nullable String createdAt;
 
     @JsonProperty("updated_at")
-    private String updatedAt;
+    private @Nullable String updatedAt;
 
     @JsonProperty("status")
-    private String status;
+    private @Nullable String status;
 
     @JsonProperty("published_at")
-    private String publishedAt;
+    private @Nullable String publishedAt;
 
     @JsonProperty("from")
-    private String from;
+    private @Nullable String from;
 
     @JsonProperty("subject")
-    private String subject;
+    private @Nullable String subject;
 
     @JsonProperty("reply_to")
-    private List<String> replyTo;
+    private @Nullable List<String> replyTo;
 
     @JsonProperty("html")
-    private String html;
+    private @Nullable String html;
 
     @JsonProperty("text")
-    private String text;
+    private @Nullable String text;
 
     @JsonProperty("variables")
-    private List<Variable> variables;
+    private @Nullable List<Variable> variables;
 
     /**
      * Default constructor.
@@ -62,7 +63,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The object type.
      */
-    public String getObject() {
+    public @Nullable String getObject() {
         return object;
     }
 
@@ -71,7 +72,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param object The object type.
      */
-    public void setObject(String object) {
+    public void setObject(@Nullable String object) {
         this.object = object;
     }
 
@@ -80,7 +81,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The ID of the template.
      */
-    public String getId() {
+    public @Nullable String getId() {
         return id;
     }
 
@@ -89,7 +90,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param id The ID of the template.
      */
-    public void setId(String id) {
+    public void setId(@Nullable String id) {
         this.id = id;
     }
 
@@ -98,7 +99,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The alias of the template.
      */
-    public String getAlias() {
+    public @Nullable String getAlias() {
         return alias;
     }
 
@@ -107,7 +108,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param alias The alias of the template.
      */
-    public void setAlias(String alias) {
+    public void setAlias(@Nullable String alias) {
         this.alias = alias;
     }
 
@@ -116,7 +117,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The name of the template.
      */
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
@@ -125,7 +126,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param name The name of the template.
      */
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
@@ -134,7 +135,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The creation timestamp.
      */
-    public String getCreatedAt() {
+    public @Nullable String getCreatedAt() {
         return createdAt;
     }
 
@@ -143,7 +144,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param createdAt The creation timestamp.
      */
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(@Nullable String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -152,7 +153,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The last update timestamp.
      */
-    public String getUpdatedAt() {
+    public @Nullable String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -161,7 +162,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param updatedAt The last update timestamp.
      */
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(@Nullable String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -170,7 +171,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The status of the template.
      */
-    public String getStatus() {
+    public @Nullable String getStatus() {
         return status;
     }
 
@@ -179,7 +180,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param status The status of the template.
      */
-    public void setStatus(String status) {
+    public void setStatus(@Nullable String status) {
         this.status = status;
     }
 
@@ -188,7 +189,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The publication timestamp.
      */
-    public String getPublishedAt() {
+    public @Nullable String getPublishedAt() {
         return publishedAt;
     }
 
@@ -197,7 +198,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param publishedAt The publication timestamp.
      */
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(@Nullable String publishedAt) {
         this.publishedAt = publishedAt;
     }
 
@@ -206,7 +207,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The sender email address.
      */
-    public String getFrom() {
+    public @Nullable String getFrom() {
         return from;
     }
 
@@ -215,7 +216,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param from The sender email address.
      */
-    public void setFrom(String from) {
+    public void setFrom(@Nullable String from) {
         this.from = from;
     }
 
@@ -224,7 +225,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The email subject.
      */
-    public String getSubject() {
+    public @Nullable String getSubject() {
         return subject;
     }
 
@@ -233,7 +234,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param subject The email subject.
      */
-    public void setSubject(String subject) {
+    public void setSubject(@Nullable String subject) {
         this.subject = subject;
     }
 
@@ -242,7 +243,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The reply-to email addresses.
      */
-    public List<String> getReplyTo() {
+    public @Nullable List<String> getReplyTo() {
         return replyTo;
     }
 
@@ -251,7 +252,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param replyTo The reply-to email addresses.
      */
-    public void setReplyTo(List<String> replyTo) {
+    public void setReplyTo(@Nullable List<String> replyTo) {
         this.replyTo = replyTo;
     }
 
@@ -260,7 +261,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The HTML version of the template.
      */
-    public String getHtml() {
+    public @Nullable String getHtml() {
         return html;
     }
 
@@ -269,7 +270,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param html The HTML version of the template.
      */
-    public void setHtml(String html) {
+    public void setHtml(@Nullable String html) {
         this.html = html;
     }
 
@@ -278,7 +279,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The plain text version of the template.
      */
-    public String getText() {
+    public @Nullable String getText() {
         return text;
     }
 
@@ -287,7 +288,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param text The plain text version of the template.
      */
-    public void setText(String text) {
+    public void setText(@Nullable String text) {
         this.text = text;
     }
 
@@ -296,7 +297,7 @@ public class GetTemplateResponseSuccess {
      *
      * @return The list of variables.
      */
-    public List<Variable> getVariables() {
+    public @Nullable List<Variable> getVariables() {
         return variables;
     }
 
@@ -305,7 +306,7 @@ public class GetTemplateResponseSuccess {
      *
      * @param variables The list of variables.
      */
-    public void setVariables(List<Variable> variables) {
+    public void setVariables(@Nullable List<Variable> variables) {
         this.variables = variables;
     }
 }

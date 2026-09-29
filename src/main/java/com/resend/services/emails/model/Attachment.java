@@ -1,25 +1,26 @@
 package com.resend.services.emails.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an attachment associated with an email.
  */
 public class Attachment {
     @JsonProperty("filename")
-    private final String fileName;
+    private final @Nullable String fileName;
 
     @JsonProperty("content")
-    private final String content;
+    private final @Nullable String content;
 
     @JsonProperty("path")
-    private final String path;
+    private final @Nullable String path;
 
     @JsonProperty("content_type")
-    private final String contentType;
+    private final @Nullable String contentType;
 
     @JsonProperty("content_id")
-    private final String contentId;
+    private final @Nullable String contentId;
 
     private Attachment(Builder builder) {
         this.fileName = builder.fileName;
@@ -33,7 +34,7 @@ public class Attachment {
      * Get the filename of the attachment.
      * @return The filename.
      */
-    public String getFileName() {
+    public @Nullable String getFileName() {
         return fileName;
     }
 
@@ -41,7 +42,7 @@ public class Attachment {
      * Get the content of the attachment as a byte array.
      * @return The content.
      */
-    public String getContent() {
+    public @Nullable String getContent() {
         return content;
     }
 
@@ -49,7 +50,7 @@ public class Attachment {
      * Get the path of the attachment.
      * @return The path.
      */
-    public String getPath() {
+    public @Nullable String getPath() {
         return path;
     }
 
@@ -57,7 +58,7 @@ public class Attachment {
      * Get the content type of the attachment.
      * @return The content type.
      */
-    public String getContentType() {
+    public @Nullable String getContentType() {
         return contentType;
     }
 
@@ -65,7 +66,7 @@ public class Attachment {
      * Get the content ID for inline attachments used in HTML content with cid: references.
      * @return The content ID for inline attachments.
      */
-    public String getContentId() {
+    public @Nullable String getContentId() {
         return contentId;
     }
 
@@ -87,12 +88,12 @@ public class Attachment {
         public Builder() {
         }
 
-        private String fileName;
-        private String content;
-        private String path;
+        private @Nullable String fileName;
+        private @Nullable String content;
+        private @Nullable String path;
 
-        private String contentType;
-        private String contentId;
+        private @Nullable String contentType;
+        private @Nullable String contentId;
 
         /**
          * Set the filename of the attachment.

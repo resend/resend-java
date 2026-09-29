@@ -26,6 +26,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    // Nullability annotations are part of the public API: Kotlin and static analyzers read them from our signatures.
+    api 'org.jspecify:jspecify:1.0.0'
+
     implementation 'com.squareup.okhttp3:okhttp-jvm:5.4.0'
     implementation("org.json:json:20250517")
 }

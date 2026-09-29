@@ -23,12 +23,12 @@ public final class DomainClaims extends BaseService {
     }
 
     /**
-     * Package-private constructor for testing, allowing injection of a mock HTTP client.
+     * Constructs an instance of the {@code DomainClaims} class that sends requests through the given HTTP client.
      *
      * @param apiKey     The apiKey used for authentication.
      * @param httpClient The HTTP client to use.
      */
-    DomainClaims(final String apiKey, final IHttpClient httpClient) {
+    public DomainClaims(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 

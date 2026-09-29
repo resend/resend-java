@@ -15,7 +15,6 @@ import java.util.Map;
  * An abstract base class for service implementations, providing common functionality such as HTTP client,
  * authentication provider, and mapper initialization.
  */
-@SuppressWarnings("rawtypes")
 public abstract class BaseService {
 
     /**
@@ -23,7 +22,7 @@ public abstract class BaseService {
      * {@code resend.emails()} reuse one OkHttp connection pool and one Jackson mapper.
      */
     private static final class Defaults {
-        static final IHttpClient HTTP_CLIENT = new HttpClient();
+        static final IHttpClient<String> HTTP_CLIENT = new HttpClient();
         static final ResendMapper MAPPER = new ResendMapper();
     }
 
@@ -48,7 +47,6 @@ public abstract class BaseService {
      *
      * @param apiKey The apiKey to use.
      */
-    @SuppressWarnings("unchecked")
     public BaseService(final String apiKey) {
         this.apiKey = apiKey;
         this.httpClient = Defaults.HTTP_CLIENT;
@@ -61,8 +59,7 @@ public abstract class BaseService {
      * @param apiKey     The apiKey to use.
      * @param httpClient The HTTP client to use.
      */
-    @SuppressWarnings("unchecked")
-    protected BaseService(final String apiKey, final IHttpClient httpClient) {
+    protected BaseService(final String apiKey, final IHttpClient<String> httpClient) {
         this.apiKey = apiKey;
         this.httpClient = httpClient;
         this.resendMapper = Defaults.MAPPER;
@@ -73,7 +70,7 @@ public abstract class BaseService {
      *
      * @return The HTTP client.
      */
-    public IHttpClient getHttpClient() {
+    public IHttpClient<String> getHttpClient() {
         return httpClient;
     }
 

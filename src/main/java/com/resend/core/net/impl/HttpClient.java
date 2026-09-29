@@ -16,8 +16,7 @@ import java.util.Map;
  * An implementation of the {@link IHttpClient} interface for performing HTTP requests.
  * This implementation utilizes the OkHttp library for handling HTTP communication.
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class HttpClient implements IHttpClient<Response> {
+public class HttpClient implements IHttpClient<String> {
 
     /** The base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
@@ -47,7 +46,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
+    public AbstractHttpResponse<String> perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -64,7 +63,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         try {
             Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +81,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Deprecated
-    public AbstractHttpResponse perform(
+    public AbstractHttpResponse<String> perform(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -113,7 +112,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         try {
             Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -130,7 +129,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @param requestOptions A map of header-name → header-value to add.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    public AbstractHttpResponse perform(
+    public AbstractHttpResponse<String> perform(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -165,7 +164,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         try {
             Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -186,7 +185,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -198,7 +197,7 @@ public class HttpClient implements IHttpClient<Response> {
     }
 
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -228,7 +227,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -241,7 +240,7 @@ public class HttpClient implements IHttpClient<Response> {
     }
 
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -258,7 +257,7 @@ public class HttpClient implements IHttpClient<Response> {
                 requestOptions);
     }
 
-    private AbstractHttpResponse executeMultipart(
+    private AbstractHttpResponse<String> executeMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -304,7 +303,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         try {
             Response response = httpClient.newCall(requestBuilder.build()).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

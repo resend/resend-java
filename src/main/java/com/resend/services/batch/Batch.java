@@ -1,5 +1,6 @@
 package com.resend.services.batch;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -24,6 +25,16 @@ public class Batch extends BaseService {
      */
     public Batch(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Batch} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Batch(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Batch(final String apiKey, final IHttpClient httpClient) {

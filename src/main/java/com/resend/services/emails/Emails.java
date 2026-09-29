@@ -1,5 +1,6 @@
 package com.resend.services.emails;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
@@ -26,6 +27,16 @@ public final class Emails extends BaseService {
      */
     public Emails(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Emails} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Emails(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Emails(final String apiKey, final IHttpClient httpClient) {
@@ -55,7 +66,7 @@ public final class Emails extends BaseService {
 
     /**
      * Sends an email based on the provided email request.
-     *hjk
+     *
      * @param createEmailOptions The request containing email details.
      * @param requestOptions The options with additional headers.
      * @return The response indicating the status of the email sending.

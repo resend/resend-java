@@ -1,5 +1,6 @@
 package com.resend.services.audiences;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
@@ -22,6 +23,16 @@ public class Audiences extends BaseService {
      */
     public Audiences(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Audiences} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Audiences(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Audiences(final String apiKey, final IHttpClient httpClient) {

@@ -1,5 +1,6 @@
 package com.resend.core.service;
 
+import com.resend.ResendOptions;
 import com.resend.core.mapper.ResendMapper;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.impl.HttpClient;
@@ -27,13 +28,23 @@ public abstract class BaseService {
     protected final ResendMapper resendMapper;
 
     /**
-     * Constructs a BaseService instance with the specified authentication provider, default HTTP client, and mapper.
+     * Constructs a BaseService instance with the specified API key and default client options.
      *
      * @param apiKey The apiKey to use.
      */
     public BaseService(final String apiKey) {
+        this(apiKey, ResendOptions.defaults());
+    }
+
+    /**
+     * Constructs a BaseService instance with the specified API key and client options.
+     *
+     * @param apiKey  The apiKey to use.
+     * @param options Client options (base URL, User-Agent, timeouts). {@code null} uses defaults.
+     */
+    public BaseService(final String apiKey, final ResendOptions options) {
         this.apiKey = apiKey;
-        this.httpClient = new HttpClient();
+        this.httpClient = new HttpClient(options);
         this.resendMapper = new ResendMapper();
     }
 

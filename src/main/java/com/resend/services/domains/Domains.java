@@ -1,5 +1,6 @@
 package com.resend.services.domains;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
@@ -22,6 +23,16 @@ public final class Domains extends BaseService {
      */
     public Domains(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Domains} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Domains(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Domains(final String apiKey, final IHttpClient httpClient) {

@@ -1,5 +1,6 @@
 package com.resend.core.net.impl;
 
+import com.resend.ResendOptions;
 import com.resend.core.SdkVersion;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -11,6 +12,7 @@ import okhttp3.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An implementation of the {@link IHttpClient} interface for performing HTTP requests.
@@ -19,21 +21,86 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class HttpClient implements IHttpClient<Response> {
 
-    /** The base URL for the API. */
+    /** The default base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
 
-    /** The User-Agent header value for HTTP requests. */
+    /** The default User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
+
+    /** The resolved API base URL (no trailing slash). */
+    private final String baseUrl;
+
+    /** The User-Agent header value for HTTP requests. */
+    private final String userAgent;
 
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;
 
     /**
-     * Constructs an instance of the HttpClient with the provided API key.
-     *
+     * Constructs an instance of the HttpClient with default options.
      */
     public HttpClient() {
-        this.httpClient = new OkHttpClient();
+        this(ResendOptions.defaults());
+    }
+
+    /**
+     * Constructs an instance of the HttpClient with the provided options.
+     *
+     * @param options Client options for base URL, User-Agent, and timeouts. {@code null} uses defaults.
+     */
+    public HttpClient(final ResendOptions options) {
+        ResendOptions resolved = options != null ? options : ResendOptions.defaults();
+        this.baseUrl = normalizeBaseUrl(
+                resolved.getBaseUrl() != null && !resolved.getBaseUrl().trim().isEmpty()
+                        ? resolved.getBaseUrl()
+                        : BASE_API);
+        this.userAgent = resolved.getUserAgent() != null && !resolved.getUserAgent().trim().isEmpty()
+                ? resolved.getUserAgent()
+                : USER_AGENT;
+        this.httpClient = buildOkHttpClient(resolved);
+    }
+
+    /**
+     * Returns the configured API base URL.
+     *
+     * @return The base URL without a trailing slash.
+     */
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    /**
+     * Returns the configured User-Agent header value.
+     *
+     * @return The User-Agent string.
+     */
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    private static String normalizeBaseUrl(String url) {
+        String trimmed = url.trim();
+        while (trimmed.endsWith("/")) {
+            trimmed = trimmed.substring(0, trimmed.length() - 1);
+        }
+        return trimmed;
+    }
+
+    private static OkHttpClient buildOkHttpClient(ResendOptions options) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (options.getConnectTimeoutMs() != null) {
+            builder.connectTimeout(options.getConnectTimeoutMs(), TimeUnit.MILLISECONDS);
+        }
+        if (options.getReadTimeoutMs() != null) {
+            builder.readTimeout(options.getReadTimeoutMs(), TimeUnit.MILLISECONDS);
+        }
+        if (options.getWriteTimeoutMs() != null) {
+            builder.writeTimeout(options.getWriteTimeoutMs(), TimeUnit.MILLISECONDS);
+        }
+        if (options.getCallTimeoutMs() != null) {
+            builder.callTimeout(options.getCallTimeoutMs(), TimeUnit.MILLISECONDS);
+        }
+        return builder.build();
     }
 
     /**
@@ -55,9 +122,9 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request request = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody)
                 .build();
@@ -96,9 +163,9 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
@@ -144,9 +211,9 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
@@ -285,9 +352,9 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), bodyBuilder.build());
 
@@ -310,4 +377,3 @@ public class HttpClient implements IHttpClient<Response> {
         }
     }
 }
-

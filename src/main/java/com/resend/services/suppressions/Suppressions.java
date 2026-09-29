@@ -1,5 +1,6 @@
 package com.resend.services.suppressions;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -20,6 +21,16 @@ public class Suppressions extends BaseService {
      */
     public Suppressions(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Suppressions} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Suppressions(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Suppressions(final String apiKey, final IHttpClient httpClient) {

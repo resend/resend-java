@@ -21,7 +21,10 @@ import com.resend.services.templates.Templates;
 import com.resend.services.usage.Usage;
 
 /**
- * The Resend class provides a facade for the Domains and Emails services.
+ * Entry point for the Resend Java SDK.
+ *
+ * <p>Create one instance per API key and access feature modules through methods like
+ * {@link #emails()}, {@link #domains()}, and {@link #contacts()}.</p>
  */
 public class Resend {
 
@@ -31,12 +34,43 @@ public class Resend {
     private final String apiKey;
 
     /**
-     * Constructs a new Resend with the specified API key.
+     * Optional client configuration (base URL, User-Agent, timeouts).
+     */
+    private final ResendOptions options;
+
+    /**
+     * Constructs a new Resend client with the specified API key and default options.
      *
-     * @param apiKey The API key for the ReSend service.
+     * @param apiKey The API key for the Resend service.
+     * @throws IllegalArgumentException If {@code apiKey} is {@code null} or blank.
      */
     public Resend(final String apiKey) {
+        this(apiKey, ResendOptions.defaults());
+    }
+
+    /**
+     * Constructs a new Resend client with the specified API key and options.
+     *
+     * @param apiKey  The API key for the Resend service.
+     * @param options Client options such as base URL and timeouts. {@code null} uses defaults.
+     * @throws IllegalArgumentException If {@code apiKey} is {@code null} or blank.
+     */
+    public Resend(final String apiKey, final ResendOptions options) {
+        if (apiKey == null || apiKey.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Missing API key. Pass it to the constructor: new Resend(\"re_123\")");
+        }
         this.apiKey = apiKey;
+        this.options = options != null ? options : ResendOptions.defaults();
+    }
+
+    /**
+     * Returns the client options used by this instance.
+     *
+     * @return The {@link ResendOptions}.
+     */
+    public ResendOptions getOptions() {
+        return options;
     }
 
     /**
@@ -45,7 +79,7 @@ public class Resend {
      * @return A Domains object.
      */
     public Domains domains() {
-        return new Domains(apiKey);
+        return new Domains(apiKey, options);
     }
 
     /**
@@ -54,7 +88,7 @@ public class Resend {
      * @return An Emails object.
      */
     public Emails emails() {
-        return new Emails(apiKey);
+        return new Emails(apiKey, options);
     }
 
     /**
@@ -63,16 +97,16 @@ public class Resend {
      * @return An ApiKeys object.
      */
     public ApiKeys apiKeys() {
-        return new ApiKeys(apiKey);
+        return new ApiKeys(apiKey, options);
     }
 
     /**
      * Returns a Contacts object that can be used to interact with the Contacts service.
      *
-     * @return A Contact object.
+     * @return A Contacts object.
      */
     public Contacts contacts() {
-        return new Contacts(apiKey);
+        return new Contacts(apiKey, options);
     }
 
     /**
@@ -81,36 +115,36 @@ public class Resend {
      * @return A ContactProperties object.
      */
     public ContactProperties contactProperties() {
-        return new ContactProperties(apiKey);
+        return new ContactProperties(apiKey, options);
     }
 
     /**
-     * Returns an Audience object that can be used to interact with the Audiences service.
+     * Returns an Audiences object that can be used to interact with the Audiences service.
      *
-     * @return an Audiences object.
+     * @return An Audiences object.
      * @deprecated Use {@link #segments()} instead.
      */
     @Deprecated
     public Audiences audiences() {
-        return new Audiences(apiKey);
+        return new Audiences(apiKey, options);
     }
 
     /**
      * Returns a Segments object that can be used to interact with the Segments service.
      *
-     * @return a Segments object.
+     * @return A Segments object.
      */
     public Segments segments() {
-        return new Segments(apiKey);
+        return new Segments(apiKey, options);
     }
 
     /**
      * Returns a Batch object that can be used to interact with the Batch service.
      *
-     * @return An Batch object.
+     * @return A Batch object.
      */
     public Batch batch() {
-        return new Batch(apiKey);
+        return new Batch(apiKey, options);
     }
 
     /**
@@ -119,7 +153,7 @@ public class Resend {
      * @return A Broadcasts object.
      */
     public Broadcasts broadcasts() {
-        return new Broadcasts(apiKey);
+        return new Broadcasts(apiKey, options);
     }
 
     /**
@@ -128,7 +162,7 @@ public class Resend {
      * @return A Webhooks object.
      */
     public Webhooks webhooks() {
-        return new Webhooks(apiKey);
+        return new Webhooks(apiKey, options);
     }
   
     /** 
@@ -137,7 +171,7 @@ public class Resend {
      * @return A Receiving object.
      */
     public Receiving receiving() {
-        return new Receiving(apiKey);
+        return new Receiving(apiKey, options);
     }
   
     /**
@@ -146,7 +180,7 @@ public class Resend {
      * @return A Topics object.
      */
     public Topics topics() {
-        return new Topics(apiKey);
+        return new Topics(apiKey, options);
     }
   
     /**
@@ -155,7 +189,7 @@ public class Resend {
      * @return A Templates object.
      */
     public Templates templates() {
-        return new Templates(apiKey);
+        return new Templates(apiKey, options);
     }
 
     /**
@@ -164,7 +198,7 @@ public class Resend {
      * @return A Logs object.
      */
     public Logs logs() {
-        return new Logs(apiKey);
+        return new Logs(apiKey, options);
     }
 
     /**
@@ -173,7 +207,7 @@ public class Resend {
      * @return An Events object.
      */
     public Events events() {
-        return new Events(apiKey);
+        return new Events(apiKey, options);
     }
 
     /**
@@ -182,7 +216,7 @@ public class Resend {
      * @return An Automations object.
      */
     public Automations automations() {
-        return new Automations(apiKey);
+        return new Automations(apiKey, options);
     }
 
     /**
@@ -191,7 +225,7 @@ public class Resend {
      * @return A Suppressions object.
      */
     public Suppressions suppressions() {
-        return new Suppressions(apiKey);
+        return new Suppressions(apiKey, options);
     }
 
     /**
@@ -200,7 +234,7 @@ public class Resend {
      * @return An OAuthGrants object.
      */
     public OAuthGrants oauthGrants() {
-        return new OAuthGrants(apiKey);
+        return new OAuthGrants(apiKey, options);
     }
 
     /**
@@ -209,6 +243,6 @@ public class Resend {
      * @return A Usage object.
      */
     public Usage usage() {
-        return new Usage(apiKey);
+        return new Usage(apiKey, options);
     }
 }

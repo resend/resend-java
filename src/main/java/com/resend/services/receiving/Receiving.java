@@ -1,5 +1,6 @@
 package com.resend.services.receiving;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.AbstractHttpResponse;
@@ -22,6 +23,16 @@ public final class Receiving extends BaseService {
      */
     public Receiving(final String apiKey) {
         super(apiKey);
+    }
+
+    /**
+     * Constructs an instance of the {@code Receiving} class with custom client options.
+     *
+     * @param apiKey  The apiKey used for authentication.
+     * @param options Client options (base URL, User-Agent, timeouts).
+     */
+    public Receiving(final String apiKey, final ResendOptions options) {
+        super(apiKey, options);
     }
 
     Receiving(final String apiKey, final IHttpClient httpClient) {

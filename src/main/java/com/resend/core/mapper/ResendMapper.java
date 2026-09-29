@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.UncheckedIOException;
+
 /**
  * Implementation of the IMapper interface for mapping between JSON representation and Java objects using ObjectMapper.
  */
@@ -26,14 +28,14 @@ public class ResendMapper implements IMapper {
      *
      * @param object The object to be converted to JSON.
      * @return The JSON representation of the object.
+     * @throws UncheckedIOException If the object can't be serialized.
      */
     @Override
     public String writeValue(Object object) {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
+            throw new UncheckedIOException("Failed to serialize " + object.getClass().getName() + " to JSON", e);
         }
     }
 
@@ -44,14 +46,14 @@ public class ResendMapper implements IMapper {
      * @param clazz The class to convert the JSON value to.
      * @param <T>   The type of the resulting object.
      * @return An instance of the specified class with values from the JSON value.
+     * @throws UncheckedIOException If the value isn't valid JSON for the specified class.
      */
     @Override
     public <T> T readValue(String value, Class<T> clazz)  {
         try {
             return mapper.readValue(value, clazz);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
+            throw new UncheckedIOException("Failed to parse JSON into " + clazz.getName(), e);
         }
     }
 }

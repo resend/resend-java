@@ -10,6 +10,7 @@ public interface IMapper {
      *
      * @param object The object to be converted to JSON.
      * @return The JSON representation of the object.
+     * @throws java.io.UncheckedIOException If the object can't be serialized.
      */
     String writeValue(Object object);
 
@@ -20,6 +21,7 @@ public interface IMapper {
      * @param clazz The class to convert the JSON value to.
      * @param <T>   The type of the resulting object.
      * @return An instance of the specified class with values from the JSON value.
+     * @throws java.io.UncheckedIOException If the value isn't valid JSON for the specified class.
      */
     <T> T readValue(String value, Class<T> clazz);
 

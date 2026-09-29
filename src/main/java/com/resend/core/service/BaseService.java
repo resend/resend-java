@@ -9,6 +9,7 @@ import com.resend.core.net.RequestOptions;
 import com.resend.core.net.impl.HttpClient;
 import okhttp3.MediaType;
 
+import java.io.UncheckedIOException;
 import java.util.Map;
 
 /**
@@ -137,13 +138,34 @@ public abstract class BaseService {
      * @param response     The HTTP response.
      * @param responseType The class to deserialize the response body into.
      * @param <T>          The response type.
-     * @return The deserialized response.
-     * @throws ResendException If the response is not successful.
+     * @return The deserialized response, never {@code null}.
+     * @throws ResendException If the response is not successful, or its body can't be parsed into
+     *                         {@code responseType}.
      */
     protected <T> T handle(final AbstractHttpResponse<String> response, final Class<T> responseType) throws ResendException {
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());
         }
-        return resendMapper.readValue(response.getBody(), responseType);
+        T value;
+        try {
+            value = resendMapper.readValue(response.getBody(), responseType);
+        } catch (UncheckedIOException e) {
+            throw unparseableResponse(response, responseType, e);
+        }
+        if (value == null) {
+            throw unparseableResponse(response, responseType, null);
+        }
+        return value;
+    }
+
+    private static ResendException unparseableResponse(final AbstractHttpResponse<String> response,
+                                                       final Class<?> responseType, final Throwable cause) {
+        ResendException exception = new ResendException(
+                "Failed to parse the response body as " + responseType.getSimpleName(),
+                response.getCode(), response.getBody());
+        if (cause != null) {
+            exception.initCause(cause);
+        }
+        return exception;
     }
 }

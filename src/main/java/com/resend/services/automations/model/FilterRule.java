@@ -101,17 +101,11 @@ public class FilterRule {
          */
         public FilterRule build() {
             Map<String, @Nullable Object> rule = new HashMap<>();
-            putIfSet(rule, "type", type);
-            putIfSet(rule, "field", field);
-            putIfSet(rule, "operator", operator);
-            putIfSet(rule, "value", value);
+            RuleMaps.putIfSet(rule, "type", type);
+            RuleMaps.putIfSet(rule, "field", field);
+            RuleMaps.putIfSet(rule, "operator", operator);
+            RuleMaps.putIfSet(rule, "value", value);
             return new FilterRule(rule);
-        }
-
-        private static void putIfSet(Map<String, @Nullable Object> rule, String key, @Nullable Object value) {
-            if (value != null) {
-                rule.put(key, value);
-            }
         }
     }
 }

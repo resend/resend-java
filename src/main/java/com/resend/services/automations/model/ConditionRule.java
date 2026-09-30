@@ -275,16 +275,10 @@ public class ConditionRule {
         public ConditionRule build() {
             Map<String, @Nullable Object> rule = new HashMap<>();
             rule.put("type", "rule");
-            putIfSet(rule, "field", field);
-            putIfSet(rule, "operator", operator != null ? operator.getValue() : null);
-            putIfSet(rule, "value", value);
+            RuleMaps.putIfSet(rule, "field", field);
+            RuleMaps.putIfSet(rule, "operator", operator != null ? operator.getValue() : null);
+            RuleMaps.putIfSet(rule, "value", value);
             return new ConditionRule(rule);
-        }
-
-        private static void putIfSet(Map<String, @Nullable Object> rule, String key, @Nullable Object value) {
-            if (value != null) {
-                rule.put(key, value);
-            }
         }
     }
 }

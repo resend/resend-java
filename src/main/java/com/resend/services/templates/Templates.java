@@ -3,7 +3,6 @@ package com.resend.services.templates;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -26,16 +25,12 @@ public final class Templates extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Templates} class with custom client options.
+     * Constructs an instance of the {@code Templates} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Templates(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Templates(final String apiKey, final IHttpClient httpClient) {
+    public Templates(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -48,15 +43,7 @@ public final class Templates extends BaseService {
      */
     public CreateTemplateResponseSuccess create(CreateTemplateOptions options) throws ResendException {
         String payload = super.resendMapper.writeValue(options);
-        AbstractHttpResponse<String> response = super.httpClient.perform("/templates", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, CreateTemplateResponseSuccess.class);
+        return execute("/templates", HttpMethod.POST, payload, MediaType.get("application/json"), CreateTemplateResponseSuccess.class);
     }
 
     /**
@@ -67,15 +54,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while retrieving the template.
      */
     public GetTemplateResponseSuccess get(String templateId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, GetTemplateResponseSuccess.class);
+        return execute("/templates/" + templateId, HttpMethod.GET, null, MediaType.get("application/json"), GetTemplateResponseSuccess.class);
     }
 
     /**
@@ -85,15 +64,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs during the templates list retrieval process.
      */
     public ListTemplatesResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListTemplatesResponseSuccess.class);
+        return execute("/templates", HttpMethod.GET, null, MediaType.get("application/json"), ListTemplatesResponseSuccess.class);
     }
 
     /**
@@ -105,15 +76,7 @@ public final class Templates extends BaseService {
      */
     public ListTemplatesResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/templates" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListTemplatesResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListTemplatesResponseSuccess.class);
     }
 
     /**
@@ -126,15 +89,7 @@ public final class Templates extends BaseService {
      */
     public UpdateTemplateResponseSuccess update(String templateId, UpdateTemplateOptions options) throws ResendException {
         String payload = super.resendMapper.writeValue(options);
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, UpdateTemplateResponseSuccess.class);
+        return execute("/templates/" + templateId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateTemplateResponseSuccess.class);
     }
 
     /**
@@ -145,15 +100,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while deleting the template.
      */
     public DeleteTemplateResponseSuccess remove(String templateId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId, super.apiKey, HttpMethod.DELETE, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, DeleteTemplateResponseSuccess.class);
+        return execute("/templates/" + templateId, HttpMethod.DELETE, null, MediaType.get("application/json"), DeleteTemplateResponseSuccess.class);
     }
 
     /**
@@ -164,15 +111,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while duplicating the template.
      */
     public DuplicateTemplateResponseSuccess duplicate(String templateId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, DuplicateTemplateResponseSuccess.class);
+        return execute("/templates/" + templateId + "/duplicate", HttpMethod.POST, "", MediaType.get("application/json"), DuplicateTemplateResponseSuccess.class);
     }
 
     /**
@@ -183,14 +122,6 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while publishing the template.
      */
     public PublishTemplateResponseSuccess publish(String templateId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/templates/" + templateId + "/publish", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, PublishTemplateResponseSuccess.class);
+        return execute("/templates/" + templateId + "/publish", HttpMethod.POST, "", MediaType.get("application/json"), PublishTemplateResponseSuccess.class);
     }
 }

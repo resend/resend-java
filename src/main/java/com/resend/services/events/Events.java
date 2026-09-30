@@ -3,7 +3,6 @@ package com.resend.services.events;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -26,16 +25,12 @@ public class Events extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Events} class with custom client options.
+     * Constructs an instance of the {@code Events} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Events(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Events(final String apiKey, final IHttpClient httpClient) {
+    public Events(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -48,14 +43,7 @@ public class Events extends BaseService {
      */
     public CreateEventResponseSuccess create(CreateEventOptions createEventOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createEventOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/events", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateEventResponseSuccess.class);
+        return execute("/events", HttpMethod.POST, payload, MediaType.get("application/json"), CreateEventResponseSuccess.class);
     }
 
     /**
@@ -66,14 +54,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while retrieving the event.
      */
     public Event get(String identifier) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/events/" + identifier, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, Event.class);
+        return execute("/events/" + identifier, HttpMethod.GET, null, MediaType.get("application/json"), Event.class);
     }
 
     /**
@@ -83,14 +64,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while listing the events.
      */
     public ListEventsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/events", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListEventsResponseSuccess.class);
+        return execute("/events", HttpMethod.GET, null, MediaType.get("application/json"), ListEventsResponseSuccess.class);
     }
 
     /**
@@ -102,14 +76,7 @@ public class Events extends BaseService {
      */
     public ListEventsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/events" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListEventsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListEventsResponseSuccess.class);
     }
 
     /**
@@ -121,14 +88,7 @@ public class Events extends BaseService {
      */
     public UpdateEventResponseSuccess update(UpdateEventOptions updateEventOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateEventOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/events/" + updateEventOptions.getIdentifier(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateEventResponseSuccess.class);
+        return execute("/events/" + updateEventOptions.getIdentifier(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateEventResponseSuccess.class);
     }
 
     /**
@@ -139,14 +99,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while removing the event.
      */
     public RemoveEventResponseSuccess remove(String identifier) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/events/" + identifier, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, RemoveEventResponseSuccess.class);
+        return execute("/events/" + identifier, HttpMethod.DELETE, "", null, RemoveEventResponseSuccess.class);
     }
 
     /**
@@ -158,13 +111,6 @@ public class Events extends BaseService {
      */
     public SendEventResponseSuccess send(SendEventOptions sendEventOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(sendEventOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/events/send", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, SendEventResponseSuccess.class);
+        return execute("/events/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendEventResponseSuccess.class);
     }
 }

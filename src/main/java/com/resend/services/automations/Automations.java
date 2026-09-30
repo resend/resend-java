@@ -2,7 +2,6 @@ package com.resend.services.automations;
 
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -25,16 +24,12 @@ public class Automations extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Automations} class with custom client options.
+     * Constructs an instance of the {@code Automations} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Automations(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Automations(final String apiKey, final IHttpClient httpClient) {
+    public Automations(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -47,14 +42,7 @@ public class Automations extends BaseService {
      */
     public CreateAutomationResponseSuccess create(CreateAutomationOptions createAutomationOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createAutomationOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/automations", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateAutomationResponseSuccess.class);
+        return execute("/automations", HttpMethod.POST, payload, MediaType.get("application/json"), CreateAutomationResponseSuccess.class);
     }
 
     /**
@@ -65,14 +53,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while retrieving the automation.
      */
     public Automation get(String automationId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + automationId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, Automation.class);
+        return execute("/automations/" + automationId, HttpMethod.GET, null, MediaType.get("application/json"), Automation.class);
     }
 
     /**
@@ -82,14 +63,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the automations.
      */
     public ListAutomationsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/automations", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAutomationsResponseSuccess.class);
+        return execute("/automations", HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationsResponseSuccess.class);
     }
 
     /**
@@ -101,14 +75,7 @@ public class Automations extends BaseService {
      */
     public ListAutomationsResponseSuccess list(ListAutomationsParams params) throws ResendException {
         String pathWithQuery = "/automations" + (params != null ? params.toQueryString() : "");
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAutomationsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationsResponseSuccess.class);
     }
 
     /**
@@ -120,14 +87,7 @@ public class Automations extends BaseService {
      */
     public UpdateAutomationResponseSuccess update(UpdateAutomationOptions updateAutomationOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateAutomationOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/automations/" + updateAutomationOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateAutomationResponseSuccess.class);
+        return execute("/automations/" + updateAutomationOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateAutomationResponseSuccess.class);
     }
 
     /**
@@ -138,14 +98,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while removing the automation.
      */
     public DeleteAutomationResponseSuccess remove(String automationId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/automations/" + automationId, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DeleteAutomationResponseSuccess.class);
+        return execute("/automations/" + automationId, HttpMethod.DELETE, "", null, DeleteAutomationResponseSuccess.class);
     }
 
     /**
@@ -156,14 +109,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while duplicating the automation.
      */
     public DuplicateAutomationResponseSuccess duplicate(String automationId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/automations/" + automationId + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DuplicateAutomationResponseSuccess.class);
+        return execute("/automations/" + automationId + "/duplicate", HttpMethod.POST, "", MediaType.get("application/json"), DuplicateAutomationResponseSuccess.class);
     }
 
     /**
@@ -174,14 +120,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while stopping the automation.
      */
     public StopAutomationResponseSuccess stop(String automationId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/automations/" + automationId + "/stop", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, StopAutomationResponseSuccess.class);
+        return execute("/automations/" + automationId + "/stop", HttpMethod.POST, "", MediaType.get("application/json"), StopAutomationResponseSuccess.class);
     }
 
     /**
@@ -192,14 +131,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while listing the runs.
      */
     public ListAutomationRunsResponseSuccess listRuns(String automationId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + automationId + "/runs", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAutomationRunsResponseSuccess.class);
+        return execute("/automations/" + automationId + "/runs", HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationRunsResponseSuccess.class);
     }
 
     /**
@@ -212,14 +144,7 @@ public class Automations extends BaseService {
      */
     public ListAutomationRunsResponseSuccess listRuns(String automationId, ListAutomationRunsParams params) throws ResendException {
         String pathWithQuery = "/automations/" + automationId + "/runs" + (params != null ? params.toQueryString() : "");
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, ListAutomationRunsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAutomationRunsResponseSuccess.class);
     }
 
     /**
@@ -236,13 +161,6 @@ public class Automations extends BaseService {
         if (options.getRunId() == null || options.getRunId().isEmpty()) {
             throw new IllegalArgumentException("runId must be provided");
         }
-        AbstractHttpResponse<String> response = this.httpClient.perform("/automations/" + options.getAutomationId() + "/runs/" + options.getRunId(), super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, AutomationRun.class);
+        return execute("/automations/" + options.getAutomationId() + "/runs/" + options.getRunId(), HttpMethod.GET, null, MediaType.get("application/json"), AutomationRun.class);
     }
 }

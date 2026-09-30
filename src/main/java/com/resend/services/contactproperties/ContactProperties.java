@@ -2,7 +2,6 @@ package com.resend.services.contactproperties;
 
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -24,16 +23,12 @@ public class ContactProperties extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code ContactProperties} class with custom client options.
+     * Constructs an instance of the {@code ContactProperties} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public ContactProperties(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    ContactProperties(final String apiKey, final IHttpClient httpClient) {
+    public ContactProperties(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -46,14 +41,7 @@ public class ContactProperties extends BaseService {
      */
     public CreateContactPropertyResponseSuccess create(CreateContactPropertyOptions createContactPropertyOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createContactPropertyOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/contact-properties", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateContactPropertyResponseSuccess.class);
+        return execute("/contact-properties", HttpMethod.POST, payload, MediaType.get("application/json"), CreateContactPropertyResponseSuccess.class);
     }
 
     /**
@@ -63,15 +51,7 @@ public class ContactProperties extends BaseService {
      * @throws ResendException If an error occurs during the contact properties list retrieval process.
      */
     public ListContactPropertiesResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/contact-properties", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListContactPropertiesResponseSuccess.class);
+        return execute("/contact-properties", HttpMethod.GET, null, MediaType.get("application/json"), ListContactPropertiesResponseSuccess.class);
     }
 
     /**
@@ -86,15 +66,7 @@ public class ContactProperties extends BaseService {
             throw new IllegalArgumentException("Contact property id must be provided");
         }
 
-        AbstractHttpResponse<String> response = this.httpClient.perform("/contact-properties/" + id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ContactProperty.class);
+        return execute("/contact-properties/" + id, HttpMethod.GET, null, MediaType.get("application/json"), ContactProperty.class);
     }
 
     /**
@@ -110,15 +82,7 @@ public class ContactProperties extends BaseService {
         }
 
         String payload = super.resendMapper.writeValue(updateContactPropertyOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/contact-properties/" + updateContactPropertyOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, UpdateContactPropertyResponseSuccess.class);
+        return execute("/contact-properties/" + updateContactPropertyOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactPropertyResponseSuccess.class);
     }
 
     /**
@@ -133,14 +97,6 @@ public class ContactProperties extends BaseService {
             throw new IllegalArgumentException("Contact property id must be provided");
         }
 
-        AbstractHttpResponse<String> response = httpClient.perform("/contact-properties/" + id, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveContactPropertyResponseSuccess.class);
+        return execute("/contact-properties/" + id, HttpMethod.DELETE, "", null, RemoveContactPropertyResponseSuccess.class);
     }
 }

@@ -3,7 +3,6 @@ package com.resend.services.domains;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -26,16 +25,12 @@ public final class Domains extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Domains} class with custom client options.
+     * Constructs an instance of the {@code Domains} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Domains(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Domains(final String apiKey, final IHttpClient httpClient) {
+    public Domains(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -48,14 +43,7 @@ public final class Domains extends BaseService {
      */
     public CreateDomainResponse create(CreateDomainOptions createDomainOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createDomainOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/domains", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateDomainResponse.class);
+        return execute("/domains", HttpMethod.POST, payload, MediaType.get("application/json"), CreateDomainResponse.class);
     }
 
     /**
@@ -66,14 +54,7 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain retrieval process.
      */
     public Domain get(String domainId) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, Domain.class);
+        return execute("/domains/" + domainId, HttpMethod.GET, null, MediaType.get("application/json"), Domain.class);
 
     }
 
@@ -85,14 +66,7 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain verification process.
      */
     public VerifyDomainResponse verify(String domainId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/verify", super.apiKey, HttpMethod.POST, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, VerifyDomainResponse.class);
+        return execute("/domains/" + domainId + "/verify", HttpMethod.POST, "", null, VerifyDomainResponse.class);
     }
 
     /**
@@ -102,15 +76,7 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain list retrieval process.
      */
     public ListDomainsResponse list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/domains", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListDomainsResponse.class);
+        return execute("/domains", HttpMethod.GET, null, MediaType.get("application/json"), ListDomainsResponse.class);
     }
 
     /**
@@ -122,15 +88,7 @@ public final class Domains extends BaseService {
      */
     public ListDomainsResponse list(ListParams params) throws ResendException {
         String pathWithQuery = "/domains" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListDomainsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListDomainsResponse.class);
     }
 
     /**
@@ -142,14 +100,7 @@ public final class Domains extends BaseService {
      */
     public UpdateDomainResponseSuccess update(UpdateDomainOptions updateDomainOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateDomainOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + updateDomainOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateDomainResponseSuccess.class);
+        return execute("/domains/" + updateDomainOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateDomainResponseSuccess.class);
     }
 
     /**
@@ -169,13 +120,6 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain deletion process.
      */
     public RemoveDomainResponse remove(String domainId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, RemoveDomainResponse.class);
+        return execute("/domains/" + domainId, HttpMethod.DELETE, "", null, RemoveDomainResponse.class);
     }
 }

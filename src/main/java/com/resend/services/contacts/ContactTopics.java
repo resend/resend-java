@@ -2,7 +2,6 @@ package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -27,7 +26,13 @@ public class ContactTopics extends BaseService {
         super(apiKey);
     }
 
-    ContactTopics(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code ContactTopics} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public ContactTopics(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -43,15 +48,7 @@ public class ContactTopics extends BaseService {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
-        AbstractHttpResponse<String> response = this.httpClient.perform("/contacts/" + contactIdOrEmail + "/topics", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
     }
 
     /**
@@ -68,15 +65,7 @@ public class ContactTopics extends BaseService {
         }
 
         String pathWithQuery = "/contacts/" + contactIdOrEmail + "/topics" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListContactTopicsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
     }
 
     /**
@@ -100,14 +89,6 @@ public class ContactTopics extends BaseService {
 
         // Serialize just the topics array (not the whole options object)
         String payload = super.resendMapper.writeValue(options.getTopics());
-        AbstractHttpResponse<String> response = httpClient.perform("/contacts/" + contactIdOrEmail + "/topics", super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, UpdateContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactTopicsResponse.class);
     }
 }

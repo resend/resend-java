@@ -3,7 +3,6 @@ package com.resend.services.oauthgrants;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -27,16 +26,12 @@ public class OAuthGrants extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code OAuthGrants} class with custom client options.
+     * Constructs an instance of the {@code OAuthGrants} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public OAuthGrants(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    OAuthGrants(final String apiKey, final IHttpClient httpClient) {
+    public OAuthGrants(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -47,15 +42,7 @@ public class OAuthGrants extends BaseService {
      * @throws ResendException If an error occurs during the OAuth grants list retrieval process.
      */
     public ListOAuthGrantsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/oauth/grants", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListOAuthGrantsResponseSuccess.class);
+        return execute("/oauth/grants", HttpMethod.GET, null, MediaType.get("application/json"), ListOAuthGrantsResponseSuccess.class);
     }
 
     /**
@@ -67,15 +54,7 @@ public class OAuthGrants extends BaseService {
      */
     public ListOAuthGrantsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/oauth/grants" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListOAuthGrantsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListOAuthGrantsResponseSuccess.class);
     }
 
     /**
@@ -86,14 +65,6 @@ public class OAuthGrants extends BaseService {
      * @throws ResendException If an error occurs during the OAuth grant revocation process.
      */
     public RevokeOAuthGrantResponseSuccess revoke(String oauthGrantId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/oauth/grants/" + oauthGrantId, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RevokeOAuthGrantResponseSuccess.class);
+        return execute("/oauth/grants/" + oauthGrantId, HttpMethod.DELETE, "", null, RevokeOAuthGrantResponseSuccess.class);
     }
 }

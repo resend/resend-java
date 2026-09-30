@@ -2,7 +2,6 @@ package com.resend.services.usage;
 
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -24,16 +23,12 @@ public class Usage extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Usage} class with custom client options.
+     * Constructs an instance of the {@code Usage} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Usage(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Usage(final String apiKey, final IHttpClient httpClient) {
+    public Usage(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -44,12 +39,6 @@ public class Usage extends BaseService {
      * @throws ResendException If an error occurs while retrieving the usage data.
      */
     public UsageResponse get() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/usage", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        return resendMapper.readValue(response.getBody(), UsageResponse.class);
+        return execute("/usage", HttpMethod.GET, null, MediaType.get("application/json"), UsageResponse.class);
     }
 }

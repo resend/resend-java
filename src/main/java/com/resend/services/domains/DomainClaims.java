@@ -1,7 +1,6 @@
 package com.resend.services.domains;
 
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -24,12 +23,12 @@ public final class DomainClaims extends BaseService {
     }
 
     /**
-     * Package-private constructor for testing, allowing injection of a mock HTTP client.
+     * Constructs an instance of the {@code DomainClaims} class that sends requests through the given HTTP client.
      *
      * @param apiKey     The apiKey used for authentication.
      * @param httpClient The HTTP client to use.
      */
-    DomainClaims(final String apiKey, final IHttpClient httpClient) {
+    public DomainClaims(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -45,14 +44,7 @@ public final class DomainClaims extends BaseService {
             throw new ResendException("claimDomainOptions must not be null");
         }
         String payload = super.resendMapper.writeValue(claimDomainOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/claim", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DomainClaimResponseSuccess.class);
+        return execute("/domains/claim", HttpMethod.POST, payload, MediaType.get("application/json"), DomainClaimResponseSuccess.class);
     }
 
     /**
@@ -63,14 +55,7 @@ public final class DomainClaims extends BaseService {
      * @throws ResendException If an error occurs during the retrieval process.
      */
     public DomainClaimResponseSuccess get(String domainId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/claim", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DomainClaimResponseSuccess.class);
+        return execute("/domains/" + domainId + "/claim", HttpMethod.GET, null, MediaType.get("application/json"), DomainClaimResponseSuccess.class);
     }
 
     /**
@@ -81,13 +66,6 @@ public final class DomainClaims extends BaseService {
      * @throws ResendException If an error occurs during the verification process.
      */
     public DomainClaimResponseSuccess verify(String domainId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/domains/" + domainId + "/claim/verify", super.apiKey, HttpMethod.POST, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DomainClaimResponseSuccess.class);
+        return execute("/domains/" + domainId + "/claim/verify", HttpMethod.POST, "", null, DomainClaimResponseSuccess.class);
     }
 }

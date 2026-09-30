@@ -2,7 +2,6 @@ package com.resend.services.contacts;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -25,7 +24,13 @@ public class ContactSegments extends BaseService {
         super(apiKey);
     }
 
-    ContactSegments(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code ContactSegments} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public ContactSegments(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -49,15 +54,7 @@ public class ContactSegments extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments/" + options.getSegmentId();
 
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, AddContactToSegmentResponseSuccess.class);
+        return execute(endpoint, HttpMethod.POST, "", MediaType.get("application/json"), AddContactToSegmentResponseSuccess.class);
     }
 
     /**
@@ -80,15 +77,7 @@ public class ContactSegments extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments/" + options.getSegmentId();
 
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveContactFromSegmentResponseSuccess.class);
+        return execute(endpoint, HttpMethod.DELETE, "", null, RemoveContactFromSegmentResponseSuccess.class);
     }
 
     /**
@@ -104,15 +93,7 @@ public class ContactSegments extends BaseService {
         }
 
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments";
-        AbstractHttpResponse<String> response = httpClient.perform(endpoint, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListContactSegmentsResponseSuccess.class);
+        return execute(endpoint, HttpMethod.GET, null, MediaType.get("application/json"), ListContactSegmentsResponseSuccess.class);
     }
 
     /**
@@ -129,14 +110,6 @@ public class ContactSegments extends BaseService {
         }
 
         String pathWithQuery = "/contacts/" + contactId + "/segments" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListContactSegmentsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactSegmentsResponseSuccess.class);
     }
 }

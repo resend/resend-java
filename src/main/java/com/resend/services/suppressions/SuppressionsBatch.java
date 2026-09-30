@@ -1,7 +1,6 @@
 package com.resend.services.suppressions;
 
 import com.resend.core.exception.ResendException;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -22,7 +21,13 @@ public class SuppressionsBatch extends BaseService {
         super(apiKey);
     }
 
-    SuppressionsBatch(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code SuppressionsBatch} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public SuppressionsBatch(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -35,15 +40,7 @@ public class SuppressionsBatch extends BaseService {
      */
     public AddSuppressionsResponseSuccess add(AddSuppressionsOptions addSuppressionsOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(addSuppressionsOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/suppressions/batch/add", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, AddSuppressionsResponseSuccess.class);
+        return execute("/suppressions/batch/add", HttpMethod.POST, payload, MediaType.get("application/json"), AddSuppressionsResponseSuccess.class);
     }
 
     /**
@@ -56,14 +53,6 @@ public class SuppressionsBatch extends BaseService {
      */
     public RemoveSuppressionsResponseSuccess remove(RemoveSuppressionsOptions removeSuppressionsOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(removeSuppressionsOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/suppressions/batch/remove", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveSuppressionsResponseSuccess.class);
+        return execute("/suppressions/batch/remove", HttpMethod.POST, payload, MediaType.get("application/json"), RemoveSuppressionsResponseSuccess.class);
     }
 }

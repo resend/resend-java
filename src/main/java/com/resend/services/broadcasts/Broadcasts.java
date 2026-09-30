@@ -3,7 +3,6 @@ package com.resend.services.broadcasts;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -26,16 +25,12 @@ public class Broadcasts extends BaseService  {
     }
 
     /**
-     * Constructs an instance of the {@code Broadcasts} class with custom client options.
+     * Constructs an instance of the {@code Broadcasts} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Broadcasts(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Broadcasts(final String apiKey, final IHttpClient httpClient) {
+    public Broadcasts(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -48,14 +43,7 @@ public class Broadcasts extends BaseService  {
      */
     public CreateBroadcastResponseSuccess create(CreateBroadcastOptions createBroadcastOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createBroadcastOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateBroadcastResponseSuccess.class);
+        return execute("/broadcasts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateBroadcastResponseSuccess.class);
     }
 
     /**
@@ -66,15 +54,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs while retrieving the broadcast.
      */
     public GetBroadcastResponseSuccess get(String id) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, GetBroadcastResponseSuccess.class);
+        return execute("/broadcasts/" +id, HttpMethod.GET, null, MediaType.get("application/json"), GetBroadcastResponseSuccess.class);
     }
 
     /**
@@ -87,14 +67,7 @@ public class Broadcasts extends BaseService  {
      */
     public SendBroadcastResponseSuccess send(SendBroadcastOptions sendBroadcastOptions, String broadcastId) throws ResendException {
         String payload = super.resendMapper.writeValue(sendBroadcastOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" +broadcastId + "/send", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, SendBroadcastResponseSuccess.class);
+        return execute("/broadcasts/" +broadcastId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendBroadcastResponseSuccess.class);
     }
 
     /**
@@ -105,14 +78,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the broadcast cancellation process.
      */
     public CancelBroadcastResponseSuccess cancel(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" + id + "/cancel", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CancelBroadcastResponseSuccess.class);
+        return execute("/broadcasts/" + id + "/cancel", HttpMethod.POST, "", MediaType.get("application/json"), CancelBroadcastResponseSuccess.class);
     }
 
     /**
@@ -123,14 +89,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the broadcast duplication process.
      */
     public DuplicateBroadcastResponseSuccess duplicate(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" + id + "/duplicate", super.apiKey, HttpMethod.POST, "", MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, DuplicateBroadcastResponseSuccess.class);
+        return execute("/broadcasts/" + id + "/duplicate", HttpMethod.POST, "", MediaType.get("application/json"), DuplicateBroadcastResponseSuccess.class);
     }
 
     /**
@@ -141,15 +100,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the broadcast deletion process.
      */
     public RemoveBroadcastResponseSuccess remove(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/" +id, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveBroadcastResponseSuccess.class);
+        return execute("/broadcasts/" +id, HttpMethod.DELETE, "", null, RemoveBroadcastResponseSuccess.class);
     }
 
     /**
@@ -159,15 +110,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the broadcasts list retrieval process.
      */
     public ListBroadcastsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListBroadcastsResponseSuccess.class);
+        return execute("/broadcasts", HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastsResponseSuccess.class);
     }
 
     /**
@@ -179,15 +122,7 @@ public class Broadcasts extends BaseService  {
      */
     public ListBroadcastsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/broadcasts" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListBroadcastsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastsResponseSuccess.class);
     }
 
     /**
@@ -201,15 +136,7 @@ public class Broadcasts extends BaseService  {
      */
     public ListBroadcastRecipientsResponseSuccess recipients(String id, ListBroadcastRecipientsParams params) throws ResendException {
         String pathWithQuery = "/broadcasts/" + id + "/recipients" + params.toQueryString();
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListBroadcastRecipientsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastRecipientsResponseSuccess.class);
     }
 
     /**
@@ -220,15 +147,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the clicked links retrieval process.
      */
     public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/broadcasts/" + id + "/clicked-links", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListBroadcastClickedLinksResponseSuccess.class);
+        return execute("/broadcasts/" + id + "/clicked-links", HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastClickedLinksResponseSuccess.class);
     }
 
     /**
@@ -242,15 +161,7 @@ public class Broadcasts extends BaseService  {
      */
     public ListBroadcastClickedLinksResponseSuccess clickedLinks(String id, ListParams params) throws ResendException {
         String pathWithQuery = "/broadcasts/" + id + "/clicked-links" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListBroadcastClickedLinksResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListBroadcastClickedLinksResponseSuccess.class);
     }
 
     /**
@@ -262,13 +173,6 @@ public class Broadcasts extends BaseService  {
      */
     public UpdateBroadcastResponseSuccess update(UpdateBroadcastOptions updateBroadcastOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateBroadcastOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/broadcasts/"+updateBroadcastOptions.getId(), super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, UpdateBroadcastResponseSuccess.class);
+        return execute("/broadcasts/"+updateBroadcastOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateBroadcastResponseSuccess.class);
     }
 }

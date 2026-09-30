@@ -3,7 +3,6 @@ package com.resend.services.segments;
 import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
-import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
@@ -26,16 +25,12 @@ public class Segments extends BaseService {
     }
 
     /**
-     * Constructs an instance of the {@code Segments} class with custom client options.
+     * Constructs an instance of the {@code Segments} class that sends requests through the given HTTP client.
      *
-     * @param apiKey  The apiKey used for authentication.
-     * @param options Client options (base URL, User-Agent, timeouts).
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
      */
-    public Segments(final String apiKey, final ResendOptions options) {
-        super(apiKey, options);
-    }
-
-    Segments(final String apiKey, final IHttpClient httpClient) {
+    public Segments(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 
@@ -48,14 +43,7 @@ public class Segments extends BaseService {
      */
     public CreateSegmentResponseSuccess create(CreateSegmentOptions createSegmentOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createSegmentOptions);
-        AbstractHttpResponse<String> response = httpClient.perform("/segments", super.apiKey, HttpMethod.POST, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-        return resendMapper.readValue(responseBody, CreateSegmentResponseSuccess.class);
+        return execute("/segments", HttpMethod.POST, payload, MediaType.get("application/json"), CreateSegmentResponseSuccess.class);
     }
 
     /**
@@ -65,15 +53,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
     public ListSegmentsResponseSuccess list() throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/segments", super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListSegmentsResponseSuccess.class);
+        return execute("/segments", HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
     }
 
     /**
@@ -85,15 +65,7 @@ public class Segments extends BaseService {
      */
     public ListSegmentsResponseSuccess list(ListParams params) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
-        AbstractHttpResponse<String> response = this.httpClient.perform(pathWithQuery, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, ListSegmentsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
     }
 
     /**
@@ -104,15 +76,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs while retrieving the segment.
      */
     public GetSegmentResponseSuccess get(String id) throws ResendException {
-        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" +id, super.apiKey, HttpMethod.GET, null, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, GetSegmentResponseSuccess.class);
+        return execute("/segments/" +id, HttpMethod.GET, null, MediaType.get("application/json"), GetSegmentResponseSuccess.class);
     }
 
     /**
@@ -125,15 +89,7 @@ public class Segments extends BaseService {
      */
     public UpdateSegmentResponseSuccess update(String id, UpdateSegmentOptions updateSegmentOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateSegmentOptions);
-        AbstractHttpResponse<String> response = this.httpClient.perform("/segments/" + id, super.apiKey, HttpMethod.PATCH, payload, MediaType.get("application/json"));
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, UpdateSegmentResponseSuccess.class);
+        return execute("/segments/" + id, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateSegmentResponseSuccess.class);
     }
 
     /**
@@ -144,14 +100,6 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segment deletion process.
      */
     public RemoveSegmentResponseSuccess remove(String id) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/segments/" +id, super.apiKey, HttpMethod.DELETE, "", null);
-
-        if (!response.isSuccessful()) {
-            throw new ResendException(response.getCode(), response.getBody());
-        }
-
-        String responseBody = response.getBody();
-
-        return resendMapper.readValue(responseBody, RemoveSegmentResponseSuccess.class);
+        return execute("/segments/" +id, HttpMethod.DELETE, "", null, RemoveSegmentResponseSuccess.class);
     }
 }

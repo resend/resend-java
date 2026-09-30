@@ -42,7 +42,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while creating the event.
      */
     public CreateEventResponseSuccess create(CreateEventOptions createEventOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createEventOptions);
+        String payload = serialize(createEventOptions);
         return execute("/events", HttpMethod.POST, payload, MediaType.get("application/json"), CreateEventResponseSuccess.class);
     }
 
@@ -87,7 +87,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while updating the event.
      */
     public UpdateEventResponseSuccess update(UpdateEventOptions updateEventOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateEventOptions);
+        String payload = serialize(updateEventOptions);
         return execute("/events/" + updateEventOptions.getIdentifier(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateEventResponseSuccess.class);
     }
 
@@ -110,7 +110,7 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while sending the event.
      */
     public SendEventResponseSuccess send(SendEventOptions sendEventOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(sendEventOptions);
+        String payload = serialize(sendEventOptions);
         return execute("/events/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendEventResponseSuccess.class);
     }
 }

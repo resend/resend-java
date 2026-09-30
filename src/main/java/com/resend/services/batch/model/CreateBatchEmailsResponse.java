@@ -35,7 +35,7 @@ public class CreateBatchEmailsResponse extends AbstractBatchEmailsResponse {
     /**
      * Get the list of validation errors.
      *
-     * @return A list of batch email errors, never null (but may be empty).
+     * @return A list of batch email errors, or {@code null} if the API omitted the field; use {@link #hasErrors()} to check.
      */
     public @Nullable List<BatchError> getErrors() {
         return errors;

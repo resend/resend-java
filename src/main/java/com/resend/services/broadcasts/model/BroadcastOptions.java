@@ -188,7 +188,7 @@ public class BroadcastOptions {
          * @deprecated Use {@link #segmentId(String)} instead.
          */
         @Deprecated
-        public B audienceId(String audienceId) {
+        public B audienceId(@Nullable String audienceId) {
             this.audienceId = audienceId;
             return self();
         }
@@ -246,7 +246,7 @@ public class BroadcastOptions {
          * @param replyTo the list of reply-to email addresses.
          * @return the builder instance.
          */
-        public B replyTo(List<String> replyTo) {
+        public B replyTo(@Nullable List<String> replyTo) {
             this.replyTo = replyTo;
             return self();
         }
@@ -257,7 +257,7 @@ public class BroadcastOptions {
          * @param html the HTML content.
          * @return the builder instance.
          */
-        public B html(String html) {
+        public B html(@Nullable String html) {
             this.html = html;
             return self();
         }
@@ -268,7 +268,7 @@ public class BroadcastOptions {
          * @param text the plain text content.
          * @return the builder instance.
          */
-        public B text(String text) {
+        public B text(@Nullable String text) {
             this.text = text;
             return self();
         }
@@ -279,7 +279,7 @@ public class BroadcastOptions {
          * @param name the name of the broadcast.
          * @return the builder instance.
          */
-        public B name(String name) {
+        public B name(@Nullable String name) {
             this.name = name;
             return self();
         }

@@ -72,7 +72,7 @@ public class CreateBroadcastOptions extends BroadcastOptions {
          * @param send true to send immediately, false or null to create as draft.
          * @return The builder instance for chaining.
          */
-        public Builder send(Boolean send) {
+        public Builder send(@Nullable Boolean send) {
             this.send = send;
             return self();
         }
@@ -84,7 +84,7 @@ public class CreateBroadcastOptions extends BroadcastOptions {
          * @param scheduledAt The scheduled time in ISO 8601 format (e.g., "2024-12-25T10:00:00.000Z").
          * @return The builder instance for chaining.
          */
-        public Builder scheduledAt(String scheduledAt) {
+        public Builder scheduledAt(@Nullable String scheduledAt) {
             this.scheduledAt = scheduledAt;
             return self();
         }

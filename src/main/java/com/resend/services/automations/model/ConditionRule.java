@@ -15,7 +15,7 @@ public class ConditionRule {
 
     private final Map<String, @Nullable Object> rule;
 
-    private ConditionRule(Map<String, ? extends @Nullable Object> rule) {
+    private ConditionRule(Map<String, @Nullable Object> rule) {
         this.rule = Collections.<String, @Nullable Object>unmodifiableMap(new HashMap<>(rule));
     }
 
@@ -210,9 +210,9 @@ public class ConditionRule {
     }
 
     private static ConditionRule combineRules(String type, ConditionRule... rules) {
-        Map<String, Object> combinedRule = new HashMap<>();
+        Map<String, @Nullable Object> combinedRule = new HashMap<>();
         combinedRule.put("type", type);
-        List<Map<String, Object>> rulesList = new ArrayList<>();
+        List<Map<String, @Nullable Object>> rulesList = new ArrayList<>();
         for (ConditionRule rule : rules) {
             rulesList.add(rule.toMap());
         }
@@ -262,7 +262,7 @@ public class ConditionRule {
          * @param value The comparison value.
          * @return The builder instance.
          */
-        public Builder value(Object value) {
+        public Builder value(@Nullable Object value) {
             this.value = value;
             return this;
         }
@@ -273,7 +273,7 @@ public class ConditionRule {
          * @return A new ConditionRule.
          */
         public ConditionRule build() {
-            Map<String, Object> rule = new HashMap<>();
+            Map<String, @Nullable Object> rule = new HashMap<>();
             rule.put("type", "rule");
             rule.put("field", field);
             rule.put("operator", operator != null ? operator.getValue() : null);

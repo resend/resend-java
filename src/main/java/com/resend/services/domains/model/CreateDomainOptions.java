@@ -165,7 +165,7 @@ public class CreateDomainOptions {
          * @param region The region of the domain.
          * @return The builder instance.
          */
-        public Builder region(String region) {
+        public Builder region(@Nullable String region) {
             this.region = region;
             return this;
         }
@@ -176,7 +176,7 @@ public class CreateDomainOptions {
          * @param customReturnPath The customReturnPath of the domain.
          * @return The builder instance.
          */
-        public Builder customReturnPath(String customReturnPath) {
+        public Builder customReturnPath(@Nullable String customReturnPath) {
             this.customReturnPath = customReturnPath;
             return this;
         }
@@ -187,7 +187,7 @@ public class CreateDomainOptions {
          * @param openTracking The openTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder openTracking(Boolean openTracking) {
+        public Builder openTracking(@Nullable Boolean openTracking) {
             this.openTracking = openTracking;
             return this;
         }
@@ -198,7 +198,7 @@ public class CreateDomainOptions {
          * @param clickTracking The clickTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder clickTracking(Boolean clickTracking) {
+        public Builder clickTracking(@Nullable Boolean clickTracking) {
             this.clickTracking = clickTracking;
             return this;
         }
@@ -209,7 +209,7 @@ public class CreateDomainOptions {
          * @param tls The TLS setting for the domain.
          * @return The builder instance.
          */
-        public Builder tls(Tls tls) {
+        public Builder tls(@Nullable Tls tls) {
             this.tls = tls;
             return this;
         }
@@ -220,7 +220,7 @@ public class CreateDomainOptions {
          * @param capabilities The capabilities of the domain.
          * @return The builder instance.
          */
-        public Builder capabilities(DomainCapabilities capabilities) {
+        public Builder capabilities(@Nullable DomainCapabilities capabilities) {
             this.capabilities = capabilities;
             return this;
         }
@@ -231,7 +231,7 @@ public class CreateDomainOptions {
          * @param trackingSubdomain The subdomain to use for click and open tracking.
          * @return The builder instance.
          */
-        public Builder trackingSubdomain(String trackingSubdomain) {
+        public Builder trackingSubdomain(@Nullable String trackingSubdomain) {
             this.trackingSubdomain = trackingSubdomain;
             return this;
         }

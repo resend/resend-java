@@ -162,7 +162,7 @@ public class CreateContactOptions {
          * @deprecated Use {@link #segmentId(String)} instead.
          */
         @Deprecated
-        public Builder audienceId(String audienceId) {
+        public Builder audienceId(@Nullable String audienceId) {
             this.audienceId = audienceId;
             return this;
         }
@@ -176,7 +176,7 @@ public class CreateContactOptions {
          *             Use {@code resend.contacts().segments().add(options)} to add contacts to segments.
          */
         @Deprecated
-        public Builder segmentId(String segmentId) {
+        public Builder segmentId(@Nullable String segmentId) {
             this.segmentId = segmentId;
             return this;
         }
@@ -198,7 +198,7 @@ public class CreateContactOptions {
          * @param unsubscribed The unsubscribed status of the contact.
          * @return The builder instance.
          */
-        public Builder unsubscribed(Boolean unsubscribed) {
+        public Builder unsubscribed(@Nullable Boolean unsubscribed) {
             this.unsubscribed = unsubscribed;
             return this;
         }
@@ -209,7 +209,7 @@ public class CreateContactOptions {
          * @param firstName The first name of the contact.
          * @return The builder instance.
          */
-        public Builder firstName(String firstName) {
+        public Builder firstName(@Nullable String firstName) {
             this.firstName = firstName;
             return this;
         }
@@ -220,7 +220,7 @@ public class CreateContactOptions {
          * @param lastName The last name of the contact.
          * @return The builder instance.
          */
-        public Builder lastName(String lastName) {
+        public Builder lastName(@Nullable String lastName) {
             this.lastName = lastName;
             return this;
         }

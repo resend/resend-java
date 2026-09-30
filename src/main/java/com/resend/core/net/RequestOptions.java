@@ -70,7 +70,7 @@ public class RequestOptions {
          * @param idempotencyKey The idempotency key.
          * @return The builder instance.
          */
-        public Builder setIdempotencyKey(String idempotencyKey) {
+        public Builder setIdempotencyKey(@Nullable String idempotencyKey) {
             this.idempotencyKey = idempotencyKey;
             return this;
         }

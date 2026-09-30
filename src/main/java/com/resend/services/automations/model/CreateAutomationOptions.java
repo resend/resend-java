@@ -114,7 +114,7 @@ public class CreateAutomationOptions {
          * @param status The automation status.
          * @return The builder instance.
          */
-        public Builder status(AutomationStatus status) {
+        public Builder status(@Nullable AutomationStatus status) {
             this.status = status;
             return this;
         }

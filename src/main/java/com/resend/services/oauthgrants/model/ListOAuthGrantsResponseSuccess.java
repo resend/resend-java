@@ -50,7 +50,7 @@ public class ListOAuthGrantsResponseSuccess {
     /**
      * Checks if there are more items available for pagination.
      *
-     * @return true if more items are available, false otherwise
+     * @return true if more items are available, false if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean hasMore() {
         return hasMore;

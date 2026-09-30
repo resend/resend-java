@@ -87,7 +87,7 @@ public class ContactImportPropertyMapping {
          * @param type The property value type.
          * @return The builder instance.
          */
-        public Builder type(String type) {
+        public Builder type(@Nullable String type) {
             this.type = type;
             return this;
         }

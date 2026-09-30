@@ -34,7 +34,7 @@ public class ListContactImportsParams {
     /**
      * Gets the pagination limit.
      *
-     * @return The pagination limit.
+     * @return The pagination limit, or {@code null} if not set.
      */
     public @Nullable Integer getLimit() {
         return limit;
@@ -43,7 +43,7 @@ public class ListContactImportsParams {
     /**
      * Gets the cursor for fetching contact imports created after this ID.
      *
-     * @return The {@code after} cursor.
+     * @return The {@code after} cursor, or {@code null} if not set.
      */
     public @Nullable String getAfter() {
         return after;
@@ -52,7 +52,7 @@ public class ListContactImportsParams {
     /**
      * Gets the cursor for fetching contact imports created before this ID.
      *
-     * @return The {@code before} cursor.
+     * @return The {@code before} cursor, or {@code null} if not set.
      */
     public @Nullable String getBefore() {
         return before;
@@ -62,7 +62,7 @@ public class ListContactImportsParams {
      * Gets the status filter ({@code queued}, {@code in_progress}, {@code completed},
      * or {@code failed}).
      *
-     * @return The status filter.
+     * @return The status filter, or {@code null} if not set.
      */
     public @Nullable String getStatus() {
         return status;
@@ -98,7 +98,7 @@ public class ListContactImportsParams {
          * @param limit The pagination limit.
          * @return The builder instance.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -110,7 +110,7 @@ public class ListContactImportsParams {
          * @param after The {@code after} cursor.
          * @return The builder instance.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }
@@ -122,7 +122,7 @@ public class ListContactImportsParams {
          * @param before The {@code before} cursor.
          * @return The builder instance.
          */
-        public Builder before(String before) {
+        public Builder before(@Nullable String before) {
             this.before = before;
             return this;
         }
@@ -134,7 +134,7 @@ public class ListContactImportsParams {
          * @param status The status filter.
          * @return The builder instance.
          */
-        public Builder status(String status) {
+        public Builder status(@Nullable String status) {
             this.status = status;
             return this;
         }

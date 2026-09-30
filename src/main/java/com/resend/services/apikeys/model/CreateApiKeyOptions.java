@@ -95,7 +95,7 @@ public class CreateApiKeyOptions {
          * @param permission The permission of the Api Key.
          * @return The builder instance.
          */
-        public Builder permission(String permission) {
+        public Builder permission(@Nullable String permission) {
             this.permission = permission;
             return this;
         }
@@ -106,7 +106,7 @@ public class CreateApiKeyOptions {
          * @param domainId The domain id of the Api Key.
          * @return The builder instance.
          */
-        public Builder domainId(String domainId) {
+        public Builder domainId(@Nullable String domainId) {
             this.domainId = domainId;
             return this;
         }

@@ -60,7 +60,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook creation process.
      */
     public CreateWebhookResponseSuccess create(CreateWebhookOptions createWebhookOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createWebhookOptions);
+        String payload = serialize(createWebhookOptions);
         return execute("/webhooks", HttpMethod.POST, payload, MediaType.get("application/json"), CreateWebhookResponseSuccess.class);
     }
 
@@ -73,7 +73,7 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook update process.
      */
     public UpdateWebhookResponseSuccess update(String webhookId, UpdateWebhookOptions updateWebhookOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateWebhookOptions);
+        String payload = serialize(updateWebhookOptions);
         return execute("/webhooks/" + webhookId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateWebhookResponseSuccess.class);
     }
 

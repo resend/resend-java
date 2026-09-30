@@ -39,7 +39,7 @@ public class SuppressionsBatch extends BaseService {
      * @throws ResendException If an error occurs during the suppressions creation process.
      */
     public AddSuppressionsResponseSuccess add(AddSuppressionsOptions addSuppressionsOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(addSuppressionsOptions);
+        String payload = serialize(addSuppressionsOptions);
         return execute("/suppressions/batch/add", HttpMethod.POST, payload, MediaType.get("application/json"), AddSuppressionsResponseSuccess.class);
     }
 
@@ -52,7 +52,7 @@ public class SuppressionsBatch extends BaseService {
      * @throws ResendException If an error occurs during the suppressions removal process.
      */
     public RemoveSuppressionsResponseSuccess remove(RemoveSuppressionsOptions removeSuppressionsOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(removeSuppressionsOptions);
+        String payload = serialize(removeSuppressionsOptions);
         return execute("/suppressions/batch/remove", HttpMethod.POST, payload, MediaType.get("application/json"), RemoveSuppressionsResponseSuccess.class);
     }
 }

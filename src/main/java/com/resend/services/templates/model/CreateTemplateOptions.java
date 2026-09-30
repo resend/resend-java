@@ -165,7 +165,7 @@ public class CreateTemplateOptions {
          * @param alias The alias of the template.
          * @return This builder instance for method chaining.
          */
-        public Builder alias(String alias) {
+        public Builder alias(@Nullable String alias) {
             this.alias = alias;
             return this;
         }
@@ -176,7 +176,7 @@ public class CreateTemplateOptions {
          * @param from The sender email address.
          * @return This builder instance for method chaining.
          */
-        public Builder from(String from) {
+        public Builder from(@Nullable String from) {
             this.from = from;
             return this;
         }
@@ -187,7 +187,7 @@ public class CreateTemplateOptions {
          * @param subject The email subject.
          * @return This builder instance for method chaining.
          */
-        public Builder subject(String subject) {
+        public Builder subject(@Nullable String subject) {
             this.subject = subject;
             return this;
         }
@@ -214,7 +214,7 @@ public class CreateTemplateOptions {
          * @param replyTo The reply-to email addresses.
          * @return This builder instance for method chaining.
          */
-        public Builder replyTo(List<String> replyTo) {
+        public Builder replyTo(@Nullable List<String> replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -250,7 +250,7 @@ public class CreateTemplateOptions {
          * @param text The plain text version of the template.
          * @return This builder instance for method chaining.
          */
-        public Builder text(String text) {
+        public Builder text(@Nullable String text) {
             this.text = text;
             return this;
         }
@@ -277,7 +277,7 @@ public class CreateTemplateOptions {
          * @param variables The list of variables.
          * @return This builder instance for method chaining.
          */
-        public Builder variables(List<Variable> variables) {
+        public Builder variables(@Nullable List<Variable> variables) {
             this.variables = variables;
             return this;
         }

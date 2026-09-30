@@ -171,7 +171,7 @@ public class UpdateContactOptions {
          * @deprecated Use {@link #segmentId(String)} instead.
          */
         @Deprecated
-        public Builder audienceId(String audienceId) {
+        public Builder audienceId(@Nullable String audienceId) {
             this.audienceId = audienceId;
             return this;
         }
@@ -184,7 +184,7 @@ public class UpdateContactOptions {
          * @deprecated This field is ignored when updating global contacts.
          */
         @Deprecated
-        public Builder segmentId(String segmentId) {
+        public Builder segmentId(@Nullable String segmentId) {
             this.segmentId = segmentId;
             return this;
         }
@@ -195,7 +195,7 @@ public class UpdateContactOptions {
          * @param id The id of the contact.
          * @return The builder instance.
          */
-        public Builder id(String id) {
+        public Builder id(@Nullable String id) {
             this.id = id;
             return this;
         }
@@ -206,7 +206,7 @@ public class UpdateContactOptions {
          * @param email The email of the contact.
          * @return The builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }
@@ -217,7 +217,7 @@ public class UpdateContactOptions {
          * @param unsubscribed The unsubscribed status of the contact.
          * @return The builder instance.
          */
-        public Builder unsubscribed(Boolean unsubscribed) {
+        public Builder unsubscribed(@Nullable Boolean unsubscribed) {
             this.unsubscribed = unsubscribed;
             return this;
         }
@@ -228,7 +228,7 @@ public class UpdateContactOptions {
          * @param firstName The first name of the contact.
          * @return The builder instance.
          */
-        public Builder firstName(String firstName) {
+        public Builder firstName(@Nullable String firstName) {
             this.firstName = firstName;
             return this;
         }
@@ -239,7 +239,7 @@ public class UpdateContactOptions {
          * @param lastName The last name of the contact.
          * @return The builder instance.
          */
-        public Builder lastName(String lastName) {
+        public Builder lastName(@Nullable String lastName) {
             this.lastName = lastName;
             return this;
         }

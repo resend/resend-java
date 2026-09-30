@@ -38,7 +38,7 @@ public class WaitForEventStepBuilder extends AbstractStepBuilder<WaitForEventSte
      * @param timeout The timeout string (e.g., "7d", "1h").
      * @return The builder instance.
      */
-    public WaitForEventStepBuilder timeout(String timeout) {
+    public WaitForEventStepBuilder timeout(@Nullable String timeout) {
         return addConfig("timeout", timeout);
     }
 

@@ -44,7 +44,7 @@ public class Audiences extends BaseService {
      */
     @Deprecated
     public CreateAudienceResponseSuccess create(CreateAudienceOptions createAudienceOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createAudienceOptions);
+        String payload = serialize(createAudienceOptions);
         return execute("/audiences", HttpMethod.POST, payload, MediaType.get("application/json"), CreateAudienceResponseSuccess.class);
     }
 

@@ -269,4 +269,15 @@ public class AutomationsTest {
         assertEquals("run_1", response.getId());
         assertEquals(RunStatus.COMPLETED, response.getStatus());
     }
+
+    @Test
+    public void testListAutomationRunsParams_NullStatusListClearsFilter() {
+        ListAutomationRunsParams params = ListAutomationRunsParams.builder()
+                .status(RunStatus.RUNNING)
+                .status((java.util.List<RunStatus>) null)
+                .build();
+
+        assertNull(params.getStatus());
+        assertFalse(params.toQueryString().contains("status"));
+    }
 }

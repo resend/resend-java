@@ -53,7 +53,7 @@ public class ShareEmailOptions {
          * @param expiresIn A human-readable duration (e.g., "10m", "2 hours", "1 day", "1h 30m"). Defaults to "48h" and is capped at 48 hours.
          * @return This builder instance for method chaining.
          */
-        public Builder expiresIn(String expiresIn) {
+        public Builder expiresIn(@Nullable String expiresIn) {
             this.expiresIn = expiresIn;
             return this;
         }

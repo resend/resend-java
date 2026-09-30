@@ -34,7 +34,6 @@ public class ListContactsResponseSuccess {
     public ListContactsResponseSuccess(final @Nullable List<Contact> data, final @Nullable String object) {
         this.data = data;
         this.object = object;
-        this.hasMore = hasMore;
     }
 
     /**

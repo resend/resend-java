@@ -489,4 +489,12 @@ public class ContactsTest {
         assertNull(sent.get("nickname"));
         assertFalse(properties.containsKey("active"));
     }
+
+    @Test
+    public void testRemoveContactResponseSuccess_ConstructorSetsContact() {
+        RemoveContactResponseSuccess response = new RemoveContactResponseSuccess("id-1", "contact", true, "user@example.com");
+
+        assertEquals("user@example.com", response.getContact());
+        assertTrue(response.getRemoved());
+    }
 }

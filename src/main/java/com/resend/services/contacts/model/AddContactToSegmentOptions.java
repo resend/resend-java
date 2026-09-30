@@ -93,7 +93,7 @@ public class AddContactToSegmentOptions {
          * @param id The contact ID.
          * @return This builder instance.
          */
-        public Builder id(String id) {
+        public Builder id(@Nullable String id) {
             this.id = id;
             return this;
         }
@@ -104,7 +104,7 @@ public class AddContactToSegmentOptions {
          * @param email The contact email.
          * @return This builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }

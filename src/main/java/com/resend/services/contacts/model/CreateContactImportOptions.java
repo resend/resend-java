@@ -241,7 +241,7 @@ public class CreateContactImportOptions {
          * @param columnMap The column map.
          * @return The builder instance.
          */
-        public Builder columnMap(ContactImportColumnMap columnMap) {
+        public Builder columnMap(@Nullable ContactImportColumnMap columnMap) {
             this.columnMap = columnMap;
             return this;
         }
@@ -253,7 +253,7 @@ public class CreateContactImportOptions {
          * @param onConflict {@code "upsert"} or {@code "skip"}.
          * @return The builder instance.
          */
-        public Builder onConflict(String onConflict) {
+        public Builder onConflict(@Nullable String onConflict) {
             this.onConflict = onConflict;
             return this;
         }
@@ -264,7 +264,7 @@ public class CreateContactImportOptions {
          * @param segments The list of segment references.
          * @return The builder instance.
          */
-        public Builder segments(List<ContactImportSegmentReference> segments) {
+        public Builder segments(@Nullable List<ContactImportSegmentReference> segments) {
             this.segments = segments;
             return this;
         }
@@ -306,7 +306,7 @@ public class CreateContactImportOptions {
          * @param topics The list of topic subscriptions.
          * @return The builder instance.
          */
-        public Builder topics(List<ContactImportTopicSubscription> topics) {
+        public Builder topics(@Nullable List<ContactImportTopicSubscription> topics) {
             this.topics = topics;
             return this;
         }

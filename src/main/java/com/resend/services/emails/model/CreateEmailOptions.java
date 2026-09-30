@@ -271,7 +271,7 @@ public class CreateEmailOptions {
          * @param text The plain text body of the email.
          * @return This builder instance for method chaining.
          */
-        public Builder text(String text) {
+        public Builder text(@Nullable String text) {
             this.text = text;
             return this;
         }
@@ -425,7 +425,7 @@ public class CreateEmailOptions {
          * @param html The HTML content of the email.
          * @return This builder instance for method chaining.
          */
-        public Builder html(String html) {
+        public Builder html(@Nullable String html) {
             this.html = html;
             return this;
         }
@@ -436,7 +436,7 @@ public class CreateEmailOptions {
          * @param headers The map of custom headers for the email.
          * @return This builder instance for method chaining.
          */
-        public Builder headers(Map<String, String> headers) {
+        public Builder headers(@Nullable Map<String, String> headers) {
             this.headers = headers;
             return this;
         }
@@ -478,7 +478,7 @@ public class CreateEmailOptions {
          * @param attachments The list of attachments for the email.
          * @return This builder instance for method chaining.
          */
-        public Builder attachments(List<Attachment> attachments) {
+        public Builder attachments(@Nullable List<Attachment> attachments) {
             this.attachments = attachments;
             return this;
         }
@@ -519,7 +519,7 @@ public class CreateEmailOptions {
          * @param tags The list of tags for the email.
          * @return This builder instance for method chaining.
          */
-        public Builder tags(List<Tag> tags) {
+        public Builder tags(@Nullable List<Tag> tags) {
             this.tags = tags;
             return this;
         }
@@ -544,7 +544,7 @@ public class CreateEmailOptions {
          * @param scheduledAt The schedule of the email in ISO 8601 format (e.g., 2024-08-05T11:52:01.858Z).
          * @return This builder instance for method chaining.
          */
-        public Builder scheduledAt(String scheduledAt) {
+        public Builder scheduledAt(@Nullable String scheduledAt) {
             this.scheduledAt = scheduledAt;
             return this;
         }
@@ -559,7 +559,7 @@ public class CreateEmailOptions {
          * @param template The template configuration.
          * @return This builder instance for method chaining.
          */
-        public Builder template(Template template) {
+        public Builder template(@Nullable Template template) {
             this.template = template;
             return this;
         }

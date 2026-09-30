@@ -115,7 +115,7 @@ public class CreateTopicOptions {
          * @param description The topic description. Max length is 200 characters.
          * @return This builder instance for method chaining.
          */
-        public Builder description(String description) {
+        public Builder description(@Nullable String description) {
             this.description = description;
             return this;
         }

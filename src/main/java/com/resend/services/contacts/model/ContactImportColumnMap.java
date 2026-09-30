@@ -120,7 +120,7 @@ public class ContactImportColumnMap {
          * @param email The CSV column name.
          * @return The builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }
@@ -131,7 +131,7 @@ public class ContactImportColumnMap {
          * @param firstName The CSV column name.
          * @return The builder instance.
          */
-        public Builder firstName(String firstName) {
+        public Builder firstName(@Nullable String firstName) {
             this.firstName = firstName;
             return this;
         }
@@ -142,7 +142,7 @@ public class ContactImportColumnMap {
          * @param lastName The CSV column name.
          * @return The builder instance.
          */
-        public Builder lastName(String lastName) {
+        public Builder lastName(@Nullable String lastName) {
             this.lastName = lastName;
             return this;
         }
@@ -153,7 +153,7 @@ public class ContactImportColumnMap {
          * @param unsubscribed The CSV column name.
          * @return The builder instance.
          */
-        public Builder unsubscribed(String unsubscribed) {
+        public Builder unsubscribed(@Nullable String unsubscribed) {
             this.unsubscribed = unsubscribed;
             return this;
         }

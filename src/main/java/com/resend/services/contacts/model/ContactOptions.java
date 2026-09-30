@@ -135,7 +135,7 @@ public abstract class ContactOptions {
          * @param id The id of the ContactOptions.
          * @return The builder instance.
          */
-        public B id(String id) {
+        public B id(@Nullable String id) {
             this.id = id;
             return self();
         }
@@ -148,7 +148,7 @@ public abstract class ContactOptions {
          * @deprecated This field is ignored. Use ContactSegments service for segment operations.
          */
         @Deprecated
-        public B audienceId(String audienceId) {
+        public B audienceId(@Nullable String audienceId) {
             this.audienceId = audienceId;
             return self();
         }
@@ -161,7 +161,7 @@ public abstract class ContactOptions {
          * @deprecated This field is ignored. Use ContactSegments service for segment operations.
          */
         @Deprecated
-        public B segmentId(String segmentId) {
+        public B segmentId(@Nullable String segmentId) {
             this.segmentId = segmentId;
             return self();
         }
@@ -172,7 +172,7 @@ public abstract class ContactOptions {
          * @param email The email of the ContactOptions.
          * @return The builder instance.
          */
-        public B email(String email) {
+        public B email(@Nullable String email) {
             this.email = email;
             return self();
         }

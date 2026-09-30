@@ -160,7 +160,7 @@ public class ListBroadcastRecipientsParams {
          * @param email The email substring filter.
          * @return The builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }
@@ -172,7 +172,7 @@ public class ListBroadcastRecipientsParams {
          * @param bounceType The bounce type filter.
          * @return The builder instance.
          */
-        public Builder bounceType(BroadcastRecipientBounceType bounceType) {
+        public Builder bounceType(@Nullable BroadcastRecipientBounceType bounceType) {
             this.bounceType = bounceType;
             return this;
         }
@@ -183,7 +183,7 @@ public class ListBroadcastRecipientsParams {
          * @param limit The pagination limit.
          * @return The builder instance.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -195,7 +195,7 @@ public class ListBroadcastRecipientsParams {
          * @param after The after cursor.
          * @return The builder instance.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }
@@ -207,7 +207,7 @@ public class ListBroadcastRecipientsParams {
          * @param before The before cursor.
          * @return The builder instance.
          */
-        public Builder before(String before) {
+        public Builder before(@Nullable String before) {
             this.before = before;
             return this;
         }

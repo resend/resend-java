@@ -72,7 +72,7 @@ public class DomainCapabilities {
          * @param sending The sending capability of the domain.
          * @return The builder instance.
          */
-        public Builder sending(DomainCapabilityStatus sending) {
+        public Builder sending(@Nullable DomainCapabilityStatus sending) {
             this.sending = sending;
             return this;
         }
@@ -83,7 +83,7 @@ public class DomainCapabilities {
          * @param receiving The receiving capability of the domain.
          * @return The builder instance.
          */
-        public Builder receiving(DomainCapabilityStatus receiving) {
+        public Builder receiving(@Nullable DomainCapabilityStatus receiving) {
             this.receiving = receiving;
             return this;
         }

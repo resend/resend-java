@@ -42,7 +42,7 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain creation process.
      */
     public CreateDomainResponse create(CreateDomainOptions createDomainOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createDomainOptions);
+        String payload = serialize(createDomainOptions);
         return execute("/domains", HttpMethod.POST, payload, MediaType.get("application/json"), CreateDomainResponse.class);
     }
 
@@ -99,7 +99,7 @@ public final class Domains extends BaseService {
      * @throws ResendException If an error occurs during the domain update process.
      */
     public UpdateDomainResponseSuccess update(UpdateDomainOptions updateDomainOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateDomainOptions);
+        String payload = serialize(updateDomainOptions);
         return execute("/domains/" + updateDomainOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateDomainResponseSuccess.class);
     }
 

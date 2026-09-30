@@ -42,7 +42,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while creating the template.
      */
     public CreateTemplateResponseSuccess create(CreateTemplateOptions options) throws ResendException {
-        String payload = super.resendMapper.writeValue(options);
+        String payload = serialize(options);
         return execute("/templates", HttpMethod.POST, payload, MediaType.get("application/json"), CreateTemplateResponseSuccess.class);
     }
 
@@ -88,7 +88,7 @@ public final class Templates extends BaseService {
      * @throws ResendException If an error occurs while updating the template.
      */
     public UpdateTemplateResponseSuccess update(String templateId, UpdateTemplateOptions options) throws ResendException {
-        String payload = super.resendMapper.writeValue(options);
+        String payload = serialize(options);
         return execute("/templates/" + templateId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateTemplateResponseSuccess.class);
     }
 

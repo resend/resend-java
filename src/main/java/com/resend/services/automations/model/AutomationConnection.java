@@ -126,7 +126,7 @@ public class AutomationConnection {
          * @param type The connection type.
          * @return The builder instance.
          */
-        public Builder type(ConnectionType type) {
+        public Builder type(@Nullable ConnectionType type) {
             this.type = type;
             return this;
         }

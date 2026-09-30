@@ -140,7 +140,7 @@ public class ClaimDomainOptions {
          * @param region The region.
          * @return The builder instance.
          */
-        public Builder region(String region) {
+        public Builder region(@Nullable String region) {
             this.region = region;
             return this;
         }
@@ -151,7 +151,7 @@ public class ClaimDomainOptions {
          * @param customReturnPath The custom return path.
          * @return The builder instance.
          */
-        public Builder customReturnPath(String customReturnPath) {
+        public Builder customReturnPath(@Nullable String customReturnPath) {
             this.customReturnPath = customReturnPath;
             return this;
         }
@@ -162,7 +162,7 @@ public class ClaimDomainOptions {
          * @param openTracking The open tracking setting.
          * @return The builder instance.
          */
-        public Builder openTracking(Boolean openTracking) {
+        public Builder openTracking(@Nullable Boolean openTracking) {
             this.openTracking = openTracking;
             return this;
         }
@@ -173,7 +173,7 @@ public class ClaimDomainOptions {
          * @param clickTracking The click tracking setting.
          * @return The builder instance.
          */
-        public Builder clickTracking(Boolean clickTracking) {
+        public Builder clickTracking(@Nullable Boolean clickTracking) {
             this.clickTracking = clickTracking;
             return this;
         }
@@ -184,7 +184,7 @@ public class ClaimDomainOptions {
          * @param trackingSubdomain The tracking subdomain.
          * @return The builder instance.
          */
-        public Builder trackingSubdomain(String trackingSubdomain) {
+        public Builder trackingSubdomain(@Nullable String trackingSubdomain) {
             this.trackingSubdomain = trackingSubdomain;
             return this;
         }

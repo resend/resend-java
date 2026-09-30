@@ -43,7 +43,7 @@ public final class DomainClaims extends BaseService {
         if (claimDomainOptions == null) {
             throw new ResendException("claimDomainOptions must not be null");
         }
-        String payload = super.resendMapper.writeValue(claimDomainOptions);
+        String payload = serialize(claimDomainOptions);
         return execute("/domains/claim", HttpMethod.POST, payload, MediaType.get("application/json"), DomainClaimResponseSuccess.class);
     }
 

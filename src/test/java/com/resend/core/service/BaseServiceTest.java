@@ -2,12 +2,18 @@ package com.resend.core.service;
 
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
+import com.resend.core.net.IHttpClient;
+import com.resend.services.emails.Emails;
+import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
+import com.resend.services.emails.model.Template;
 import org.junit.jupiter.api.Test;
 
 import java.io.UncheckedIOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 public class BaseServiceTest {
 
@@ -56,5 +62,29 @@ public class BaseServiceTest {
 
         assertEquals(404, exception.getStatusCode());
         assertEquals("Email not found", exception.getMessage());
+    }
+
+    @Test
+    public void testSerialize_UnserializableBody_ThrowsResendException() {
+        ResendException exception = assertThrows(ResendException.class, () -> service.serialize(new Object()));
+
+        assertTrue(exception.getMessage().startsWith("Failed to serialize the request body"));
+        assertInstanceOf(UncheckedIOException.class, exception.getCause());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testServiceMethod_UnserializableBody_ThrowsResendExceptionWithoutSendingRequest() {
+        IHttpClient<String> httpClient = mock(IHttpClient.class);
+        Emails emails = new Emails("re_test", httpClient);
+        CreateEmailOptions options = CreateEmailOptions.builder()
+                .from("a@example.com").to("b@example.com").subject("hi")
+                .template(Template.builder().id("template-id").addVariable("unserializable", new Object()).build())
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> emails.send(options));
+
+        assertInstanceOf(UncheckedIOException.class, exception.getCause());
+        verifyNoInteractions(httpClient);
     }
 }

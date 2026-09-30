@@ -100,7 +100,7 @@ public class Attachment {
          * @param fileName The filename.
          * @return The Builder instance.
          */
-        public Builder fileName(String fileName) {
+        public Builder fileName(@Nullable String fileName) {
             this.fileName = fileName;
             return this;
         }
@@ -110,7 +110,7 @@ public class Attachment {
          * @param content The content as a byte array.
          * @return The Builder instance.
          */
-        public Builder content(String content) {
+        public Builder content(@Nullable String content) {
             this.content = content;
             return this;
         }
@@ -120,7 +120,7 @@ public class Attachment {
          * @param path The path.
          * @return The Builder instance.
          */
-        public Builder path(String path) {
+        public Builder path(@Nullable String path) {
             this.path = path;
             return this;
         }
@@ -130,7 +130,7 @@ public class Attachment {
          * @param contentType The content type.
          * @return The Builder instance.
          */
-        public Builder contentType(String contentType) {
+        public Builder contentType(@Nullable String contentType) {
             this.contentType = contentType;
             return this;
         }
@@ -140,7 +140,7 @@ public class Attachment {
          * @param contentId The content ID for inline attachments.
          * @return The Builder instance.
          */
-        public Builder contentId(String contentId) {
+        public Builder contentId(@Nullable String contentId) {
             this.contentId = contentId;
             return this;
         }

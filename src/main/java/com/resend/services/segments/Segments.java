@@ -42,7 +42,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the Segment creation process.
      */
     public CreateSegmentResponseSuccess create(CreateSegmentOptions createSegmentOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createSegmentOptions);
+        String payload = serialize(createSegmentOptions);
         return execute("/segments", HttpMethod.POST, payload, MediaType.get("application/json"), CreateSegmentResponseSuccess.class);
     }
 
@@ -88,7 +88,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs while updating the segment.
      */
     public UpdateSegmentResponseSuccess update(String id, UpdateSegmentOptions updateSegmentOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateSegmentOptions);
+        String payload = serialize(updateSegmentOptions);
         return execute("/segments/" + id, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateSegmentResponseSuccess.class);
     }
 

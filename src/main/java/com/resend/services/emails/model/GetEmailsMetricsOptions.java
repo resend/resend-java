@@ -203,7 +203,7 @@ public class GetEmailsMetricsOptions {
          * @param startDate The start date.
          * @return The builder instance.
          */
-        public Builder startDate(String startDate) {
+        public Builder startDate(@Nullable String startDate) {
             this.startDate = startDate;
             return this;
         }
@@ -215,7 +215,7 @@ public class GetEmailsMetricsOptions {
          * @param endDate The end date.
          * @return The builder instance.
          */
-        public Builder endDate(String endDate) {
+        public Builder endDate(@Nullable String endDate) {
             this.endDate = endDate;
             return this;
         }
@@ -227,7 +227,7 @@ public class GetEmailsMetricsOptions {
          * @param timezone The timezone.
          * @return The builder instance.
          */
-        public Builder timezone(String timezone) {
+        public Builder timezone(@Nullable String timezone) {
             this.timezone = timezone;
             return this;
         }
@@ -239,7 +239,7 @@ public class GetEmailsMetricsOptions {
          * @param granularity The granularity.
          * @return The builder instance.
          */
-        public Builder granularity(MetricsGranularity granularity) {
+        public Builder granularity(@Nullable MetricsGranularity granularity) {
             this.granularity = granularity;
             return this;
         }
@@ -250,7 +250,7 @@ public class GetEmailsMetricsOptions {
          * @param metrics The metrics to return.
          * @return The builder instance.
          */
-        public Builder metrics(List<MetricName> metrics) {
+        public Builder metrics(@Nullable List<MetricName> metrics) {
             this.metrics = metrics;
             return this;
         }
@@ -273,7 +273,7 @@ public class GetEmailsMetricsOptions {
          * @param dimensions The dimensions.
          * @return The builder instance.
          */
-        public Builder dimensions(List<MetricsDimension> dimensions) {
+        public Builder dimensions(@Nullable List<MetricsDimension> dimensions) {
             this.dimensions = dimensions;
             return this;
         }
@@ -297,7 +297,7 @@ public class GetEmailsMetricsOptions {
          * @param domainIds The domain ID filter.
          * @return The builder instance.
          */
-        public Builder domainIds(List<String> domainIds) {
+        public Builder domainIds(@Nullable List<String> domainIds) {
             this.domainIds = domainIds;
             return this;
         }
@@ -321,7 +321,7 @@ public class GetEmailsMetricsOptions {
          * @param emailIds The email ID filter.
          * @return The builder instance.
          */
-        public Builder emailIds(List<String> emailIds) {
+        public Builder emailIds(@Nullable List<String> emailIds) {
             this.emailIds = emailIds;
             return this;
         }
@@ -346,7 +346,7 @@ public class GetEmailsMetricsOptions {
          * @param broadcastIds The broadcast ID filter.
          * @return The builder instance.
          */
-        public Builder broadcastIds(List<String> broadcastIds) {
+        public Builder broadcastIds(@Nullable List<String> broadcastIds) {
             this.broadcastIds = broadcastIds;
             return this;
         }

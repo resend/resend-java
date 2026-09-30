@@ -85,7 +85,7 @@ public class CreateEventOptions {
          * @param schema The schema map.
          * @return The builder instance.
          */
-        public Builder schema(Map<String, String> schema) {
+        public Builder schema(@Nullable Map<String, String> schema) {
             this.schema = schema;
             return this;
         }

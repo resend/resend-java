@@ -68,7 +68,7 @@ public class Template {
      * Represents a template variable with a key and value.
      */
     public static class Variable {
-        private final @Nullable String key;
+        private final String key;
         private final @Nullable Object value;
 
         /**
@@ -77,7 +77,7 @@ public class Template {
          * @param key The variable key.
          * @param value The variable value.
          */
-        public Variable(@Nullable String key, @Nullable Object value) {
+        public Variable(String key, @Nullable Object value) {
             this.key = key;
             this.value = value;
         }
@@ -87,7 +87,7 @@ public class Template {
          *
          * @return The variable key.
          */
-        public @Nullable String getKey() {
+        public String getKey() {
             return key;
         }
 

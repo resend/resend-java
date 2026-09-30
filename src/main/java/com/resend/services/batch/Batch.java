@@ -45,7 +45,7 @@ public class Batch extends BaseService {
      */
     public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(emails);
+        String payload = serialize(emails);
         return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), CreateBatchEmailsResponse.class);
     }
 
@@ -59,7 +59,7 @@ public class Batch extends BaseService {
      */
     public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails, @Nullable RequestOptions requestOptions) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(emails);
+        String payload = serialize(emails);
         return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateBatchEmailsResponse.class);
     }
 

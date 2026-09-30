@@ -36,7 +36,7 @@ public class ListWebhookEventsResponseSuccess {
     /**
      * Indicates whether more events are available for pagination.
      *
-     * @return True if more events are available, false otherwise.
+     * @return True if more events are available, false if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean hasMore() {
         return hasMore;

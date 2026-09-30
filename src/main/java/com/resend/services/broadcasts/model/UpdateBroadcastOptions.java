@@ -82,7 +82,7 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
          * @param previewText The broadcast preview text.
          * @return The builder instance.
          */
-        public Builder previewText(String previewText) {
+        public Builder previewText(@Nullable String previewText) {
             this.previewText = previewText;
             return this;
         }

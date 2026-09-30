@@ -46,7 +46,8 @@ public class ResendMapper implements IMapper {
      * @param value The JSON value to be converted.
      * @param clazz The class to convert the JSON value to.
      * @param <T>   The type of the resulting object.
-     * @return An instance of the specified class with values from the JSON value.
+     * @return An instance of the specified class with values from the JSON value, or {@code null} if the JSON value is
+     *         the literal {@code null}.
      * @throws UncheckedIOException If the value isn't valid JSON for the specified class.
      */
     @Override

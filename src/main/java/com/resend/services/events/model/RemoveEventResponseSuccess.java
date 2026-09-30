@@ -57,7 +57,7 @@ public class RemoveEventResponseSuccess {
     /**
      * Indicates if the event was successfully deleted.
      *
-     * @return True if deleted, false otherwise.
+     * @return True if deleted, false if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean getDeleted() {
         return deleted;

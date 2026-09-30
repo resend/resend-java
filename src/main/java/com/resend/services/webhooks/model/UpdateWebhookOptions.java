@@ -80,7 +80,7 @@ public class UpdateWebhookOptions {
          * @param endpoint The endpoint URL.
          * @return This builder instance.
          */
-        public Builder endpoint(String endpoint) {
+        public Builder endpoint(@Nullable String endpoint) {
             this.endpoint = endpoint;
             return this;
         }
@@ -91,7 +91,7 @@ public class UpdateWebhookOptions {
          * @param events The list of webhook events.
          * @return This builder instance.
          */
-        public Builder events(List<WebhookEvent> events) {
+        public Builder events(@Nullable List<WebhookEvent> events) {
             this.events = events;
             return this;
         }
@@ -113,7 +113,7 @@ public class UpdateWebhookOptions {
          * @param status The webhook status.
          * @return This builder instance.
          */
-        public Builder status(WebhookStatus status) {
+        public Builder status(@Nullable WebhookStatus status) {
             this.status = status;
             return this;
         }

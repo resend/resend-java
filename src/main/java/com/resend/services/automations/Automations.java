@@ -41,7 +41,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while creating the automation.
      */
     public CreateAutomationResponseSuccess create(CreateAutomationOptions createAutomationOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createAutomationOptions);
+        String payload = serialize(createAutomationOptions);
         return execute("/automations", HttpMethod.POST, payload, MediaType.get("application/json"), CreateAutomationResponseSuccess.class);
     }
 
@@ -86,7 +86,7 @@ public class Automations extends BaseService {
      * @throws ResendException If an error occurs while updating the automation.
      */
     public UpdateAutomationResponseSuccess update(UpdateAutomationOptions updateAutomationOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateAutomationOptions);
+        String payload = serialize(updateAutomationOptions);
         return execute("/automations/" + updateAutomationOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateAutomationResponseSuccess.class);
     }
 

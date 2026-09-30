@@ -45,9 +45,9 @@ public class EmailsMetricsResponse {
     }
 
     /**
-     * Gets the object type, always {@code metrics}.
+     * Gets the object type ({@code metrics}).
      *
-     * @return The object type.
+     * @return The object type, or {@code null} if the API omitted the field.
      */
     public @Nullable String getObject() {
         return object;
@@ -56,7 +56,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the resolved start of the date range that was queried.
      *
-     * @return The start date.
+     * @return The start date, or {@code null} if the API omitted the field.
      */
     public @Nullable String getStartDate() {
         return startDate;
@@ -65,7 +65,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the resolved end of the date range that was queried.
      *
-     * @return The end date.
+     * @return The end date, or {@code null} if the API omitted the field.
      */
     public @Nullable String getEndDate() {
         return endDate;
@@ -74,7 +74,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the metrics that were returned.
      *
-     * @return The returned metrics.
+     * @return The returned metrics, or {@code null} if the API omitted the field.
      */
     public @Nullable List<MetricName> getMetrics() {
         return metrics;
@@ -83,7 +83,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the dimensions that were used to break the metrics down.
      *
-     * @return The dimensions used, empty when the response only contains {@code totals}.
+     * @return The dimensions used, empty when the response only contains {@code totals}, or {@code null} if the API omitted the field.
      */
     public @Nullable List<MetricsDimension> getDimensions() {
         return dimensions;
@@ -92,7 +92,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the bucket size used for the {@code period} dimension.
      *
-     * @return The granularity.
+     * @return The granularity, or {@code null} if the API omitted the field.
      */
     public @Nullable MetricsGranularity getGranularity() {
         return granularity;
@@ -101,7 +101,7 @@ public class EmailsMetricsResponse {
     /**
      * Gets the aggregate totals for each requested metric across the whole date range.
      *
-     * @return The totals, keyed by metric name.
+     * @return The totals, keyed by metric name, or {@code null} if the API omitted the field.
      */
     public @Nullable Map<String, @Nullable Object> getTotals() {
         return totals;

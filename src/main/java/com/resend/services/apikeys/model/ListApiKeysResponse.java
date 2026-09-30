@@ -20,7 +20,7 @@ public class ListApiKeysResponse {
     private @Nullable String object;
 
     /**
-     * Default constructor. Creates an instance of ListApiKeysResponse with an empty data list.
+     * Default constructor. Creates an instance of ListApiKeysResponse with no data; fields stay {@code null} until set.
      */
     public ListApiKeysResponse() {
     }

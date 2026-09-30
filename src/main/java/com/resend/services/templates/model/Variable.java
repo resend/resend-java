@@ -217,7 +217,7 @@ public class Variable {
          * @param fallbackValue The fallback value of the variable.
          * @return This builder instance for method chaining.
          */
-        public Builder fallbackValue(Object fallbackValue) {
+        public Builder fallbackValue(@Nullable Object fallbackValue) {
             this.fallbackValue = fallbackValue;
             return this;
         }

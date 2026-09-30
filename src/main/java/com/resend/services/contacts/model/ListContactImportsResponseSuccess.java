@@ -50,7 +50,7 @@ public class ListContactImportsResponseSuccess {
     /**
      * Indicates whether there are more items available for pagination.
      *
-     * @return {@code true} if more items are available, otherwise {@code false}.
+     * @return {@code true} if more items are available, {@code false} if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean hasMore() {
         return hasMore;

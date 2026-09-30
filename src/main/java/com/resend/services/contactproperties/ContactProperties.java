@@ -39,7 +39,7 @@ public class ContactProperties extends BaseService {
      * @throws ResendException If an error occurs during the ContactProperty creation process.
      */
     public CreateContactPropertyResponseSuccess create(CreateContactPropertyOptions createContactPropertyOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createContactPropertyOptions);
+        String payload = serialize(createContactPropertyOptions);
         return execute("/contact-properties", HttpMethod.POST, payload, MediaType.get("application/json"), CreateContactPropertyResponseSuccess.class);
     }
 
@@ -80,7 +80,7 @@ public class ContactProperties extends BaseService {
             throw new IllegalArgumentException("Contact property id must be provided");
         }
 
-        String payload = super.resendMapper.writeValue(updateContactPropertyOptions);
+        String payload = serialize(updateContactPropertyOptions);
         return execute("/contact-properties/" + updateContactPropertyOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactPropertyResponseSuccess.class);
     }
 

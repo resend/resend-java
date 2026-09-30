@@ -42,7 +42,7 @@ public final class Topics extends BaseService {
      * @throws ResendException If an error occurs while creating the topic.
      */
     public CreateTopicResponseSuccess create(CreateTopicOptions createTopicOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createTopicOptions);
+        String payload = serialize(createTopicOptions);
         return execute("/topics", HttpMethod.POST, payload, MediaType.get("application/json"), CreateTopicResponseSuccess.class);
     }
 
@@ -66,7 +66,7 @@ public final class Topics extends BaseService {
      * @throws ResendException If an error occurs while updating the topic.
      */
     public UpdateTopicResponseSuccess update(String topicId, UpdateTopicOptions updateTopicOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateTopicOptions);
+        String payload = serialize(updateTopicOptions);
         return execute("/topics/" + topicId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateTopicResponseSuccess.class);
     }
 

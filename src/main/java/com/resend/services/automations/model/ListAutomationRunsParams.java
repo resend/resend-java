@@ -140,10 +140,14 @@ public class ListAutomationRunsParams {
         /**
          * Adds status filters from a list.
          *
-         * @param status The list of run statuses to filter by.
+         * @param status The list of run statuses to filter by, or {@code null} to clear the status filter.
          * @return This builder instance.
          */
-        public Builder status(List<RunStatus> status) {
+        public Builder status(@Nullable List<RunStatus> status) {
+            if (status == null) {
+                this.status = null;
+                return this;
+            }
             if (this.status == null) {
                 this.status = new ArrayList<>();
             }
@@ -157,7 +161,7 @@ public class ListAutomationRunsParams {
          * @param limit The limit.
          * @return The builder instance.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -168,7 +172,7 @@ public class ListAutomationRunsParams {
          * @param after The after cursor.
          * @return The builder instance.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }
@@ -179,7 +183,7 @@ public class ListAutomationRunsParams {
          * @param before The before cursor.
          * @return The builder instance.
          */
-        public Builder before(String before) {
+        public Builder before(@Nullable String before) {
             this.before = before;
             return this;
         }

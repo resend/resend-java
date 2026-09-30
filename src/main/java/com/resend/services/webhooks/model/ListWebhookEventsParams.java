@@ -76,7 +76,7 @@ public class ListWebhookEventsParams {
          * @param limit The result limit.
          * @return This builder.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -87,7 +87,7 @@ public class ListWebhookEventsParams {
          * @param after The pagination cursor.
          * @return This builder.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }

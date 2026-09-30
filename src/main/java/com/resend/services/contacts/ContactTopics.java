@@ -89,7 +89,7 @@ public class ContactTopics extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
 
         // Serialize just the topics array (not the whole options object)
-        String payload = super.resendMapper.writeValue(options.getTopics());
+        String payload = serialize(options.getTopics());
         return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactTopicsResponse.class);
     }
 }

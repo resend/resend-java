@@ -49,7 +49,7 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs during the suppression creation process.
      */
     public AddSuppressionResponseSuccess add(AddSuppressionOptions addSuppressionOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(addSuppressionOptions);
+        String payload = serialize(addSuppressionOptions);
         return execute("/suppressions", HttpMethod.POST, payload, MediaType.get("application/json"), AddSuppressionResponseSuccess.class);
     }
 

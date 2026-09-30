@@ -32,7 +32,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
      * @param firstName The first name value or expression.
      * @return The builder instance.
      */
-    public ContactUpdateStepBuilder firstName(Object firstName) {
+    public ContactUpdateStepBuilder firstName(@Nullable Object firstName) {
         return addConfig("first_name", firstName);
     }
 
@@ -42,7 +42,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
      * @param lastName The last name value or expression.
      * @return The builder instance.
      */
-    public ContactUpdateStepBuilder lastName(Object lastName) {
+    public ContactUpdateStepBuilder lastName(@Nullable Object lastName) {
         return addConfig("last_name", lastName);
     }
 

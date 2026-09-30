@@ -86,7 +86,7 @@ public class ListContactSegmentsResponseSuccess {
     /**
      * Gets whether there are more segments to retrieve.
      *
-     * @return True if there are more segments, false otherwise.
+     * @return True if there are more segments, false if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean getHasMore() {
         return hasMore;

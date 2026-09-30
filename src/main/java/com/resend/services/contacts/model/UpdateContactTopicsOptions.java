@@ -89,7 +89,7 @@ public class UpdateContactTopicsOptions {
          * @param id The contact ID.
          * @return The builder instance.
          */
-        public Builder id(String id) {
+        public Builder id(@Nullable String id) {
             this.id = id;
             return this;
         }
@@ -100,7 +100,7 @@ public class UpdateContactTopicsOptions {
          * @param email The contact email.
          * @return The builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }

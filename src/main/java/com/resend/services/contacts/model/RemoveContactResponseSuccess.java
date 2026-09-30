@@ -32,6 +32,7 @@ public class RemoveContactResponseSuccess extends BaseContact {
     public RemoveContactResponseSuccess(final @Nullable String id, final @Nullable String object, final boolean deleted, final @Nullable String contact) {
         super(id, object);
         this.deleted = deleted;
+        this.contact = contact;
     }
 
     /**

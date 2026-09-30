@@ -113,7 +113,7 @@ public class SendEventOptions {
          * @param contactId The contact ID.
          * @return The builder instance.
          */
-        public Builder contactId(String contactId) {
+        public Builder contactId(@Nullable String contactId) {
             this.contactId = contactId;
             return this;
         }
@@ -124,7 +124,7 @@ public class SendEventOptions {
          * @param email The contact email address.
          * @return The builder instance.
          */
-        public Builder email(String email) {
+        public Builder email(@Nullable String email) {
             this.email = email;
             return this;
         }

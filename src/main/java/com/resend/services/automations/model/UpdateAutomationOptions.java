@@ -131,7 +131,7 @@ public class UpdateAutomationOptions {
          * @param name The automation name.
          * @return The builder instance.
          */
-        public Builder name(String name) {
+        public Builder name(@Nullable String name) {
             this.name = name;
             return this;
         }
@@ -142,7 +142,7 @@ public class UpdateAutomationOptions {
          * @param status The automation status.
          * @return The builder instance.
          */
-        public Builder status(AutomationStatus status) {
+        public Builder status(@Nullable AutomationStatus status) {
             this.status = status;
             return this;
         }
@@ -153,7 +153,7 @@ public class UpdateAutomationOptions {
          * @param steps The list of steps.
          * @return The builder instance.
          */
-        public Builder steps(List<AutomationStep> steps) {
+        public Builder steps(@Nullable List<AutomationStep> steps) {
             this.steps = steps;
             this.stepsSet = true;
             return this;
@@ -195,7 +195,7 @@ public class UpdateAutomationOptions {
          * @param connections The list of connections.
          * @return The builder instance.
          */
-        public Builder connections(List<AutomationConnection> connections) {
+        public Builder connections(@Nullable List<AutomationConnection> connections) {
             this.connections = connections;
             this.connectionsSet = true;
             return this;

@@ -13,7 +13,7 @@ public class FilterRule {
 
     private final Map<String, @Nullable Object> rule;
 
-    private FilterRule(Map<String, ? extends @Nullable Object> rule) {
+    private FilterRule(Map<String, @Nullable Object> rule) {
         this.rule = Collections.<String, @Nullable Object>unmodifiableMap(new HashMap<>(rule));
     }
 
@@ -56,7 +56,7 @@ public class FilterRule {
          * @param type The rule type.
          * @return The builder instance.
          */
-        public Builder type(String type) {
+        public Builder type(@Nullable String type) {
             this.type = type;
             return this;
         }
@@ -89,7 +89,7 @@ public class FilterRule {
          * @param value The comparison value.
          * @return The builder instance.
          */
-        public Builder value(Object value) {
+        public Builder value(@Nullable Object value) {
             this.value = value;
             return this;
         }
@@ -100,7 +100,7 @@ public class FilterRule {
          * @return A new FilterRule.
          */
         public FilterRule build() {
-            Map<String, Object> rule = new HashMap<>();
+            Map<String, @Nullable Object> rule = new HashMap<>();
             rule.put("type", type);
             rule.put("field", field);
             rule.put("operator", operator);

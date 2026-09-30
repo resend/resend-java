@@ -113,7 +113,7 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the Contact creation process.
      */
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createContactOptions);
+        String payload = serialize(createContactOptions);
 
         return execute("/contacts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateContactResponseSuccess.class);
     }
@@ -311,7 +311,7 @@ public class Contacts extends BaseService {
 
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
 
-        String payload = super.resendMapper.writeValue(params);
+        String payload = serialize(params);
         return execute("/contacts/" + pathParameter, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactResponseSuccess.class);
     }
 
@@ -382,7 +382,7 @@ public class Contacts extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
 
         // Serialize just the topics array (not the whole options object)
-        String payload = super.resendMapper.writeValue(options.getTopics());
+        String payload = serialize(options.getTopics());
         return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactTopicsResponse.class);
     }
 }

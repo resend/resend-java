@@ -76,7 +76,7 @@ public class RemoveSuppressionsOptions {
          * @param emails The email addresses to remove from the suppression list.
          * @return The builder instance.
          */
-        public Builder emails(List<String> emails) {
+        public Builder emails(@Nullable List<String> emails) {
             this.emails = emails;
             return this;
         }
@@ -101,7 +101,7 @@ public class RemoveSuppressionsOptions {
          * @param ids The suppression IDs to remove from the suppression list.
          * @return The builder instance.
          */
-        public Builder ids(List<String> ids) {
+        public Builder ids(@Nullable List<String> ids) {
             this.ids = ids;
             return this;
         }

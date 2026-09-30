@@ -289,8 +289,8 @@ public class Resend {
         /**
          * Sets the base URL requests are sent to. Defaults to {@value HttpClient#BASE_API}.
          *
-         * @param baseUrl The base URL, e.g. {@code https://api.resend.com}. A trailing slash is ignored; a query or
-         *                fragment is rejected by {@link #build()}.
+         * @param baseUrl The base URL, e.g. {@code https://api.resend.com}, or {@code null} for the default. A trailing
+         *                slash is ignored; a query or fragment is rejected by {@link #build()}.
          * @return This builder.
          */
         public Builder baseUrl(final @Nullable String baseUrl) {
@@ -301,7 +301,8 @@ public class Resend {
         /**
          * Sets the timeout for establishing a connection. Defaults to 10 seconds.
          *
-         * @param connectTimeout The connect timeout; {@link Duration#ZERO} means no timeout.
+         * @param connectTimeout The connect timeout; {@link Duration#ZERO} means no timeout, and {@code null} restores the
+         *                       default.
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
@@ -313,7 +314,7 @@ public class Resend {
         /**
          * Sets the maximum time to wait for data once a connection is established. Defaults to 10 seconds.
          *
-         * @param readTimeout The read timeout; {@link Duration#ZERO} means no timeout.
+         * @param readTimeout The read timeout; {@link Duration#ZERO} means no timeout, and {@code null} restores the default.
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
@@ -325,7 +326,8 @@ public class Resend {
         /**
          * Sets the maximum time to wait while sending a request body, e.g. a file upload. Defaults to 10 seconds.
          *
-         * @param writeTimeout The write timeout; {@link Duration#ZERO} means no timeout.
+         * @param writeTimeout The write timeout; {@link Duration#ZERO} means no timeout, and {@code null} restores the
+         *                     default.
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
@@ -338,7 +340,8 @@ public class Resend {
          * Sets the timeout for a complete call, from connecting to reading the whole response. Defaults to no
          * timeout.
          *
-         * @param callTimeout The call timeout; {@link Duration#ZERO} means no timeout.
+         * @param callTimeout The call timeout; {@link Duration#ZERO} means no timeout, and {@code null} restores the default
+         *                    (no timeout).
          * @return This builder.
          * @throws IllegalArgumentException If the timeout is negative.
          */
@@ -352,7 +355,7 @@ public class Resend {
          * {@code new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.internal", 3128))}. Defaults to the
          * system's proxy settings.
          *
-         * @param proxy The proxy, or {@link Proxy#NO_PROXY} to connect directly.
+         * @param proxy The proxy, {@link Proxy#NO_PROXY} to connect directly, or {@code null} for the system's proxy settings.
          * @return This builder.
          */
         public Builder proxy(final @Nullable Proxy proxy) {
@@ -367,7 +370,7 @@ public class Resend {
          *
          * <p>Can't be combined with {@link #baseUrl}, the timeouts or {@link #proxy}; set those on the client.</p>
          *
-         * @param httpClient The HTTP client.
+         * @param httpClient The HTTP client, or {@code null} to use the built-in one.
          * @return This builder.
          */
         public Builder httpClient(final @Nullable IHttpClient<String> httpClient) {

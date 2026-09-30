@@ -42,7 +42,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the Broadcast creation process.
      */
     public CreateBroadcastResponseSuccess create(CreateBroadcastOptions createBroadcastOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createBroadcastOptions);
+        String payload = serialize(createBroadcastOptions);
         return execute("/broadcasts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateBroadcastResponseSuccess.class);
     }
 
@@ -66,7 +66,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the Broadcast creation process.
      */
     public SendBroadcastResponseSuccess send(SendBroadcastOptions sendBroadcastOptions, String broadcastId) throws ResendException {
-        String payload = super.resendMapper.writeValue(sendBroadcastOptions);
+        String payload = serialize(sendBroadcastOptions);
         return execute("/broadcasts/" +broadcastId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendBroadcastResponseSuccess.class);
     }
 
@@ -172,7 +172,7 @@ public class Broadcasts extends BaseService  {
      * @throws ResendException If an error occurs during the Broadcast patching process.
      */
     public UpdateBroadcastResponseSuccess update(UpdateBroadcastOptions updateBroadcastOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateBroadcastOptions);
+        String payload = serialize(updateBroadcastOptions);
         return execute("/broadcasts/"+updateBroadcastOptions.getId(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateBroadcastResponseSuccess.class);
     }
 }

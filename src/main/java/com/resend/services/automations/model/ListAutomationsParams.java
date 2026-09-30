@@ -123,7 +123,7 @@ public class ListAutomationsParams {
          * @param status The automation status.
          * @return The builder instance.
          */
-        public Builder status(AutomationStatus status) {
+        public Builder status(@Nullable AutomationStatus status) {
             this.status = status;
             return this;
         }
@@ -134,7 +134,7 @@ public class ListAutomationsParams {
          * @param limit The limit.
          * @return The builder instance.
          */
-        public Builder limit(Integer limit) {
+        public Builder limit(@Nullable Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -145,7 +145,7 @@ public class ListAutomationsParams {
          * @param after The after cursor.
          * @return The builder instance.
          */
-        public Builder after(String after) {
+        public Builder after(@Nullable String after) {
             this.after = after;
             return this;
         }
@@ -156,7 +156,7 @@ public class ListAutomationsParams {
          * @param before The before cursor.
          * @return The builder instance.
          */
-        public Builder before(String before) {
+        public Builder before(@Nullable String before) {
             this.before = before;
             return this;
         }

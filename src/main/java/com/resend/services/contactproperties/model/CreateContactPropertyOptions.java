@@ -106,7 +106,7 @@ public class CreateContactPropertyOptions {
          * @param fallbackValue The fallback value of the contact property.
          * @return The builder instance.
          */
-        public Builder fallbackValue(Object fallbackValue) {
+        public Builder fallbackValue(@Nullable Object fallbackValue) {
             this.fallbackValue = fallbackValue;
             return this;
         }

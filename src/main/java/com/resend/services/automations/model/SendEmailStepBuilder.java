@@ -70,7 +70,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
      * @param subject The email subject.
      * @return The builder instance.
      */
-    public SendEmailStepBuilder subject(String subject) {
+    public SendEmailStepBuilder subject(@Nullable String subject) {
         return addConfig("subject", subject);
     }
 
@@ -80,7 +80,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
      * @param from The sender email address.
      * @return The builder instance.
      */
-    public SendEmailStepBuilder from(String from) {
+    public SendEmailStepBuilder from(@Nullable String from) {
         return addConfig("from", from);
     }
 
@@ -90,7 +90,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
      * @param replyTo The reply-to email address.
      * @return The builder instance.
      */
-    public SendEmailStepBuilder replyTo(String replyTo) {
+    public SendEmailStepBuilder replyTo(@Nullable String replyTo) {
         return addConfig("reply_to", replyTo);
     }
 

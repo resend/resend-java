@@ -47,7 +47,7 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the API key creation process.
      */
     public CreateApiKeyResponse create(CreateApiKeyOptions createApiKeyOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createApiKeyOptions);
+        String payload = serialize(createApiKeyOptions);
         return execute("/api-keys", HttpMethod.POST, payload, MediaType.get("application/json"), CreateApiKeyResponse.class);
     }
 
@@ -82,7 +82,7 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api key update process.
      */
     public UpdateApiKeyResponseSuccess update(String apiKeyId, UpdateApiKeyOptions updateApiKeyOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(updateApiKeyOptions);
+        String payload = serialize(updateApiKeyOptions);
         return execute("/api-keys/" + apiKeyId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateApiKeyResponseSuccess.class);
     }
 

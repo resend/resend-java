@@ -50,7 +50,7 @@ public class ListAutomationRunsResponseSuccess {
     /**
      * Indicates if there are more runs available for pagination.
      *
-     * @return True if more runs are available, false otherwise.
+     * @return True if more runs are available, false if not, or {@code null} if the API omitted the field.
      */
     public @Nullable Boolean hasMore() {
         return hasMore;

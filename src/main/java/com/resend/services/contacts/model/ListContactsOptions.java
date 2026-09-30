@@ -83,7 +83,7 @@ public class ListContactsOptions {
          * @param segmentId The segment ID.
          * @return This builder.
          */
-        public Builder segmentId(String segmentId) {
+        public Builder segmentId(@Nullable String segmentId) {
             this.segmentId = segmentId;
             return this;
         }
@@ -96,7 +96,7 @@ public class ListContactsOptions {
          * @deprecated Use {@link #segmentId(String)} instead.
          */
         @Deprecated
-        public Builder audienceId(String audienceId) {
+        public Builder audienceId(@Nullable String audienceId) {
             this.audienceId = audienceId;
             return this;
         }

@@ -47,7 +47,7 @@ public final class Emails extends BaseService {
      */
     public CreateEmailResponse send(CreateEmailOptions createEmailOptions) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(createEmailOptions);
+        String payload = serialize(createEmailOptions);
         return execute("/emails", HttpMethod.POST, payload, MediaType.get("application/json"), CreateEmailResponse.class);
     }
 
@@ -60,7 +60,7 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while sending the email.
      */
     public CreateEmailResponse send(CreateEmailOptions createEmailOptions, @Nullable RequestOptions requestOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createEmailOptions);
+        String payload = serialize(createEmailOptions);
 
         return execute("/emails", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateEmailResponse.class);
     }
@@ -76,7 +76,7 @@ public final class Emails extends BaseService {
      */
     @Deprecated
     public CreateEmailResponse send(CreateEmailOptions createEmailOptions, Map<String,String> requestOptions) throws ResendException {
-        String payload = super.resendMapper.writeValue(createEmailOptions);
+        String payload = serialize(createEmailOptions);
 
         return execute("/emails", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateEmailResponse.class);
     }
@@ -102,7 +102,7 @@ public final class Emails extends BaseService {
      */
     public UpdateEmailResponse update(String emailId, UpdateEmailOptions updateEmailOptions) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(updateEmailOptions);
+        String payload = serialize(updateEmailOptions);
         return execute("/emails/" + emailId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateEmailResponse.class);
     }
 
@@ -140,7 +140,7 @@ public final class Emails extends BaseService {
      */
     public ShareEmailResponse share(String emailId, ShareEmailOptions shareEmailOptions) throws ResendException {
 
-        String payload = super.resendMapper.writeValue(shareEmailOptions);
+        String payload = serialize(shareEmailOptions);
         return execute("/emails/" + emailId + "/share", HttpMethod.POST, payload, MediaType.get("application/json"), ShareEmailResponse.class);
     }
 

@@ -42,9 +42,9 @@ public class UsageResponse {
     }
 
     /**
-     * Gets the object type, always {@code usage}.
+     * Gets the object type ({@code usage}).
      *
-     * @return The object type.
+     * @return The object type, or {@code null} if the API omitted the field.
      */
     public @Nullable String getObject() {
         return object;

@@ -77,6 +77,21 @@ public abstract class BaseService {
     }
 
     /**
+     * Serializes a request body to JSON.
+     *
+     * @param body The object to serialize.
+     * @return The JSON representation of {@code body}.
+     * @throws ResendException If {@code body} can't be serialized, e.g. because it holds a value Jackson can't write.
+     */
+    protected String serialize(final Object body) throws ResendException {
+        try {
+            return resendMapper.writeValue(body);
+        } catch (UncheckedIOException e) {
+            throw new ResendException("Failed to serialize the request body: " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Performs a request and deserializes a successful response body.
      *
      * @param path         The endpoint path.
@@ -86,7 +101,7 @@ public abstract class BaseService {
      * @param responseType The class to deserialize the response body into.
      * @param <T>          The response type.
      * @return The deserialized response.
-     * @throws ResendException If the response is not successful.
+     * @throws ResendException If the response is not successful, or its body can't be parsed into {@code responseType}.
      */
     protected <T> T execute(final String path, final HttpMethod method, final @Nullable String payload,
                             final @Nullable MediaType mediaType, final Class<T> responseType) throws ResendException {
@@ -104,7 +119,7 @@ public abstract class BaseService {
      * @param responseType   The class to deserialize the response body into.
      * @param <T>            The response type.
      * @return The deserialized response.
-     * @throws ResendException If the response is not successful.
+     * @throws ResendException If the response is not successful, or its body can't be parsed into {@code responseType}.
      */
     protected <T> T execute(final String path, final HttpMethod method, final @Nullable String payload,
                             final @Nullable MediaType mediaType, final @Nullable RequestOptions requestOptions,
@@ -123,7 +138,7 @@ public abstract class BaseService {
      * @param responseType      The class to deserialize the response body into.
      * @param <T>               The response type.
      * @return The deserialized response.
-     * @throws ResendException If the response is not successful.
+     * @throws ResendException If the response is not successful, or its body can't be parsed into {@code responseType}.
      * @deprecated Use {@link #execute(String, HttpMethod, String, MediaType, RequestOptions, Class)} instead.
      */
     @Deprecated

@@ -82,16 +82,16 @@ public class ContactImports extends BaseService {
         Map<String, String> formFields = new LinkedHashMap<>();
 
         if (options.getColumnMap() != null) {
-            formFields.put("column_map", super.resendMapper.writeValue(options.getColumnMap()));
+            formFields.put("column_map", serialize(options.getColumnMap()));
         }
         if (options.getOnConflict() != null) {
             formFields.put("on_conflict", options.getOnConflict());
         }
         if (options.getSegments() != null) {
-            formFields.put("segments", super.resendMapper.writeValue(options.getSegments()));
+            formFields.put("segments", serialize(options.getSegments()));
         }
         if (options.getTopics() != null) {
-            formFields.put("topics", super.resendMapper.writeValue(options.getTopics()));
+            formFields.put("topics", serialize(options.getTopics()));
         }
 
         AbstractHttpResponse<String> response;

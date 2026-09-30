@@ -124,7 +124,7 @@ public class UpdateDomainOptions {
          * @param clickTracking The clickTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder clickTracking(Boolean clickTracking) {
+        public Builder clickTracking(@Nullable Boolean clickTracking) {
             this.clickTracking = clickTracking;
             return this;
         }
@@ -135,7 +135,7 @@ public class UpdateDomainOptions {
          * @param openTracking The openTracking state in the domain.
          * @return The builder instance.
          */
-        public Builder openTracking(Boolean openTracking) {
+        public Builder openTracking(@Nullable Boolean openTracking) {
             this.openTracking = openTracking;
             return this;
         }
@@ -146,7 +146,7 @@ public class UpdateDomainOptions {
          * @param tls The TLS setting for the domain.
          * @return The builder instance.
          */
-        public Builder tls(Tls tls) {
+        public Builder tls(@Nullable Tls tls) {
             this.tls = tls;
             return this;
         }
@@ -157,7 +157,7 @@ public class UpdateDomainOptions {
          * @param trackingSubdomain The subdomain to use for click and open tracking.
          * @return The builder instance.
          */
-        public Builder trackingSubdomain(String trackingSubdomain) {
+        public Builder trackingSubdomain(@Nullable String trackingSubdomain) {
             this.trackingSubdomain = trackingSubdomain;
             return this;
         }

@@ -270,15 +270,21 @@ public class ConditionRule {
         /**
          * Builds a new ConditionRule instance.
          *
-         * @return A new ConditionRule.
+         * @return A new ConditionRule. Settings left unset (or set to {@code null}) are omitted from its map.
          */
         public ConditionRule build() {
             Map<String, @Nullable Object> rule = new HashMap<>();
             rule.put("type", "rule");
-            rule.put("field", field);
-            rule.put("operator", operator != null ? operator.getValue() : null);
-            rule.put("value", value);
+            putIfSet(rule, "field", field);
+            putIfSet(rule, "operator", operator != null ? operator.getValue() : null);
+            putIfSet(rule, "value", value);
             return new ConditionRule(rule);
+        }
+
+        private static void putIfSet(Map<String, @Nullable Object> rule, String key, @Nullable Object value) {
+            if (value != null) {
+                rule.put(key, value);
+            }
         }
     }
 }

@@ -291,4 +291,16 @@ public class AutomationsTest {
         assertEquals("{\"key\":\"wait\",\"type\":\"wait_for_event\",\"config\":{\"event_name\":\"signup\"}}", waitStep);
         assertFalse(sendStep.contains("subject") || sendStep.contains("from") || sendStep.contains("reply_to"), sendStep);
     }
+
+    @Test
+    public void testRuleBuilders_NullSettingsAreOmittedFromMap() {
+        FilterRule filter = FilterRule.builder().type(null).field("plan").operator("eq").value(null).build();
+        ConditionRule condition = ConditionRule.builder().field("email").operator(ConditionOperator.IS_EMPTY).build();
+
+        assertFalse(filter.toMap().containsKey("type"));
+        assertFalse(filter.toMap().containsKey("value"));
+        assertEquals("plan", filter.toMap().get("field"));
+        assertFalse(condition.toMap().containsKey("value"));
+        assertEquals("rule", condition.toMap().get("type"));
+    }
 }

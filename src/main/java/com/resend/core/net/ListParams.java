@@ -90,7 +90,7 @@ public class ListParams {
         /**
          * Set the emails before this cursor for pagination.
          *
-         * @param before The emails after this cursor for pagination, or {@code null} to leave it unset.
+         * @param before The emails before this cursor for pagination, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder before(@Nullable String before) {

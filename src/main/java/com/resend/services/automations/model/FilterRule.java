@@ -97,15 +97,21 @@ public class FilterRule {
         /**
          * Builds a new FilterRule instance.
          *
-         * @return A new FilterRule.
+         * @return A new FilterRule. Settings left unset (or set to {@code null}) are omitted from its map.
          */
         public FilterRule build() {
             Map<String, @Nullable Object> rule = new HashMap<>();
-            rule.put("type", type);
-            rule.put("field", field);
-            rule.put("operator", operator);
-            rule.put("value", value);
+            putIfSet(rule, "type", type);
+            putIfSet(rule, "field", field);
+            putIfSet(rule, "operator", operator);
+            putIfSet(rule, "value", value);
             return new FilterRule(rule);
+        }
+
+        private static void putIfSet(Map<String, @Nullable Object> rule, String key, @Nullable Object value) {
+            if (value != null) {
+                rule.put(key, value);
+            }
         }
     }
 }

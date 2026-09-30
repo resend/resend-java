@@ -214,7 +214,7 @@ public class Variable {
         /**
          * Sets the fallback value of the variable.
          *
-         * @param fallbackValue The fallback value of the variable.
+         * @param fallbackValue The fallback value of the variable, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder fallbackValue(@Nullable Object fallbackValue) {

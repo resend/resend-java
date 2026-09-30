@@ -97,7 +97,7 @@ public class Attachment {
 
         /**
          * Set the filename of the attachment.
-         * @param fileName The filename.
+         * @param fileName The filename, or {@code null} to leave it unset.
          * @return The Builder instance.
          */
         public Builder fileName(@Nullable String fileName) {
@@ -107,7 +107,7 @@ public class Attachment {
 
         /**
          * Set the content of the attachment.
-         * @param content The content as a byte array.
+         * @param content The content as a byte array, or {@code null} to leave it unset.
          * @return The Builder instance.
          */
         public Builder content(@Nullable String content) {
@@ -117,7 +117,7 @@ public class Attachment {
 
         /**
          * Set the path of the attachment.
-         * @param path The path.
+         * @param path The path, or {@code null} to leave it unset.
          * @return The Builder instance.
          */
         public Builder path(@Nullable String path) {
@@ -127,7 +127,7 @@ public class Attachment {
 
         /**
          * Set the content type of the attachment.
-         * @param contentType The content type.
+         * @param contentType The content type, or {@code null} to leave it unset.
          * @return The Builder instance.
          */
         public Builder contentType(@Nullable String contentType) {
@@ -137,7 +137,7 @@ public class Attachment {
 
         /**
          * Set the content ID for inline attachments used in HTML content with cid: references.
-         * @param contentId The content ID for inline attachments.
+         * @param contentId The content ID for inline attachments, or {@code null} to leave it unset.
          * @return The Builder instance.
          */
         public Builder contentId(@Nullable String contentId) {

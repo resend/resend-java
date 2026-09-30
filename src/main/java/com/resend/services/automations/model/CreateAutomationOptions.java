@@ -111,7 +111,7 @@ public class CreateAutomationOptions {
         /**
          * Sets the automation status.
          *
-         * @param status The automation status.
+         * @param status The automation status, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder status(@Nullable AutomationStatus status) {

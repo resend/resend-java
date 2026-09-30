@@ -73,7 +73,7 @@ public class RemoveSuppressionsOptions {
         /**
          * Set the email addresses to remove from the suppression list.
          *
-         * @param emails The email addresses to remove from the suppression list.
+         * @param emails The email addresses to remove from the suppression list, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder emails(@Nullable List<String> emails) {
@@ -98,7 +98,7 @@ public class RemoveSuppressionsOptions {
         /**
          * Set the suppression IDs to remove from the suppression list.
          *
-         * @param ids The suppression IDs to remove from the suppression list.
+         * @param ids The suppression IDs to remove from the suppression list, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder ids(@Nullable List<String> ids) {

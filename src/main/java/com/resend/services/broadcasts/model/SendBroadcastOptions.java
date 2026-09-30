@@ -44,7 +44,8 @@ public class SendBroadcastOptions {
         /**
          * Sets the scheduled time for sending the email.
          *
-         * @param scheduledAt The scheduled time, in natural language (e.g., "in 1 min") or ISO 8601 format (e.g., "2024-08-05T11:52:01.858Z").
+         * @param scheduledAt The scheduled time, in natural language (e.g., "in 1 min") or ISO 8601 format (e.g.,
+         *                    "2024-08-05T11:52:01.858Z"), or {@code null} to leave it unset.
          * @return The Builder instance for chaining.
          */
         public Builder scheduledAt(@Nullable String scheduledAt) {

@@ -162,7 +162,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the alias of the template.
          *
-         * @param alias The alias of the template.
+         * @param alias The alias of the template, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder alias(@Nullable String alias) {
@@ -173,7 +173,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the sender email address.
          *
-         * @param from The sender email address.
+         * @param from The sender email address, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder from(@Nullable String from) {
@@ -184,7 +184,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the email subject.
          *
-         * @param subject The email subject.
+         * @param subject The email subject, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder subject(@Nullable String subject) {
@@ -211,7 +211,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the reply-to email addresses.
          *
-         * @param replyTo The reply-to email addresses.
+         * @param replyTo The reply-to email addresses, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder replyTo(@Nullable List<String> replyTo) {
@@ -247,7 +247,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the plain text version of the template.
          *
-         * @param text The plain text version of the template.
+         * @param text The plain text version of the template, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder text(@Nullable String text) {
@@ -274,7 +274,7 @@ public class CreateTemplateOptions {
         /**
          * Sets the list of variables used in the template.
          *
-         * @param variables The list of variables.
+         * @param variables The list of variables, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder variables(@Nullable List<Variable> variables) {

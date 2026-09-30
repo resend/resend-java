@@ -77,7 +77,7 @@ public class UpdateWebhookOptions {
         /**
          * Sets the webhook endpoint URL.
          *
-         * @param endpoint The endpoint URL.
+         * @param endpoint The endpoint URL, or {@code null} to leave it unset.
          * @return This builder instance.
          */
         public Builder endpoint(@Nullable String endpoint) {
@@ -88,7 +88,7 @@ public class UpdateWebhookOptions {
         /**
          * Sets the list of events that will trigger the webhook.
          *
-         * @param events The list of webhook events.
+         * @param events The list of webhook events, or {@code null} to leave it unset.
          * @return This builder instance.
          */
         public Builder events(@Nullable List<WebhookEvent> events) {
@@ -110,7 +110,7 @@ public class UpdateWebhookOptions {
         /**
          * Sets the webhook status.
          *
-         * @param status The webhook status.
+         * @param status The webhook status, or {@code null} to leave it unset.
          * @return This builder instance.
          */
         public Builder status(@Nullable WebhookStatus status) {

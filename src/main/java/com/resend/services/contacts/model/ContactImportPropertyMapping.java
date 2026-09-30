@@ -84,7 +84,7 @@ public class ContactImportPropertyMapping {
          * Sets the custom property value type ({@code "string"}, {@code "number"}, or {@code "boolean"}).
          * Defaults to {@code "string"} when omitted.
          *
-         * @param type The property value type.
+         * @param type The property value type, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder type(@Nullable String type) {

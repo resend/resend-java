@@ -200,7 +200,7 @@ public class GetEmailsMetricsOptions {
          * Sets the start of the date range (ISO 8601 date or datetime). Defaults server-side
          * to 6 days before {@code endDate}.
          *
-         * @param startDate The start date.
+         * @param startDate The start date, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder startDate(@Nullable String startDate) {
@@ -212,7 +212,7 @@ public class GetEmailsMetricsOptions {
          * Sets the end of the date range (ISO 8601 date or datetime). Defaults server-side to
          * now.
          *
-         * @param endDate The end date.
+         * @param endDate The end date, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder endDate(@Nullable String endDate) {
@@ -224,7 +224,7 @@ public class GetEmailsMetricsOptions {
          * Sets the IANA timezone used to bucket metrics (e.g. {@code America/New_York}).
          * Defaults server-side to {@code UTC}.
          *
-         * @param timezone The timezone.
+         * @param timezone The timezone, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder timezone(@Nullable String timezone) {
@@ -236,7 +236,7 @@ public class GetEmailsMetricsOptions {
          * Sets the bucket size used when {@code period} is included in the requested
          * dimensions. Defaults server-side to {@code daily}.
          *
-         * @param granularity The granularity.
+         * @param granularity The granularity, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder granularity(@Nullable MetricsGranularity granularity) {
@@ -247,7 +247,7 @@ public class GetEmailsMetricsOptions {
         /**
          * Sets the metrics to return, replacing any previously set metrics.
          *
-         * @param metrics The metrics to return.
+         * @param metrics The metrics to return, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder metrics(@Nullable List<MetricName> metrics) {
@@ -270,7 +270,7 @@ public class GetEmailsMetricsOptions {
          * Sets the dimensions to break metrics down by, replacing any previously set
          * dimensions.
          *
-         * @param dimensions The dimensions.
+         * @param dimensions The dimensions, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder dimensions(@Nullable List<MetricsDimension> dimensions) {
@@ -294,7 +294,7 @@ public class GetEmailsMetricsOptions {
          * Sets the sending domain IDs to filter by (max 100), replacing any previously set
          * domain IDs.
          *
-         * @param domainIds The domain ID filter.
+         * @param domainIds The domain ID filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder domainIds(@Nullable List<String> domainIds) {
@@ -318,7 +318,7 @@ public class GetEmailsMetricsOptions {
          * Sets the email IDs to filter by (max 100), replacing any previously set email IDs.
          * Cannot be combined with the {@code broadcast} dimension or {@code broadcastIds}.
          *
-         * @param emailIds The email ID filter.
+         * @param emailIds The email ID filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder emailIds(@Nullable List<String> emailIds) {
@@ -343,7 +343,7 @@ public class GetEmailsMetricsOptions {
          * broadcast IDs. Cannot be combined with the {@code email} dimension or
          * {@code emailIds}.
          *
-         * @param broadcastIds The broadcast ID filter.
+         * @param broadcastIds The broadcast ID filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder broadcastIds(@Nullable List<String> broadcastIds) {

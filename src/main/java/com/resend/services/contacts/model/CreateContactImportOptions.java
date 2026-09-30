@@ -165,7 +165,7 @@ public class CreateContactImportOptions {
         /**
          * Sets the CSV file to import. Maximum size 50MB.
          *
-         * @param file The CSV file on disk.
+         * @param file The CSV file on disk, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder file(@Nullable File file) {
@@ -238,7 +238,7 @@ public class CreateContactImportOptions {
         /**
          * Sets the mapping between CSV columns and contact fields.
          *
-         * @param columnMap The column map.
+         * @param columnMap The column map, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder columnMap(@Nullable ContactImportColumnMap columnMap) {
@@ -250,7 +250,7 @@ public class CreateContactImportOptions {
          * Sets the conflict-handling strategy for contacts that already exist. Defaults to
          * {@code "skip"} when not provided.
          *
-         * @param onConflict {@code "upsert"} or {@code "skip"}.
+         * @param onConflict {@code "upsert"} or {@code "skip"}, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder onConflict(@Nullable String onConflict) {
@@ -261,7 +261,7 @@ public class CreateContactImportOptions {
         /**
          * Sets the segments that imported contacts will be added to.
          *
-         * @param segments The list of segment references.
+         * @param segments The list of segment references, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder segments(@Nullable List<ContactImportSegmentReference> segments) {
@@ -303,7 +303,7 @@ public class CreateContactImportOptions {
         /**
          * Sets the topic subscriptions to apply to imported contacts.
          *
-         * @param topics The list of topic subscriptions.
+         * @param topics The list of topic subscriptions, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder topics(@Nullable List<ContactImportTopicSubscription> topics) {

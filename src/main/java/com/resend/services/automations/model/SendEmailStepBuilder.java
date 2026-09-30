@@ -67,7 +67,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
     /**
      * Sets the email subject.
      *
-     * @param subject The email subject.
+     * @param subject The email subject, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public SendEmailStepBuilder subject(@Nullable String subject) {
@@ -77,7 +77,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
     /**
      * Sets the sender email address.
      *
-     * @param from The sender email address.
+     * @param from The sender email address, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public SendEmailStepBuilder from(@Nullable String from) {
@@ -87,7 +87,7 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
     /**
      * Sets the reply-to email address.
      *
-     * @param replyTo The reply-to email address.
+     * @param replyTo The reply-to email address, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public SendEmailStepBuilder replyTo(@Nullable String replyTo) {

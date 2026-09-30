@@ -121,7 +121,7 @@ public class UpdateDomainOptions {
         /**
          * Set the clickTracking state in the domain.
          *
-         * @param clickTracking The clickTracking state in the domain.
+         * @param clickTracking The clickTracking state in the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder clickTracking(@Nullable Boolean clickTracking) {
@@ -132,7 +132,7 @@ public class UpdateDomainOptions {
         /**
          * Set the openTracking state in the domain.
          *
-         * @param openTracking The openTracking state in the domain.
+         * @param openTracking The openTracking state in the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder openTracking(@Nullable Boolean openTracking) {
@@ -143,7 +143,7 @@ public class UpdateDomainOptions {
         /**
          * Set the TLS setting for the domain.
          *
-         * @param tls The TLS setting for the domain.
+         * @param tls The TLS setting for the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder tls(@Nullable Tls tls) {
@@ -154,7 +154,7 @@ public class UpdateDomainOptions {
         /**
          * Set the trackingSubdomain of the domain.
          *
-         * @param trackingSubdomain The subdomain to use for click and open tracking.
+         * @param trackingSubdomain The subdomain to use for click and open tracking, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder trackingSubdomain(@Nullable String trackingSubdomain) {

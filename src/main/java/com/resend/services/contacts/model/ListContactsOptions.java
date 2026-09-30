@@ -80,7 +80,7 @@ public class ListContactsOptions {
         /**
          * Sets the segment ID to scope the contact list.
          *
-         * @param segmentId The segment ID.
+         * @param segmentId The segment ID, or {@code null} to leave it unset.
          * @return This builder.
          */
         public Builder segmentId(@Nullable String segmentId) {

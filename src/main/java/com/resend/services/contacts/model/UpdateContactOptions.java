@@ -192,7 +192,7 @@ public class UpdateContactOptions {
         /**
          * Set the id of the contact.
          *
-         * @param id The id of the contact.
+         * @param id The id of the contact, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder id(@Nullable String id) {
@@ -203,7 +203,7 @@ public class UpdateContactOptions {
         /**
          * Set the email of the contact.
          *
-         * @param email The email of the contact.
+         * @param email The email of the contact, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder email(@Nullable String email) {
@@ -214,7 +214,7 @@ public class UpdateContactOptions {
         /**
          * Set the unsubscribed status of the contact.
          *
-         * @param unsubscribed The unsubscribed status of the contact.
+         * @param unsubscribed The unsubscribed status of the contact, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder unsubscribed(@Nullable Boolean unsubscribed) {
@@ -225,7 +225,7 @@ public class UpdateContactOptions {
         /**
          * Set the first name of the contact.
          *
-         * @param firstName The first name of the contact.
+         * @param firstName The first name of the contact, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder firstName(@Nullable String firstName) {
@@ -236,7 +236,7 @@ public class UpdateContactOptions {
         /**
          * Set the last name of the contact.
          *
-         * @param lastName The last name of the contact.
+         * @param lastName The last name of the contact, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder lastName(@Nullable String lastName) {

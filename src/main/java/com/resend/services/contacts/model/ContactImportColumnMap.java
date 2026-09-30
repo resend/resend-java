@@ -117,7 +117,7 @@ public class ContactImportColumnMap {
         /**
          * Sets the CSV column that contains contact email addresses.
          *
-         * @param email The CSV column name.
+         * @param email The CSV column name, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder email(@Nullable String email) {
@@ -128,7 +128,7 @@ public class ContactImportColumnMap {
         /**
          * Sets the CSV column that contains contact first names.
          *
-         * @param firstName The CSV column name.
+         * @param firstName The CSV column name, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder firstName(@Nullable String firstName) {
@@ -139,7 +139,7 @@ public class ContactImportColumnMap {
         /**
          * Sets the CSV column that contains contact last names.
          *
-         * @param lastName The CSV column name.
+         * @param lastName The CSV column name, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder lastName(@Nullable String lastName) {
@@ -150,7 +150,7 @@ public class ContactImportColumnMap {
         /**
          * Sets the CSV column that contains the contact's global subscription status.
          *
-         * @param unsubscribed The CSV column name.
+         * @param unsubscribed The CSV column name, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder unsubscribed(@Nullable String unsubscribed) {

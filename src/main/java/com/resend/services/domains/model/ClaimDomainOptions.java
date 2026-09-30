@@ -137,7 +137,7 @@ public class ClaimDomainOptions {
         /**
          * Set the region where emails will be sent from.
          *
-         * @param region The region.
+         * @param region The region, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder region(@Nullable String region) {
@@ -148,7 +148,7 @@ public class ClaimDomainOptions {
         /**
          * Set the custom return path subdomain.
          *
-         * @param customReturnPath The custom return path.
+         * @param customReturnPath The custom return path, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder customReturnPath(@Nullable String customReturnPath) {
@@ -159,7 +159,7 @@ public class ClaimDomainOptions {
         /**
          * Set whether open tracking is enabled.
          *
-         * @param openTracking The open tracking setting.
+         * @param openTracking The open tracking setting, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder openTracking(@Nullable Boolean openTracking) {
@@ -170,7 +170,7 @@ public class ClaimDomainOptions {
         /**
          * Set whether click tracking is enabled.
          *
-         * @param clickTracking The click tracking setting.
+         * @param clickTracking The click tracking setting, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder clickTracking(@Nullable Boolean clickTracking) {
@@ -181,7 +181,7 @@ public class ClaimDomainOptions {
         /**
          * Set the subdomain used for click and open tracking.
          *
-         * @param trackingSubdomain The tracking subdomain.
+         * @param trackingSubdomain The tracking subdomain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder trackingSubdomain(@Nullable String trackingSubdomain) {

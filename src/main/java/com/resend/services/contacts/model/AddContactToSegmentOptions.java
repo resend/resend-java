@@ -90,7 +90,7 @@ public class AddContactToSegmentOptions {
         /**
          * Sets the contact ID.
          *
-         * @param id The contact ID.
+         * @param id The contact ID, or {@code null} to leave it unset.
          * @return This builder instance.
          */
         public Builder id(@Nullable String id) {
@@ -101,7 +101,7 @@ public class AddContactToSegmentOptions {
         /**
          * Sets the contact email.
          *
-         * @param email The contact email.
+         * @param email The contact email, or {@code null} to leave it unset.
          * @return This builder instance.
          */
         public Builder email(@Nullable String email) {

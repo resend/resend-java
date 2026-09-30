@@ -110,7 +110,7 @@ public class SendEventOptions {
         /**
          * Sets the contact ID.
          *
-         * @param contactId The contact ID.
+         * @param contactId The contact ID, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder contactId(@Nullable String contactId) {
@@ -121,7 +121,7 @@ public class SendEventOptions {
         /**
          * Sets the contact email address.
          *
-         * @param email The contact email address.
+         * @param email The contact email address, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder email(@Nullable String email) {

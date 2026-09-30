@@ -79,7 +79,7 @@ public class UpdateBroadcastOptions extends BroadcastOptions {
         /**
          * Set the preview text of the broadcast.
          *
-         * @param previewText The broadcast preview text.
+         * @param previewText The broadcast preview text, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder previewText(@Nullable String previewText) {

@@ -112,7 +112,7 @@ public class CreateTopicOptions {
         /**
          * Set the topic description.
          *
-         * @param description The topic description. Max length is 200 characters.
+         * @param description The topic description. Max length is 200 characters, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder description(@Nullable String description) {

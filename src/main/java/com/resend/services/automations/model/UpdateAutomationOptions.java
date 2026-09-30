@@ -128,7 +128,7 @@ public class UpdateAutomationOptions {
         /**
          * Sets the automation name.
          *
-         * @param name The automation name.
+         * @param name The automation name, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder name(@Nullable String name) {
@@ -139,7 +139,7 @@ public class UpdateAutomationOptions {
         /**
          * Sets the automation status.
          *
-         * @param status The automation status.
+         * @param status The automation status, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder status(@Nullable AutomationStatus status) {
@@ -150,7 +150,7 @@ public class UpdateAutomationOptions {
         /**
          * Sets the list of automation steps.
          *
-         * @param steps The list of steps.
+         * @param steps The list of steps, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder steps(@Nullable List<AutomationStep> steps) {
@@ -192,7 +192,7 @@ public class UpdateAutomationOptions {
         /**
          * Sets the list of automation connections.
          *
-         * @param connections The list of connections.
+         * @param connections The list of connections, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder connections(@Nullable List<AutomationConnection> connections) {

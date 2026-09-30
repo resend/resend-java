@@ -35,7 +35,7 @@ public class WaitForEventStepBuilder extends AbstractStepBuilder<WaitForEventSte
     /**
      * Sets the timeout duration.
      *
-     * @param timeout The timeout string (e.g., "7d", "1h").
+     * @param timeout The timeout string (e.g., "7d", "1h"), or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public WaitForEventStepBuilder timeout(@Nullable String timeout) {
@@ -45,7 +45,7 @@ public class WaitForEventStepBuilder extends AbstractStepBuilder<WaitForEventSte
     /**
      * Sets the filter rule for the event.
      *
-     * @param filterRule The filter rule.
+     * @param filterRule The filter rule, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public WaitForEventStepBuilder filterRule(@Nullable FilterRule filterRule) {

@@ -280,4 +280,15 @@ public class AutomationsTest {
         assertNull(params.getStatus());
         assertFalse(params.toQueryString().contains("status"));
     }
+
+    @Test
+    public void testStepBuilders_NullOptionalSettingsAreOmittedFromRequest() {
+        com.resend.core.mapper.ResendMapper mapper = new com.resend.core.mapper.ResendMapper();
+
+        String waitStep = mapper.writeValue(AutomationStep.waitForEvent("wait").eventName("signup").timeout(null).build());
+        String sendStep = mapper.writeValue(AutomationStep.sendEmail("send").template("tpl").subject(null).from(null).replyTo(null).build());
+
+        assertEquals("{\"key\":\"wait\",\"type\":\"wait_for_event\",\"config\":{\"event_name\":\"signup\"}}", waitStep);
+        assertFalse(sendStep.contains("subject") || sendStep.contains("from") || sendStep.contains("reply_to"), sendStep);
+    }
 }

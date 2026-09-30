@@ -120,7 +120,7 @@ public class ListAutomationsParams {
         /**
          * Sets the status filter.
          *
-         * @param status The automation status.
+         * @param status The automation status, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder status(@Nullable AutomationStatus status) {
@@ -131,7 +131,7 @@ public class ListAutomationsParams {
         /**
          * Sets the maximum number of results.
          *
-         * @param limit The limit.
+         * @param limit The limit, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder limit(@Nullable Integer limit) {
@@ -142,7 +142,7 @@ public class ListAutomationsParams {
         /**
          * Sets the after cursor for pagination.
          *
-         * @param after The after cursor.
+         * @param after The after cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder after(@Nullable String after) {
@@ -153,7 +153,7 @@ public class ListAutomationsParams {
         /**
          * Sets the before cursor for pagination.
          *
-         * @param before The before cursor.
+         * @param before The before cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder before(@Nullable String before) {

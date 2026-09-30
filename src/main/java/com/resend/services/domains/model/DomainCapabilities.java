@@ -69,7 +69,7 @@ public class DomainCapabilities {
         /**
          * Set the sending capability of the domain.
          *
-         * @param sending The sending capability of the domain.
+         * @param sending The sending capability of the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder sending(@Nullable DomainCapabilityStatus sending) {
@@ -80,7 +80,7 @@ public class DomainCapabilities {
         /**
          * Set the receiving capability of the domain.
          *
-         * @param receiving The receiving capability of the domain.
+         * @param receiving The receiving capability of the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder receiving(@Nullable DomainCapabilityStatus receiving) {

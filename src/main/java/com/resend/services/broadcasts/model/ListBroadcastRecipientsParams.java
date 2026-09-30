@@ -157,7 +157,7 @@ public class ListBroadcastRecipientsParams {
         /**
          * Filters recipients by a substring of their email address.
          *
-         * @param email The email substring filter.
+         * @param email The email substring filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder email(@Nullable String email) {
@@ -169,7 +169,7 @@ public class ListBroadcastRecipientsParams {
          * Filters bounced recipients by bounce type. Only meaningful when {@code type} is
          * {@link BroadcastRecipientEventType#BOUNCED}.
          *
-         * @param bounceType The bounce type filter.
+         * @param bounceType The bounce type filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder bounceType(@Nullable BroadcastRecipientBounceType bounceType) {
@@ -180,7 +180,7 @@ public class ListBroadcastRecipientsParams {
         /**
          * Sets the maximum number of recipients to return (1-100, default 20).
          *
-         * @param limit The pagination limit.
+         * @param limit The pagination limit, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder limit(@Nullable Integer limit) {
@@ -192,7 +192,7 @@ public class ListBroadcastRecipientsParams {
          * Sets the cursor for fetching recipients after this cursor. Cannot be used with
          * {@link #before(String)}.
          *
-         * @param after The after cursor.
+         * @param after The after cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder after(@Nullable String after) {
@@ -204,7 +204,7 @@ public class ListBroadcastRecipientsParams {
          * Sets the cursor for fetching recipients before this cursor. Cannot be used with
          * {@link #after(String)}.
          *
-         * @param before The before cursor.
+         * @param before The before cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder before(@Nullable String before) {

@@ -50,7 +50,8 @@ public class ShareEmailOptions {
         /**
          * Set how long the shareable link stays valid for.
          *
-         * @param expiresIn A human-readable duration (e.g., "10m", "2 hours", "1 day", "1h 30m"). Defaults to "48h" and is capped at 48 hours.
+         * @param expiresIn A human-readable duration (e.g., "10m", "2 hours", "1 day", "1h 30m"). Defaults to "48h"
+         *                  and is capped at 48 hours, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder expiresIn(@Nullable String expiresIn) {

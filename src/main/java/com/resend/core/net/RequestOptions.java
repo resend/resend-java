@@ -67,7 +67,7 @@ public class RequestOptions {
         /**
          * Set the idempotencyKey.
          *
-         * @param idempotencyKey The idempotency key.
+         * @param idempotencyKey The idempotency key, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder setIdempotencyKey(@Nullable String idempotencyKey) {

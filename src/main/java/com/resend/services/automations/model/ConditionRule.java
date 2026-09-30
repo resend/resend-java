@@ -259,7 +259,7 @@ public class ConditionRule {
         /**
          * Sets the value to compare against.
          *
-         * @param value The comparison value.
+         * @param value The comparison value, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder value(@Nullable Object value) {

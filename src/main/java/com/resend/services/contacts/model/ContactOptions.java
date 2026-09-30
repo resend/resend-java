@@ -132,7 +132,7 @@ public abstract class ContactOptions {
         /**
          * Set the id of the ContactOptions.
          *
-         * @param id The id of the ContactOptions.
+         * @param id The id of the ContactOptions, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public B id(@Nullable String id) {
@@ -169,7 +169,7 @@ public abstract class ContactOptions {
         /**
          * Set the email of the ContactOptions.
          *
-         * @param email The email of the ContactOptions.
+         * @param email The email of the ContactOptions, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public B email(@Nullable String email) {

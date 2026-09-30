@@ -29,7 +29,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
     /**
      * Sets the first name.
      *
-     * @param firstName The first name value or expression.
+     * @param firstName The first name value or expression, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public ContactUpdateStepBuilder firstName(@Nullable Object firstName) {
@@ -39,7 +39,7 @@ public class ContactUpdateStepBuilder extends AbstractStepBuilder<ContactUpdateS
     /**
      * Sets the last name.
      *
-     * @param lastName The last name value or expression.
+     * @param lastName The last name value or expression, or {@code null} to leave it unset.
      * @return The builder instance.
      */
     public ContactUpdateStepBuilder lastName(@Nullable Object lastName) {

@@ -81,7 +81,8 @@ public class CreateBroadcastOptions extends BroadcastOptions {
          * Sets the scheduled time for sending the broadcast.
          * Only valid when send is set to true.
          *
-         * @param scheduledAt The scheduled time in ISO 8601 format (e.g., "2024-12-25T10:00:00.000Z").
+         * @param scheduledAt The scheduled time in ISO 8601 format (e.g., "2024-12-25T10:00:00.000Z"), or {@code
+         *                    null} to leave it unset.
          * @return The builder instance for chaining.
          */
         public Builder scheduledAt(@Nullable String scheduledAt) {

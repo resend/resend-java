@@ -92,7 +92,7 @@ public class CreateApiKeyOptions {
         /**
          * Set the permission of the Api Key.
          *
-         * @param permission The permission of the Api Key.
+         * @param permission The permission of the Api Key, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder permission(@Nullable String permission) {
@@ -103,7 +103,7 @@ public class CreateApiKeyOptions {
         /**
          * Set the domain id of the Api Key.
          *
-         * @param domainId The domain id of the Api Key.
+         * @param domainId The domain id of the Api Key, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder domainId(@Nullable String domainId) {

@@ -73,7 +73,7 @@ public class ListWebhookEventAttemptsParams {
         /**
          * Sets the maximum number of attempts to return.
          *
-         * @param limit The result limit.
+         * @param limit The result limit, or {@code null} to leave it unset.
          * @return This builder.
          */
         public Builder limit(@Nullable Integer limit) {
@@ -84,7 +84,7 @@ public class ListWebhookEventAttemptsParams {
         /**
          * Sets the attempt ID after which to retrieve results.
          *
-         * @param after The pagination cursor.
+         * @param after The pagination cursor, or {@code null} to leave it unset.
          * @return This builder.
          */
         public Builder after(@Nullable String after) {

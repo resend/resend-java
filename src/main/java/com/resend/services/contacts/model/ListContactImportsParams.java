@@ -95,7 +95,7 @@ public class ListContactImportsParams {
         /**
          * Sets the maximum number of contact imports to return (1-100, default 10).
          *
-         * @param limit The pagination limit.
+         * @param limit The pagination limit, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder limit(@Nullable Integer limit) {
@@ -107,7 +107,7 @@ public class ListContactImportsParams {
          * Sets the cursor for fetching contact imports after this ID. Cannot be used with
          * {@link #before(String)}.
          *
-         * @param after The {@code after} cursor.
+         * @param after The {@code after} cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder after(@Nullable String after) {
@@ -119,7 +119,7 @@ public class ListContactImportsParams {
          * Sets the cursor for fetching contact imports before this ID. Cannot be used with
          * {@link #after(String)}.
          *
-         * @param before The {@code before} cursor.
+         * @param before The {@code before} cursor, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder before(@Nullable String before) {
@@ -131,7 +131,7 @@ public class ListContactImportsParams {
          * Filters contact imports by status ({@code queued}, {@code in_progress},
          * {@code completed}, or {@code failed}).
          *
-         * @param status The status filter.
+         * @param status The status filter, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder status(@Nullable String status) {

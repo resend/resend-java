@@ -268,7 +268,7 @@ public class CreateEmailOptions {
         /**
          * Set the email body text.
          *
-         * @param text The plain text body of the email.
+         * @param text The plain text body of the email, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder text(@Nullable String text) {
@@ -422,7 +422,7 @@ public class CreateEmailOptions {
         /**
          * Set the HTML content of the email.
          *
-         * @param html The HTML content of the email.
+         * @param html The HTML content of the email, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder html(@Nullable String html) {
@@ -475,7 +475,7 @@ public class CreateEmailOptions {
         /**
          * Set the list of attachments for the email.
          *
-         * @param attachments The list of attachments for the email.
+         * @param attachments The list of attachments for the email, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder attachments(@Nullable List<Attachment> attachments) {
@@ -516,7 +516,7 @@ public class CreateEmailOptions {
         /**
          * Set the list of tags for the email.
          *
-         * @param tags The list of tags for the email.
+         * @param tags The list of tags for the email, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder tags(@Nullable List<Tag> tags) {
@@ -541,7 +541,8 @@ public class CreateEmailOptions {
         /**
          * Set the schedule of the email.
          *
-         * @param scheduledAt The schedule of the email in ISO 8601 format (e.g., 2024-08-05T11:52:01.858Z).
+         * @param scheduledAt The schedule of the email in ISO 8601 format (e.g., 2024-08-05T11:52:01.858Z), or
+         *                    {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder scheduledAt(@Nullable String scheduledAt) {
@@ -556,7 +557,7 @@ public class CreateEmailOptions {
          * When sending a template, the payload for from, subject, and reply_to take precedence
          * over the template's defaults for these fields.
          *
-         * @param template The template configuration.
+         * @param template The template configuration, or {@code null} to leave it unset.
          * @return This builder instance for method chaining.
          */
         public Builder template(@Nullable Template template) {

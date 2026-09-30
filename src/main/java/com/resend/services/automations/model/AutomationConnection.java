@@ -123,7 +123,7 @@ public class AutomationConnection {
         /**
          * Sets the connection type.
          *
-         * @param type The connection type.
+         * @param type The connection type, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder type(@Nullable ConnectionType type) {

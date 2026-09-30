@@ -53,7 +53,7 @@ public class FilterRule {
         /**
          * Sets the rule type.
          *
-         * @param type The rule type.
+         * @param type The rule type, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder type(@Nullable String type) {
@@ -86,7 +86,7 @@ public class FilterRule {
         /**
          * Sets the value to compare against.
          *
-         * @param value The comparison value.
+         * @param value The comparison value, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder value(@Nullable Object value) {

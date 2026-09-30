@@ -243,7 +243,7 @@ public class BroadcastOptions {
         /**
          * Sets the reply-to email addresses as a list.
          *
-         * @param replyTo the list of reply-to email addresses.
+         * @param replyTo the list of reply-to email addresses, or {@code null} to leave it unset.
          * @return the builder instance.
          */
         public B replyTo(@Nullable List<String> replyTo) {
@@ -254,7 +254,7 @@ public class BroadcastOptions {
         /**
          * Sets the HTML content of the email.
          *
-         * @param html the HTML content.
+         * @param html the HTML content, or {@code null} to leave it unset.
          * @return the builder instance.
          */
         public B html(@Nullable String html) {
@@ -265,7 +265,7 @@ public class BroadcastOptions {
         /**
          * Sets the plain text content of the email.
          *
-         * @param text the plain text content.
+         * @param text the plain text content, or {@code null} to leave it unset.
          * @return the builder instance.
          */
         public B text(@Nullable String text) {
@@ -276,7 +276,7 @@ public class BroadcastOptions {
         /**
          * Sets the name of the broadcast.
          *
-         * @param name the name of the broadcast.
+         * @param name the name of the broadcast, or {@code null} to leave it unset.
          * @return the builder instance.
          */
         public B name(@Nullable String name) {

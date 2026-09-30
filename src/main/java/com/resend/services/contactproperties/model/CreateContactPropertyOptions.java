@@ -103,7 +103,7 @@ public class CreateContactPropertyOptions {
         /**
          * Set the fallback value of the contact property.
          *
-         * @param fallbackValue The fallback value of the contact property.
+         * @param fallbackValue The fallback value of the contact property, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder fallbackValue(@Nullable Object fallbackValue) {

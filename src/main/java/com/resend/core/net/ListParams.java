@@ -79,7 +79,7 @@ public class ListParams {
         /**
          * Set the maximum number of emails to return.
          *
-         * @param limit The maximum number of emails.
+         * @param limit The maximum number of emails, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder limit(@Nullable Integer limit) {
@@ -90,7 +90,7 @@ public class ListParams {
         /**
          * Set the emails before this cursor for pagination.
          *
-         * @param before The emails after this cursor for pagination.
+         * @param before The emails after this cursor for pagination, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder before(@Nullable String before) {
@@ -101,7 +101,7 @@ public class ListParams {
         /**
          * Set the emails after this cursor for pagination.
          *
-         * @param after The emails after this cursor for pagination.
+         * @param after The emails after this cursor for pagination, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder after(@Nullable String after) {

@@ -162,7 +162,7 @@ public class CreateDomainOptions {
         /**
          * Set the region of the domain.
          *
-         * @param region The region of the domain.
+         * @param region The region of the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder region(@Nullable String region) {
@@ -173,7 +173,7 @@ public class CreateDomainOptions {
         /**
          * Set the customReturnPath of the domain.
          *
-         * @param customReturnPath The customReturnPath of the domain.
+         * @param customReturnPath The customReturnPath of the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder customReturnPath(@Nullable String customReturnPath) {
@@ -184,7 +184,7 @@ public class CreateDomainOptions {
         /**
          * Set the openTracking state in the domain.
          *
-         * @param openTracking The openTracking state in the domain.
+         * @param openTracking The openTracking state in the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder openTracking(@Nullable Boolean openTracking) {
@@ -195,7 +195,7 @@ public class CreateDomainOptions {
         /**
          * Set the clickTracking state in the domain.
          *
-         * @param clickTracking The clickTracking state in the domain.
+         * @param clickTracking The clickTracking state in the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder clickTracking(@Nullable Boolean clickTracking) {
@@ -206,7 +206,7 @@ public class CreateDomainOptions {
         /**
          * Set the TLS setting for the domain.
          *
-         * @param tls The TLS setting for the domain.
+         * @param tls The TLS setting for the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder tls(@Nullable Tls tls) {
@@ -217,7 +217,7 @@ public class CreateDomainOptions {
         /**
          * Set the sending and receiving capabilities of the domain.
          *
-         * @param capabilities The capabilities of the domain.
+         * @param capabilities The capabilities of the domain, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder capabilities(@Nullable DomainCapabilities capabilities) {
@@ -228,7 +228,7 @@ public class CreateDomainOptions {
         /**
          * Set the trackingSubdomain of the domain.
          *
-         * @param trackingSubdomain The subdomain to use for click and open tracking.
+         * @param trackingSubdomain The subdomain to use for click and open tracking, or {@code null} to leave it unset.
          * @return The builder instance.
          */
         public Builder trackingSubdomain(@Nullable String trackingSubdomain) {

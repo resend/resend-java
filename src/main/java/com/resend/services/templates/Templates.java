@@ -1,5 +1,6 @@
 package com.resend.services.templates;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;

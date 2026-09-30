@@ -48,7 +48,8 @@ public class Resend {
     /**
      * Constructs a new Resend with the specified API key and the default HTTP client.
      *
-     * @param apiKey The API key for the ReSend service.
+     * @param apiKey The API key for the Resend service.
+     * @throws IllegalArgumentException If {@code apiKey} is {@code null} or blank.
      */
     public Resend(final String apiKey) {
         this(apiKey, HttpClient.getDefault());
@@ -105,7 +106,7 @@ public class Resend {
     /**
      * Returns a Contacts object that can be used to interact with the Contacts service.
      *
-     * @return A Contact object.
+     * @return A Contacts object.
      */
     public Contacts contacts() {
         return new Contacts(apiKey, httpClient);
@@ -121,9 +122,9 @@ public class Resend {
     }
 
     /**
-     * Returns an Audience object that can be used to interact with the Audiences service.
+     * Returns an Audiences object that can be used to interact with the Audiences service.
      *
-     * @return an Audiences object.
+     * @return An Audiences object.
      * @deprecated Use {@link #segments()} instead.
      */
     @Deprecated
@@ -134,7 +135,7 @@ public class Resend {
     /**
      * Returns a Segments object that can be used to interact with the Segments service.
      *
-     * @return a Segments object.
+     * @return A Segments object.
      */
     public Segments segments() {
         return new Segments(apiKey, httpClient);
@@ -143,7 +144,7 @@ public class Resend {
     /**
      * Returns a Batch object that can be used to interact with the Batch service.
      *
-     * @return An Batch object.
+     * @return A Batch object.
      */
     public Batch batch() {
         return new Batch(apiKey, httpClient);

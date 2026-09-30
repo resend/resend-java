@@ -1,5 +1,6 @@
 package com.resend.core.net.impl;
 
+import com.resend.ResendOptions;
 import com.resend.core.SdkVersion;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
@@ -11,6 +12,7 @@ import okhttp3.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The built-in {@link IHttpClient}, backed by OkHttp.
@@ -21,10 +23,10 @@ import java.util.Map;
  */
 public class HttpClient implements IHttpClient<String> {
 
-    /** The base URL for the API. */
+    /** The default base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
 
-    /** The User-Agent header value for HTTP requests. */
+    /** The default User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
 
     /**
@@ -120,7 +122,7 @@ public class HttpClient implements IHttpClient<String> {
         Request request = new Request.Builder()
                 .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody)
                 .build();
@@ -156,7 +158,7 @@ public class HttpClient implements IHttpClient<String> {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
@@ -199,7 +201,7 @@ public class HttpClient implements IHttpClient<String> {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody);
 
@@ -335,7 +337,7 @@ public class HttpClient implements IHttpClient<String> {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
+                .addHeader("User-Agent", userAgent)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), bodyBuilder.build());
 
@@ -378,4 +380,3 @@ public class HttpClient implements IHttpClient<String> {
         return normalized;
     }
 }
-

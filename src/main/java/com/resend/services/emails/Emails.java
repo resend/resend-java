@@ -1,5 +1,6 @@
 package com.resend.services.emails;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
@@ -52,7 +53,7 @@ public final class Emails extends BaseService {
 
     /**
      * Sends an email based on the provided email request.
-     *hjk
+     *
      * @param createEmailOptions The request containing email details.
      * @param requestOptions The options with additional headers.
      * @return The response indicating the status of the email sending.

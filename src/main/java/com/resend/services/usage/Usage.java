@@ -1,5 +1,6 @@
 package com.resend.services.usage;
 
+import com.resend.ResendOptions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;

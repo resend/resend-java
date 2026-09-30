@@ -42,11 +42,21 @@ public abstract class BaseService {
     protected final ResendMapper resendMapper;
 
     /**
-     * Constructs a BaseService instance with the specified authentication provider, default HTTP client, and mapper.
+     * Constructs a BaseService instance with the specified API key and default client options.
      *
      * @param apiKey The apiKey to use.
      */
     public BaseService(final String apiKey) {
+        this(apiKey, ResendOptions.defaults());
+    }
+
+    /**
+     * Constructs a BaseService instance with the specified API key and client options.
+     *
+     * @param apiKey  The apiKey to use.
+     * @param options Client options (base URL, User-Agent, timeouts). {@code null} uses defaults.
+     */
+    public BaseService(final String apiKey, final ResendOptions options) {
         this.apiKey = apiKey;
         this.httpClient = HttpClient.getDefault();
         this.resendMapper = Defaults.MAPPER;

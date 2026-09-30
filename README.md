@@ -3,65 +3,104 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![Build](https://github.com/resendlabs/resend-java/actions/workflows/ci.yml/badge.svg)
 ![Release](https://img.shields.io/github/release/resendlabs/resend-java.svg?style=flat-square)
----
+
+Official Java SDK for the [Resend](https://resend.com) email API.
 
 ## Installation
 
-To install the Java SDK, add the following dependency to your project:
+Add the dependency to your project. Prefer a pinned version (current release: **4.27.0**).
 
-Gradle
+### Gradle
 
 ```gradle
-implementation 'com.resend:resend-java:+'
+implementation 'com.resend:resend-java:4.27.0'
 ```
 
-Maven
+### Maven
 
-```Maven
+```xml
 <dependency>
     <groupId>com.resend</groupId>
     <artifactId>resend-java</artifactId>
-    <version>LATEST</version>
+    <version>4.27.0</version>
 </dependency>
-
 ```
+
 ## Setup
 
-First, you need to get an API key, which is available in the [Resend Dashboard](https://resend.com).
-## Example
+Create an API key in the [Resend Dashboard](https://resend.com), then create a client:
 
 ```java
-package com.resend;
+import com.resend.Resend;
 
-import com.resend.services.emails.model.*;
-import com.resend.core.provider.AuthenticationProvider;
-import com.resend.core.provider.impl.AuthenticationProviderStandard;
-import com.resend.services.emails.ResendEmails;
+Resend resend = new Resend("re_123456789");
+```
+
+### Optional client configuration
+
+Customize the base URL (useful for tests), User-Agent, and HTTP timeouts:
+
+```java
+import com.resend.Resend;
+import com.resend.ResendOptions;
+
+Resend resend = new Resend("re_123456789", ResendOptions.builder()
+        .baseUrl("https://api.resend.com")
+        .connectTimeoutMs(10_000L)
+        .readTimeoutMs(30_000L)
+        .writeTimeoutMs(30_000L)
+        .build());
+```
+
+## Examples
+
+### Send an email
+
+```java
+import com.resend.Resend;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.CreateEmailResponse;
 
 public class Main {
     public static void main(String[] args) {
-        Resend resend = new Resend("re_123");
+        Resend resend = new Resend("re_123456789");
 
         CreateEmailOptions params = CreateEmailOptions.builder()
-                .from("Me <me@exemple.io>")
-                .to("to@example", "you@example.com")
-                .cc("carbon@example.com", "copy@example.com")
-                .bcc("blind@example.com", "carbon.copy@example.com")
-                .replyTo("reply@example.com", "to@example.com")
-                .text("Hello, world!")
-                .subject("Hello from Java!")
+                .from("Acme <onboarding@resend.dev>")
+                .to("delivered@resend.dev")
+                .subject("Hello from Java")
+                .html("<strong>It works!</strong>")
                 .build();
 
         try {
             CreateEmailResponse data = resend.emails().send(params);
             System.out.println(data.getId());
         } catch (ResendException e) {
-            e.printStackTrace();
+            System.err.println(e);
         }
     }
 }
+```
 
+### Send with an idempotency key
 
+```java
+import com.resend.core.net.RequestOptions;
+import com.resend.services.emails.model.CreateEmailOptions;
+
+CreateEmailOptions params = CreateEmailOptions.builder()
+        .from("Acme <onboarding@resend.dev>")
+        .to("delivered@resend.dev")
+        .subject("Hello from Java")
+        .text("Hello, world!")
+        .build();
+
+RequestOptions requestOptions = RequestOptions.builder()
+        .setIdempotencyKey("unique-key-123")
+        .build();
+
+resend.emails().send(params, requestOptions);
 ```
 
 ## Configuration

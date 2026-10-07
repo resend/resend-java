@@ -137,6 +137,24 @@ public class HttpClientTest {
     }
 
     @Test
+    public void testRequestOptions_RejectsTimeoutThatOverflowsNanoseconds() {
+        assertThrows(IllegalArgumentException.class,
+                () -> RequestOptions.builder().timeout(Duration.ofDays(200_000)));
+        assertThrows(IllegalArgumentException.class,
+                () -> RequestOptions.builder().timeout(Duration.ofNanos(Long.MAX_VALUE).plusNanos(1)));
+    }
+
+    @Test
+    public void testRequestOptions_AcceptsLargestRepresentableTimeout() {
+        Duration largest = Duration.ofNanos(Long.MAX_VALUE);
+
+        RequestOptions options = RequestOptions.builder().timeout(largest).build();
+
+        assertEquals(largest, options.getTimeout());
+        assertEquals(Long.MAX_VALUE, options.getTimeout().toNanos());
+    }
+
+    @Test
     public void testRequestOptions_TimeoutDefaultsToNull() {
         assertNull(RequestOptions.builder().build().getTimeout());
     }

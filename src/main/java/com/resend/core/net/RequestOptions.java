@@ -64,6 +64,8 @@ public class RequestOptions {
      * Builder class for constructing RequestOptions objects.
      */
     public static class Builder {
+        private static final Duration MAX_TIMEOUT = Duration.ofNanos(Long.MAX_VALUE);
+
         private String idempotencyKey;
         private final Map<String, String> additionalHeaders;
         private Duration timeout;
@@ -117,11 +119,15 @@ public class RequestOptions {
          *
          * @param timeout The timeout; {@link Duration#ZERO} means no timeout.
          * @return The builder instance.
-         * @throws IllegalArgumentException If the timeout is negative.
+         * @throws IllegalArgumentException If the timeout is negative, or too large to be expressed in nanoseconds
+         *                                  (more than {@code Long.MAX_VALUE} nanoseconds, about 292 years).
          */
         public Builder timeout(Duration timeout) {
             if (timeout != null && timeout.isNegative()) {
                 throw new IllegalArgumentException("timeout must not be negative, got: " + timeout);
+            }
+            if (timeout != null && timeout.compareTo(MAX_TIMEOUT) > 0) {
+                throw new IllegalArgumentException("timeout must not exceed " + MAX_TIMEOUT + ", got: " + timeout);
             }
             this.timeout = timeout;
             return this;

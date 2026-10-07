@@ -23,7 +23,13 @@ public final class Receiving extends BaseService {
         super(apiKey);
     }
 
-    Receiving(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code Receiving} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public Receiving(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 

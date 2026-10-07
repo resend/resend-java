@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * An implementation of the {@link IHttpClient} interface for performing HTTP requests.
- * This implementation utilizes the OkHttp library for handling HTTP communication.
+ * The built-in {@link IHttpClient}, backed by OkHttp.
+ *
+ * <p>To use your own {@code OkHttpClient} (interceptors, TLS settings, a shared connection pool), pass one to
+ * {@link #HttpClient(OkHttpClient, String)} and hand the result to {@code Resend.builder().httpClient(...)}. That
+ * requires declaring the {@code com.squareup.okhttp3:okhttp-jvm} dependency in your own build.</p>
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class HttpClient implements IHttpClient<Response> {
+public class HttpClient implements IHttpClient<String> {
 
     /** The base URL for the API. */
     public static final String BASE_API = "https://api.resend.com";
@@ -25,15 +27,76 @@ public class HttpClient implements IHttpClient<Response> {
     /** The User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
 
+    /**
+     * Lazily-initialized client shared by every service that isn't given one explicitly, so the whole SDK
+     * reuses one OkHttp connection pool and dispatcher by default.
+     */
+    private static final class DefaultHolder {
+        static final HttpClient INSTANCE = new HttpClient();
+    }
+
     /** The OkHttpClient instance for handling HTTP requests. */
     private final OkHttpClient httpClient;
 
+    /** The base URL requests are sent to, without a trailing slash. */
+    private final String baseUrl;
+
     /**
-     * Constructs an instance of the HttpClient with the provided API key.
-     *
+     * Constructs an HttpClient with a new {@link OkHttpClient} that sends requests to {@link #BASE_API}.
      */
     public HttpClient() {
-        this.httpClient = new OkHttpClient();
+        this(new OkHttpClient());
+    }
+
+    /**
+     * Constructs an HttpClient that sends requests to {@link #BASE_API} through the given {@link OkHttpClient}.
+     *
+     * @param okHttpClient The OkHttp client used to execute requests.
+     */
+    public HttpClient(final OkHttpClient okHttpClient) {
+        this(okHttpClient, BASE_API);
+    }
+
+    /**
+     * Constructs an HttpClient that sends requests to the given base URL through the given {@link OkHttpClient}.
+     *
+     * @param okHttpClient The OkHttp client used to execute requests.
+     * @param baseUrl      The base URL of the Resend API, e.g. {@code https://api.resend.com}.
+     * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL, or has a query or fragment.
+     */
+    public HttpClient(final OkHttpClient okHttpClient, final String baseUrl) {
+        if (okHttpClient == null) {
+            throw new IllegalArgumentException("okHttpClient must not be null");
+        }
+        this.httpClient = okHttpClient;
+        this.baseUrl = normalizeBaseUrl(baseUrl);
+    }
+
+    /**
+     * Returns the client shared by every service that isn't configured with its own.
+     *
+     * @return The shared default HttpClient.
+     */
+    public static HttpClient getDefault() {
+        return DefaultHolder.INSTANCE;
+    }
+
+    /**
+     * Gets the underlying OkHttp client.
+     *
+     * @return The OkHttp client.
+     */
+    public OkHttpClient getOkHttpClient() {
+        return httpClient;
+    }
+
+    /**
+     * Gets the base URL requests are sent to.
+     *
+     * @return The base URL, without a trailing slash.
+     */
+    public String getBaseUrl() {
+        return baseUrl;
     }
 
     /**
@@ -47,7 +110,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
+    public AbstractHttpResponse<String> perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
 
         RequestBody requestBody = null;
         if(payload != null) {
@@ -55,19 +118,14 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request request = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .method(method.name(), requestBody)
                 .build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -82,7 +140,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Deprecated
-    public AbstractHttpResponse perform(
+    public AbstractHttpResponse<String> perform(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -96,7 +154,7 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -111,12 +169,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         Request request = requestBuilder.build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -130,7 +183,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @param requestOptions A map of header-name → header-value to add.
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
-    public AbstractHttpResponse perform(
+    public AbstractHttpResponse<String> perform(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -144,7 +197,7 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -163,12 +216,7 @@ public class HttpClient implements IHttpClient<Response> {
 
         Request request = requestBuilder.build();
 
-        try {
-            Response response =  httpClient.newCall(request).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return execute(request);
     }
 
     /**
@@ -186,7 +234,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -198,7 +246,7 @@ public class HttpClient implements IHttpClient<Response> {
     }
 
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -228,7 +276,7 @@ public class HttpClient implements IHttpClient<Response> {
      * @return An {@link AbstractHttpResponse} representing the response from the server.
      */
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -241,7 +289,7 @@ public class HttpClient implements IHttpClient<Response> {
     }
 
     @Override
-    public AbstractHttpResponse performMultipart(
+    public AbstractHttpResponse<String> performMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -258,7 +306,7 @@ public class HttpClient implements IHttpClient<Response> {
                 requestOptions);
     }
 
-    private AbstractHttpResponse executeMultipart(
+    private AbstractHttpResponse<String> executeMultipart(
             final String path,
             final String apiKey,
             final HttpMethod method,
@@ -285,7 +333,7 @@ public class HttpClient implements IHttpClient<Response> {
         }
 
         Request.Builder requestBuilder = new Request.Builder()
-                .url(BASE_API + path)
+                .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
@@ -302,12 +350,32 @@ public class HttpClient implements IHttpClient<Response> {
             }
         }
 
-        try {
-            Response response = httpClient.newCall(requestBuilder.build()).execute();
-            return new AbstractHttpResponse(response.code(), response.body().string(), response.isSuccessful());
+        return execute(requestBuilder.build());
+    }
+
+    private AbstractHttpResponse<String> execute(final Request request) {
+        try (Response response = httpClient.newCall(request).execute()) {
+            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String normalizeBaseUrl(final String baseUrl) {
+        HttpUrl parsed = baseUrl == null ? null : HttpUrl.parse(baseUrl);
+        if (parsed == null) {
+            throw new IllegalArgumentException("baseUrl must be a valid http or https URL, got: " + baseUrl);
+        }
+        // Endpoint paths (which may carry their own query string) are appended to the base URL as-is, so a
+        // query or fragment here would swallow them.
+        if (parsed.query() != null || parsed.fragment() != null) {
+            throw new IllegalArgumentException("baseUrl must not contain a query or fragment, got: " + baseUrl);
+        }
+        String normalized = baseUrl;
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
     }
 }
 

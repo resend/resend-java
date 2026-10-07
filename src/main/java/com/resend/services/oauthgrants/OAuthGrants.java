@@ -24,7 +24,13 @@ public class OAuthGrants extends BaseService {
         super(apiKey);
     }
 
-    OAuthGrants(final String apiKey, final IHttpClient httpClient) {
+    /**
+     * Constructs an instance of the {@code OAuthGrants} class that sends requests through the given HTTP client.
+     *
+     * @param apiKey     The apiKey used for authentication.
+     * @param httpClient The HTTP client to use.
+     */
+    public OAuthGrants(final String apiKey, final IHttpClient<String> httpClient) {
         super(apiKey, httpClient);
     }
 

@@ -246,7 +246,7 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder to(List<String> recipients) {
-            this.to = recipients;
+            this.to = recipients == null ? null : new ArrayList<>(recipients);
             return this;
         }
 
@@ -436,7 +436,7 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder headers(Map<String, String> headers) {
-            this.headers = headers;
+            this.headers = headers == null ? null : new HashMap<>(headers);
             return this;
         }
 
@@ -478,7 +478,7 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder attachments(List<Attachment> attachments) {
-            this.attachments = attachments;
+            this.attachments = attachments == null ? null : new ArrayList<>(attachments);
             return this;
         }
 
@@ -519,7 +519,7 @@ public class CreateEmailOptions {
          * @return This builder instance for method chaining.
          */
         public Builder tags(List<Tag> tags) {
-            this.tags = tags;
+            this.tags = tags == null ? null : new ArrayList<>(tags);
             return this;
         }
 

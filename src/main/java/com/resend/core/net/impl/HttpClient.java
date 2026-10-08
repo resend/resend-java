@@ -10,7 +10,10 @@ import okhttp3.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,6 +31,12 @@ public class HttpClient implements IHttpClient<String> {
     /** The User-Agent header value for HTTP requests. */
     public static final String USER_AGENT = "resend-java/" + SdkVersion.getVersion();
 
+    private static final long MIN_RETRY_DELAY_MILLIS = 500L;
+
+    private static final long MAX_RETRY_DELAY_MILLIS = 5000L;
+
+    private static final long MAX_RETRY_AFTER_MILLIS = 30000L;
+
     /**
      * Lazily-initialized client shared by every service that isn't given one explicitly, so the whole SDK
      * reuses one OkHttp connection pool and dispatcher by default.
@@ -41,6 +50,9 @@ public class HttpClient implements IHttpClient<String> {
 
     /** The base URL requests are sent to, without a trailing slash. */
     private final String baseUrl;
+
+    /** The number of retries used when a request doesn't set its own. */
+    private final int maxRetries;
 
     /**
      * Constructs an HttpClient with a new {@link OkHttpClient} that sends requests to {@link #BASE_API}.
@@ -66,11 +78,34 @@ public class HttpClient implements IHttpClient<String> {
      * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL, or has a query or fragment.
      */
     public HttpClient(final OkHttpClient okHttpClient, final String baseUrl) {
+        this(okHttpClient, baseUrl, 0);
+    }
+
+    /**
+     * Constructs an HttpClient that retries failed requests.
+     *
+     * <p>A request is retried on HTTP 429, on HTTP 5xx and on network errors, waiting between attempts with
+     * exponential backoff, or for the time the {@code Retry-After} header asks for. Timeouts are not retried. A
+     * {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a network error only when it carries an
+     * {@code Idempotency-Key} header, because the request may already have been processed.</p>
+     *
+     * @param okHttpClient The OkHttp client used to execute requests.
+     * @param baseUrl      The base URL of the Resend API, e.g. {@code https://api.resend.com}.
+     * @param maxRetries   The maximum number of retries per request, unless a request sets its own through
+     *                     {@link RequestOptions}. Zero disables retries.
+     * @throws IllegalArgumentException If {@code baseUrl} is not a valid http(s) URL, has a query or fragment, or
+     *                                  {@code maxRetries} is negative.
+     */
+    public HttpClient(final OkHttpClient okHttpClient, final String baseUrl, final int maxRetries) {
         if (okHttpClient == null) {
             throw new IllegalArgumentException("okHttpClient must not be null");
         }
+        if (maxRetries < 0) {
+            throw new IllegalArgumentException("maxRetries must not be negative, got: " + maxRetries);
+        }
         this.httpClient = okHttpClient;
         this.baseUrl = normalizeBaseUrl(baseUrl);
+        this.maxRetries = maxRetries;
     }
 
     /**
@@ -98,6 +133,15 @@ public class HttpClient implements IHttpClient<String> {
      */
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    /**
+     * Gets the number of retries used when a request doesn't set its own.
+     *
+     * @return The default maximum number of retries; zero means retries are disabled.
+     */
+    public int getMaxRetries() {
+        return maxRetries;
     }
 
     /**
@@ -317,15 +361,92 @@ public class HttpClient implements IHttpClient<String> {
     }
 
     private AbstractHttpResponse<String> execute(final Request request, final RequestOptions requestOptions) {
-        Call call = httpClient.newCall(request);
-        if (requestOptions != null && requestOptions.getTimeout() != null) {
-            call.timeout().timeout(requestOptions.getTimeout().toNanos(), TimeUnit.NANOSECONDS);
+        int retries = requestOptions != null && requestOptions.getMaxRetries() != null
+                ? requestOptions.getMaxRetries()
+                : maxRetries;
+
+        for (int attempt = 0; ; attempt++) {
+            long delayMillis;
+            Call call = httpClient.newCall(request);
+            if (requestOptions != null && requestOptions.getTimeout() != null) {
+                call.timeout().timeout(requestOptions.getTimeout().toNanos(), TimeUnit.NANOSECONDS);
+            }
+            try (Response response = call.execute()) {
+                AbstractHttpResponse<String> result =
+                        new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
+                if (attempt >= retries || !isRetryable(request, response.code())) {
+                    return result;
+                }
+                delayMillis = retryDelayMillis(response, attempt);
+            } catch (IOException e) {
+                if (attempt >= retries || !isRetryable(request, e)) {
+                    throw new RuntimeException(e);
+                }
+                delayMillis = backoffMillis(attempt);
+            }
+            pause(delayMillis);
         }
-        try (Response response = call.execute()) {
-            return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    }
+
+    private static boolean isRetryable(final Request request, final int statusCode) {
+        if (statusCode == 429) {
+            return true;
         }
+        return statusCode >= 500 && mayRepeat(request);
+    }
+
+    private static boolean isRetryable(final Request request, final IOException failure) {
+        return !(failure instanceof InterruptedIOException) && mayRepeat(request);
+    }
+
+    private static boolean mayRepeat(final Request request) {
+        return !"POST".equals(request.method()) || request.header("Idempotency-Key") != null;
+    }
+
+    private static long retryDelayMillis(final Response response, final int attempt) {
+        String retryAfter = response.header("Retry-After");
+        if (retryAfter != null) {
+            long delayMillis = -1L;
+            try {
+                delayMillis = Long.parseLong(retryAfter.trim()) * 1000L;
+            } catch (NumberFormatException e) {
+                Date date = response.headers().getDate("Retry-After");
+                if (date != null) {
+                    delayMillis = date.getTime() - System.currentTimeMillis();
+                }
+            }
+            if (delayMillis >= 0L) {
+                return Math.min(delayMillis, MAX_RETRY_AFTER_MILLIS);
+            }
+        }
+        return backoffMillis(attempt);
+    }
+
+    private static long backoffMillis(final int attempt) {
+        long exponential = Math.min(MAX_RETRY_DELAY_MILLIS, MIN_RETRY_DELAY_MILLIS * (1L << Math.min(attempt, 10)));
+        return (long) (exponential * (0.75 + 0.25 * ThreadLocalRandom.current().nextDouble()));
+    }
+
+    private void pause(final long delayMillis) {
+        if (delayMillis <= 0L) {
+            return;
+        }
+        try {
+            sleep(delayMillis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Interrupted while waiting to retry a request", e);
+        }
+    }
+
+    /**
+     * Blocks the calling thread between retry attempts. Overridable so tests don't have to wait.
+     *
+     * @param millis How long to wait, in milliseconds.
+     * @throws InterruptedException If the thread is interrupted while waiting.
+     */
+    void sleep(final long millis) throws InterruptedException {
+        Thread.sleep(millis);
     }
 
     private static String normalizeBaseUrl(final String baseUrl) {

@@ -12,6 +12,7 @@ public class RequestOptions {
     private final String idempotencyKey;
     private final Map<String, String> additionalHeaders;
     private final Duration timeout;
+    private final Integer maxRetries;
 
     /**
      * Constructs a RequestOptions object using the provided builder.
@@ -22,6 +23,16 @@ public class RequestOptions {
         this.idempotencyKey = builder.idempotencyKey;
         this.additionalHeaders = Collections.unmodifiableMap(new HashMap<>(builder.additionalHeaders));
         this.timeout = builder.timeout;
+        this.maxRetries = builder.maxRetries;
+    }
+
+    /**
+     * Get the maximum number of retries for this request.
+     *
+     * @return The maximum number of retries, or {@code null} to use the client's configured default.
+     */
+    public Integer getMaxRetries() {
+        return maxRetries;
     }
 
     /**
@@ -69,6 +80,7 @@ public class RequestOptions {
         private String idempotencyKey;
         private final Map<String, String> additionalHeaders;
         private Duration timeout;
+        private Integer maxRetries;
 
         /**
          * Constructs a new Builder with empty additional headers map.
@@ -130,6 +142,29 @@ public class RequestOptions {
                 throw new IllegalArgumentException("timeout must not exceed " + MAX_TIMEOUT + ", got: " + timeout);
             }
             this.timeout = timeout;
+            return this;
+        }
+
+        /**
+         * Set the maximum number of times this request is retried after a retryable failure, overriding the
+         * client's default. Zero disables retries for this request.
+         *
+         * <p>A request is retried on HTTP 429, on HTTP 5xx and on network errors, waiting between attempts with
+         * exponential backoff (or the {@code Retry-After} header when the server sends one). Timeouts are not
+         * retried. A {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a network error only when it
+         * carries an idempotency key, because the request may already have been processed.</p>
+         *
+         * <p>Only the built-in {@code HttpClient} honors this option; a custom {@code IHttpClient} may ignore it.</p>
+         *
+         * @param maxRetries The maximum number of retries.
+         * @return The builder instance.
+         * @throws IllegalArgumentException If the value is negative.
+         */
+        public Builder maxRetries(int maxRetries) {
+            if (maxRetries < 0) {
+                throw new IllegalArgumentException("maxRetries must not be negative, got: " + maxRetries);
+            }
+            this.maxRetries = maxRetries;
             return this;
         }
 

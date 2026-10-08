@@ -88,6 +88,40 @@ Resend resend = Resend.builder()
 
 Create one `Resend` instance and reuse it: every service it returns shares the same HTTP client.
 
+### Retries and timeouts
+
+Retries are off by default. Set `maxRetries` on the builder to retry failed requests for every call:
+
+```java
+Resend resend = Resend.builder()
+    .apiKey("re_123")
+    .maxRetries(3)
+    .build();
+```
+
+A request is retried when the API answers `429` or any `5xx`, or when a network error occurs. The SDK waits between
+attempts with exponential backoff (starting at 500 ms, capped at 5 s, with jitter), or for as long as the
+`Retry-After` header asks for, up to 30 s. After the last attempt the final response is returned, so you still get
+the usual `ResendException`.
+
+A `POST` may already have been processed when a `5xx` or a network error happens, so it is retried on `429`
+always, but on `5xx` or network errors only when it carries an idempotency key. Timeouts are never retried.
+
+`RequestOptions` can override both settings for a single request. The timeout covers one whole attempt, from
+connecting to reading the full response, and replaces the client's `callTimeout` for that request:
+
+```java
+RequestOptions options = RequestOptions.builder()
+    .setIdempotencyKey("order-1234")
+    .maxRetries(5)
+    .timeout(Duration.ofSeconds(15))
+    .build();
+
+CreateEmailResponse data = resend.emails().send(params, options);
+```
+
+Per-request options are available on `emails().send(...)`, `batch().send(...)` and `contacts().imports().create(...)`.
+
 ### Custom HTTP client
 
 To take full control of the HTTP layer, pass your own `IHttpClient` with `.httpClient(...)`. For example, to use
@@ -114,6 +148,8 @@ Resend resend = Resend.builder()
     .build();
 ```
 
-A custom `httpClient` can't be combined with `baseUrl`, the timeouts or `proxy`; configure those on your client.
+A custom `httpClient` can't be combined with `baseUrl`, the timeouts, `maxRetries` or `proxy`; configure those on your
+client. To enable retries on the built-in `HttpClient`, pass the retry count as the third argument:
+`new HttpClient(okHttpClient, "https://api.resend.com", 3)`.
 
 You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-example)

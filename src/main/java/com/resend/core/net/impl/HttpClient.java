@@ -9,8 +9,9 @@ import com.resend.core.net.RequestOptions;
 import okhttp3.*;
 
 import java.io.File;
+import java.io.EOFException;
 import java.io.IOException;
-import java.io.InterruptedIOException;
+import java.net.SocketException;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,6 +37,8 @@ public class HttpClient implements IHttpClient<String> {
     private static final long MAX_RETRY_DELAY_MILLIS = 5000L;
 
     private static final long MAX_RETRY_AFTER_MILLIS = 30000L;
+
+    private static final int MAX_RETRY_AFTER_DIGITS = 9;
 
     /**
      * Lazily-initialized client shared by every service that isn't given one explicitly, so the whole SDK
@@ -84,10 +87,15 @@ public class HttpClient implements IHttpClient<String> {
     /**
      * Constructs an HttpClient that retries failed requests.
      *
-     * <p>A request is retried on HTTP 429, on HTTP 5xx and on network errors, waiting between attempts with
-     * exponential backoff, or for the time the {@code Retry-After} header asks for. Timeouts are not retried. A
-     * {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a network error only when it carries an
-     * {@code Idempotency-Key} header, because the request may already have been processed.</p>
+     * <p>A request is retried on HTTP 429, on HTTP 5xx and on connection failures (a refused or reset connection, or
+     * one closed mid-response), waiting between attempts with exponential backoff, or for the time the
+     * {@code Retry-After} header asks for. Timeouts and failures that a retry can't fix, such as an unknown host or
+     * a TLS error, are not retried. A {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a connection
+     * failure only when it carries an {@code Idempotency-Key} header, because the request may already have been
+     * processed.</p>
+     *
+     * <p>The waits between attempts block the calling thread and are not covered by the request timeout, which
+     * applies to each attempt; interrupting the thread ends the wait.</p>
      *
      * @param okHttpClient The OkHttp client used to execute requests.
      * @param baseUrl      The base URL of the Resend API, e.g. {@code https://api.resend.com}.
@@ -396,7 +404,7 @@ public class HttpClient implements IHttpClient<String> {
     }
 
     private static boolean isRetryable(final Request request, final IOException failure) {
-        return !(failure instanceof InterruptedIOException) && mayRepeat(request);
+        return (failure instanceof SocketException || failure instanceof EOFException) && mayRepeat(request);
     }
 
     private static boolean mayRepeat(final Request request) {
@@ -407,9 +415,12 @@ public class HttpClient implements IHttpClient<String> {
         String retryAfter = response.header("Retry-After");
         if (retryAfter != null) {
             long delayMillis = -1L;
-            try {
-                delayMillis = Long.parseLong(retryAfter.trim()) * 1000L;
-            } catch (NumberFormatException e) {
+            String seconds = retryAfter.trim();
+            if (seconds.matches("[0-9]+")) {
+                delayMillis = seconds.length() > MAX_RETRY_AFTER_DIGITS
+                        ? MAX_RETRY_AFTER_MILLIS
+                        : Long.parseLong(seconds) * 1000L;
+            } else {
                 Date date = response.headers().getDate("Retry-After");
                 if (date != null) {
                     delayMillis = date.getTime() - System.currentTimeMillis();

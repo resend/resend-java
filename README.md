@@ -99,13 +99,20 @@ Resend resend = Resend.builder()
     .build();
 ```
 
-A request is retried when the API answers `429` or any `5xx`, or when a network error occurs. The SDK waits between
-attempts with exponential backoff (starting at 500 ms, capped at 5 s, with jitter), or for as long as the
-`Retry-After` header asks for, up to 30 s. After the last attempt the final response is returned, so you still get
-the usual `ResendException`.
+A request is retried when the API answers `429` or any `5xx`, or when the connection fails (refused, reset, or closed
+mid-response). The SDK waits between attempts with exponential backoff (starting at 500 ms, capped at 5 s, with
+jitter), or for as long as the `Retry-After` header asks for, up to 30 s.
 
-A `POST` may already have been processed when a `5xx` or a network error happens, so it is retried on `429`
-always, but on `5xx` or network errors only when it carries an idempotency key. Timeouts are never retried.
+When the last attempt still gets an error response from the API, you get the usual `ResendException`. When the last
+attempt fails before any response arrives (a connection failure, a timeout, or a failure that retrying can't fix, such
+as an unknown host or a TLS error), the SDK throws a `RuntimeException` wrapping the underlying `IOException`.
+
+A `POST` may already have been processed when a `5xx` or a connection failure happens, so it is retried on `429`
+always, but on `5xx` or connection failures only when it carries an idempotency key. Timeouts are never retried.
+
+The waits between attempts block the calling thread and are not covered by the timeout, which applies to each
+attempt separately. In the worst case a request takes about `(maxRetries + 1)` attempts plus up to 30 s of waiting per
+retry, so keep `maxRetries` small for latency-sensitive code. Interrupting the thread ends the wait immediately.
 
 `RequestOptions` can override both settings for a single request. The timeout covers one whole attempt, from
 connecting to reading the full response, and replaces the client's `callTimeout` for that request:

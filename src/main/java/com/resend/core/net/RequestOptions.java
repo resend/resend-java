@@ -149,10 +149,12 @@ public class RequestOptions {
          * Set the maximum number of times this request is retried after a retryable failure, overriding the
          * client's default. Zero disables retries for this request.
          *
-         * <p>A request is retried on HTTP 429, on HTTP 5xx and on network errors, waiting between attempts with
-         * exponential backoff (or the {@code Retry-After} header when the server sends one). Timeouts are not
-         * retried. A {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a network error only when it
-         * carries an idempotency key, because the request may already have been processed.</p>
+         * <p>A request is retried on HTTP 429, on HTTP 5xx and on connection failures (a refused or reset
+         * connection, or one closed mid-response), waiting between attempts with exponential backoff (or the
+         * {@code Retry-After} header when the server sends one). Timeouts and failures that a retry can't fix, such
+         * as an unknown host or a TLS error, are not retried. A {@code POST} is retried on HTTP 429 always, but on
+         * HTTP 5xx or a connection failure only when it carries an idempotency key, because the request may already
+         * have been processed.</p>
          *
          * <p>Only the built-in {@code HttpClient} honors this option; a custom {@code IHttpClient} may ignore it.</p>
          *

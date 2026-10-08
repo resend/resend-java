@@ -365,10 +365,12 @@ public class Resend {
          * Sets how many times a failed request is retried. Defaults to 0, which disables retries; a single request
          * can override it with {@code RequestOptions.builder().maxRetries(...)}.
          *
-         * <p>A request is retried on HTTP 429, on HTTP 5xx and on network errors, waiting between attempts with
-         * exponential backoff, or for the time the {@code Retry-After} header asks for. Timeouts are not retried. A
-         * {@code POST} is retried on HTTP 429 always, but on HTTP 5xx or a network error only when it carries an
-         * idempotency key, because the request may already have been processed.</p>
+         * <p>A request is retried on HTTP 429, on HTTP 5xx and on connection failures (a refused or reset
+         * connection, or one closed mid-response), waiting between attempts with exponential backoff, or for the
+         * time the {@code Retry-After} header asks for. Timeouts and failures that a retry can't fix, such as an
+         * unknown host or a TLS error, are not retried. A {@code POST} is retried on HTTP 429 always, but on HTTP
+         * 5xx or a connection failure only when it carries an idempotency key, because the request may already have
+         * been processed.</p>
          *
          * @param maxRetries The maximum number of retries per request.
          * @return This builder.

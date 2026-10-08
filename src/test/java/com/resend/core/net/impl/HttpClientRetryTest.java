@@ -7,12 +7,17 @@ import okhttp3.*;
 import okio.Buffer;
 import org.junit.jupiter.api.Test;
 
+import javax.net.ssl.SSLHandshakeException;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
+import java.net.ProtocolException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -189,6 +195,70 @@ public class HttpClientRetryTest {
     }
 
     @Test
+    public void testRetry_TransientConnectionFailuresAreRetried() {
+        List<IOException> transientFailures = Arrays.<IOException>asList(
+                new ConnectException("refused"),
+                new SocketException("Connection reset"),
+                new SocketException("Broken pipe"),
+                new EOFException("unexpected end of stream"));
+
+        for (IOException failure : transientFailures) {
+            Script script = new Script(failure(failure), status(200));
+            RecordingClient client = client(script, 1);
+
+            AbstractHttpResponse<String> response = client.perform("/emails", "re_test", HttpMethod.GET, null, null);
+
+            assertEquals(200, response.getCode(), failure.toString());
+            assertEquals(2, script.requests.size(), failure.toString());
+            assertEquals(1, client.sleeps.size(), failure.toString());
+        }
+    }
+
+    @Test
+    public void testRetry_FailuresThatRetryingCannotFixAreNotRetried() {
+        List<IOException> permanentFailures = Arrays.<IOException>asList(
+                new UnknownHostException("api.resend.com"),
+                new SSLHandshakeException("PKIX path building failed"),
+                new ProtocolException("unexpected status line"),
+                new IOException("something else"));
+
+        for (IOException failure : permanentFailures) {
+            Script script = new Script(failure(failure), status(200));
+            RecordingClient client = client(script, 3);
+
+            RuntimeException thrown = assertThrows(RuntimeException.class,
+                    () -> client.perform("/emails", "re_test", HttpMethod.GET, null, null));
+
+            assertSame(failure, thrown.getCause());
+            assertEquals(1, script.requests.size(), failure.toString());
+            assertTrue(client.sleeps.isEmpty(), failure.toString());
+        }
+    }
+
+    @Test
+    public void testRetry_OversizedRetryAfterIsCappedInsteadOfOverflowing() {
+        for (String retryAfter : new String[]{"9223372036854775807", "9223372036854776", "99999999999999999999",
+                "1000000000", "31"}) {
+            Script script = new Script(status(429, retryAfter), status(200));
+            RecordingClient client = client(script, 1);
+
+            client.perform("/emails", "re_test", HttpMethod.GET, null, null);
+
+            assertEquals(Collections.singletonList(30_000L), client.sleeps, "Retry-After " + retryAfter);
+        }
+    }
+
+    @Test
+    public void testRetry_NegativeRetryAfterFallsBackToBackoff() {
+        Script script = new Script(status(429, "-5"), status(200));
+        RecordingClient client = client(script, 1);
+
+        client.perform("/emails", "re_test", HttpMethod.GET, null, null);
+
+        assertBackoff(client.sleeps.get(0), 0);
+    }
+
+    @Test
     public void testRetry_TimeoutsAreNotRetried() {
         List<IOException> timeouts = Arrays.<IOException>asList(
                 new SocketTimeoutException("connect timed out"),
@@ -242,7 +312,8 @@ public class HttpClientRetryTest {
                 assertTrue(thrown.getCause() instanceof InterruptedIOException,
                         "cause was " + thrown.getCause());
                 assertTrue(client.sleeps.isEmpty());
-                assertEquals(1, server.accepted.get() - before);
+                assertTrue(server.awaitAccepted(before + 1), "the server never saw the connection");
+                assertEquals(before + 1, server.accepted.get());
             }
         }
     }
@@ -467,6 +538,19 @@ public class HttpClientRetryTest {
 
         int port() {
             return socket.getLocalPort();
+        }
+
+        boolean awaitAccepted(final int expected) {
+            long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+            while (accepted.get() < expected && System.nanoTime() < deadline) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+            return accepted.get() >= expected;
         }
 
         @Override

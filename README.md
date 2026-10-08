@@ -114,8 +114,10 @@ The waits between attempts block the calling thread and are not covered by the t
 attempt separately. In the worst case a request takes about `(maxRetries + 1)` attempts plus up to 30 s of waiting per
 retry, so keep `maxRetries` small for latency-sensitive code. Interrupting the thread ends the wait immediately.
 
-`RequestOptions` can override both settings for a single request. The timeout covers one whole attempt, from
-connecting to reading the full response, and replaces the client's `callTimeout` for that request:
+`RequestOptions` can override both settings for a single request when you use the built-in HTTP client. The timeout
+covers one whole attempt, from connecting to reading the full response, and replaces the client's `callTimeout` for
+that request. A custom `IHttpClient` passed with `.httpClient(...)` receives the `RequestOptions` but may ignore the
+timeout and retries; configure those on that client instead:
 
 ```java
 RequestOptions options = RequestOptions.builder()
@@ -127,8 +129,9 @@ RequestOptions options = RequestOptions.builder()
 CreateEmailResponse data = resend.emails().send(params, options);
 ```
 
-Every method that calls the API has an overload that takes a `RequestOptions` as its last argument, so the same options
-work for reads, updates and deletes too:
+Every non-deprecated method that calls the API has an overload that takes a `RequestOptions` as its last argument, so
+the same options work for reads, updates and deletes too. Methods marked `@Deprecated`, such as everything on
+`audiences()`, don't have one:
 
 ```java
 ListEmailsResponseSuccess emails = resend.emails().list(

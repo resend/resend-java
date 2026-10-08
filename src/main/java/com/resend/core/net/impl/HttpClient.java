@@ -417,9 +417,10 @@ public class HttpClient implements IHttpClient<String> {
             long delayMillis = -1L;
             String seconds = retryAfter.trim();
             if (seconds.matches("[0-9]+")) {
-                delayMillis = seconds.length() > MAX_RETRY_AFTER_DIGITS
+                String significant = seconds.replaceFirst("^0+(?=[0-9])", "");
+                delayMillis = significant.length() > MAX_RETRY_AFTER_DIGITS
                         ? MAX_RETRY_AFTER_MILLIS
-                        : Long.parseLong(seconds) * 1000L;
+                        : Long.parseLong(significant) * 1000L;
             } else {
                 Date date = response.headers().getDate("Retry-After");
                 if (date != null) {

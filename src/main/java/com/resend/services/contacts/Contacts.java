@@ -434,7 +434,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(contactIdOrEmail)}.
+     *             {@code resend.contacts().topics().list(contactIdOrEmail)}.
      *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
@@ -450,7 +450,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(contactIdOrEmail)}.
+     *             {@code resend.contacts().topics().list(contactIdOrEmail)}.
      *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
@@ -471,7 +471,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(contactIdOrEmail, params)}.
+     *             {@code resend.contacts().topics().list(contactIdOrEmail, params)}.
      *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
@@ -488,7 +488,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(contactIdOrEmail, params)}.
+     *             {@code resend.contacts().topics().list(contactIdOrEmail, params)}.
      *             This method will be removed in a future version.
      *
      * @param contactIdOrEmail The contact ID or email address.
@@ -511,7 +511,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(options)}.
+     *             {@code resend.contacts().topics().update(options)}.
      *             This method will be removed in a future version.
      *
      * @param options The options containing the contact identifier and topic updates.
@@ -527,7 +527,7 @@ public class Contacts extends BaseService {
      *
      * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
      *             For contact-topics  operations, use the Contacts service instead:
-     *             {@code resend.contacts().topics.list(options)}.
+     *             {@code resend.contacts().topics().update(options)}.
      *             This method will be removed in a future version.
      *
      * @param options The options containing the contact identifier and topic updates.

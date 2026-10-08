@@ -349,7 +349,8 @@ public final class Emails extends BaseService {
      * Retrieves aggregate emails metrics (received, delivered, opened, etc.) across the
      * account, filtered and broken down according to the given options.
      *
-     * @param options The metrics query options; can be null.
+     * @param options The metrics query options; pass {@code null} for the default query, as in
+     *                {@code metrics(null, requestOptions)}.
      * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
      * @return The emails metrics.
      * @throws ResendException If an error occurs while retrieving the metrics.

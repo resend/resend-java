@@ -6,6 +6,7 @@ import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
 import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
+import com.resend.services.contacts.model.CreateContactImportOptions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.Invocation;
@@ -18,6 +19,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,9 +40,6 @@ public class RequestOptionsCoverageTest {
     private static final Set<String> WITHOUT_OPTIONS_VARIANT = new HashSet<>(Arrays.asList(
             "Emails.metrics()",
             "Webhooks.verify(VerifyWebhookOptions)"));
-
-    private static final Set<String> NOT_INVOKED = new HashSet<>(Collections.singletonList(
-            "ContactImports.create(CreateContactImportOptions, RequestOptions)"));
 
     @Test
     public void testEveryServiceMethodHasAnOverloadAcceptingRequestOptions() {
@@ -80,10 +79,6 @@ public class RequestOptionsCoverageTest {
                 if (params.length == 0 || params[params.length - 1] != RequestOptions.class) {
                     continue;
                 }
-                if (NOT_INVOKED.contains(describe(method))) {
-                    continue;
-                }
-
                 RequestOptions options = RequestOptions.builder().setIdempotencyKey("key-" + method.getName()).build();
                 Call call = call(service, method, options);
                 if (call.failure != null) {
@@ -115,10 +110,6 @@ public class RequestOptionsCoverageTest {
                 if (WITHOUT_OPTIONS_VARIANT.contains(describe(method)) && method.getName().equals("verify")) {
                     continue;
                 }
-                if (describe(method).equals("ContactImports.create(CreateContactImportOptions)")) {
-                    continue;
-                }
-
                 Call call = call(service, method, null);
                 if (call.failure != null) {
                     failures.add(describe(method) + " threw " + call.failure);
@@ -268,6 +259,11 @@ public class RequestOptionsCoverageTest {
         }
         if (type.isEnum()) {
             return type.getEnumConstants()[0];
+        }
+        if (type == CreateContactImportOptions.class) {
+            return CreateContactImportOptions.builder()
+                    .file("email\nperson@example.com\n".getBytes(StandardCharsets.UTF_8), "contacts.csv")
+                    .build();
         }
         if (mocks) {
             return mock(type, RequestOptionsCoverageTest::answerWithValidIdentifiers);

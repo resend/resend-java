@@ -249,6 +249,25 @@ public class HttpClientRetryTest {
     }
 
     @Test
+    public void testRetry_RetryAfterWithLeadingZerosIsReadAsTheSameNumber() {
+        Script small = new Script(status(429, "0000000001"), status(200));
+        RecordingClient smallClient = client(small, 1);
+        smallClient.perform("/emails", "re_test", HttpMethod.GET, null, null);
+        assertEquals(Collections.singletonList(1000L), smallClient.sleeps);
+
+        Script padded = new Script(status(429, "000000000000000000000031"), status(200));
+        RecordingClient paddedClient = client(padded, 1);
+        paddedClient.perform("/emails", "re_test", HttpMethod.GET, null, null);
+        assertEquals(Collections.singletonList(30_000L), paddedClient.sleeps);
+
+        Script zero = new Script(status(429, "0000000000"), status(200));
+        RecordingClient zeroClient = client(zero, 1);
+        AbstractHttpResponse<String> response = zeroClient.perform("/emails", "re_test", HttpMethod.GET, null, null);
+        assertEquals(200, response.getCode());
+        assertTrue(zeroClient.sleeps.isEmpty());
+    }
+
+    @Test
     public void testRetry_NegativeRetryAfterFallsBackToBackoff() {
         Script script = new Script(status(429, "-5"), status(200));
         RecordingClient client = client(script, 1);

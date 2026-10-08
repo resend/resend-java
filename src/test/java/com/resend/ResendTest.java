@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.net.impl.HttpClient;
 import com.resend.services.emails.Emails;
 import com.resend.services.emails.model.CreateEmailResponse;
@@ -212,6 +213,119 @@ public class ResendTest {
     public void testBuilder_RejectsNegativeTimeout() {
         assertThrows(IllegalArgumentException.class,
                 () -> Resend.builder().readTimeout(Duration.ofSeconds(-1)));
+    }
+
+    @Test
+    public void testBuilder_MaxRetries_ConfiguresBuiltInClientOnTopOfDefault() {
+        Resend resend = Resend.builder().apiKey("re_test").maxRetries(3).build();
+
+        HttpClient client = (HttpClient) resend.emails().getHttpClient();
+
+        assertEquals(3, client.getMaxRetries());
+        assertEquals(HttpClient.BASE_API, client.getBaseUrl());
+        assertSame(HttpClient.getDefault().getOkHttpClient(), client.getOkHttpClient());
+        assertEquals(0, HttpClient.getDefault().getMaxRetries(), "the shared default client must not change");
+    }
+
+    @Test
+    public void testBuilder_MaxRetries_CombinesWithTimeoutsAndBaseUrl() {
+        Resend resend = Resend.builder()
+                .apiKey("re_test")
+                .baseUrl("http://localhost:8080")
+                .readTimeout(Duration.ofSeconds(20))
+                .maxRetries(2)
+                .build();
+
+        HttpClient client = (HttpClient) resend.emails().getHttpClient();
+
+        assertEquals(2, client.getMaxRetries());
+        assertEquals("http://localhost:8080", client.getBaseUrl());
+        assertEquals(20_000, client.getOkHttpClient().readTimeoutMillis());
+    }
+
+    @Test
+    public void testBuilder_WithoutMaxRetries_DisablesRetries() {
+        Resend resend = Resend.builder().apiKey("re_test").readTimeout(Duration.ofSeconds(20)).build();
+
+        assertEquals(0, ((HttpClient) resend.emails().getHttpClient()).getMaxRetries());
+        assertEquals(0, ((HttpClient) new Resend("re_test").emails().getHttpClient()).getMaxRetries());
+    }
+
+    @Test
+    public void testBuilder_MaxRetries_RetriesRequestsThroughTheService() throws ResendException {
+        ScriptedStatuses stub = new ScriptedStatuses(429, 200);
+        OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(stub).build();
+        Resend resend = Resend.builder()
+                .apiKey("re_test")
+                .httpClient(new HttpClient(okHttp, "http://localhost:8080", 1))
+                .build();
+
+        CreateEmailResponse response = resend.emails().send(
+                EmailsUtil.createEmailOptions(), RequestOptions.builder().setIdempotencyKey("key-1").build());
+
+        assertEquals("49a3999c-0ce1-4ea6-ab68-afcd6dc2e794", response.getId());
+        assertEquals(2, stub.requests.size());
+        assertEquals("key-1", stub.requests.get(1).header("Idempotency-Key"));
+    }
+
+    @Test
+    public void testBuilder_RequestMaxRetries_OverridesClientDefaultThroughTheService() {
+        ScriptedStatuses stub = new ScriptedStatuses(429, 200);
+        OkHttpClient okHttp = new OkHttpClient.Builder().addInterceptor(stub).build();
+        Resend resend = Resend.builder()
+                .apiKey("re_test")
+                .httpClient(new HttpClient(okHttp, "http://localhost:8080", 3))
+                .build();
+
+        ResendException exception = assertThrows(ResendException.class, () -> resend.emails().send(
+                EmailsUtil.createEmailOptions(), RequestOptions.builder().maxRetries(0).build()));
+
+        assertEquals(429, exception.getStatusCode());
+        assertEquals(1, stub.requests.size());
+    }
+
+    @Test
+    public void testBuilder_MaxRetries_CannotBeCombinedWithCustomHttpClient() {
+        IHttpClient<String> custom = mock(IHttpClient.class);
+
+        assertThrows(IllegalStateException.class, () -> Resend.builder().apiKey("re_test")
+                .httpClient(custom).maxRetries(2).build());
+    }
+
+    @Test
+    public void testBuilder_RejectsNegativeMaxRetries() {
+        assertThrows(IllegalArgumentException.class, () -> Resend.builder().maxRetries(-1));
+    }
+
+    /**
+     * Answers each request with the next status code in order, repeating the last one, and asks to retry
+     * immediately so tests don't wait.
+     */
+    private static final class ScriptedStatuses implements Interceptor {
+
+        private final List<Request> requests = new ArrayList<>();
+        private final int[] codes;
+
+        ScriptedStatuses(final int... codes) {
+            this.codes = codes;
+        }
+
+        @Override
+        public Response intercept(final Chain chain) {
+            int code = codes[Math.min(requests.size(), codes.length - 1)];
+            requests.add(chain.request());
+            String body = code == 200
+                    ? "{\"id\":\"49a3999c-0ce1-4ea6-ab68-afcd6dc2e794\"}"
+                    : "{\"statusCode\":" + code + ",\"name\":\"rate_limit_exceeded\",\"message\":\"Slow down.\"}";
+            return new Response.Builder()
+                    .request(chain.request())
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(code)
+                    .message("stub")
+                    .header("Retry-After", "0")
+                    .body(ResponseBody.create(body, MediaType.get("application/json")))
+                    .build();
+        }
     }
 
     /**

@@ -98,7 +98,7 @@ public abstract class BaseService {
      * @param method         The HTTP method.
      * @param payload        The body payload (or null).
      * @param mediaType      The media type for the payload.
-     * @param requestOptions The options with additional headers.
+     * @param requestOptions The per-request options, or {@code null} to send the request without any.
      * @param responseType   The class to deserialize the response body into.
      * @param <T>            The response type.
      * @return The deserialized response.
@@ -107,7 +107,26 @@ public abstract class BaseService {
     protected <T> T execute(final String path, final HttpMethod method, final String payload,
                             final MediaType mediaType, final RequestOptions requestOptions,
                             final Class<T> responseType) throws ResendException {
-        return handle(httpClient.perform(path, apiKey, method, payload, mediaType, requestOptions), responseType);
+        return handle(request(path, method, payload, mediaType, requestOptions), responseType);
+    }
+
+    /**
+     * Performs a request and returns the raw response, for endpoints that don't return a JSON body to deserialize.
+     * Sends the request without options when {@code requestOptions} is {@code null}.
+     *
+     * @param path           The endpoint path.
+     * @param method         The HTTP method.
+     * @param payload        The body payload (or null).
+     * @param mediaType      The media type for the payload.
+     * @param requestOptions The per-request options, or {@code null} to send the request without any.
+     * @return The raw HTTP response.
+     */
+    protected AbstractHttpResponse<String> request(final String path, final HttpMethod method, final String payload,
+                                                   final MediaType mediaType, final RequestOptions requestOptions) {
+        if (requestOptions == null) {
+            return httpClient.perform(path, apiKey, method, payload, mediaType);
+        }
+        return httpClient.perform(path, apiKey, method, payload, mediaType, requestOptions);
     }
 
     /**

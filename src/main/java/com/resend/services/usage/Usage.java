@@ -3,6 +3,7 @@ package com.resend.services.usage;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.usage.model.UsageResponse;
 import okhttp3.MediaType;
@@ -38,6 +39,17 @@ public class Usage extends BaseService {
      * @throws ResendException If an error occurs while retrieving the usage data.
      */
     public UsageResponse get() throws ResendException {
-        return execute("/usage", HttpMethod.GET, null, MediaType.get("application/json"), UsageResponse.class);
+        return get((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves the caller's account-level usage and quota data.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The account's usage details.
+     * @throws ResendException If an error occurs while retrieving the usage data.
+     */
+    public UsageResponse get(RequestOptions requestOptions) throws ResendException {
+        return execute("/usage", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, UsageResponse.class);
     }
 }

@@ -45,9 +45,7 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while sending the email.
      */
     public CreateEmailResponse send(CreateEmailOptions createEmailOptions) throws ResendException {
-
-        String payload = super.resendMapper.writeValue(createEmailOptions);
-        return execute("/emails", HttpMethod.POST, payload, MediaType.get("application/json"), CreateEmailResponse.class);
+        return send(createEmailOptions, (RequestOptions) null);
     }
 
     /**
@@ -88,7 +86,19 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the email.
      */
     public Email get(String emailId) throws ResendException {
-            return execute("/emails/" + emailId, HttpMethod.GET, null, MediaType.get("application/json"), Email.class);
+        return get(emailId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves an email by its unique identifier.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved email's details.
+     * @throws ResendException If an error occurs while retrieving the email.
+     */
+    public Email get(String emailId, RequestOptions requestOptions) throws ResendException {
+            return execute("/emails/" + emailId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, Email.class);
     }
 
     /**
@@ -100,9 +110,22 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the email.
      */
     public UpdateEmailResponse update(String emailId, UpdateEmailOptions updateEmailOptions) throws ResendException {
+        return update(emailId, updateEmailOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Update the email by its unique identifier.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param updateEmailOptions The new data of the email.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved email's details.
+     * @throws ResendException If an error occurs while retrieving the email.
+     */
+    public UpdateEmailResponse update(String emailId, UpdateEmailOptions updateEmailOptions, RequestOptions requestOptions) throws ResendException {
 
         String payload = super.resendMapper.writeValue(updateEmailOptions);
-        return execute("/emails/" + emailId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateEmailResponse.class);
+        return execute("/emails/" + emailId, HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateEmailResponse.class);
     }
 
     /**
@@ -113,8 +136,20 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the email.
      */
     public CancelEmailResponse cancel(String emailId) throws ResendException {
+        return cancel(emailId, (RequestOptions) null);
+    }
 
-        return execute("/emails/" + emailId + "/cancel", HttpMethod.POST, "", MediaType.get("application/json"), CancelEmailResponse.class);
+    /**
+     * Cancels an email by its unique identifier.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved email's details.
+     * @throws ResendException If an error occurs while retrieving the email.
+     */
+    public CancelEmailResponse cancel(String emailId, RequestOptions requestOptions) throws ResendException {
+
+        return execute("/emails/" + emailId + "/cancel", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, CancelEmailResponse.class);
     }
 
     /**
@@ -125,8 +160,20 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while creating the shareable link.
      */
     public ShareEmailResponse share(String emailId) throws ResendException {
+        return share(emailId, (RequestOptions) null);
+    }
 
-        return execute("/emails/" + emailId + "/share", HttpMethod.POST, "", MediaType.get("application/json"), ShareEmailResponse.class);
+    /**
+     * Creates a shareable link for an email, using the default expiration.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The share link details.
+     * @throws ResendException If an error occurs while creating the shareable link.
+     */
+    public ShareEmailResponse share(String emailId, RequestOptions requestOptions) throws ResendException {
+
+        return execute("/emails/" + emailId + "/share", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, ShareEmailResponse.class);
     }
 
     /**
@@ -138,9 +185,22 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while creating the shareable link.
      */
     public ShareEmailResponse share(String emailId, ShareEmailOptions shareEmailOptions) throws ResendException {
+        return share(emailId, shareEmailOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates a shareable link for an email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param shareEmailOptions The options for the shareable link, such as its expiration.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The share link details.
+     * @throws ResendException If an error occurs while creating the shareable link.
+     */
+    public ShareEmailResponse share(String emailId, ShareEmailOptions shareEmailOptions, RequestOptions requestOptions) throws ResendException {
 
         String payload = super.resendMapper.writeValue(shareEmailOptions);
-        return execute("/emails/" + emailId + "/share", HttpMethod.POST, payload, MediaType.get("application/json"), ShareEmailResponse.class);
+        return execute("/emails/" + emailId + "/share", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, ShareEmailResponse.class);
     }
 
     /**
@@ -150,7 +210,18 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs during the emails list retrieval process.
      */
     public ListEmailsResponseSuccess list() throws ResendException {
-        return execute("/emails", HttpMethod.GET, null, MediaType.get("application/json"), ListEmailsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of emails and returns a List.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListEmailsResponseSuccess containing the list of emails.
+     * @throws ResendException If an error occurs during the emails list retrieval process.
+     */
+    public ListEmailsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/emails", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListEmailsResponseSuccess.class);
     }
 
     /**
@@ -161,8 +232,20 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs during the emails list retrieval process.
      */
     public ListEmailsResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of emails and returns a List.
+     *
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListEmailsResponseSuccess containing the paginated list of emails.
+     * @throws ResendException If an error occurs during the emails list retrieval process.
+     */
+    public ListEmailsResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/emails" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListEmailsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListEmailsResponseSuccess.class);
     }
 
     /**
@@ -174,7 +257,20 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attachment.
      */
     public AttachmentResponse getAttachment(String emailId, String attachmentId) throws ResendException {
-        return execute("/emails/" + emailId + "/attachments/" + attachmentId, HttpMethod.GET, null, MediaType.get("application/json"), AttachmentResponse.class);
+        return getAttachment(emailId, attachmentId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a single attachment from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param attachmentId The unique identifier of the attachment.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The attachment details including download URL.
+     * @throws ResendException If an error occurs while retrieving the attachment.
+     */
+    public AttachmentResponse getAttachment(String emailId, String attachmentId, RequestOptions requestOptions) throws ResendException {
+        return execute("/emails/" + emailId + "/attachments/" + attachmentId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, AttachmentResponse.class);
     }
 
     /**
@@ -185,7 +281,19 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attachments.
      */
     public ListAttachmentsResponse listAttachments(String emailId) throws ResendException {
-        return execute("/emails/" + emailId + "/attachments", HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
+        return listAttachments(emailId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves all attachments from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListAttachmentsResponse containing all attachments from the email.
+     * @throws ResendException If an error occurs while retrieving the attachments.
+     */
+    public ListAttachmentsResponse listAttachments(String emailId, RequestOptions requestOptions) throws ResendException {
+        return execute("/emails/" + emailId + "/attachments", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListAttachmentsResponse.class);
     }
 
     /**
@@ -197,8 +305,21 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attachments.
      */
     public ListAttachmentsResponse listAttachments(String emailId, ListParams params) throws ResendException {
+        return listAttachments(emailId, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of attachments from a sent email.
+     *
+     * @param emailId The unique identifier of the email.
+     * @param params The params used to customize the list (pagination).
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListAttachmentsResponse containing the paginated list of attachments.
+     * @throws ResendException If an error occurs while retrieving the attachments.
+     */
+    public ListAttachmentsResponse listAttachments(String emailId, ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/emails/" + emailId + "/attachments" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListAttachmentsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListAttachmentsResponse.class);
     }
 
     /**
@@ -221,7 +342,21 @@ public final class Emails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the metrics.
      */
     public EmailsMetricsResponse metrics(GetEmailsMetricsOptions options) throws ResendException {
+        return metrics(options, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves aggregate emails metrics (received, delivered, opened, etc.) across the
+     * account, filtered and broken down according to the given options.
+     *
+     * @param options The metrics query options; pass {@code null} for the default query, as in
+     *                {@code metrics(null, requestOptions)}.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The emails metrics.
+     * @throws ResendException If an error occurs while retrieving the metrics.
+     */
+    public EmailsMetricsResponse metrics(GetEmailsMetricsOptions options, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/emails/metrics" + (options == null ? "" : options.toQueryString());
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), EmailsMetricsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, EmailsMetricsResponse.class);
     }
 }

@@ -253,11 +253,12 @@ public class Resend {
      *
      * <p>Only the API key is required. The other options fall into two groups, which can't be combined:</p>
      * <ul>
-     *   <li>{@link #baseUrl}, the timeouts and {@link #proxy} configure the built-in HTTP client. When none of them
-     *   is set, the instance uses the same shared client as {@link Resend#Resend(String)}; otherwise it gets a
-     *   client derived from the shared one, which still reuses its connection pool.</li>
-     *   <li>{@link #httpClient} replaces the built-in client entirely. Configure the base URL, timeouts and proxy on
-     *   that client instead.</li>
+     *   <li>{@link #baseUrl}, the timeouts, {@link #maxRetries} and {@link #proxy} configure the built-in HTTP
+     *   client. When none of them is set, the instance uses the same shared client as
+     *   {@link Resend#Resend(String)}; otherwise it gets a client derived from the shared one, which still reuses
+     *   its connection pool.</li>
+     *   <li>{@link #httpClient} replaces the built-in client entirely. Configure the base URL, timeouts, retries and
+     *   proxy on that client instead.</li>
      * </ul>
      */
     public static final class Builder {
@@ -269,6 +270,7 @@ public class Resend {
         private Duration writeTimeout;
         private Duration callTimeout;
         private Proxy proxy;
+        private Integer maxRetries;
         private IHttpClient<String> httpClient;
 
         private Builder() {
@@ -360,11 +362,35 @@ public class Resend {
         }
 
         /**
+         * Sets how many times a failed request is retried. Defaults to 0, which disables retries; a single request
+         * can override it with {@code RequestOptions.builder().maxRetries(...)}.
+         *
+         * <p>A request is retried on HTTP 429, on HTTP 5xx and on connection failures (a refused or reset
+         * connection, or one closed mid-response), waiting between attempts with exponential backoff, or for the
+         * time the {@code Retry-After} header asks for. Timeouts and failures that a retry can't fix, such as an
+         * unknown host or a TLS error, are not retried. A {@code POST} is retried on HTTP 429 always, but on HTTP
+         * 5xx or a connection failure only when it carries an idempotency key, because the request may already have
+         * been processed.</p>
+         *
+         * @param maxRetries The maximum number of retries per request.
+         * @return This builder.
+         * @throws IllegalArgumentException If the value is negative.
+         */
+        public Builder maxRetries(final int maxRetries) {
+            if (maxRetries < 0) {
+                throw new IllegalArgumentException("maxRetries must not be negative, got: " + maxRetries);
+            }
+            this.maxRetries = maxRetries;
+            return this;
+        }
+
+        /**
          * Sets the HTTP client that executes every request, replacing the built-in one. Use it to plug in another
          * HTTP library, a test double, or {@code new HttpClient(okHttpClient, baseUrl)} to supply your own
          * {@code OkHttpClient} (which requires declaring the {@code com.squareup.okhttp3:okhttp-jvm} dependency).
          *
-         * <p>Can't be combined with {@link #baseUrl}, the timeouts or {@link #proxy}; set those on the client.</p>
+         * <p>Can't be combined with {@link #baseUrl}, the timeouts, {@link #maxRetries} or {@link #proxy}; set those
+         * on the client.</p>
          *
          * @param httpClient The HTTP client.
          * @return This builder.
@@ -388,8 +414,8 @@ public class Resend {
             }
             if (httpClient != null) {
                 if (configuresBuiltInClient()) {
-                    throw new IllegalStateException("baseUrl, timeouts and proxy configure the built-in HTTP client "
-                            + "and can't be combined with httpClient(...); set them on your client instead");
+                    throw new IllegalStateException("baseUrl, timeouts, maxRetries and proxy configure the built-in "
+                            + "HTTP client and can't be combined with httpClient(...); set them on your client instead");
                 }
                 return new Resend(apiKey, httpClient);
             }
@@ -397,7 +423,7 @@ public class Resend {
         }
 
         private boolean configuresBuiltInClient() {
-            return baseUrl != null || hasOkHttpOverrides();
+            return baseUrl != null || maxRetries != null || hasOkHttpOverrides();
         }
 
         private boolean hasOkHttpOverrides() {
@@ -431,7 +457,8 @@ public class Resend {
                 }
                 client = clientBuilder.build();
             }
-            return new HttpClient(client, baseUrl != null ? baseUrl : HttpClient.BASE_API);
+            return new HttpClient(client, baseUrl != null ? baseUrl : HttpClient.BASE_API,
+                    maxRetries != null ? maxRetries : 0);
         }
 
         private static Duration requireNonNegative(final String name, final Duration timeout) {

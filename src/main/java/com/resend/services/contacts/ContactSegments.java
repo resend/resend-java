@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
@@ -42,6 +43,18 @@ public class ContactSegments extends BaseService {
      * @throws ResendException If an error occurs during the segment addition process.
      */
     public AddContactToSegmentResponseSuccess add(AddContactToSegmentOptions options) throws ResendException {
+        return add(options, (RequestOptions) null);
+    }
+
+    /**
+     * Adds an existing contact to a segment.
+     *
+     * @param options The options containing the contact identifier (id or email) and segment ID.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The AddContactToSegmentResponseSuccess with the segment ID.
+     * @throws ResendException If an error occurs during the segment addition process.
+     */
+    public AddContactToSegmentResponseSuccess add(AddContactToSegmentOptions options, RequestOptions requestOptions) throws ResendException {
         if ((options.getId() == null && options.getEmail() == null) ||
                 (options.getId() != null && options.getEmail() != null)) {
             throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
@@ -54,7 +67,7 @@ public class ContactSegments extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments/" + options.getSegmentId();
 
-        return execute(endpoint, HttpMethod.POST, "", MediaType.get("application/json"), AddContactToSegmentResponseSuccess.class);
+        return execute(endpoint, HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, AddContactToSegmentResponseSuccess.class);
     }
 
     /**
@@ -65,6 +78,18 @@ public class ContactSegments extends BaseService {
      * @throws ResendException If an error occurs during the segment removal process.
      */
     public RemoveContactFromSegmentResponseSuccess remove(RemoveContactFromSegmentOptions options) throws ResendException {
+        return remove(options, (RequestOptions) null);
+    }
+
+    /**
+     * Removes an existing contact from a segment.
+     *
+     * @param options The options containing the contact identifier (id or email) and segment ID.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The RemoveContactFromSegmentResponseSuccess with the segment ID and deletion status.
+     * @throws ResendException If an error occurs during the segment removal process.
+     */
+    public RemoveContactFromSegmentResponseSuccess remove(RemoveContactFromSegmentOptions options, RequestOptions requestOptions) throws ResendException {
         if ((options.getId() == null && options.getEmail() == null) ||
                 (options.getId() != null && options.getEmail() != null)) {
             throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
@@ -77,7 +102,7 @@ public class ContactSegments extends BaseService {
         String contactIdOrEmail = options.getId() != null ? options.getId() : options.getEmail();
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments/" + options.getSegmentId();
 
-        return execute(endpoint, HttpMethod.DELETE, "", null, RemoveContactFromSegmentResponseSuccess.class);
+        return execute(endpoint, HttpMethod.DELETE, "", null, requestOptions, RemoveContactFromSegmentResponseSuccess.class);
     }
 
     /**
@@ -88,12 +113,24 @@ public class ContactSegments extends BaseService {
      * @throws ResendException If an error occurs during the segment list retrieval process.
      */
     public ListContactSegmentsResponseSuccess list(String contactIdOrEmail) throws ResendException {
+        return list(contactIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of segments that a contact belongs to.
+     *
+     * @param contactIdOrEmail The contact ID or email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The ListContactSegmentsResponseSuccess with the list of segments.
+     * @throws ResendException If an error occurs during the segment list retrieval process.
+     */
+    public ListContactSegmentsResponseSuccess list(String contactIdOrEmail, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
         String endpoint = "/contacts/" + contactIdOrEmail + "/segments";
-        return execute(endpoint, HttpMethod.GET, null, MediaType.get("application/json"), ListContactSegmentsResponseSuccess.class);
+        return execute(endpoint, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactSegmentsResponseSuccess.class);
     }
 
     /**
@@ -105,11 +142,24 @@ public class ContactSegments extends BaseService {
      * @throws ResendException If an error occurs during the segment list retrieval process.
      */
     public ListContactSegmentsResponseSuccess list(String contactId, ListParams params) throws ResendException {
+        return list(contactId, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of segments that a contact belongs to.
+     *
+     * @param contactId The contact ID.
+     * @param params           The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The ListContactSegmentsResponseSuccess with the paginated list of segments.
+     * @throws ResendException If an error occurs during the segment list retrieval process.
+     */
+    public ListContactSegmentsResponseSuccess list(String contactId, ListParams params, RequestOptions requestOptions) throws ResendException {
         if (contactId == null || contactId.isEmpty()) {
             throw new IllegalArgumentException("Contact ID must be provided");
         }
 
         String pathWithQuery = "/contacts/" + contactId + "/segments" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactSegmentsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactSegmentsResponseSuccess.class);
     }
 }

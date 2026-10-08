@@ -43,9 +43,7 @@ public class Batch extends BaseService {
      * @throws ResendException If an error occurs while sending batch emails.
      */
     public CreateBatchEmailsResponse send(List<CreateEmailOptions> emails) throws ResendException {
-
-        String payload = super.resendMapper.writeValue(emails);
-        return execute("/emails/batch", HttpMethod.POST, payload, MediaType.get("application/json"), CreateBatchEmailsResponse.class);
+        return send(emails, (RequestOptions) null);
     }
 
     /**
@@ -71,6 +69,18 @@ public class Batch extends BaseService {
      */
     public CreateBatchEmailsResponse create(List<CreateEmailOptions> emails) throws ResendException {
         return this.send(emails);
+    }
+
+    /**
+     * Creates and sends a batch of email messages based on the provided list of email requests.
+     *
+     * @param emails A list of {@link CreateEmailOptions} objects representing the email messages to be sent.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A {@link CreateBatchEmailsResponse} containing information about the created batch of emails.
+     * @throws ResendException if an error occurs during the creation and sending of the emails.
+     */
+    public CreateBatchEmailsResponse create(List<CreateEmailOptions> emails, RequestOptions requestOptions) throws ResendException {
+        return this.send(emails, requestOptions);
     }
 
 }

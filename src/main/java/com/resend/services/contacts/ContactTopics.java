@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.ListContactTopicsResponse;
 import com.resend.services.contacts.model.UpdateContactTopicsOptions;
@@ -44,11 +45,23 @@ public class ContactTopics extends BaseService {
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
     public ListContactTopicsResponse list(String contactIdOrEmail) throws ResendException {
+        return list(contactIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of topic subscriptions for a contact.
+     *
+     * @param contactIdOrEmail The contact ID or email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactTopicsResponse containing the list of topic subscriptions.
+     * @throws ResendException If an error occurs during the topic list retrieval process.
+     */
+    public ListContactTopicsResponse list(String contactIdOrEmail, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
-        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactTopicsResponse.class);
     }
 
     /**
@@ -60,12 +73,25 @@ public class ContactTopics extends BaseService {
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
     public ListContactTopicsResponse list(String contactIdOrEmail, ListParams params) throws ResendException {
+        return list(contactIdOrEmail, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of topic subscriptions for a contact.
+     *
+     * @param contactIdOrEmail The contact ID or email address.
+     * @param params           The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactTopicsResponse containing the paginated list of topic subscriptions.
+     * @throws ResendException If an error occurs during the topic list retrieval process.
+     */
+    public ListContactTopicsResponse list(String contactIdOrEmail, ListParams params, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
         String pathWithQuery = "/contacts/" + contactIdOrEmail + "/topics" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactTopicsResponse.class);
     }
 
     /**
@@ -76,6 +102,18 @@ public class ContactTopics extends BaseService {
      * @throws ResendException If an error occurs during the topic update process.
      */
     public UpdateContactTopicsResponse update(UpdateContactTopicsOptions options) throws ResendException {
+        return update(options, (RequestOptions) null);
+    }
+
+    /**
+     * Updates topic subscriptions for a contact.
+     *
+     * @param options The options containing the contact identifier and topic updates.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The UpdateContactTopicsResponse with the contact ID.
+     * @throws ResendException If an error occurs during the topic update process.
+     */
+    public UpdateContactTopicsResponse update(UpdateContactTopicsOptions options, RequestOptions requestOptions) throws ResendException {
         if ((options.getId() == null && options.getEmail() == null) ||
                 (options.getId() != null && options.getEmail() != null)) {
             throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
@@ -89,6 +127,6 @@ public class ContactTopics extends BaseService {
 
         // Serialize just the topics array (not the whole options object)
         String payload = super.resendMapper.writeValue(options.getTopics());
-        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateContactTopicsResponse.class);
     }
 }

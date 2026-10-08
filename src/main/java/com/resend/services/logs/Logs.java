@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.logs.model.GetLogResponseSuccess;
 import com.resend.services.logs.model.ListLogsResponseSuccess;
@@ -42,7 +43,19 @@ public class Logs extends BaseService {
      * @throws ResendException If an error occurs while retrieving the log.
      */
     public GetLogResponseSuccess get(String logId) throws ResendException {
-        return execute("/logs/" + logId, HttpMethod.GET, null, MediaType.get("application/json"), GetLogResponseSuccess.class);
+        return get(logId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a single log entry by its unique identifier.
+     *
+     * @param logId The unique identifier of the log.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved log details.
+     * @throws ResendException If an error occurs while retrieving the log.
+     */
+    public GetLogResponseSuccess get(String logId, RequestOptions requestOptions) throws ResendException {
+        return execute("/logs/" + logId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetLogResponseSuccess.class);
     }
 
     /**
@@ -52,7 +65,18 @@ public class Logs extends BaseService {
      * @throws ResendException If an error occurs during the logs list retrieval process.
      */
     public ListLogsResponseSuccess list() throws ResendException {
-        return execute("/logs", HttpMethod.GET, null, MediaType.get("application/json"), ListLogsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of logs.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListLogsResponseSuccess containing the list of logs.
+     * @throws ResendException If an error occurs during the logs list retrieval process.
+     */
+    public ListLogsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/logs", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListLogsResponseSuccess.class);
     }
 
     /**
@@ -63,7 +87,19 @@ public class Logs extends BaseService {
      * @throws ResendException If an error occurs during the logs list retrieval process.
      */
     public ListLogsResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of logs.
+     *
+     * @param params The params used to customize the list (limit, after, before).
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListLogsResponseSuccess containing the paginated list of logs.
+     * @throws ResendException If an error occurs during the logs list retrieval process.
+     */
+    public ListLogsResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/logs" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListLogsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListLogsResponseSuccess.class);
     }
 }

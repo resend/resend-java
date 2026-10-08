@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.events.model.*;
 import okhttp3.MediaType;
@@ -41,8 +42,20 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while creating the event.
      */
     public CreateEventResponseSuccess create(CreateEventOptions createEventOptions) throws ResendException {
+        return create(createEventOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates a new event.
+     *
+     * @param createEventOptions The options for creating an event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response containing the created event details.
+     * @throws ResendException If an error occurs while creating the event.
+     */
+    public CreateEventResponseSuccess create(CreateEventOptions createEventOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createEventOptions);
-        return execute("/events", HttpMethod.POST, payload, MediaType.get("application/json"), CreateEventResponseSuccess.class);
+        return execute("/events", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateEventResponseSuccess.class);
     }
 
     /**
@@ -53,7 +66,19 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while retrieving the event.
      */
     public Event get(String identifier) throws ResendException {
-        return execute("/events/" + identifier, HttpMethod.GET, null, MediaType.get("application/json"), Event.class);
+        return get(identifier, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves an event by its unique identifier or name.
+     *
+     * @param identifier The unique identifier (UUID) or name of the event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The event details.
+     * @throws ResendException If an error occurs while retrieving the event.
+     */
+    public Event get(String identifier, RequestOptions requestOptions) throws ResendException {
+        return execute("/events/" + identifier, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, Event.class);
     }
 
     /**
@@ -63,7 +88,18 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while listing the events.
      */
     public ListEventsResponseSuccess list() throws ResendException {
-        return execute("/events", HttpMethod.GET, null, MediaType.get("application/json"), ListEventsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Lists all events.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response containing the list of events.
+     * @throws ResendException If an error occurs while listing the events.
+     */
+    public ListEventsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/events", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListEventsResponseSuccess.class);
     }
 
     /**
@@ -74,8 +110,20 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while listing the events.
      */
     public ListEventsResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Lists all events with pagination support.
+     *
+     * @param params The pagination parameters.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response containing the list of events.
+     * @throws ResendException If an error occurs while listing the events.
+     */
+    public ListEventsResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/events" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListEventsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListEventsResponseSuccess.class);
     }
 
     /**
@@ -86,8 +134,20 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while updating the event.
      */
     public UpdateEventResponseSuccess update(UpdateEventOptions updateEventOptions) throws ResendException {
+        return update(updateEventOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Updates an existing event's schema.
+     *
+     * @param updateEventOptions The options for updating the event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response containing the updated event details.
+     * @throws ResendException If an error occurs while updating the event.
+     */
+    public UpdateEventResponseSuccess update(UpdateEventOptions updateEventOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateEventOptions);
-        return execute("/events/" + updateEventOptions.getIdentifier(), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateEventResponseSuccess.class);
+        return execute("/events/" + updateEventOptions.getIdentifier(), HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateEventResponseSuccess.class);
     }
 
     /**
@@ -98,7 +158,19 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while removing the event.
      */
     public RemoveEventResponseSuccess remove(String identifier) throws ResendException {
-        return execute("/events/" + identifier, HttpMethod.DELETE, "", null, RemoveEventResponseSuccess.class);
+        return remove(identifier, (RequestOptions) null);
+    }
+
+    /**
+     * Removes an event by its unique identifier or name.
+     *
+     * @param identifier The unique identifier (UUID) or name of the event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response indicating the event was deleted.
+     * @throws ResendException If an error occurs while removing the event.
+     */
+    public RemoveEventResponseSuccess remove(String identifier, RequestOptions requestOptions) throws ResendException {
+        return execute("/events/" + identifier, HttpMethod.DELETE, "", null, requestOptions, RemoveEventResponseSuccess.class);
     }
 
     /**
@@ -109,7 +181,19 @@ public class Events extends BaseService {
      * @throws ResendException If an error occurs while sending the event.
      */
     public SendEventResponseSuccess send(SendEventOptions sendEventOptions) throws ResendException {
+        return send(sendEventOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Sends an event to a contact.
+     *
+     * @param sendEventOptions The options for sending the event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response containing the sent event details.
+     * @throws ResendException If an error occurs while sending the event.
+     */
+    public SendEventResponseSuccess send(SendEventOptions sendEventOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(sendEventOptions);
-        return execute("/events/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendEventResponseSuccess.class);
+        return execute("/events/send", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, SendEventResponseSuccess.class);
     }
 }

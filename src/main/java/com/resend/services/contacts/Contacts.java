@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.contacts.model.*;
 import okhttp3.MediaType;
@@ -112,9 +113,27 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the Contact creation process.
      */
     public CreateContactResponseSuccess create(CreateContactOptions createContactOptions) throws ResendException {
+        return create(createContactOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates a global contact (not associated with any segment).
+     *
+     * <p>To add a contact to a segment, first create the global contact using this method,
+     * then use {@code contacts().segments().add(options)} to add it to specific segments.</p>
+     *
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code CreateContactOptions}
+     * are ignored. Use the workflow above for segment membership.</p>
+     *
+     * @param createContactOptions The Contact details.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The details of the created contact.
+     * @throws ResendException If an error occurs during the Contact creation process.
+     */
+    public CreateContactResponseSuccess create(CreateContactOptions createContactOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createContactOptions);
 
-        return execute("/contacts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateContactResponseSuccess.class);
+        return execute("/contacts", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateContactResponseSuccess.class);
     }
 
     /**
@@ -165,9 +184,25 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list(ListContactsOptions options) throws ResendException {
+        return list(options, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of contacts, optionally scoped to a segment.
+     *
+     * <p>If {@code options} contains a {@code segmentId} (or the deprecated {@code audienceId}),
+     * the contacts are fetched from that segment. When both are provided, {@code segmentId}
+     * takes precedence. If neither is set, all global contacts are returned.</p>
+     *
+     * @param options The options specifying an optional segment/audience ID.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactsResponseSuccess containing the list of contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListContactsOptions options, RequestOptions requestOptions) throws ResendException {
         String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String path = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
-        return execute(path, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
+        return execute(path, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactsResponseSuccess.class);
     }
 
     /**
@@ -183,10 +218,27 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list(ListContactsOptions options, ListParams params) throws ResendException {
+        return list(options, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of contacts, optionally scoped to a segment.
+     *
+     * <p>If {@code options} contains a {@code segmentId} (or the deprecated {@code audienceId}),
+     * the contacts are fetched from that segment. When both are provided, {@code segmentId}
+     * takes precedence. If neither is set, all global contacts are returned.</p>
+     *
+     * @param options The options specifying an optional segment/audience ID.
+     * @param params  The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactsResponseSuccess containing the paginated list of contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListContactsOptions options, ListParams params, RequestOptions requestOptions) throws ResendException {
         String resolvedId = options != null ? options.resolvedSegmentId() : null;
         String basePath = resolvedId != null ? "/segments/" + resolvedId + "/contacts" : "/contacts";
         String pathWithQuery = basePath + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactsResponseSuccess.class);
     }
 
     /**
@@ -196,7 +248,18 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list() throws ResendException {
-        return execute("/contacts", HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of global contacts (not associated with any segment).
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactsResponseSuccess containing the list of global contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/contacts", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactsResponseSuccess.class);
     }
 
     /**
@@ -207,8 +270,20 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contacts list retrieval process.
      */
     public ListContactsResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of global contacts (not associated with any segment).
+     *
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactsResponseSuccess containing the paginated list of global contacts.
+     * @throws ResendException If an error occurs during the contacts list retrieval process.
+     */
+    public ListContactsResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/contacts" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactsResponseSuccess.class);
     }
 
     /**
@@ -245,11 +320,23 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs while retrieving the contact.
      */
     public GetContactResponseSuccess get(String contactIdOrEmail) throws ResendException {
+        return get(contactIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a global contact by its unique identifier (not associated with any segment).
+     *
+     * @param contactIdOrEmail The contact's id or email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved contact details.
+     * @throws ResendException If an error occurs while retrieving the contact.
+     */
+    public GetContactResponseSuccess get(String contactIdOrEmail, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact id or email must be provided");
         }
 
-        return execute("/contacts/" + contactIdOrEmail, HttpMethod.GET, null, MediaType.get("application/json"), GetContactResponseSuccess.class);
+        return execute("/contacts/" + contactIdOrEmail, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetContactResponseSuccess.class);
     }
 
     /**
@@ -285,11 +372,24 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contact deletion process.
      */
     public RemoveContactResponseSuccess remove(String contactId) throws ResendException {
+        return remove(contactId, (RequestOptions) null);
+    }
+
+    /**
+     * Deletes a global contact based on the provided contact ID.
+     * Note: Global contacts can only be removed by ID, not by email.
+     *
+     * @param contactId The contact's id.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The RemoveContactsResponseSuccess with the details of the removed contact.
+     * @throws ResendException If an error occurs during the contact deletion process.
+     */
+    public RemoveContactResponseSuccess remove(String contactId, RequestOptions requestOptions) throws ResendException {
         if (contactId == null || contactId.isEmpty()) {
             throw new IllegalArgumentException("Contact id must be provided");
         }
 
-        return execute("/contacts/" + contactId, HttpMethod.DELETE, "", null, RemoveContactResponseSuccess.class);
+        return execute("/contacts/" + contactId, HttpMethod.DELETE, "", null, requestOptions, RemoveContactResponseSuccess.class);
     }
 
     /**
@@ -303,6 +403,21 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the contact patching process.
      */
     public UpdateContactResponseSuccess update(UpdateContactOptions params) throws ResendException {
+        return update(params, (RequestOptions) null);
+    }
+
+    /**
+     * Updates a global contact based on the provided contact ID or email.
+     *
+     * <p><strong>Note:</strong> The {@code segmentId} and {@code audienceId} fields in {@code UpdateContactOptions}
+     * are ignored. This method only updates global contacts.</p>
+     *
+     * @param params The object with identifier of the contact to patch.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The UpdateContactResponseSuccess with the details of the patched contact.
+     * @throws ResendException If an error occurs during the contact patching process.
+     */
+    public UpdateContactResponseSuccess update(UpdateContactOptions params, RequestOptions requestOptions) throws ResendException {
         if ((params.getId() == null && params.getEmail() == null) ||
                 (params.getId() != null && params.getEmail() != null)) {
             throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
@@ -311,7 +426,7 @@ public class Contacts extends BaseService {
         String pathParameter = params.getId() != null ? params.getId() : params.getEmail();
 
         String payload = super.resendMapper.writeValue(params);
-        return execute("/contacts/" + pathParameter, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactResponseSuccess.class);
+        return execute("/contacts/" + pathParameter, HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateContactResponseSuccess.class);
     }
 
     /**
@@ -327,11 +442,28 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
     public ListContactTopicsResponse getTopics(String contactIdOrEmail) throws ResendException {
+        return getTopics(contactIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(contactIdOrEmail)}.
+     *             This method will be removed in a future version.
+     *
+     * @param contactIdOrEmail The contact ID or email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactTopicsResponse containing the list of topic subscriptions.
+     * @throws ResendException If an error occurs during the topic list retrieval process.
+     */
+    public ListContactTopicsResponse getTopics(String contactIdOrEmail, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
-        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactTopicsResponse.class);
     }
 
     /**
@@ -348,12 +480,30 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the topic list retrieval process.
      */
     public ListContactTopicsResponse getTopics(String contactIdOrEmail, ListParams params) throws ResendException {
+        return getTopics(contactIdOrEmail, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(contactIdOrEmail, params)}.
+     *             This method will be removed in a future version.
+     *
+     * @param contactIdOrEmail The contact ID or email address.
+     * @param params           The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListContactTopicsResponse containing the paginated list of topic subscriptions.
+     * @throws ResendException If an error occurs during the topic list retrieval process.
+     */
+    public ListContactTopicsResponse getTopics(String contactIdOrEmail, ListParams params, RequestOptions requestOptions) throws ResendException {
         if (contactIdOrEmail == null || contactIdOrEmail.isEmpty()) {
             throw new IllegalArgumentException("Contact ID or email must be provided");
         }
 
         String pathWithQuery = "/contacts/" + contactIdOrEmail + "/topics" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactTopicsResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactTopicsResponse.class);
     }
 
     /**
@@ -369,6 +519,23 @@ public class Contacts extends BaseService {
      * @throws ResendException If an error occurs during the topic update process.
      */
     public UpdateContactTopicsResponse updateTopics(UpdateContactTopicsOptions options) throws ResendException {
+        return updateTopics(options, (RequestOptions) null);
+    }
+
+    /**
+     * Updates topic subscriptions for a contact.
+     *
+     * @deprecated This method is deprecated. Topics related operations have been moved to dedicated services.
+     *             For contact-topics  operations, use the Contacts service instead:
+     *             {@code resend.contacts().topics.list(options)}.
+     *             This method will be removed in a future version.
+     *
+     * @param options The options containing the contact identifier and topic updates.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The UpdateContactTopicsResponse with the contact ID.
+     * @throws ResendException If an error occurs during the topic update process.
+     */
+    public UpdateContactTopicsResponse updateTopics(UpdateContactTopicsOptions options, RequestOptions requestOptions) throws ResendException {
         if ((options.getId() == null && options.getEmail() == null) ||
                 (options.getId() != null && options.getEmail() != null)) {
             throw new IllegalArgumentException("Either 'id' or 'email' must be provided, but not both.");
@@ -382,6 +549,6 @@ public class Contacts extends BaseService {
 
         // Serialize just the topics array (not the whole options object)
         String payload = super.resendMapper.writeValue(options.getTopics());
-        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateContactTopicsResponse.class);
+        return execute("/contacts/" + contactIdOrEmail + "/topics", HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateContactTopicsResponse.class);
     }
 }

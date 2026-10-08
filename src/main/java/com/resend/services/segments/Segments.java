@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.segments.model.*;
 import okhttp3.MediaType;
@@ -41,8 +42,20 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the Segment creation process.
      */
     public CreateSegmentResponseSuccess create(CreateSegmentOptions createSegmentOptions) throws ResendException {
+        return create(createSegmentOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates a Segment.
+     *
+     * @param createSegmentOptions The Segment details.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The details of the created segment.
+     * @throws ResendException If an error occurs during the Segment creation process.
+     */
+    public CreateSegmentResponseSuccess create(CreateSegmentOptions createSegmentOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createSegmentOptions);
-        return execute("/segments", HttpMethod.POST, payload, MediaType.get("application/json"), CreateSegmentResponseSuccess.class);
+        return execute("/segments", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateSegmentResponseSuccess.class);
     }
 
     /**
@@ -52,7 +65,18 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
     public ListSegmentsResponseSuccess list() throws ResendException {
-        return execute("/segments", HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of segments and returns a ListSegmentsResponseSuccess.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListSegmentsResponseSuccess containing the list of segments.
+     * @throws ResendException If an error occurs during the segments list retrieval process.
+     */
+    public ListSegmentsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/segments", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListSegmentsResponseSuccess.class);
     }
 
     /**
@@ -63,8 +87,20 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
     public ListSegmentsResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of segments and returns a ListSegmentsResponseSuccess.
+     * @param params The params used to customize the list.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListSegmentsResponseSuccess containing the paginated list of segments.
+     * @throws ResendException If an error occurs during the segments list retrieval process.
+     */
+    public ListSegmentsResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/audiences" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListSegmentsResponseSuccess.class);
     }
 
     /**
@@ -75,7 +111,19 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs while retrieving the segment.
      */
     public GetSegmentResponseSuccess get(String id) throws ResendException {
-        return execute("/segments/" +id, HttpMethod.GET, null, MediaType.get("application/json"), GetSegmentResponseSuccess.class);
+        return get(id, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a segment by its unique identifier.
+     *
+     * @param id The unique identifier of the segment.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved segment details.
+     * @throws ResendException If an error occurs while retrieving the segment.
+     */
+    public GetSegmentResponseSuccess get(String id, RequestOptions requestOptions) throws ResendException {
+        return execute("/segments/" +id, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetSegmentResponseSuccess.class);
     }
 
     /**
@@ -87,8 +135,21 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs while updating the segment.
      */
     public UpdateSegmentResponseSuccess update(String id, UpdateSegmentOptions updateSegmentOptions) throws ResendException {
+        return update(id, updateSegmentOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Updates a segment by its unique identifier.
+     *
+     * @param id The unique identifier of the segment.
+     * @param updateSegmentOptions The new data for the segment.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response indicating the status of the segment update.
+     * @throws ResendException If an error occurs while updating the segment.
+     */
+    public UpdateSegmentResponseSuccess update(String id, UpdateSegmentOptions updateSegmentOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateSegmentOptions);
-        return execute("/segments/" + id, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateSegmentResponseSuccess.class);
+        return execute("/segments/" + id, HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateSegmentResponseSuccess.class);
     }
 
     /**
@@ -99,6 +160,18 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segment deletion process.
      */
     public RemoveSegmentResponseSuccess remove(String id) throws ResendException {
-        return execute("/segments/" +id, HttpMethod.DELETE, "", null, RemoveSegmentResponseSuccess.class);
+        return remove(id, (RequestOptions) null);
+    }
+
+    /**
+     * Deletes a segment based on the provided segment ID.
+     *
+     * @param id The unique identifier of the segment to delete.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The RemoveSegmentResponseSuccess with the details of the removed segment.
+     * @throws ResendException If an error occurs during the segment deletion process.
+     */
+    public RemoveSegmentResponseSuccess remove(String id, RequestOptions requestOptions) throws ResendException {
+        return execute("/segments/" +id, HttpMethod.DELETE, "", null, requestOptions, RemoveSegmentResponseSuccess.class);
     }
 }

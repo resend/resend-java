@@ -3,6 +3,7 @@ package com.resend.services.suppressions;
 import com.resend.core.exception.ResendException;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.suppressions.model.*;
 import okhttp3.MediaType;
@@ -48,8 +49,20 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs during the suppression creation process.
      */
     public AddSuppressionResponseSuccess add(AddSuppressionOptions addSuppressionOptions) throws ResendException {
+        return add(addSuppressionOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Adds an email address to the suppression list.
+     *
+     * @param addSuppressionOptions The suppression details.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The details of the added suppression.
+     * @throws ResendException If an error occurs during the suppression creation process.
+     */
+    public AddSuppressionResponseSuccess add(AddSuppressionOptions addSuppressionOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(addSuppressionOptions);
-        return execute("/suppressions", HttpMethod.POST, payload, MediaType.get("application/json"), AddSuppressionResponseSuccess.class);
+        return execute("/suppressions", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, AddSuppressionResponseSuccess.class);
     }
 
     /**
@@ -60,7 +73,19 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs during the suppression removal process.
      */
     public RemoveSuppressionResponseSuccess remove(String suppressionIdOrEmail) throws ResendException {
-        return execute("/suppressions/" + suppressionIdOrEmail, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveSuppressionResponseSuccess.class);
+        return remove(suppressionIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Removes a suppression by its unique identifier or by the suppressed email address.
+     *
+     * @param suppressionIdOrEmail The unique identifier or the suppressed email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The RemoveSuppressionResponseSuccess with the details of the removed suppression.
+     * @throws ResendException If an error occurs during the suppression removal process.
+     */
+    public RemoveSuppressionResponseSuccess remove(String suppressionIdOrEmail, RequestOptions requestOptions) throws ResendException {
+        return execute("/suppressions/" + suppressionIdOrEmail, HttpMethod.DELETE, null, MediaType.get("application/json"), requestOptions, RemoveSuppressionResponseSuccess.class);
     }
 
     /**
@@ -71,7 +96,19 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs while retrieving the suppression.
      */
     public GetSuppressionResponseSuccess get(String suppressionIdOrEmail) throws ResendException {
-        return execute("/suppressions/" + suppressionIdOrEmail, HttpMethod.GET, null, MediaType.get("application/json"), GetSuppressionResponseSuccess.class);
+        return get(suppressionIdOrEmail, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a suppression by its unique identifier or by the suppressed email address.
+     *
+     * @param suppressionIdOrEmail The unique identifier or the suppressed email address.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved suppression details.
+     * @throws ResendException If an error occurs while retrieving the suppression.
+     */
+    public GetSuppressionResponseSuccess get(String suppressionIdOrEmail, RequestOptions requestOptions) throws ResendException {
+        return execute("/suppressions/" + suppressionIdOrEmail, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetSuppressionResponseSuccess.class);
     }
 
     /**
@@ -81,7 +118,18 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs during the suppressions list retrieval process.
      */
     public ListSuppressionsResponseSuccess list() throws ResendException {
-        return execute("/suppressions", HttpMethod.GET, null, MediaType.get("application/json"), ListSuppressionsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of suppressions.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListSuppressionsResponseSuccess containing the list of suppressions.
+     * @throws ResendException If an error occurs during the suppressions list retrieval process.
+     */
+    public ListSuppressionsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/suppressions", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListSuppressionsResponseSuccess.class);
     }
 
     /**
@@ -92,7 +140,19 @@ public class Suppressions extends BaseService {
      * @throws ResendException If an error occurs during the suppressions list retrieval process.
      */
     public ListSuppressionsResponseSuccess list(ListSuppressionsParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of suppressions with optional filtering by origin.
+     *
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListSuppressionsResponseSuccess containing the paginated list of suppressions.
+     * @throws ResendException If an error occurs during the suppressions list retrieval process.
+     */
+    public ListSuppressionsResponseSuccess list(ListSuppressionsParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/suppressions" + (params != null ? params.toQueryString() : "");
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSuppressionsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListSuppressionsResponseSuccess.class);
     }
 }

@@ -6,6 +6,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.apikeys.model.CreateApiKeyResponse;
 import com.resend.services.apikeys.model.CreateApiKeyOptions;
@@ -46,8 +47,20 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the API key creation process.
      */
     public CreateApiKeyResponse create(CreateApiKeyOptions createApiKeyOptions) throws ResendException {
+        return create(createApiKeyOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates an API key.
+     *
+     * @param createApiKeyOptions The request the API key details.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response indicating the state of the api key.
+     * @throws ResendException If an error occurs during the API key creation process.
+     */
+    public CreateApiKeyResponse create(CreateApiKeyOptions createApiKeyOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createApiKeyOptions);
-        return execute("/api-keys", HttpMethod.POST, payload, MediaType.get("application/json"), CreateApiKeyResponse.class);
+        return execute("/api-keys", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateApiKeyResponse.class);
     }
 
     /**
@@ -57,7 +70,18 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api keys list retrieval process.
      */
     public ListApiKeysResponse list() throws ResendException {
-        return execute("/api-keys", HttpMethod.GET, null, MediaType.get("application/json"), ListApiKeysResponse.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of api keys and returns a ListApiKeysResponse.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListApiKeysResponse containing the list of api keys.
+     * @throws ResendException If an error occurs during the api keys list retrieval process.
+     */
+    public ListApiKeysResponse list(RequestOptions requestOptions) throws ResendException {
+        return execute("/api-keys", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListApiKeysResponse.class);
     }
 
     /**
@@ -68,8 +92,20 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api keys list retrieval process.
      */
     public ListApiKeysResponse list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of api keys and returns a ListApiKeysResponse.
+     * @param params The params used to customize the list.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListApiKeysResponse containing the paginated list of api keys.
+     * @throws ResendException If an error occurs during the api keys list retrieval process.
+     */
+    public ListApiKeysResponse list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/api-keys" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListApiKeysResponse.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListApiKeysResponse.class);
     }
 
     /**
@@ -81,8 +117,21 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api key update process.
      */
     public UpdateApiKeyResponseSuccess update(String apiKeyId, UpdateApiKeyOptions updateApiKeyOptions) throws ResendException {
+        return update(apiKeyId, updateApiKeyOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Updates an api key by its unique identifier.
+     *
+     * @param apiKeyId The unique identifier of the api key to update.
+     * @param updateApiKeyOptions The new data for the api key.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The response indicating the status of the api key update.
+     * @throws ResendException If an error occurs during the api key update process.
+     */
+    public UpdateApiKeyResponseSuccess update(String apiKeyId, UpdateApiKeyOptions updateApiKeyOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateApiKeyOptions);
-        return execute("/api-keys/" + apiKeyId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateApiKeyResponseSuccess.class);
+        return execute("/api-keys/" + apiKeyId, HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateApiKeyResponseSuccess.class);
     }
 
     /**
@@ -93,7 +142,19 @@ public final class ApiKeys extends BaseService {
      * @throws ResendException If an error occurs during the api key deletion process.
      */
     public boolean remove(String apiKeyId) throws ResendException {
-        AbstractHttpResponse<String> response = httpClient.perform("/api-keys/" + apiKeyId, super.apiKey, HttpMethod.DELETE, "", null);
+        return remove(apiKeyId, (RequestOptions) null);
+    }
+
+    /**
+     * Deletes an api key based on the provided api key ID and returns a boolean response.
+     *
+     * @param apiKeyId The unique identifier of the api key to delete.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A boolean representing the result of the api key deletion operation.
+     * @throws ResendException If an error occurs during the api key deletion process.
+     */
+    public boolean remove(String apiKeyId, RequestOptions requestOptions) throws ResendException {
+        AbstractHttpResponse<String> response = request("/api-keys/" + apiKeyId, HttpMethod.DELETE, "", null, requestOptions);
 
         if (!response.isSuccessful()) {
             throw new ResendException(response.getCode(), response.getBody());

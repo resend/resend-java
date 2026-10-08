@@ -126,11 +126,23 @@ public class ContactImports extends BaseService {
      * @throws ResendException If an error occurs while retrieving the contact import.
      */
     public GetContactImportResponseSuccess get(String contactImportId) throws ResendException {
+        return get(contactImportId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a single contact import by its ID.
+     *
+     * @param contactImportId The contact import ID.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved contact import details.
+     * @throws ResendException If an error occurs while retrieving the contact import.
+     */
+    public GetContactImportResponseSuccess get(String contactImportId, RequestOptions requestOptions) throws ResendException {
         if (contactImportId == null || contactImportId.isEmpty()) {
             throw new IllegalArgumentException("Contact import ID must be provided");
         }
 
-        return execute("/contacts/imports/" + contactImportId, HttpMethod.GET, null, MediaType.get("application/json"), GetContactImportResponseSuccess.class);
+        return execute("/contacts/imports/" + contactImportId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetContactImportResponseSuccess.class);
     }
 
     /**
@@ -140,7 +152,18 @@ public class ContactImports extends BaseService {
      * @throws ResendException If an error occurs during the contact imports list retrieval process.
      */
     public ListContactImportsResponseSuccess list() throws ResendException {
-        return execute("/contacts/imports", HttpMethod.GET, null, MediaType.get("application/json"), ListContactImportsResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of contact imports.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The list of contact imports.
+     * @throws ResendException If an error occurs during the contact imports list retrieval process.
+     */
+    public ListContactImportsResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/contacts/imports", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactImportsResponseSuccess.class);
     }
 
     /**
@@ -151,8 +174,20 @@ public class ContactImports extends BaseService {
      * @throws ResendException If an error occurs during the contact imports list retrieval process.
      */
     public ListContactImportsResponseSuccess list(ListContactImportsParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of contact imports, optionally filtered by status.
+     *
+     * @param params The query parameters used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The list of contact imports matching the supplied parameters.
+     * @throws ResendException If an error occurs during the contact imports list retrieval process.
+     */
+    public ListContactImportsResponseSuccess list(ListContactImportsParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/contacts/imports" + buildQueryString(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListContactImportsResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListContactImportsResponseSuccess.class);
     }
 
     private static String buildQueryString(ListContactImportsParams params) {

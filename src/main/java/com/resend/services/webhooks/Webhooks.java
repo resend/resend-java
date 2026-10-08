@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.webhooks.model.CreateWebhookOptions;
 import com.resend.services.webhooks.model.CreateWebhookResponseSuccess;
@@ -59,8 +60,20 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook creation process.
      */
     public CreateWebhookResponseSuccess create(CreateWebhookOptions createWebhookOptions) throws ResendException {
+        return create(createWebhookOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Creates a webhook based on the provided CreateWebhookOptions and returns a CreateWebhookResponseSuccess.
+     *
+     * @param createWebhookOptions The request object containing the webhook creation details.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A CreateWebhookResponseSuccess representing the result of the webhook creation operation.
+     * @throws ResendException If an error occurs during the webhook creation process.
+     */
+    public CreateWebhookResponseSuccess create(CreateWebhookOptions createWebhookOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createWebhookOptions);
-        return execute("/webhooks", HttpMethod.POST, payload, MediaType.get("application/json"), CreateWebhookResponseSuccess.class);
+        return execute("/webhooks", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateWebhookResponseSuccess.class);
     }
 
     /**
@@ -72,8 +85,21 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook update process.
      */
     public UpdateWebhookResponseSuccess update(String webhookId, UpdateWebhookOptions updateWebhookOptions) throws ResendException {
+        return update(webhookId, updateWebhookOptions, (RequestOptions) null);
+    }
+
+    /**
+     * Updates a webhook based on the provided webhook ID and UpdateWebhookOptions, and returns an UpdateWebhookResponseSuccess.
+     *
+     * @param webhookId The unique identifier of the webhook to update.
+     * @param updateWebhookOptions The object containing the information to be updated.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return An UpdateWebhookResponseSuccess representing the result of the webhook update operation.
+     * @throws ResendException If an error occurs during the webhook update process.
+     */
+    public UpdateWebhookResponseSuccess update(String webhookId, UpdateWebhookOptions updateWebhookOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateWebhookOptions);
-        return execute("/webhooks/" + webhookId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateWebhookResponseSuccess.class);
+        return execute("/webhooks/" + webhookId, HttpMethod.PATCH, payload, MediaType.get("application/json"), requestOptions, UpdateWebhookResponseSuccess.class);
     }
 
     /**
@@ -84,7 +110,19 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook retrieval process.
      */
     public GetWebhookResponseSuccess get(String webhookId) throws ResendException {
-        return execute("/webhooks/" + webhookId, HttpMethod.GET, null, MediaType.get("application/json"), GetWebhookResponseSuccess.class);
+        return get(webhookId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a webhook based on the provided webhook ID and returns a Webhook object.
+     *
+     * @param webhookId The unique identifier of the webhook to retrieve.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A Webhook object representing the retrieved webhook.
+     * @throws ResendException If an error occurs during the webhook retrieval process.
+     */
+    public GetWebhookResponseSuccess get(String webhookId, RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks/" + webhookId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetWebhookResponseSuccess.class);
     }
 
     /**
@@ -94,7 +132,18 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook list retrieval process.
      */
     public ListWebhooksResponseSuccess list() throws ResendException {
-        return execute("/webhooks", HttpMethod.GET, null, MediaType.get("application/json"), ListWebhooksResponseSuccess.class);
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of webhooks and returns a ListWebhooksResponseSuccess.
+     *
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhooksResponseSuccess containing the list of webhooks.
+     * @throws ResendException If an error occurs during the webhook list retrieval process.
+     */
+    public ListWebhooksResponseSuccess list(RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks", HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListWebhooksResponseSuccess.class);
     }
 
     /**
@@ -105,8 +154,20 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook list retrieval process.
      */
     public ListWebhooksResponseSuccess list(ListParams params) throws ResendException {
+        return list(params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of webhooks and returns a ListWebhooksResponseSuccess.
+     *
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhooksResponseSuccess containing the paginated list of webhooks.
+     * @throws ResendException If an error occurs during the webhook list retrieval process.
+     */
+    public ListWebhooksResponseSuccess list(ListParams params, RequestOptions requestOptions) throws ResendException {
         String pathWithQuery = "/webhooks" + URLHelper.parse(params);
-        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhooksResponseSuccess.class);
+        return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListWebhooksResponseSuccess.class);
     }
 
     /**
@@ -117,7 +178,19 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the events.
      */
     public ListWebhookEventsResponseSuccess listEvents(String webhookId) throws ResendException {
-        return listEvents(webhookId, null);
+        return listEvents(webhookId, (ListWebhookEventsParams) null, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a list of events delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhookEventsResponseSuccess containing the webhook events.
+     * @throws ResendException If an error occurs while retrieving the events.
+     */
+    public ListWebhookEventsResponseSuccess listEvents(String webhookId, RequestOptions requestOptions) throws ResendException {
+        return listEvents(webhookId, (ListWebhookEventsParams) null, requestOptions);
     }
 
     /**
@@ -129,8 +202,21 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the events.
      */
     public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params) throws ResendException {
+        return listEvents(webhookId, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of events delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhookEventsResponseSuccess containing the webhook events.
+     * @throws ResendException If an error occurs while retrieving the events.
+     */
+    public ListWebhookEventsResponseSuccess listEvents(String webhookId, ListWebhookEventsParams params, RequestOptions requestOptions) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        return execute("/webhooks/" + webhookId + "/events" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventsResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events" + query, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListWebhookEventsResponseSuccess.class);
     }
 
     /**
@@ -142,7 +228,20 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the event.
      */
     public GetWebhookEventResponseSuccess getEvent(String webhookId, String eventId) throws ResendException {
-        return execute("/webhooks/" + webhookId + "/events/" + eventId, HttpMethod.GET, null, MediaType.get("application/json"), GetWebhookEventResponseSuccess.class);
+        return getEvent(webhookId, eventId, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a single event delivered to a webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return The retrieved webhook event.
+     * @throws ResendException If an error occurs while retrieving the event.
+     */
+    public GetWebhookEventResponseSuccess getEvent(String webhookId, String eventId, RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks/" + webhookId + "/events/" + eventId, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, GetWebhookEventResponseSuccess.class);
     }
 
     /**
@@ -154,7 +253,20 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while replaying the event.
      */
     public ReplayWebhookEventResponseSuccess replayEvent(String webhookId, String eventId) throws ResendException {
-        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/replay", HttpMethod.POST, "", MediaType.get("application/json"), ReplayWebhookEventResponseSuccess.class);
+        return replayEvent(webhookId, eventId, (RequestOptions) null);
+    }
+
+    /**
+     * Queues one more delivery of a webhook event to its webhook.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ReplayWebhookEventResponseSuccess containing the replayed event ID.
+     * @throws ResendException If an error occurs while replaying the event.
+     */
+    public ReplayWebhookEventResponseSuccess replayEvent(String webhookId, String eventId, RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/replay", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, ReplayWebhookEventResponseSuccess.class);
     }
 
     /**
@@ -165,7 +277,19 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while rotating the signing secret.
      */
     public RotateWebhookSigningSecretResponseSuccess rotateSigningSecret(String webhookId) throws ResendException {
-        return execute("/webhooks/" + webhookId + "/signing-secret/rotate", HttpMethod.POST, "", MediaType.get("application/json"), RotateWebhookSigningSecretResponseSuccess.class);
+        return rotateSigningSecret(webhookId, (RequestOptions) null);
+    }
+
+    /**
+     * Rotates the signing secret of a webhook. The previous secret keeps working for 24 hours.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A RotateWebhookSigningSecretResponseSuccess containing the webhook ID and the new signing secret.
+     * @throws ResendException If an error occurs while rotating the signing secret.
+     */
+    public RotateWebhookSigningSecretResponseSuccess rotateSigningSecret(String webhookId, RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks/" + webhookId + "/signing-secret/rotate", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, RotateWebhookSigningSecretResponseSuccess.class);
     }
 
     /**
@@ -177,7 +301,20 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attempts.
      */
     public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId) throws ResendException {
-        return listEventAttempts(webhookId, eventId, null);
+        return listEventAttempts(webhookId, eventId, (ListWebhookEventAttemptsParams) null, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves the delivery attempts for a webhook event.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhookEventAttemptsResponseSuccess containing the delivery attempts.
+     * @throws ResendException If an error occurs while retrieving the attempts.
+     */
+    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, RequestOptions requestOptions) throws ResendException {
+        return listEventAttempts(webhookId, eventId, (ListWebhookEventAttemptsParams) null, requestOptions);
     }
 
     /**
@@ -190,8 +327,22 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs while retrieving the attempts.
      */
     public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params) throws ResendException {
+        return listEventAttempts(webhookId, eventId, params, (RequestOptions) null);
+    }
+
+    /**
+     * Retrieves a paginated list of delivery attempts for a webhook event.
+     *
+     * @param webhookId The unique identifier of the webhook.
+     * @param eventId The unique identifier of the webhook event.
+     * @param params The params used to customize the list.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A ListWebhookEventAttemptsResponseSuccess containing the delivery attempts.
+     * @throws ResendException If an error occurs while retrieving the attempts.
+     */
+    public ListWebhookEventAttemptsResponseSuccess listEventAttempts(String webhookId, String eventId, ListWebhookEventAttemptsParams params, RequestOptions requestOptions) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListWebhookEventAttemptsResponseSuccess.class);
+        return execute("/webhooks/" + webhookId + "/events/" + eventId + "/attempts" + query, HttpMethod.GET, null, MediaType.get("application/json"), requestOptions, ListWebhookEventAttemptsResponseSuccess.class);
     }
 
     /**
@@ -202,7 +353,19 @@ public final class Webhooks extends BaseService {
      * @throws ResendException If an error occurs during the webhook deletion process.
      */
     public RemoveWebhookResponseSuccess remove(String webhookId) throws ResendException {
-        return execute("/webhooks/" + webhookId, HttpMethod.DELETE, "", null, RemoveWebhookResponseSuccess.class);
+        return remove(webhookId, (RequestOptions) null);
+    }
+
+    /**
+     * Deletes a webhook based on the provided webhook ID and returns a RemoveWebhookResponseSuccess.
+     *
+     * @param webhookId The unique identifier of the webhook to delete.
+     * @param requestOptions The per-request options (timeout, retries, idempotency key, headers), or {@code null} for none.
+     * @return A RemoveWebhookResponseSuccess representing the result of the webhook deletion operation.
+     * @throws ResendException If an error occurs during the webhook deletion process.
+     */
+    public RemoveWebhookResponseSuccess remove(String webhookId, RequestOptions requestOptions) throws ResendException {
+        return execute("/webhooks/" + webhookId, HttpMethod.DELETE, "", null, requestOptions, RemoveWebhookResponseSuccess.class);
     }
 
     /**

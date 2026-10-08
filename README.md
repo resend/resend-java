@@ -127,7 +127,20 @@ RequestOptions options = RequestOptions.builder()
 CreateEmailResponse data = resend.emails().send(params, options);
 ```
 
-Per-request options are available on `emails().send(...)`, `batch().send(...)` and `contacts().imports().create(...)`.
+Every method that calls the API has an overload that takes a `RequestOptions` as its last argument, so the same options
+work for reads, updates and deletes too:
+
+```java
+ListEmailsResponseSuccess emails = resend.emails().list(
+    ListParams.builder().limit(50).build(),
+    RequestOptions.builder().timeout(Duration.ofSeconds(5)).add("X-Trace-Id", traceId).build());
+
+resend.domains().verify("domain_id", RequestOptions.builder().maxRetries(2).build());
+```
+
+Pass `null` as the options (or use the overload without them) to send the request with the client's defaults. The
+idempotency key only has an effect on endpoints that support it. A literal `null` as the sole argument can make a call
+ambiguous between overloads, for example `topics().list(null)`; cast it, as in `list((ListParams) null)`.
 
 ### Custom HTTP client
 

@@ -112,12 +112,16 @@ public class RequestOptions {
         }
 
         /**
-         * Set the timeout for this request, covering the whole call from connecting to reading the full response.
+         * Set a call timeout for this request, bounding the whole call from connecting to reading the full response.
          * It overrides the client's {@code callTimeout} for this request only.
+         *
+         * <p>The client's connect, read and write timeouts (10 seconds each by default) still apply, so this option
+         * can shorten a request but can't make it wait longer than those limits. To allow longer requests, raise
+         * them with {@link com.resend.Resend.Builder}.</p>
          *
          * <p>Only the built-in {@code HttpClient} honors this option; a custom {@code IHttpClient} may ignore it.</p>
          *
-         * @param timeout The timeout; {@link Duration#ZERO} means no timeout.
+         * @param timeout The call timeout; {@link Duration#ZERO} disables only the call timeout.
          * @return The builder instance.
          * @throws IllegalArgumentException If the timeout is negative, or too large to be expressed in nanoseconds
          *                                  (more than {@code Long.MAX_VALUE} nanoseconds, about 292 years).

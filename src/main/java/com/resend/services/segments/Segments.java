@@ -63,7 +63,7 @@ public class Segments extends BaseService {
      * @throws ResendException If an error occurs during the segments list retrieval process.
      */
     public ListSegmentsResponseSuccess list(ListParams params) throws ResendException {
-        String pathWithQuery = "/audiences" + URLHelper.parse(params);
+        String pathWithQuery = "/segments" + URLHelper.parse(params);
         return execute(pathWithQuery, HttpMethod.GET, null, MediaType.get("application/json"), ListSegmentsResponseSuccess.class);
     }
 

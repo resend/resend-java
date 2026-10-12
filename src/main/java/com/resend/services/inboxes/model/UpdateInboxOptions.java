@@ -84,11 +84,14 @@ public class UpdateInboxOptions {
          * Build a new UpdateInboxOptions object.
          *
          * @return A new UpdateInboxOptions object.
-         * @throws IllegalArgumentException if neither {@code name} nor {@code from_name} is set.
+         * @throws IllegalArgumentException if neither {@code name} nor {@code from_name} is set, or {@code name} is blank.
          */
         public UpdateInboxOptions build() {
             if (name == null && fromName == null) {
                 throw new IllegalArgumentException("At least one of name or from_name must be provided");
+            }
+            if (name != null && name.trim().isEmpty()) {
+                throw new IllegalArgumentException("name must not be blank");
             }
             return new UpdateInboxOptions(this);
         }

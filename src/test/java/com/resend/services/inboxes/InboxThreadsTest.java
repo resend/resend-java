@@ -164,6 +164,7 @@ public class InboxThreadsTest {
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder().build());
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder()
                 .addLabelIds(LABEL_ID).removeLabelIds(LABEL_ID).build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder().addLabelIds().build());
     }
 
     @Test

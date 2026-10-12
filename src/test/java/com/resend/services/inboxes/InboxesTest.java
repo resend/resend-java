@@ -121,6 +121,7 @@ public class InboxesTest {
     public void testBuilders_RequireFields() {
         assertThrows(IllegalArgumentException.class, () -> CreateInboxOptions.builder().name("Support").build());
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxOptions.builder().build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxOptions.builder().name(" ").build());
         assertEquals("", UpdateInboxOptions.builder().fromName("").build().getFromName());
     }
 

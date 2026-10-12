@@ -179,7 +179,7 @@ public class InboxThread {
     }
 
     /**
-     * Get true only when every email in the thread is read.
+     * Get whether every email in the thread is read.
      *
      * @return True only when every email in the thread is read.
      */

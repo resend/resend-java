@@ -59,7 +59,7 @@ public class InboxThreadSearchResult extends InboxThread {
     }
 
     /**
-     * Get where {@code query} matched the email in {@code matched_email_id}, as text fragments with each match wrapped in {@code **}, keyed by {@code subject}, {@code body}, {@code from}, {@code to}, {@code cc}, {@code bcc} or {@code attachments}. Only keys with a match are present. Empty when there is no {@code query}.
+     * Get the places where {@code query} matched the email in {@code matched_email_id}, as text fragments with each match wrapped in {@code **}, keyed by {@code subject}, {@code body}, {@code from}, {@code to}, {@code cc}, {@code bcc} or {@code attachments}. Only keys with a match are present. Empty when there is no {@code query}.
      *
      * @return Where {@code query} matched the email in {@code matched_email_id}, as text fragments with each match wrapped in {@code **}, keyed by {@code subject}, {@code body}, {@code from}, {@code to}, {@code cc}, {@code bcc} or {@code attachments}. Only keys with a match are present. Empty when there is no {@code query}.
      */

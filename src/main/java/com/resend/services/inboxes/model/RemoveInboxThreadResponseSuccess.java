@@ -55,7 +55,7 @@ public class RemoveInboxThreadResponseSuccess {
     }
 
     /**
-     * Get true when this call moved the thread to {@code trash}. False when the thread was already there.
+     * Get whether this call moved the thread to {@code trash}. False when the thread was already there.
      *
      * @return True when this call moved the thread to {@code trash}. False when the thread was already there.
      */

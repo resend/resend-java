@@ -314,8 +314,12 @@ public class ForwardInboxThreadEmailOptions {
          * Build a new ForwardInboxThreadEmailOptions object.
          *
          * @return A new ForwardInboxThreadEmailOptions object.
+         * @throws IllegalArgumentException if {@code to} is null or empty.
          */
         public ForwardInboxThreadEmailOptions build() {
+            if (to == null || to.isEmpty()) {
+                throw new IllegalArgumentException("At least one to recipient must be provided");
+            }
             return new ForwardInboxThreadEmailOptions(this);
         }
     }

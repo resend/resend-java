@@ -39,7 +39,7 @@ public enum InboxAgentAction {
     }
 
     /**
-     * Creates a InboxAgentAction from a string value.
+     * Creates an InboxAgentAction from a string value.
      *
      * @param value The string value.
      * @return The corresponding InboxAgentAction.

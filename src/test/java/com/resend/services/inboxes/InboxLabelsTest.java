@@ -73,6 +73,11 @@ public class InboxLabelsTest {
     }
 
     @Test
+    public void testCreateLabelBuilder_RequiresName() {
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxLabelOptions.builder().color("#E93D82").build());
+    }
+
+    @Test
     public void testUpdateLabel_Success() throws ResendException {
         when(httpClient.perform(eq(LABELS_PATH + "/" + LABEL_ID), anyString(), eq(HttpMethod.PATCH),
                 eq("{\"color\":\"#F76B15\"}"), any(MediaType.class)))

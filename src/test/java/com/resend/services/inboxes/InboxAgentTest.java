@@ -84,6 +84,11 @@ public class InboxAgentTest {
     }
 
     @Test
+    public void testUpdateAgentBuilder_RequiresAField() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxAgentOptions.builder().build());
+    }
+
+    @Test
     public void testAgentAction_UnknownValue_Throws() {
         assertEquals(InboxAgentAction.MARK_AS_SPAM, InboxAgentAction.fromValue("mark_as_spam"));
         assertThrows(IllegalArgumentException.class, () -> InboxAgentAction.fromValue("send_email"));

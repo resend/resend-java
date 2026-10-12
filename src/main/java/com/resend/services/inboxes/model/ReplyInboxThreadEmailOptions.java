@@ -289,9 +289,26 @@ public class ReplyInboxThreadEmailOptions {
          * Build a new ReplyInboxThreadEmailOptions object.
          *
          * @return A new ReplyInboxThreadEmailOptions object.
+         * @throws IllegalArgumentException if both {@code html} and {@code text} are null or blank.
          */
         public ReplyInboxThreadEmailOptions build() {
+            if (isBlank(html) && isBlank(text)) {
+                throw new IllegalArgumentException("At least one of html or text must contain more than whitespace");
+            }
             return new ReplyInboxThreadEmailOptions(this);
+        }
+
+        private static boolean isBlank(String value) {
+            if (value == null) {
+                return true;
+            }
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (!Character.isWhitespace(c) && !Character.isSpaceChar(c)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

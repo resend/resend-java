@@ -313,9 +313,33 @@ public class CreateInboxDraftOptions {
          * Build a new CreateInboxDraftOptions object.
          *
          * @return A new CreateInboxDraftOptions object.
+         * @throws IllegalArgumentException if every content field is empty, or only one of {@code thread_id} and {@code reply_to_email_id} is set.
          */
         public CreateInboxDraftOptions build() {
+            if (isEmpty(to) && isEmpty(cc) && isEmpty(bcc) && isBlank(subject) && isBlank(text) && isBlank(html)) {
+                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text or html must be non-empty");
+            }
+            if ((threadId == null) != (replyToEmailId == null)) {
+                throw new IllegalArgumentException("thread_id and reply_to_email_id must be provided together");
+            }
             return new CreateInboxDraftOptions(this);
+        }
+
+        private static boolean isBlank(String value) {
+            if (value == null) {
+                return true;
+            }
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (!Character.isWhitespace(c) && !Character.isSpaceChar(c)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static boolean isEmpty(List<String> values) {
+            return values == null || values.isEmpty();
         }
     }
 }

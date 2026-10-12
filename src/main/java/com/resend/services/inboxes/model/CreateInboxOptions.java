@@ -134,9 +134,26 @@ public class CreateInboxOptions {
          * Build a new CreateInboxOptions object.
          *
          * @return A new CreateInboxOptions object.
+         * @throws IllegalArgumentException if {@code email_address} is null or blank.
          */
         public CreateInboxOptions build() {
+            if (isBlank(emailAddress)) {
+                throw new IllegalArgumentException("email_address must not be null or blank");
+            }
             return new CreateInboxOptions(this);
+        }
+
+        private static boolean isBlank(String value) {
+            if (value == null) {
+                return true;
+            }
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (!Character.isWhitespace(c) && !Character.isSpaceChar(c)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

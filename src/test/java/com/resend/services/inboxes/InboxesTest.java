@@ -118,6 +118,13 @@ public class InboxesTest {
     }
 
     @Test
+    public void testBuilders_RequireFields() {
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxOptions.builder().name("Support").build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxOptions.builder().build());
+        assertEquals("", UpdateInboxOptions.builder().fromName("").build().getFromName());
+    }
+
+    @Test
     public void testUpdateInbox_Success() throws ResendException {
         when(httpClient.perform(eq("/inboxes/" + INBOX_ID), anyString(), eq(HttpMethod.PATCH), eq("{\"from_name\":\"Ada from Support\"}"), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"inbox\",\"id\":\"" + INBOX_ID + "\"}", true));

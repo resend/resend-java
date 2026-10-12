@@ -84,8 +84,12 @@ public class UpdateInboxOptions {
          * Build a new UpdateInboxOptions object.
          *
          * @return A new UpdateInboxOptions object.
+         * @throws IllegalArgumentException if neither {@code name} nor {@code from_name} is set.
          */
         public UpdateInboxOptions build() {
+            if (name == null && fromName == null) {
+                throw new IllegalArgumentException("At least one of name or from_name must be provided");
+            }
             return new UpdateInboxOptions(this);
         }
     }

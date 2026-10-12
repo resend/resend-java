@@ -242,8 +242,14 @@ public class ListInboxThreadsParams {
          * Builds a new ListInboxThreadsParams instance.
          *
          * @return A new ListInboxThreadsParams.
+         * @throws IllegalArgumentException if both {@code after} and {@code before} are set.
          */
         public ListInboxThreadsParams build() {
+            boolean hasAfter = after != null && !after.isEmpty();
+            boolean hasBefore = before != null && !before.isEmpty();
+            if (hasAfter && hasBefore) {
+                throw new IllegalArgumentException("after and before cannot be used together");
+            }
             return new ListInboxThreadsParams(this);
         }
     }

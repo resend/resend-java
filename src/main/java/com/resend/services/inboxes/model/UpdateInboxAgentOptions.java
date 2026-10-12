@@ -137,8 +137,12 @@ public class UpdateInboxAgentOptions {
          * Build a new UpdateInboxAgentOptions object.
          *
          * @return A new UpdateInboxAgentOptions object.
+         * @throws IllegalArgumentException if no field is set.
          */
         public UpdateInboxAgentOptions build() {
+            if (fields.isEmpty()) {
+                throw new IllegalArgumentException("At least one of instructions, tone or enabled_actions must be provided");
+            }
             return new UpdateInboxAgentOptions(this);
         }
     }

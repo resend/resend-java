@@ -84,9 +84,26 @@ public class CreateInboxLabelOptions {
          * Build a new CreateInboxLabelOptions object.
          *
          * @return A new CreateInboxLabelOptions object.
+         * @throws IllegalArgumentException if {@code name} is null or blank.
          */
         public CreateInboxLabelOptions build() {
+            if (isBlank(name)) {
+                throw new IllegalArgumentException("name must not be null or blank");
+            }
             return new CreateInboxLabelOptions(this);
+        }
+
+        private static boolean isBlank(String value) {
+            if (value == null) {
+                return true;
+            }
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (!Character.isWhitespace(c) && !Character.isSpaceChar(c)) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -96,11 +96,21 @@ public class InboxThreadEmailsTest {
     }
 
     @Test
+    public void testReplyBuilder_RequiresBody() {
+        assertThrows(IllegalArgumentException.class, () -> ReplyInboxThreadEmailOptions.builder().subject("Re: hi").text("  ").build());
+    }
+
+    @Test
+    public void testForwardBuilder_RequiresTo() {
+        assertThrows(IllegalArgumentException.class, () -> ForwardInboxThreadEmailOptions.builder().text("FYI").build());
+    }
+
+    @Test
     public void testReply_ValidationError_ThrowsResendException() throws ResendException {
         when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/reply"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(422, "{\"name\":\"validation_error\",\"message\":\"Missing body\"}", false));
 
-        ReplyInboxThreadEmailOptions options = ReplyInboxThreadEmailOptions.builder().subject("Re: hi").build();
+        ReplyInboxThreadEmailOptions options = ReplyInboxThreadEmailOptions.builder().text("Thanks").build();
         ResendException ex = assertThrows(ResendException.class, () -> emails.reply(INBOX_ID, THREAD_ID, EMAIL_ID, options));
         assertEquals(422, (int) ex.getStatusCode());
     }

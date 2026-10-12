@@ -85,6 +85,17 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testCreateDraftBuilder_Validation() {
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().to(java.util.Collections.<String>emptyList()).build());
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().text("Hi").threadId(THREAD_ID).build());
+    }
+
+    @Test
+    public void testUpdateDraftBuilder_RequiresAField() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxDraftOptions.builder().build());
+    }
+
+    @Test
     public void testGetDraft_Success() throws ResendException {
         when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, DRAFT_JSON, true));

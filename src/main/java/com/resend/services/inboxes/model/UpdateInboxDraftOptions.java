@@ -214,8 +214,12 @@ public class UpdateInboxDraftOptions {
          * Build a new UpdateInboxDraftOptions object.
          *
          * @return A new UpdateInboxDraftOptions object.
+         * @throws IllegalArgumentException if no field is set.
          */
         public UpdateInboxDraftOptions build() {
+            if (fields.isEmpty()) {
+                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text or html must be provided");
+            }
             return new UpdateInboxDraftOptions(this);
         }
     }

@@ -160,6 +160,19 @@ public class InboxThreadsTest {
     }
 
     @Test
+    public void testUpdateThreadBuilder_Validation() {
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder().build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder()
+                .addLabelIds(LABEL_ID).removeLabelIds(LABEL_ID).build());
+    }
+
+    @Test
+    public void testParamsBuilders_RejectBothCursors() {
+        assertThrows(IllegalArgumentException.class, () -> ListInboxThreadsParams.builder().after(THREAD_ID).before(THREAD_ID).build());
+        assertThrows(IllegalArgumentException.class, () -> SearchInboxThreadsParams.builder().after(THREAD_ID).before(THREAD_ID).build());
+    }
+
+    @Test
     public void testFolder_UnknownValue_Throws() {
         assertEquals(InboxFolder.TRASH, InboxFolder.fromValue("trash"));
         assertThrows(IllegalArgumentException.class, () -> MoveInboxThreadFolder.fromValue("sent"));

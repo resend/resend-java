@@ -35,7 +35,7 @@ public enum InboxFolder {
     }
 
     /**
-     * Creates a InboxFolder from a string value.
+     * Creates an InboxFolder from a string value.
      *
      * @param value The string value.
      * @return The corresponding InboxFolder.

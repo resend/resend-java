@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -190,8 +191,15 @@ public class UpdateInboxThreadOptions {
          * Build a new UpdateInboxThreadOptions object.
          *
          * @return A new UpdateInboxThreadOptions object.
+         * @throws IllegalArgumentException if no field is set, or a label ID is both added and removed.
          */
         public UpdateInboxThreadOptions build() {
+            if (read == null && folder == null && labelId == null && addLabelIds == null && removeLabelIds == null) {
+                throw new IllegalArgumentException("At least one of read, folder, label_id, add_label_ids or remove_label_ids must be provided");
+            }
+            if (addLabelIds != null && removeLabelIds != null && !Collections.disjoint(addLabelIds, removeLabelIds)) {
+                throw new IllegalArgumentException("A label ID cannot be both added and removed in the same request");
+            }
             return new UpdateInboxThreadOptions(this);
         }
     }

@@ -92,7 +92,7 @@ public class InboxesTest {
 
     @Test
     public void testGetInboxByEmail_Success() throws ResendException {
-        when(httpClient.perform(eq("/inboxes/support@acme.com"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+        when(httpClient.perform(eq("/inboxes/support%40acme.com"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, INBOX_JSON, true));
 
         GetInboxResponseSuccess response = inboxes.get("support@acme.com");
@@ -107,6 +107,14 @@ public class InboxesTest {
         assertEquals(2, (int) response.getDrafts());
         assertEquals("2026-08-05T14:03:11.229Z", response.getLastReceived());
         assertEquals("2026-08-01T09:12:44.512Z", response.getCreatedAt());
+    }
+
+    @Test
+    public void testGetInboxByEmail_EncodesPercentAndPlus() throws ResendException {
+        when(httpClient.perform(eq("/inboxes/a%25b%2Bc%40acme.com"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, INBOX_JSON, true));
+
+        assertEquals(INBOX_ID, inboxes.get("a%b+c@acme.com").getId());
     }
 
     @Test

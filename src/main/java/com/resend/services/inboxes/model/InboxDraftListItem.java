@@ -39,6 +39,9 @@ public class InboxDraftListItem {
     @JsonProperty("updated_at")
     private String updatedAt;
 
+    @JsonProperty("attachments")
+    private List<InboxDraftAttachment> attachments;
+
     /**
      * Default constructor
      */
@@ -59,8 +62,9 @@ public class InboxDraftListItem {
      * @param threadId       The Thread ID when the draft is a reply. {@code null} otherwise.
      * @param replyToEmailId The Email ID the draft replies to. {@code null} otherwise.
      * @param updatedAt      The timestamp when the draft was last saved.
+     * @param attachments    The files stored on the draft.
      */
-    public InboxDraftListItem(String id, String type, List<String> to, List<String> cc, List<String> bcc, String subject, String snippet, String threadId, String replyToEmailId, String updatedAt) {
+    public InboxDraftListItem(String id, String type, List<String> to, List<String> cc, List<String> bcc, String subject, String snippet, String threadId, String replyToEmailId, String updatedAt, List<InboxDraftAttachment> attachments) {
         this.id = id;
         this.type = type;
         this.to = to;
@@ -71,6 +75,7 @@ public class InboxDraftListItem {
         this.threadId = threadId;
         this.replyToEmailId = replyToEmailId;
         this.updatedAt = updatedAt;
+        this.attachments = attachments;
     }
 
     /**
@@ -161,5 +166,14 @@ public class InboxDraftListItem {
      */
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    /**
+     * Get the files stored on the draft.
+     *
+     * @return The files stored on the draft.
+     */
+    public List<InboxDraftAttachment> getAttachments() {
+        return attachments;
     }
 }

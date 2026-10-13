@@ -3,6 +3,7 @@ package com.resend.services.inboxes.model;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.resend.services.emails.model.Attachment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,8 @@ import java.util.Map;
 
 /**
  * Represents a request to update a draft.
- * Send at least one of {@code to}, {@code cc}, {@code bcc}, {@code subject}, {@code text} or {@code html}.
+ * Send at least one of {@code to}, {@code cc}, {@code bcc}, {@code subject}, {@code text}, {@code html} or
+ * {@code attachments}. Sending {@code attachments} replaces every attachment on the draft.
  * Omitted fields are left unchanged. Setting {@code text} or {@code html} replaces the whole body,
  * so the body part you omit becomes {@code null}. The merged draft must contain at least one non-empty field,
  * and its combined recipients cannot exceed 50.
@@ -88,6 +90,16 @@ public class UpdateInboxDraftOptions {
      */
     public String getText() {
         return (String) fields.get("text");
+    }
+
+    /**
+     * Get the files to store on the draft.
+     *
+     * @return The files, or null when they are not set.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Attachment> getAttachments() {
+        return (List<Attachment>) fields.get("attachments");
     }
 
     /**
@@ -211,16 +223,54 @@ public class UpdateInboxDraftOptions {
         }
 
         /**
+         * Set the files to store on the draft. Replaces every attachment on the draft. Pass no files to remove
+         * them all. Each one needs {@code content}, {@code filename} and {@code content_type}. A {@code path} or
+         * {@code content_id} is not accepted. A draft can carry up to 10 files and 25 MB in total.
+         *
+         * @param attachments The files to store on the draft.
+         * @return The builder instance.
+         */
+        public Builder attachments(Attachment... attachments) {
+            fields.put("attachments", new ArrayList<>(Arrays.asList(attachments)));
+            return this;
+        }
+
+        /**
+         * Set the files to store on the draft. Replaces every attachment on the draft. Pass an empty list to
+         * remove them all. Pass null to leave the attachments unchanged. Each one needs {@code content},
+         * {@code filename} and {@code content_type}. A {@code path} or {@code content_id} is not accepted.
+         * A draft can carry up to 10 files and 25 MB in total.
+         *
+         * @param attachments The files to store on the draft.
+         * @return The builder instance.
+         */
+        public Builder attachments(List<Attachment> attachments) {
+            if (attachments == null) {
+                fields.remove("attachments");
+            } else {
+                fields.put("attachments", new ArrayList<>(attachments));
+            }
+            return this;
+        }
+
+        /**
          * Build a new UpdateInboxDraftOptions object.
          *
          * @return A new UpdateInboxDraftOptions object.
-         * @throws IllegalArgumentException if no field is set.
+         * @throws IllegalArgumentException if no field is set, or an attachment lacks {@code content},
+         *                                  {@code filename} or {@code content_type} or has a {@code path} or {@code content_id}.
          */
         public UpdateInboxDraftOptions build() {
             if (fields.isEmpty()) {
-                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text or html must be provided");
+                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text, html or attachments must be provided");
             }
+            DraftAttachments.validate(getAttachmentsField());
             return new UpdateInboxDraftOptions(this);
+        }
+
+        @SuppressWarnings("unchecked")
+        private List<Attachment> getAttachmentsField() {
+            return (List<Attachment>) fields.get("attachments");
         }
     }
 }

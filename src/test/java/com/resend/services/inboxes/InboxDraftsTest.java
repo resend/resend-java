@@ -5,6 +5,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.services.emails.model.Attachment;
 import com.resend.services.inboxes.model.*;
 import com.resend.services.util.InboxesUtil;
 import okhttp3.MediaType;
@@ -28,7 +29,9 @@ public class InboxDraftsTest {
             "\"to\":[\"ada@example.org\"],\"cc\":[],\"bcc\":[],\"subject\":\"Re: Refund for order 1041\"," +
             "\"html\":null,\"text\":\"Refund issued for order 1041.\",\"thread_id\":\"" + THREAD_ID + "\"," +
             "\"reply_to_email_id\":\"" + EMAIL_ID + "\",\"email_id\":null," +
-            "\"created_at\":\"2026-08-05T14:12:04.110Z\",\"updated_at\":\"2026-08-05T14:12:04.110Z\"}";
+            "\"created_at\":\"2026-08-05T14:12:04.110Z\",\"updated_at\":\"2026-08-05T14:12:04.110Z\"," +
+            "\"attachments\":[{\"id\":\"5c1e9d2a-7b3f-4e8a-9c6d-2f0a1b3c4d5e\",\"filename\":\"receipt.pdf\"," +
+            "\"content_type\":\"application/pdf\",\"size\":20841}]}";
 
     @Mock
     private IHttpClient httpClient;
@@ -45,7 +48,7 @@ public class InboxDraftsTest {
     public void testListDrafts_Success() throws ResendException {
         String json = "{\"object\":\"list\",\"has_more\":false,\"data\":[{\"id\":\"" + DRAFT_ID + "\",\"type\":\"standalone\"," +
                 "\"to\":null,\"cc\":[],\"bcc\":[],\"subject\":null,\"snippet\":\"Refund issued\",\"thread_id\":null," +
-                "\"reply_to_email_id\":null,\"updated_at\":\"2026-08-05T14:12:04.110Z\"}]}";
+                "\"reply_to_email_id\":null,\"updated_at\":\"2026-08-05T14:12:04.110Z\",\"attachments\":[]}]}";
         when(httpClient.perform(eq(DRAFTS_PATH + "?limit=1"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, json, true));
 
@@ -57,6 +60,7 @@ public class InboxDraftsTest {
         assertNull(item.getTo());
         assertEquals("Refund issued", item.getSnippet());
         assertNull(item.getThreadId());
+        assertTrue(item.getAttachments().isEmpty());
     }
 
     @Test
@@ -85,6 +89,38 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testCreateDraft_WithAttachment() throws ResendException {
+        CreateInboxDraftOptions options = CreateInboxDraftOptions.builder()
+                .addAttachment(Attachment.builder().fileName("notes.txt").content("bm90ZXM=").contentType("text/plain").build())
+                .build();
+        String payload = "{\"attachments\":[{\"filename\":\"notes.txt\",\"content\":\"bm90ZXM=\",\"content_type\":\"text/plain\"}]}";
+        when(httpClient.perform(eq(DRAFTS_PATH), anyString(), eq(HttpMethod.POST), eq(payload), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(201, "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\"}", true));
+
+        assertEquals(DRAFT_ID, drafts.create(INBOX_ID, options).getId());
+    }
+
+    @Test
+    public void testUpdateDraft_EmptyAttachmentsRemovesThem() throws ResendException {
+        UpdateInboxDraftOptions options = UpdateInboxDraftOptions.builder().attachments().build();
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH),
+                eq("{\"attachments\":[]}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, DRAFT_JSON, true));
+
+        assertNotNull(drafts.update(INBOX_ID, DRAFT_ID, options));
+        assertTrue(options.getAttachments().isEmpty());
+    }
+
+    @Test
+    public void testDraftAttachmentBuilder_Validation() {
+        Attachment withPath = Attachment.builder().fileName("a.txt").path("https://example.com/a.txt").contentType("text/plain").build();
+        Attachment noType = Attachment.builder().fileName("a.txt").content("YQ==").build();
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(withPath).build());
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(noType).build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxDraftOptions.builder().attachments(noType).build());
+    }
+
+    @Test
     public void testCreateDraftBuilder_Validation() {
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().to(java.util.Collections.<String>emptyList()).build());
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().text("Hi").threadId(THREAD_ID).build());
@@ -108,6 +144,11 @@ public class InboxDraftsTest {
         assertEquals(THREAD_ID, response.getThreadId());
         assertEquals(EMAIL_ID, response.getReplyToEmailId());
         assertNull(response.getEmailId());
+        InboxDraftAttachment attachment = response.getAttachments().get(0);
+        assertEquals("5c1e9d2a-7b3f-4e8a-9c6d-2f0a1b3c4d5e", attachment.getId());
+        assertEquals("receipt.pdf", attachment.getFilename());
+        assertEquals("application/pdf", attachment.getContentType());
+        assertEquals(20841, (int) attachment.getSize());
     }
 
     @Test

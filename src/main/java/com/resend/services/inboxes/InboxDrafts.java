@@ -95,7 +95,8 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Updates the content of an unsent draft. Omitted fields are left unchanged. A request that sets
-     * {@code text} or {@code html} replaces the whole body. The body part you omit from that request becomes
+     * {@code text} or {@code html} replaces the whole body.
+     * Sending {@code attachments} replaces every attachment on the draft, and an empty list removes them all. The body part you omit from that request becomes
      * {@code null}. A draft that was already sent, or that changed during the request, returns a 409.
      *
      * @param inboxId                 The inbox ID. An email address is not accepted.

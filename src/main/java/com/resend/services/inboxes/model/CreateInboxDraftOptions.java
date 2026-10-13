@@ -1,13 +1,14 @@
 package com.resend.services.inboxes.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.resend.services.emails.model.Attachment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a request to create a draft. At least one of {@code to}, {@code cc}, {@code bcc}, {@code subject}, {@code text} or {@code html} must be non-empty. The combined recipients of {@code to}, {@code cc} and {@code bcc} cannot exceed 50. {@code thread_id} and {@code reply_to_email_id} must be sent together or not at all.
+ * Represents a request to create a draft. At least one of {@code to}, {@code cc}, {@code bcc}, {@code subject}, {@code text}, {@code html} or {@code attachments} must be non-empty. The combined recipients of {@code to}, {@code cc} and {@code bcc} cannot exceed 50. {@code thread_id} and {@code reply_to_email_id} must be sent together or not at all.
  */
 public class CreateInboxDraftOptions {
 
@@ -29,6 +30,9 @@ public class CreateInboxDraftOptions {
     @JsonProperty("text")
     private final String text;
 
+    @JsonProperty("attachments")
+    private final List<Attachment> attachments;
+
     @JsonProperty("thread_id")
     private final String threadId;
 
@@ -42,6 +46,7 @@ public class CreateInboxDraftOptions {
         this.subject = builder.subject;
         this.html = builder.html;
         this.text = builder.text;
+        this.attachments = builder.attachments;
         this.threadId = builder.threadId;
         this.replyToEmailId = builder.replyToEmailId;
     }
@@ -101,6 +106,15 @@ public class CreateInboxDraftOptions {
     }
 
     /**
+     * Get the files to store on the draft.
+     *
+     * @return The files to store on the draft.
+     */
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    /**
      * Get the Thread ID to reply in.
      *
      * @return The Thread ID to reply in.
@@ -137,6 +151,7 @@ public class CreateInboxDraftOptions {
         private String subject;
         private String html;
         private String text;
+        private List<Attachment> attachments;
         private String threadId;
         private String replyToEmailId;
 
@@ -288,6 +303,46 @@ public class CreateInboxDraftOptions {
         }
 
         /**
+         * Set the files to store on the draft. Each one needs {@code content}, {@code filename} and
+         * {@code content_type}. A {@code path} or {@code content_id} is not accepted. A draft can carry up to
+         * 10 files and 25 MB in total.
+         *
+         * @param attachments The files to store on the draft.
+         * @return The builder instance.
+         */
+        public Builder attachments(Attachment... attachments) {
+            this.attachments = new ArrayList<>(Arrays.asList(attachments));
+            return this;
+        }
+
+        /**
+         * Set the files to store on the draft. Each one needs {@code content}, {@code filename} and
+         * {@code content_type}. A {@code path} or {@code content_id} is not accepted. A draft can carry up to
+         * 10 files and 25 MB in total.
+         *
+         * @param attachments The files to store on the draft.
+         * @return The builder instance.
+         */
+        public Builder attachments(List<Attachment> attachments) {
+            this.attachments = attachments == null ? null : new ArrayList<>(attachments);
+            return this;
+        }
+
+        /**
+         * Add one file to store on the draft.
+         *
+         * @param attachment The file to add.
+         * @return The builder instance.
+         */
+        public Builder addAttachment(Attachment attachment) {
+            if (this.attachments == null) {
+                this.attachments = new ArrayList<>();
+            }
+            this.attachments.add(attachment);
+            return this;
+        }
+
+        /**
          * Set the Thread ID to reply in. Must be sent with {@code reply_to_email_id}.
          *
          * @param threadId The Thread ID to reply in.
@@ -313,12 +368,14 @@ public class CreateInboxDraftOptions {
          * Build a new CreateInboxDraftOptions object.
          *
          * @return A new CreateInboxDraftOptions object.
-         * @throws IllegalArgumentException if every content field is empty, or only one of {@code thread_id} and {@code reply_to_email_id} is set.
+         * @throws IllegalArgumentException if every content field is empty, an attachment lacks {@code content}, {@code filename} or {@code content_type} or has a {@code path} or {@code content_id}, or only one of {@code thread_id} and {@code reply_to_email_id} is set.
          */
         public CreateInboxDraftOptions build() {
-            if (isEmpty(to) && isEmpty(cc) && isEmpty(bcc) && isBlank(subject) && isBlank(text) && isBlank(html)) {
-                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text or html must be non-empty");
+            if (isEmpty(to) && isEmpty(cc) && isEmpty(bcc) && isBlank(subject) && isBlank(text) && isBlank(html)
+                    && (attachments == null || attachments.isEmpty())) {
+                throw new IllegalArgumentException("At least one of to, cc, bcc, subject, text, html or attachments must be non-empty");
             }
+            DraftAttachments.validate(attachments);
             if ((threadId == null) != (replyToEmailId == null)) {
                 throw new IllegalArgumentException("thread_id and reply_to_email_id must be provided together");
             }

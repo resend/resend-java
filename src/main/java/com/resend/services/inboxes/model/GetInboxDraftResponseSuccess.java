@@ -32,8 +32,9 @@ public class GetInboxDraftResponseSuccess extends InboxDraft {
      * @param emailId        The ID of the outbound email queued when the draft was sent. {@code null} until the draft is sent.
      * @param createdAt      The timestamp when the draft was created.
      * @param updatedAt      The timestamp when the draft was last saved.
+     * @param attachments    The files stored on the draft.
      */
-    public GetInboxDraftResponseSuccess(String object, String id, String type, List<String> to, List<String> cc, List<String> bcc, String subject, String html, String text, String threadId, String replyToEmailId, String emailId, String createdAt, String updatedAt) {
-        super(object, id, type, to, cc, bcc, subject, html, text, threadId, replyToEmailId, emailId, createdAt, updatedAt);
+    public GetInboxDraftResponseSuccess(String object, String id, String type, List<String> to, List<String> cc, List<String> bcc, String subject, String html, String text, String threadId, String replyToEmailId, String emailId, String createdAt, String updatedAt, List<InboxDraftAttachment> attachments) {
+        super(object, id, type, to, cc, bcc, subject, html, text, threadId, replyToEmailId, emailId, createdAt, updatedAt, attachments);
     }
 }

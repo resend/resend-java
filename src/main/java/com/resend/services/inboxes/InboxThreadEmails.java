@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.inboxes.model.ForwardInboxThreadEmailOptions;
 import com.resend.services.inboxes.model.ForwardInboxThreadEmailResponseSuccess;
@@ -102,6 +103,31 @@ public class InboxThreadEmails extends BaseService {
     }
 
     /**
+     * Sends a reply from the inbox address right away, with no stored draft. The {@code to} recipients come from
+     * the message you reply to. For a message the inbox received, the reply goes to its {@code Reply-To}
+     * addresses, or to its sender when it has no {@code Reply-To}. For a message the inbox sent, the reply goes
+     * to that message's {@code to} recipients. The reply threads under the message through the
+     * {@code In-Reply-To} and {@code References} headers.
+     *
+     * <p>Set an idempotency key in {@code requestOptions} so the reply is sent only once. A retry with the same key
+     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409.</p>
+     *
+     * @param inboxId                      The inbox ID. An email address is not accepted.
+     * @param threadId                     The thread ID.
+     * @param emailId                      The email ID of the message to reply to.
+     * @param replyInboxThreadEmailOptions The reply content.
+     * @param requestOptions The options with additional headers.
+     * @return The ID of the sent email.
+     * @throws ResendException If an error occurs while sending the reply.
+     */
+    public ReplyInboxThreadEmailResponseSuccess reply(String inboxId, String threadId, String emailId, ReplyInboxThreadEmailOptions replyInboxThreadEmailOptions, RequestOptions requestOptions) throws ResendException {
+        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/reply";
+        String payload = super.resendMapper.writeValue(replyInboxThreadEmailOptions);
+        return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, ReplyInboxThreadEmailResponseSuccess.class);
+    }
+
+    /**
      * Forwards a message from the inbox address right away, with no stored draft. The original message is quoted
      * under a forwarded-message banner, below the optional {@code html} or {@code text} note. The attachments of
      * the original message are sent with the forward, together with any attachments you add. The request fails
@@ -119,5 +145,30 @@ public class InboxThreadEmails extends BaseService {
         String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/forward";
         String payload = super.resendMapper.writeValue(forwardInboxThreadEmailOptions);
         return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), ForwardInboxThreadEmailResponseSuccess.class);
+    }
+
+    /**
+     * Forwards a message from the inbox address right away, with no stored draft. The original message is quoted
+     * under a forwarded-message banner, below the optional {@code html} or {@code text} note. The attachments of
+     * the original message are sent with the forward, together with any attachments you add. The request fails
+     * when they exceed 10 files or 25 MB of {@code content} in total. An original attachment that was sent from
+     * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
+     *
+     * <p>Set an idempotency key in {@code requestOptions} so the forward is sent only once. A retry with the same key
+     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409.</p>
+     *
+     * @param inboxId                        The inbox ID. An email address is not accepted.
+     * @param threadId                       The thread ID.
+     * @param emailId                        The email ID of the message to forward.
+     * @param forwardInboxThreadEmailOptions The forward recipients and content.
+     * @param requestOptions The options with additional headers.
+     * @return The ID of the sent email.
+     * @throws ResendException If an error occurs while sending the forward.
+     */
+    public ForwardInboxThreadEmailResponseSuccess forward(String inboxId, String threadId, String emailId, ForwardInboxThreadEmailOptions forwardInboxThreadEmailOptions, RequestOptions requestOptions) throws ResendException {
+        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/forward";
+        String payload = super.resendMapper.writeValue(forwardInboxThreadEmailOptions);
+        return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, ForwardInboxThreadEmailResponseSuccess.class);
     }
 }

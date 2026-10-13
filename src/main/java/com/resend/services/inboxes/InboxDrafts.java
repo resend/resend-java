@@ -5,6 +5,7 @@ import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.core.service.BaseService;
 import com.resend.services.inboxes.model.CreateInboxDraftOptions;
 import com.resend.services.inboxes.model.CreateInboxDraftResponseSuccess;
@@ -84,6 +85,29 @@ public class InboxDrafts extends BaseService {
     }
 
     /**
+     * Creates an unsent draft on an inbox. Omit {@code thread_id} and {@code reply_to_email_id} for a draft that
+     * starts a new thread. Pass both together for a reply draft in an existing thread. Only one unsent reply draft
+     * can target an email, so a reply draft request for an email that already has one returns the ID of the
+     * existing draft. That request ignores every other field, except {@code attachments}, which replaces the
+     * attachments of the existing draft when sent. A reply draft created without {@code subject} stores an empty
+     * subject and gets no {@code Re:} prefix, so set one before you send it.
+     *
+     * <p>Set an idempotency key in {@code requestOptions} so the draft is created only once. A retry with the same key
+     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409.</p>
+     *
+     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param createInboxDraftOptions The draft content.
+     * @param requestOptions The options with additional headers.
+     * @return The ID of the draft.
+     * @throws ResendException If an error occurs while creating the draft.
+     */
+    public CreateInboxDraftResponseSuccess create(String inboxId, CreateInboxDraftOptions createInboxDraftOptions, RequestOptions requestOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(createInboxDraftOptions);
+        return execute("/inboxes/" + inboxId + "/drafts", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateInboxDraftResponseSuccess.class);
+    }
+
+    /**
      * Retrieves a single draft.
      *
      * @param inboxId The inbox ID. An email address is not accepted.
@@ -137,5 +161,25 @@ public class InboxDrafts extends BaseService {
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId) throws ResendException {
         return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, "", MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
+    }
+
+    /**
+     * Sends a draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts
+     * a new thread. The draft must have at least one {@code to} recipient, a non-empty {@code subject}, and
+     * {@code html} or {@code text}, or the request returns a 422.
+     * A draft that was already sent returns a 409.
+     *
+     * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
+     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409.</p>
+     *
+     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param draftId The draft ID.
+     * @param requestOptions The options with additional headers.
+     * @return The ID of the sent email.
+     * @throws ResendException If an error occurs while sending the draft.
+     */
+    public SendInboxDraftResponseSuccess send(String inboxId, String draftId, RequestOptions requestOptions) throws ResendException {
+        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
     }
 }

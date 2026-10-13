@@ -5,6 +5,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.services.emails.model.Attachment;
 import com.resend.services.inboxes.model.*;
 import com.resend.services.util.InboxesUtil;
@@ -207,6 +208,19 @@ public class InboxDraftsTest {
         SendInboxDraftResponseSuccess response = drafts.send(INBOX_ID, DRAFT_ID);
 
         assertEquals(SENT_EMAIL_ID, response.getId());
+    }
+
+    @Test
+    public void testCreateAndSendDraft_WithIdempotencyKey() throws ResendException {
+        RequestOptions options = RequestOptions.builder().setIdempotencyKey("draft-key-1").build();
+        when(httpClient.perform(eq(DRAFTS_PATH), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class), eq(options)))
+                .thenReturn(new AbstractHttpResponse<>(201, "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\"}", true));
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID + "/send"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class), eq(options)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+
+        assertEquals(DRAFT_ID, drafts.create(INBOX_ID, InboxesUtil.createReplyDraftRequest(), options).getId());
+        assertEquals(SENT_EMAIL_ID, drafts.send(INBOX_ID, DRAFT_ID, options).getId());
+        assertEquals("draft-key-1", options.getIdempotencyKey());
     }
 
     @Test

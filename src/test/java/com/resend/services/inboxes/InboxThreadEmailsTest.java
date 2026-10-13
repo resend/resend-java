@@ -5,6 +5,7 @@ import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.net.ListParams;
+import com.resend.core.net.RequestOptions;
 import com.resend.services.inboxes.model.*;
 import com.resend.services.util.InboxesUtil;
 import okhttp3.MediaType;
@@ -103,6 +104,18 @@ public class InboxThreadEmailsTest {
     @Test
     public void testForwardBuilder_RequiresTo() {
         assertThrows(IllegalArgumentException.class, () -> ForwardInboxThreadEmailOptions.builder().text("FYI").build());
+    }
+
+    @Test
+    public void testReplyAndForward_WithIdempotencyKey() throws ResendException {
+        RequestOptions options = RequestOptions.builder().setIdempotencyKey("reply-key-1").build();
+        when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/reply"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class), eq(options)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+        when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/forward"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class), eq(options)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+
+        assertEquals(SENT_EMAIL_ID, emails.reply(INBOX_ID, THREAD_ID, EMAIL_ID, InboxesUtil.replyRequest(), options).getId());
+        assertEquals(SENT_EMAIL_ID, emails.forward(INBOX_ID, THREAD_ID, EMAIL_ID, InboxesUtil.forwardRequest(), options).getId());
     }
 
     @Test

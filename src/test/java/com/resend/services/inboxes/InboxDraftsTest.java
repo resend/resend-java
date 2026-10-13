@@ -118,6 +118,8 @@ public class InboxDraftsTest {
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(withPath).build());
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(noType).build());
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxDraftOptions.builder().attachments(noType).build());
+        Attachment blankName = Attachment.builder().fileName(" ").content("YQ==").contentType("text/plain").build();
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(blankName).build());
     }
 
     @Test

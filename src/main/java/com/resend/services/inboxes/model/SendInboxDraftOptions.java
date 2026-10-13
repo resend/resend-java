@@ -48,7 +48,7 @@ public class SendInboxDraftOptions {
         }
 
         /**
-         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param headers The map of custom headers for the email.
          * @return This builder instance for method chaining.
@@ -59,7 +59,7 @@ public class SendInboxDraftOptions {
         }
 
         /**
-         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param key The key of the custom header.
          * @param value The value of the custom header.

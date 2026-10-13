@@ -110,8 +110,9 @@ public class InboxThreadEmails extends BaseService {
      * {@code In-Reply-To} and {@code References} headers.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the reply is sent only once. A retry with the same key
-     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
-     * key with a different body, or while the first request is still running, returns a 409.</p>
+     * within 24 hours returns the first successful response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409. A failed request is
+     * not stored, so you can retry it with the same key.</p>
      *
      * @param inboxId                      The inbox ID. An email address is not accepted.
      * @param threadId                     The thread ID.
@@ -155,8 +156,9 @@ public class InboxThreadEmails extends BaseService {
      * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the forward is sent only once. A retry with the same key
-     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
-     * key with a different body, or while the first request is still running, returns a 409.</p>
+     * within 24 hours returns the first successful response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409. A failed request is
+     * not stored, so you can retry it with the same key.</p>
      *
      * @param inboxId                        The inbox ID. An email address is not accepted.
      * @param threadId                       The thread ID.

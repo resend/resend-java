@@ -94,8 +94,9 @@ public class InboxDrafts extends BaseService {
      * subject and gets no {@code Re:} prefix, so set one before you send it.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the draft is created only once. A retry with the same key
-     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
-     * key with a different body, or while the first request is still running, returns a 409.</p>
+     * within 24 hours returns the first successful response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409. A failed request is
+     * not stored, so you can retry it with the same key.</p>
      *
      * @param inboxId                 The inbox ID. An email address is not accepted.
      * @param createInboxDraftOptions The draft content.
@@ -171,8 +172,9 @@ public class InboxDrafts extends BaseService {
      * A draft that was already sent returns a 409.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
-     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
-     * key with a different body, or while the first request is still running, returns a 409.</p>
+     * within 24 hours returns the first successful response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409. A failed request is
+     * not stored, so you can retry it with the same key.</p>
      *
      * @param inboxId The inbox ID. An email address is not accepted.
      * @param draftId The draft ID.
@@ -208,8 +210,9 @@ public class InboxDrafts extends BaseService {
      * A draft that was already sent returns a 409.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
-     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
-     * key with a different body, or while the first request is still running, returns a 409.</p>
+     * within 24 hours returns the first successful response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409. A failed request is
+     * not stored, so you can retry it with the same key.</p>
      *
      * @param inboxId               The inbox ID. An email address is not accepted.
      * @param draftId               The draft ID.

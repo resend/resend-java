@@ -113,6 +113,16 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testUpdateDraft_NullAttachmentsClearsThem() throws ResendException {
+        UpdateInboxDraftOptions options = UpdateInboxDraftOptions.builder().attachments((java.util.List<Attachment>) null).build();
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH),
+                eq("{\"attachments\":null}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, DRAFT_JSON, true));
+
+        assertNotNull(drafts.update(INBOX_ID, DRAFT_ID, options));
+    }
+
+    @Test
     public void testDraftAttachmentBuilder_Validation() {
         Attachment withPath = Attachment.builder().fileName("a.txt").path("https://example.com/a.txt").contentType("text/plain").build();
         Attachment noType = Attachment.builder().fileName("a.txt").content("YQ==").build();

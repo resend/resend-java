@@ -291,7 +291,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -302,7 +302,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -327,7 +327,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param headers The map of custom headers for the email.
          * @return This builder instance for method chaining.
@@ -338,7 +338,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param key The key of the custom header.
          * @param value The value of the custom header.

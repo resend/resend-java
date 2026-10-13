@@ -95,7 +95,7 @@ public class UpdateInboxDraftOptions {
     /**
      * Get the files to store on the draft.
      *
-     * @return The files, or null when they are not set.
+     * @return The files, or null when they are not set or are cleared.
      */
     @SuppressWarnings("unchecked")
     public List<Attachment> getAttachments() {
@@ -238,7 +238,7 @@ public class UpdateInboxDraftOptions {
 
         /**
          * Set the files to store on the draft. Replaces every attachment on the draft. Pass an empty list to
-         * remove them all. Pass null to leave the attachments unchanged. Each one needs {@code content},
+         * remove them all. Pass null to remove them all as well. Each one needs {@code content},
          * {@code filename} and {@code content_type}. A {@code path} or {@code content_id} is not accepted.
          * The files on a draft can total at most 25 MB. An empty file or a blocked file type returns a 422.
          *
@@ -246,11 +246,7 @@ public class UpdateInboxDraftOptions {
          * @return The builder instance.
          */
         public Builder attachments(List<Attachment> attachments) {
-            if (attachments == null) {
-                fields.remove("attachments");
-            } else {
-                fields.put("attachments", new ArrayList<>(attachments));
-            }
+            fields.put("attachments", attachments == null ? null : new ArrayList<>(attachments));
             return this;
         }
 

@@ -266,7 +266,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -277,7 +277,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -302,7 +302,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param headers The map of custom headers for the email.
          * @return This builder instance for method chaining.
@@ -313,7 +313,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422. Header names cannot be empty, and names and values cannot contain line breaks or null characters, or the request returns a 422.
          *
          * @param key The key of the custom header.
          * @param value The value of the custom header.

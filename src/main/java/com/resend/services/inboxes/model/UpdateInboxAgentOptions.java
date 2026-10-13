@@ -107,7 +107,7 @@ public class UpdateInboxAgentOptions {
         }
 
         /**
-         * Set the actions the agent can take. Replaces the whole set. Pass no actions to disable all actions.
+         * Set the actions the agent can take. Replaces the whole set. Duplicates are removed. Pass no actions to disable all actions.
          *
          * @param enabledActions The enabled actions.
          * @return The builder instance.
@@ -118,7 +118,7 @@ public class UpdateInboxAgentOptions {
         }
 
         /**
-         * Set the actions the agent can take. Replaces the whole set. Pass an empty list to disable all actions.
+         * Set the actions the agent can take. Replaces the whole set. Duplicates are removed. Pass an empty list to disable all actions.
          * Pass null to leave the actions unchanged.
          *
          * @param enabledActions The enabled actions.

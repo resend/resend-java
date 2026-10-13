@@ -62,6 +62,7 @@ public class InboxThreads extends BaseService {
     /**
      * Retrieves the threads in an inbox, most recently active first, with filtering and pagination.
      * The {@code after} and {@code before} cursors take a thread ID, and only one of them can be passed.
+     * A cursor thread that is not in the selected folders returns a 404.
      * To find threads by text, sender, recipient, attachment, or date, use {@link #search(String, SearchInboxThreadsParams)}.
      *
      * @param inboxId The inbox ID. An email address is not accepted.
@@ -89,7 +90,8 @@ public class InboxThreads extends BaseService {
      * Finds threads by the text of their emails, who sent or received them, whether they have attachments,
      * and their dates. Results are ordered by latest activity, newest first, and paginate like the list threads
      * endpoint. Search can be up to about a minute behind new emails. When more than 10,000 threads match,
-     * search covers the 10,000 with the newest matching email.
+     * search covers the 10,000 with the newest matching email. When any email filter is set, the matching email
+     * must itself be in one of {@code folders}.
      *
      * @param inboxId The inbox ID. An email address is not accepted.
      * @param params  The search filters and pagination.
@@ -117,7 +119,9 @@ public class InboxThreads extends BaseService {
      * Marks a thread read or unread, moves it to a folder, or adds and removes labels.
      * A label ID cannot be both added and removed in the same request. Removing a label from a thread keeps
      * the label itself.
-     * Moving a thread out of {@code trash} restores it and clears its deletion deadline.
+     * Moving a thread out of {@code trash} restores it and clears its deletion deadline. The changes apply in
+     * this order: {@code read}, {@code folder}, added labels, removed labels. They are not atomic, so a 404 for
+     * a label leaves the earlier changes applied.
      *
      * @param inboxId                  The inbox ID. An email address is not accepted.
      * @param threadId                 The thread ID.

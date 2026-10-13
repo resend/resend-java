@@ -239,7 +239,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set whether to reply to everyone on the original message. The other {@code to} and {@code cc} recipients of the message are copied in {@code cc}. The inbox address is always excluded. Defaults to {@code false}.
+         * Set whether to reply to everyone on the original message. For a message the inbox received, the reply goes to its {@code Reply-To} addresses, or to its sender when it has none, and copies the other addresses of its {@code To} header and its {@code cc} recipients in {@code cc}. For a message the inbox sent, the reply goes to that message's {@code Reply-To} addresses when they are not the inbox address, otherwise to its {@code to} recipients, and copies its {@code cc} recipients. The inbox address is always excluded, and duplicates are removed. Defaults to {@code false}.
          *
          * @param replyAll Whether to reply to everyone on the original message.
          * @return The builder instance.

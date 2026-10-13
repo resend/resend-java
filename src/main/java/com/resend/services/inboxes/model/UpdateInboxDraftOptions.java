@@ -225,7 +225,8 @@ public class UpdateInboxDraftOptions {
         /**
          * Set the files to store on the draft. Replaces every attachment on the draft. Pass no files to remove
          * them all. Each one needs {@code content}, {@code filename} and {@code content_type}. A {@code path} or
-         * {@code content_id} is not accepted. A draft can carry up to 10 files and 25 MB in total.
+         * {@code content_id} is not accepted. The files on a draft can total at most 25 MB. An empty file or a
+         * blocked file type returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.
@@ -239,7 +240,7 @@ public class UpdateInboxDraftOptions {
          * Set the files to store on the draft. Replaces every attachment on the draft. Pass an empty list to
          * remove them all. Pass null to leave the attachments unchanged. Each one needs {@code content},
          * {@code filename} and {@code content_type}. A {@code path} or {@code content_id} is not accepted.
-         * A draft can carry up to 10 files and 25 MB in total.
+         * The files on a draft can total at most 25 MB. An empty file or a blocked file type returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.

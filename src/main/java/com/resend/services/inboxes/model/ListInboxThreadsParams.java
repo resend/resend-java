@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Represents parameters for listing the threads of an inbox with filtering and pagination.
  * The {@code after} and {@code before} cursors take a thread ID, and only one of them can be passed.
+ * A cursor thread that is not in the selected folders returns a 404.
  */
 public class ListInboxThreadsParams {
 

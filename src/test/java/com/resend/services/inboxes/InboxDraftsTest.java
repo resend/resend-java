@@ -123,6 +123,15 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testDraftAttachmentBuilder_AllowsMoreThanTenFiles() {
+        CreateInboxDraftOptions.Builder builder = CreateInboxDraftOptions.builder();
+        for (int i = 0; i < 11; i++) {
+            builder.addAttachment(Attachment.builder().fileName("f" + i + ".txt").content("YQ==").contentType("text/plain").build());
+        }
+        assertEquals(11, builder.build().getAttachments().size());
+    }
+
+    @Test
     public void testCreateDraftBuilder_Validation() {
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().to(java.util.Collections.<String>emptyList()).build());
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().text("Hi").threadId(THREAD_ID).build());

@@ -82,7 +82,7 @@ public class Inboxes extends BaseService {
     /**
      * Creates an inbox that sends and receives email at an address on one of your domains.
      * A domain that does not meet the inbox rules returns a 422. An address that is already in use returns a 409.
-     * A team that has reached the inbox limit of its plan returns a 403.
+     * A team that has reached the inbox limit of its plan returns a 403. A blocked account returns a 451.
      *
      * @param createInboxOptions The inbox details.
      * @return The ID of the created inbox.
@@ -107,6 +107,8 @@ public class Inboxes extends BaseService {
     /**
      * Retrieves a paginated list of the inboxes of the team, newest first.
      * The list items carry fewer fields than a single inbox. Retrieve an inbox to get all its fields.
+     * The {@code after} and {@code before} cursors take an inbox ID. A value that is not a UUID returns a 422,
+     * and an unknown ID returns a 404.
      *
      * @param params The params used to customize the list.
      * @return A ListInboxesResponseSuccess containing the list of inboxes.

@@ -14,6 +14,8 @@ import java.util.Map;
  * Different parameters combine, so a thread must match all of them. {@code folders}, {@code labels}, and
  * {@code read} apply to the thread. {@code query}, {@code from}, {@code to}, {@code cc}, {@code bcc},
  * {@code has_attachment}, {@code start_date}, and {@code end_date} must all match the same email in the thread.
+ * When any of these email filters is set, the matching email must itself be in one of {@code folders}.
+ * For {@code sent}, that means an email the inbox sent.
  */
 public class SearchInboxThreadsParams {
 

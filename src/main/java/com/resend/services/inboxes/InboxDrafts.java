@@ -69,7 +69,9 @@ public class InboxDrafts extends BaseService {
      * Creates an unsent draft on an inbox. Omit {@code thread_id} and {@code reply_to_email_id} for a draft that
      * starts a new thread. Pass both together for a reply draft in an existing thread. Only one unsent reply draft
      * can target an email, so a reply draft request for an email that already has one returns the ID of the
-     * existing draft.
+     * existing draft. That request ignores every other field, except {@code attachments}, which replaces the
+     * attachments of the existing draft when sent. A reply draft created without {@code subject} stores an empty
+     * subject and gets no {@code Re:} prefix, so set one before you send it.
      *
      * @param inboxId                 The inbox ID. An email address is not accepted.
      * @param createInboxDraftOptions The draft content.
@@ -124,7 +126,8 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Sends a draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts
-     * a new thread. The draft must have at least one {@code to} recipient, or the request returns a 422.
+     * a new thread. The draft must have at least one {@code to} recipient, a non-empty {@code subject}, and
+     * {@code html} or {@code text}, or the request returns a 422.
      * A draft that was already sent returns a 409.
      *
      * @param inboxId The inbox ID. An email address is not accepted.

@@ -13,9 +13,6 @@ final class DraftAttachments {
         if (attachments == null) {
             return;
         }
-        if (attachments.size() > 10) {
-            throw new IllegalArgumentException("A draft can carry at most 10 attachments");
-        }
         for (Attachment attachment : attachments) {
             if (attachment == null) {
                 throw new IllegalArgumentException("attachments must not contain null");

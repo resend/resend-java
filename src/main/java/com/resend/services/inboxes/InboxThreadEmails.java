@@ -53,7 +53,8 @@ public class InboxThreadEmails extends BaseService {
     /**
      * Retrieves a page of the messages of a thread, oldest first. Pass the {@code id} of the last message as
      * {@code after} to get the next, newer page. Pass the {@code id} of the first message as {@code before}
-     * to get the previous, older page. You cannot combine {@code after} and {@code before}.
+     * to get the previous, older page. You cannot combine {@code after} and {@code before}. A cursor that is not
+     * a message of the thread returns a 404.
      *
      * @param inboxId  The inbox ID. An email address is not accepted.
      * @param threadId The thread ID.
@@ -104,7 +105,8 @@ public class InboxThreadEmails extends BaseService {
      * Forwards a message from the inbox address right away, with no stored draft. The original message is quoted
      * under a forwarded-message banner, below the optional {@code html} or {@code text} note. The attachments of
      * the original message are sent with the forward, together with any attachments you add. The request fails
-     * when they exceed 10 files or 25 MB of {@code content} in total.
+     * when they exceed 10 files or 25 MB of {@code content} in total. An original attachment that was sent from
+     * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
      *
      * @param inboxId                        The inbox ID. An email address is not accepted.
      * @param threadId                       The thread ID.

@@ -149,7 +149,7 @@ public class SegmentsTest {
         ListParams params = ListParams.builder().limit(3).build();
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, LIST_RESPONSE_JSON, true);
 
-        when(httpClient.perform(startsWith("/audiences?"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+        when(httpClient.perform(eq("/segments?limit=3"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(httpResponse);
 
         ListSegmentsResponseSuccess res = segments.list(params);

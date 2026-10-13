@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Represents a request to update a thread. Provide at least one of {@code read}, {@code folder}, {@code label_id}, {@code add_label_ids}, or {@code remove_label_ids}. A label ID cannot be both added and removed in the same request.
+ * Represents a request to update a thread. Provide at least one of {@code read}, {@code folder}, {@code add_label_ids}, or {@code remove_label_ids}. A label ID cannot be both added and removed in the same request.
  */
 public class UpdateInboxThreadOptions {
 
@@ -17,10 +17,6 @@ public class UpdateInboxThreadOptions {
 
     @JsonProperty("folder")
     private final MoveInboxThreadFolder folder;
-
-    @Deprecated
-    @JsonProperty("label_id")
-    private final String labelId;
 
     @JsonProperty("add_label_ids")
     private final List<String> addLabelIds;
@@ -31,7 +27,6 @@ public class UpdateInboxThreadOptions {
     private UpdateInboxThreadOptions(Builder builder) {
         this.read = builder.read;
         this.folder = builder.folder;
-        this.labelId = builder.labelId;
         this.addLabelIds = builder.addLabelIds;
         this.removeLabelIds = builder.removeLabelIds;
     }
@@ -52,17 +47,6 @@ public class UpdateInboxThreadOptions {
      */
     public MoveInboxThreadFolder getFolder() {
         return folder;
-    }
-
-    /**
-     * Get the label to apply to the thread, the same as one entry in {@code add_label_ids}.
-     *
-     * @return The label to apply to the thread, the same as one entry in {@code add_label_ids}.
-     * @deprecated Use {@link Builder#addLabelIds(String...)} instead.
-     */
-    @Deprecated
-    public String getLabelId() {
-        return labelId;
     }
 
     /**
@@ -98,7 +82,6 @@ public class UpdateInboxThreadOptions {
     public static class Builder {
         private Boolean read;
         private MoveInboxThreadFolder folder;
-        private String labelId;
         private List<String> addLabelIds;
         private List<String> removeLabelIds;
 
@@ -131,19 +114,6 @@ public class UpdateInboxThreadOptions {
         }
 
         /**
-         * Set the label to apply to the thread, the same as one entry in {@code add_label_ids}. A label ID that does not exist in the inbox returns a 404.
-         *
-         * @param labelId The label to apply to the thread, the same as one entry in {@code add_label_ids}.
-         * @return The builder instance.
-         * @deprecated Use {@link Builder#addLabelIds(String...)} instead.
-         */
-        @Deprecated
-        public Builder labelId(String labelId) {
-            this.labelId = labelId;
-            return this;
-        }
-
-        /**
          * Set the label IDs to apply to the thread. Between 1 and 10 IDs. A label ID that does not exist in the inbox returns a 404.
          *
          * @param addLabelIds The label IDs to apply to the thread.
@@ -166,7 +136,7 @@ public class UpdateInboxThreadOptions {
         }
 
         /**
-         * Set the label IDs to remove from the thread. Between 1 and 10 IDs. A label ID that does not exist in the inbox returns a 404.
+         * Set the label IDs to remove from the thread. Between 1 and 10 IDs. The labels themselves are kept. A label ID that does not exist in the inbox returns a 404.
          *
          * @param removeLabelIds The label IDs to remove from the thread.
          * @return The builder instance.
@@ -177,7 +147,7 @@ public class UpdateInboxThreadOptions {
         }
 
         /**
-         * Set the label IDs to remove from the thread. Between 1 and 10 IDs. A label ID that does not exist in the inbox returns a 404.
+         * Set the label IDs to remove from the thread. Between 1 and 10 IDs. The labels themselves are kept. A label ID that does not exist in the inbox returns a 404.
          *
          * @param removeLabelIds The label IDs to remove from the thread.
          * @return The builder instance.
@@ -194,8 +164,8 @@ public class UpdateInboxThreadOptions {
          * @throws IllegalArgumentException if no field is set, a label ID list is empty, or a label ID is both added and removed.
          */
         public UpdateInboxThreadOptions build() {
-            if (read == null && folder == null && labelId == null && addLabelIds == null && removeLabelIds == null) {
-                throw new IllegalArgumentException("At least one of read, folder, label_id, add_label_ids or remove_label_ids must be provided");
+            if (read == null && folder == null && addLabelIds == null && removeLabelIds == null) {
+                throw new IllegalArgumentException("At least one of read, folder, add_label_ids or remove_label_ids must be provided");
             }
             if ((addLabelIds != null && addLabelIds.isEmpty()) || (removeLabelIds != null && removeLabelIds.isEmpty())) {
                 throw new IllegalArgumentException("add_label_ids and remove_label_ids must contain at least one label ID");

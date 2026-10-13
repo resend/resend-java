@@ -138,17 +138,6 @@ public class InboxThreadsTest {
     }
 
     @Test
-    @SuppressWarnings("deprecation")
-    public void testUpdateThread_DeprecatedLabelId() throws ResendException {
-        UpdateInboxThreadOptions options = UpdateInboxThreadOptions.builder().labelId(LABEL_ID).build();
-        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID), anyString(), eq(HttpMethod.PATCH),
-                eq("{\"label_id\":\"" + LABEL_ID + "\"}"), any(MediaType.class)))
-                .thenReturn(new AbstractHttpResponse<>(200, SUMMARY_JSON, true));
-
-        assertNotNull(threads.update(INBOX_ID, THREAD_ID, options));
-    }
-
-    @Test
     public void testRemoveThread_Success() throws ResendException {
         when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID), anyString(), eq(HttpMethod.DELETE), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"inbox_thread\",\"id\":\"" + THREAD_ID + "\",\"deleted\":false}", true));

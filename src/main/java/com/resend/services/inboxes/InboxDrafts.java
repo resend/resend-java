@@ -12,6 +12,7 @@ import com.resend.services.inboxes.model.CreateInboxDraftResponseSuccess;
 import com.resend.services.inboxes.model.GetInboxDraftResponseSuccess;
 import com.resend.services.inboxes.model.ListInboxDraftsResponseSuccess;
 import com.resend.services.inboxes.model.RemoveInboxDraftResponseSuccess;
+import com.resend.services.inboxes.model.SendInboxDraftOptions;
 import com.resend.services.inboxes.model.SendInboxDraftResponseSuccess;
 import com.resend.services.inboxes.model.UpdateInboxDraftOptions;
 import com.resend.services.inboxes.model.UpdateInboxDraftResponseSuccess;
@@ -181,5 +182,44 @@ public class InboxDrafts extends BaseService {
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId, RequestOptions requestOptions) throws ResendException {
         return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
+    }
+
+    /**
+     * Sends a draft from the inbox address with custom headers. A reply draft is sent in its thread. A draft
+     * without a thread starts a new thread. The draft must have at least one {@code to} recipient, a non-empty
+     * {@code subject}, and {@code html} or {@code text}, or the request returns a 422.
+     * A draft that was already sent returns a 409.
+     *
+     * @param inboxId               The inbox ID. An email address is not accepted.
+     * @param draftId               The draft ID.
+     * @param sendInboxDraftOptions The custom headers to add to the email.
+     * @return The ID of the sent email.
+     * @throws ResendException If an error occurs while sending the draft.
+     */
+    public SendInboxDraftResponseSuccess send(String inboxId, String draftId, SendInboxDraftOptions sendInboxDraftOptions) throws ResendException {
+        String payload = sendInboxDraftOptions == null ? "" : super.resendMapper.writeValue(sendInboxDraftOptions);
+        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
+    }
+
+    /**
+     * Sends a draft from the inbox address with custom headers. A reply draft is sent in its thread. A draft
+     * without a thread starts a new thread. The draft must have at least one {@code to} recipient, a non-empty
+     * {@code subject}, and {@code html} or {@code text}, or the request returns a 422.
+     * A draft that was already sent returns a 409.
+     *
+     * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
+     * within 24 hours returns the first response, with the {@code idempotent-replayed: true} header. Reusing the
+     * key with a different body, or while the first request is still running, returns a 409.</p>
+     *
+     * @param inboxId               The inbox ID. An email address is not accepted.
+     * @param draftId               The draft ID.
+     * @param sendInboxDraftOptions The custom headers to add to the email.
+     * @param requestOptions The options with additional headers.
+     * @return The ID of the sent email.
+     * @throws ResendException If an error occurs while sending the draft.
+     */
+    public SendInboxDraftResponseSuccess send(String inboxId, String draftId, SendInboxDraftOptions sendInboxDraftOptions, RequestOptions requestOptions) throws ResendException {
+        String payload = sendInboxDraftOptions == null ? "" : super.resendMapper.writeValue(sendInboxDraftOptions);
+        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
     }
 }

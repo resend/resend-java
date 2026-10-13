@@ -5,7 +5,9 @@ import com.resend.services.emails.model.Attachment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a request to forward a thread email. {@code to}, {@code cc} and {@code bcc} combined cannot exceed 50 recipients.
@@ -33,6 +35,9 @@ public class ForwardInboxThreadEmailOptions {
     @JsonProperty("attachments")
     private final List<Attachment> attachments;
 
+    @JsonProperty("headers")
+    private final Map<String, String> headers;
+
     private ForwardInboxThreadEmailOptions(Builder builder) {
         this.to = builder.to;
         this.cc = builder.cc;
@@ -41,6 +46,7 @@ public class ForwardInboxThreadEmailOptions {
         this.text = builder.text;
         this.subject = builder.subject;
         this.attachments = builder.attachments;
+        this.headers = builder.headers;
     }
 
     /**
@@ -107,6 +113,15 @@ public class ForwardInboxThreadEmailOptions {
     }
 
     /**
+     * Retrieves the custom headers of the email.
+     *
+     * @return The custom headers of the email.
+     */
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    /**
      * Create a new builder instance for constructing ForwardInboxThreadEmailOptions objects.
      *
      * @return A new builder instance.
@@ -126,6 +141,7 @@ public class ForwardInboxThreadEmailOptions {
         private String text;
         private String subject;
         private List<Attachment> attachments;
+        private Map<String, String> headers;
 
         /**
          * Creates a new Builder instance.
@@ -307,6 +323,32 @@ public class ForwardInboxThreadEmailOptions {
                 this.attachments = new ArrayList<>();
             }
             this.attachments.add(attachment);
+            return this;
+        }
+
+        /**
+         * Set the custom headers of the email. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         *
+         * @param headers The map of custom headers for the email.
+         * @return This builder instance for method chaining.
+         */
+        public Builder headers(Map<String, String> headers) {
+            this.headers = headers == null ? null : new LinkedHashMap<>(headers);
+            return this;
+        }
+
+        /**
+         * Add a single custom header to the email headers. The {@code In-Reply-To}, {@code References} and {@code Reply-To} headers are set by Resend and cannot be set here. Sending one of them, in any letter case, returns a 422.
+         *
+         * @param key The key of the custom header.
+         * @param value The value of the custom header.
+         * @return This builder instance for method chaining.
+         */
+        public Builder addHeader(String key, String value) {
+            if (this.headers == null) {
+                this.headers = new LinkedHashMap<>();
+            }
+            this.headers.put(key, value);
             return this;
         }
 

@@ -224,6 +224,20 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testSendDraft_WithHeaders() throws ResendException {
+        SendInboxDraftOptions options = SendInboxDraftOptions.builder().addHeader("X-Ticket-Id", "4821").build();
+        RequestOptions requestOptions = RequestOptions.builder().setIdempotencyKey("send-key-2").build();
+        String payload = "{\"headers\":{\"X-Ticket-Id\":\"4821\"}}";
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID + "/send"), anyString(), eq(HttpMethod.POST), eq(payload), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID + "/send"), anyString(), eq(HttpMethod.POST), eq(payload), any(MediaType.class), eq(requestOptions)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+
+        assertEquals(SENT_EMAIL_ID, drafts.send(INBOX_ID, DRAFT_ID, options).getId());
+        assertEquals(SENT_EMAIL_ID, drafts.send(INBOX_ID, DRAFT_ID, options, requestOptions).getId());
+    }
+
+    @Test
     public void testSendDraft_AlreadySent_ThrowsResendException() throws ResendException {
         when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID + "/send"), anyString(), eq(HttpMethod.POST), eq(""), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(409, "{\"name\":\"conflict\",\"message\":\"Draft already sent\"}", false));

@@ -107,6 +107,22 @@ public class InboxThreadEmailsTest {
     }
 
     @Test
+    public void testReplyAndForward_WithHeaders() throws ResendException {
+        ReplyInboxThreadEmailOptions reply = ReplyInboxThreadEmailOptions.builder().text("Thanks").addHeader("X-Ticket-Id", "4821").build();
+        ForwardInboxThreadEmailOptions forward = ForwardInboxThreadEmailOptions.builder().to("colleague@example.org")
+                .headers(java.util.Collections.singletonMap("X-Ticket-Id", "4821")).build();
+        when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/reply"), anyString(), eq(HttpMethod.POST),
+                eq("{\"text\":\"Thanks\",\"headers\":{\"X-Ticket-Id\":\"4821\"}}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+        when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/forward"), anyString(), eq(HttpMethod.POST),
+                eq("{\"to\":[\"colleague@example.org\"],\"headers\":{\"X-Ticket-Id\":\"4821\"}}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"id\":\"" + SENT_EMAIL_ID + "\"}", true));
+
+        assertEquals(SENT_EMAIL_ID, emails.reply(INBOX_ID, THREAD_ID, EMAIL_ID, reply).getId());
+        assertEquals(SENT_EMAIL_ID, emails.forward(INBOX_ID, THREAD_ID, EMAIL_ID, forward).getId());
+    }
+
+    @Test
     public void testReplyAndForward_WithIdempotencyKey() throws ResendException {
         RequestOptions options = RequestOptions.builder().setIdempotencyKey("reply-key-1").build();
         when(httpClient.perform(eq(EMAILS_PATH + "/" + EMAIL_ID + "/reply"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class), eq(options)))

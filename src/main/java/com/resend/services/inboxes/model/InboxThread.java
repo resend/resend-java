@@ -30,8 +30,8 @@ public class InboxThread {
     @JsonProperty("labels")
     private List<InboxThreadLabel> labels;
 
-    @JsonProperty("message_count")
-    private Integer messageCount;
+    @JsonProperty("email_count")
+    private Integer emailCount;
 
     @JsonProperty("has_attachment")
     private Boolean hasAttachment;
@@ -65,14 +65,14 @@ public class InboxThread {
      * @param cc            The CC recipients of the most recent email.
      * @param bcc           The BCC recipients of the most recent email. Always empty for a received email.
      * @param labels        The labels attached to the thread.
-     * @param messageCount  The number of emails in the thread.
+     * @param emailCount  The number of emails in the thread.
      * @param hasAttachment Whether the most recent email in the thread has an attachment.
      * @param hasDraft      Whether the thread has an unsent draft.
      * @param read          True only when every email in the thread is read.
      * @param receivedAt    The timestamp when the thread was last active.
      * @param folder        The folder the thread is in. Every thread is in exactly one folder.
      */
-    public InboxThread(String id, String subject, String from, List<String> to, List<String> cc, List<String> bcc, List<InboxThreadLabel> labels, Integer messageCount, Boolean hasAttachment, Boolean hasDraft, Boolean read, String receivedAt, String folder) {
+    public InboxThread(String id, String subject, String from, List<String> to, List<String> cc, List<String> bcc, List<InboxThreadLabel> labels, Integer emailCount, Boolean hasAttachment, Boolean hasDraft, Boolean read, String receivedAt, String folder) {
         this.id = id;
         this.subject = subject;
         this.from = from;
@@ -80,7 +80,7 @@ public class InboxThread {
         this.cc = cc;
         this.bcc = bcc;
         this.labels = labels;
-        this.messageCount = messageCount;
+        this.emailCount = emailCount;
         this.hasAttachment = hasAttachment;
         this.hasDraft = hasDraft;
         this.read = read;
@@ -156,8 +156,8 @@ public class InboxThread {
      *
      * @return The number of emails in the thread.
      */
-    public Integer getMessageCount() {
-        return messageCount;
+    public Integer getEmailCount() {
+        return emailCount;
     }
 
     /**

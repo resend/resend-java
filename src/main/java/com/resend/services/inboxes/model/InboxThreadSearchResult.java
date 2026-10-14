@@ -34,7 +34,7 @@ public class InboxThreadSearchResult extends InboxThread {
      * @param cc             The CC recipients of the most recent email.
      * @param bcc            The BCC recipients of the most recent email. Always empty for a received email.
      * @param labels         The labels attached to the thread.
-     * @param messageCount   The number of emails in the thread.
+     * @param emailCount   The number of emails in the thread.
      * @param hasAttachment  Whether the most recent email in the thread has an attachment.
      * @param hasDraft       Whether the thread has an unsent draft.
      * @param read           True only when every email in the thread is read.
@@ -43,8 +43,8 @@ public class InboxThreadSearchResult extends InboxThread {
      * @param matchedEmailId The email in the thread that matched the search. The get, reply and forward thread email endpoints accept it as {@code email_id}, but it is not equal to the {@code id} those endpoints return. Null when the search index returns no matched email for the thread.
      * @param highlights     Where {@code query} matched the email in {@code matched_email_id}, as text fragments with each match wrapped in {@code **}, keyed by {@code subject}, {@code body}, {@code from}, {@code to}, {@code cc}, {@code bcc} or {@code attachments}. Only keys with a match are present. Empty when there is no {@code query}.
      */
-    public InboxThreadSearchResult(String id, String subject, String from, List<String> to, List<String> cc, List<String> bcc, List<InboxThreadLabel> labels, Integer messageCount, Boolean hasAttachment, Boolean hasDraft, Boolean read, String receivedAt, String folder, String matchedEmailId, Map<String, List<String>> highlights) {
-        super(id, subject, from, to, cc, bcc, labels, messageCount, hasAttachment, hasDraft, read, receivedAt, folder);
+    public InboxThreadSearchResult(String id, String subject, String from, List<String> to, List<String> cc, List<String> bcc, List<InboxThreadLabel> labels, Integer emailCount, Boolean hasAttachment, Boolean hasDraft, Boolean read, String receivedAt, String folder, String matchedEmailId, Map<String, List<String>> highlights) {
+        super(id, subject, from, to, cc, bcc, labels, emailCount, hasAttachment, hasDraft, read, receivedAt, folder);
         this.matchedEmailId = matchedEmailId;
         this.highlights = highlights;
     }

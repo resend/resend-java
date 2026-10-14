@@ -25,7 +25,7 @@ public class InboxThreadsTest {
     private static final String THREAD_JSON = "{\"id\":\"" + THREAD_ID + "\",\"subject\":\"Refund for order 1041\"," +
             "\"from\":\"ada@example.org\",\"to\":[\"support@example.com\"],\"cc\":[],\"bcc\":[]," +
             "\"labels\":[{\"id\":\"" + LABEL_ID + "\",\"name\":\"Urgent\",\"color\":\"#E93D82\"}]," +
-            "\"message_count\":2,\"has_attachment\":true,\"has_draft\":false,\"read\":false," +
+            "\"email_count\":2,\"has_attachment\":true,\"has_draft\":false,\"read\":false," +
             "\"received_at\":\"2026-08-05T14:03:11.229Z\",\"folder\":\"inbox\"";
     private static final String SUMMARY_JSON = "{\"object\":\"inbox_thread\",\"id\":\"" + THREAD_ID + "\"," +
             "\"subject\":\"Refund for order 1041\",\"folder\":\"archive\"," +
@@ -63,7 +63,7 @@ public class InboxThreadsTest {
         assertEquals("ada@example.org", thread.getFrom());
         assertEquals(Collections.singletonList("support@example.com"), thread.getTo());
         assertEquals("#E93D82", thread.getLabels().get(0).getColor());
-        assertEquals(2, (int) thread.getMessageCount());
+        assertEquals(2, (int) thread.getEmailCount());
         assertTrue(thread.getHasAttachment());
         assertFalse(thread.getHasDraft());
         assertFalse(thread.getRead());
@@ -101,6 +101,7 @@ public class InboxThreadsTest {
 
         InboxThreadSearchResult result = response.getData().get(0);
         assertEquals(THREAD_ID, result.getId());
+        assertEquals(2, (int) result.getEmailCount());
         assertEquals("e8a3f1c6-2b9d-4e5a-a7c4-9d1b6f3e2a80", result.getMatchedEmailId());
         assertEquals(Collections.singletonList("September **invoice**"), result.getHighlights().get("subject"));
         assertFalse(result.getHighlights().containsKey("body"));

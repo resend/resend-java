@@ -162,7 +162,7 @@ public class CreateInboxDraftOptions {
         }
 
         /**
-         * Set the recipients. Each value can include a friendly name, for example {@code Ada Lovelace <ada@example.org>}. A reply draft without {@code to} is addressed to the sender of the email it replies to, or to its Reply-To when set. Send an empty list to leave it empty.
+         * Set the recipients. Each value can include a friendly name, for example {@code Ada Lovelace <ada@example.org>}. A reply draft without {@code to} is addressed to the sender of the email it replies to, or to its Reply-To when set. For an email the inbox sent, it defaults to that email's {@code to} recipients. Send an empty list to leave it empty.
          *
          * @param to The recipients.
          * @return The builder instance.
@@ -173,7 +173,7 @@ public class CreateInboxDraftOptions {
         }
 
         /**
-         * Set the recipients. Each value can include a friendly name, for example {@code Ada Lovelace <ada@example.org>}. A reply draft without {@code to} is addressed to the sender of the email it replies to, or to its Reply-To when set. Send an empty list to leave it empty.
+         * Set the recipients. Each value can include a friendly name, for example {@code Ada Lovelace <ada@example.org>}. A reply draft without {@code to} is addressed to the sender of the email it replies to, or to its Reply-To when set. For an email the inbox sent, it defaults to that email's {@code to} recipients. Send an empty list to leave it empty.
          *
          * @param to The recipients.
          * @return The builder instance.

@@ -88,6 +88,47 @@ Resend resend = Resend.builder()
 
 Create one `Resend` instance and reuse it: every service it returns shares the same HTTP client.
 
+### Retries and timeouts
+
+Retries are off by default. Set `maxRetries` on the builder to retry failed requests for every call:
+
+```java
+Resend resend = Resend.builder()
+    .apiKey("re_123")
+    .maxRetries(3)
+    .build();
+```
+
+A request is retried when the API answers `429` or any `5xx`, or when the connection fails (refused, reset, or closed
+mid-response). The SDK waits between attempts with exponential backoff (starting at 500 ms, capped at 5 s, with
+jitter), or for as long as the `Retry-After` header asks for, up to 30 s.
+
+When the last attempt still gets an error response from the API, you get the usual `ResendException`. When the last
+attempt fails before any response arrives (a connection failure, a timeout, or a failure that retrying can't fix, such
+as an unknown host or a TLS error), the SDK throws a `RuntimeException` wrapping the underlying `IOException`.
+
+A `POST` may already have been processed when a `5xx` or a connection failure happens, so it is retried on `429`
+always, but on `5xx` or connection failures only when it carries an idempotency key. Timeouts are never retried.
+
+The waits between attempts block the calling thread and are not covered by the timeout, which applies to each
+attempt separately. In the worst case a request takes about `(maxRetries + 1)` attempts plus up to 30 s of waiting per
+retry, so keep `maxRetries` small for latency-sensitive code. Interrupting the thread ends the wait immediately.
+
+`RequestOptions` can override both settings for a single request. The timeout covers one whole attempt, from
+connecting to reading the full response, and replaces the client's `callTimeout` for that request:
+
+```java
+RequestOptions options = RequestOptions.builder()
+    .setIdempotencyKey("order-1234")
+    .maxRetries(5)
+    .timeout(Duration.ofSeconds(15))
+    .build();
+
+CreateEmailResponse data = resend.emails().send(params, options);
+```
+
+Per-request options are available on `emails().send(...)`, `batch().send(...)` and `contacts().imports().create(...)`.
+
 ### Custom HTTP client
 
 To take full control of the HTTP layer, pass your own `IHttpClient` with `.httpClient(...)`. For example, to use
@@ -114,6 +155,8 @@ Resend resend = Resend.builder()
     .build();
 ```
 
-A custom `httpClient` can't be combined with `baseUrl`, the timeouts or `proxy`; configure those on your client.
+A custom `httpClient` can't be combined with `baseUrl`, the timeouts, `maxRetries` or `proxy`; configure those on your
+client. To enable retries on the built-in `HttpClient`, pass the retry count as the third argument:
+`new HttpClient(okHttpClient, "https://api.resend.com", 3)`.
 
 You can view all the examples in the [examples folder](https://github.com/resendlabs/resend-java-example)

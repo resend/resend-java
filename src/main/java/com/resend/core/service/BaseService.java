@@ -98,7 +98,7 @@ public abstract class BaseService {
      * @param method         The HTTP method.
      * @param payload        The body payload (or null).
      * @param mediaType      The media type for the payload.
-     * @param requestOptions The options with additional headers.
+     * @param requestOptions The per-request options, or {@code null} to send the request without any.
      * @param responseType   The class to deserialize the response body into.
      * @param <T>            The response type.
      * @return The deserialized response.
@@ -107,6 +107,9 @@ public abstract class BaseService {
     protected <T> T execute(final String path, final HttpMethod method, final String payload,
                             final MediaType mediaType, final RequestOptions requestOptions,
                             final Class<T> responseType) throws ResendException {
+        if (requestOptions == null) {
+            return execute(path, method, payload, mediaType, responseType);
+        }
         return handle(httpClient.perform(path, apiKey, method, payload, mediaType, requestOptions), responseType);
     }
 

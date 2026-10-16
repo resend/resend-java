@@ -121,12 +121,9 @@ public class InboxThreads extends BaseService {
     }
 
     /**
-     * Marks a thread read or unread, moves it to a folder, or adds and removes labels.
-     * A label ID cannot be both added and removed in the same request. Removing a label from a thread keeps
-     * the label itself.
-     * Moving a thread out of {@code trash} restores it and clears its deletion deadline. The changes apply in
-     * this order: {@code read}, {@code folder}, added labels, removed labels. They are not atomic, so a 404 for
-     * a label leaves the earlier changes applied.
+     * Marks a thread read or unread, or moves it to a folder.
+     * Moving a thread out of {@code trash} restores it and clears its deletion deadline.
+     * To change the labels of a thread, use {@link #addLabels}, {@link #setLabels} or {@link #removeLabel}.
      *
      * @param inboxId                  The inbox ID. An email address is not accepted.
      * @param threadId                 The thread ID.

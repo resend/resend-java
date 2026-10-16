@@ -121,21 +121,19 @@ public class InboxThreadsTest {
     }
 
     @Test
-    public void testUpdateThread_AddAndRemoveLabels() throws ResendException {
+    public void testUpdateThread_ReadAndFolder() throws ResendException {
         UpdateInboxThreadOptions options = UpdateInboxThreadOptions.builder()
                 .read(true)
                 .folder(MoveInboxThreadFolder.ARCHIVE)
-                .addLabelIds(LABEL_ID)
-                .removeLabelIds(OTHER_LABEL_ID)
                 .build();
-        String payload = "{\"read\":true,\"folder\":\"archive\",\"add_label_ids\":[\"" + LABEL_ID + "\"]," +
-                "\"remove_label_ids\":[\"" + OTHER_LABEL_ID + "\"]}";
-        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID), anyString(), eq(HttpMethod.PATCH), eq(payload), any(MediaType.class)))
+        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID), anyString(), eq(HttpMethod.PATCH),
+                eq("{\"read\":true,\"folder\":\"archive\"}"), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, SUMMARY_JSON, true));
 
         UpdateInboxThreadResponseSuccess response = threads.update(INBOX_ID, THREAD_ID, options);
 
         assertEquals(THREAD_ID, response.getId());
+        assertEquals("archive", response.getFolder());
     }
 
     @Test
@@ -152,9 +150,6 @@ public class InboxThreadsTest {
     @Test
     public void testUpdateThreadBuilder_Validation() {
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder().build());
-        assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder()
-                .addLabelIds(LABEL_ID).removeLabelIds(LABEL_ID).build());
-        assertThrows(IllegalArgumentException.class, () -> UpdateInboxThreadOptions.builder().addLabelIds().build());
     }
 
     @Test

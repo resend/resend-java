@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 public class InboxDraftsTest {
 
     private static final String DRAFTS_PATH = "/inboxes/" + INBOX_ID + "/drafts";
+    private static final String UPDATE_RESPONSE_JSON = "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\"}";
     private static final String DRAFT_JSON = "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\",\"type\":\"reply\"," +
             "\"to\":[\"ada@example.org\"],\"cc\":[],\"bcc\":[],\"subject\":\"Re: Refund for order 1041\"," +
             "\"html\":null,\"text\":\"Refund issued for order 1041.\",\"thread_id\":\"" + THREAD_ID + "\"," +
@@ -182,10 +183,11 @@ public class InboxDraftsTest {
                 .build();
         when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH),
                 eq("{\"subject\":null,\"cc\":null,\"text\":\"Updated body.\"}"), any(MediaType.class)))
-                .thenReturn(new AbstractHttpResponse<>(200, DRAFT_JSON, true));
+                .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
 
         UpdateInboxDraftResponseSuccess response = drafts.update(INBOX_ID, DRAFT_ID, options);
 
+        assertEquals("inbox_draft", response.getObject());
         assertEquals(DRAFT_ID, response.getId());
     }
 
@@ -194,7 +196,7 @@ public class InboxDraftsTest {
         UpdateInboxDraftOptions options = UpdateInboxDraftOptions.builder().to("ada@example.org").build();
         when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH),
                 eq("{\"to\":[\"ada@example.org\"]}"), any(MediaType.class)))
-                .thenReturn(new AbstractHttpResponse<>(200, DRAFT_JSON, true));
+                .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
 
         assertNotNull(drafts.update(INBOX_ID, DRAFT_ID, options));
         assertEquals(Collections.singletonList("ada@example.org"), options.getTo());

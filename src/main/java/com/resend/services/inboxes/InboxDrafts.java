@@ -130,7 +130,7 @@ public class InboxDrafts extends BaseService {
      * @param inboxId                 The inbox ID. An email address is not accepted.
      * @param draftId                 The draft ID.
      * @param updateInboxDraftOptions The fields to update.
-     * @return The updated draft.
+     * @return The ID of the updated draft. Use {@link #get(String, String)} to read its content.
      * @throws ResendException If an error occurs while updating the draft.
      */
     public UpdateInboxDraftResponseSuccess update(String inboxId, String draftId, UpdateInboxDraftOptions updateInboxDraftOptions) throws ResendException {

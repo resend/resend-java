@@ -94,10 +94,8 @@ public class UpdateInboxAgentOptions {
         }
 
         /**
-         * Set the tone the agent writes in. Use one of the presets {@code concise_professional}, {@code concise_casual},
-         * {@code expanded_professional}, or {@code expanded_casual}, or describe the tone in your own words, such as
-         * {@code friendly and concise}. Custom text is max 64 characters. Leading and trailing whitespace is trimmed,
-         * and the trimmed value must not be empty.
+         * Set the tone the agent writes in. One of {@code concise_professional}, {@code concise_casual},
+         * {@code expanded_professional}, or {@code expanded_casual}.
          * Pass null to clear the tone.
          *
          * @param tone The tone, or null to clear it.

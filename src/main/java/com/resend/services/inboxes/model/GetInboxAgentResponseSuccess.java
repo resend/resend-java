@@ -20,7 +20,7 @@ public class GetInboxAgentResponseSuccess extends InboxAgent {
      *
      * @param object         The object type. Always {@code inbox_agent}.
      * @param instructions   The instructions the agent follows when it handles the threads of the inbox. Null when no instructions are set.
-     * @param tone           The tone the agent writes in. One of the presets {@code concise_professional}, {@code concise_casual}, {@code expanded_professional}, or {@code expanded_casual}, or custom text in the owner's own words, such as {@code friendly and concise}. Older dashboard values such as {@code Concise · Casual} are custom text. Null when no tone is set.
+     * @param tone           The tone the agent writes in. One of {@code concise_professional}, {@code concise_casual}, {@code expanded_professional}, or {@code expanded_casual}. Null when no tone is set.
      * @param actions The actions the agent can take. Empty when no actions are enabled.
      */
     public GetInboxAgentResponseSuccess(String object, String instructions, String tone, List<String> actions) {

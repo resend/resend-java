@@ -132,7 +132,7 @@ public class InboxThreadEmails extends BaseService {
      * Forwards a message from the inbox address right away, with no stored draft. The original message is quoted
      * under a forwarded-message banner, below the optional {@code html} or {@code text} note. The attachments of
      * the original message are sent with the forward, together with any attachments you add. The request fails
-     * when they exceed 10 files or 25 MB of {@code content} in total. An original attachment that was sent from
+     * when they exceed 25 MB of {@code content} in total. An original attachment that was sent from
      * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
      *
      * @param inboxId                        The inbox ID or the inbox email address.
@@ -152,7 +152,7 @@ public class InboxThreadEmails extends BaseService {
      * Forwards a message from the inbox address right away, with no stored draft. The original message is quoted
      * under a forwarded-message banner, below the optional {@code html} or {@code text} note. The attachments of
      * the original message are sent with the forward, together with any attachments you add. The request fails
-     * when they exceed 10 files or 25 MB of {@code content} in total. An original attachment that was sent from
+     * when they exceed 25 MB of {@code content} in total. An original attachment that was sent from
      * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the forward is sent only once. A retry with the same key

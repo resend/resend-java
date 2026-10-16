@@ -291,7 +291,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -302,7 +302,7 @@ public class ForwardInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: up to 10 files and at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. They share one limit with the attachments of the original message, which the forward also sends: at most 25 MB of {@code content}. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.

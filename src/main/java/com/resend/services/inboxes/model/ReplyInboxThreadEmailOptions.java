@@ -266,7 +266,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.
@@ -277,7 +277,7 @@ public class ReplyInboxThreadEmailOptions {
         }
 
         /**
-         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. Up to 10 files. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
+         * Set the files to attach, as on {@code POST /emails}. Each one needs {@code content} or {@code path}. The {@code content} of all files can total at most 25 MB. An empty file, a blocked file type, or a {@code path} that is not an {@code http} or {@code https} URL or points to {@code localhost} returns a 422.
          *
          * @param attachments The files to attach, as on {@code POST /emails}.
          * @return The builder instance.

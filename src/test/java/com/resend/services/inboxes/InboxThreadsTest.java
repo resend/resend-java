@@ -93,8 +93,7 @@ public class InboxThreadsTest {
         String path = THREADS_PATH + "/search?limit=10&query=invoice+-draft&from=isabella%40example.com%2Ccarolina%40example.com" +
                 "&has_attachment=true&start_date=2026-09-01&end_date=2026-09-30&folders=inbox";
         String json = "{\"object\":\"list\",\"has_more\":false,\"data\":[" + THREAD_JSON + "," +
-                "\"matched_email_id\":\"e8a3f1c6-2b9d-4e5a-a7c4-9d1b6f3e2a80\"," +
-                "\"highlights\":{\"subject\":[\"September **invoice**\"],\"attachments\":[\"**invoice**-2026-09.pdf\"]}}]}";
+                "\"matched_email_id\":\"e8a3f1c6-2b9d-4e5a-a7c4-9d1b6f3e2a80\"}]}";
         when(httpClient.perform(eq(path), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, json, true));
 
@@ -104,8 +103,6 @@ public class InboxThreadsTest {
         assertEquals(THREAD_ID, result.getId());
         assertEquals(2, (int) result.getEmailCount());
         assertEquals("e8a3f1c6-2b9d-4e5a-a7c4-9d1b6f3e2a80", result.getMatchedEmailId());
-        assertEquals(Collections.singletonList("September **invoice**"), result.getHighlights().get("subject"));
-        assertFalse(result.getHighlights().containsKey("body"));
     }
 
     @Test

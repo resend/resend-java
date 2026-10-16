@@ -45,7 +45,7 @@ public class InboxDrafts extends BaseService {
     /**
      * Retrieves the unsent drafts on an inbox, most recently updated first.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return A ListInboxDraftsResponseSuccess containing the drafts.
      * @throws ResendException If an error occurs while retrieving the drafts.
      */
@@ -58,7 +58,7 @@ public class InboxDrafts extends BaseService {
      * The {@code after} and {@code before} cursors take a draft ID from the current page.
      * A cursor that is not an unsent draft on this inbox returns a 404.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param params  The params used to paginate the list.
      * @return A ListInboxDraftsResponseSuccess containing the drafts.
      * @throws ResendException If an error occurs while retrieving the drafts.
@@ -75,7 +75,7 @@ public class InboxDrafts extends BaseService {
      * attachments of the existing draft when sent. A reply draft created without {@code subject} stores an empty
      * subject and gets no {@code Re:} prefix, so set one before you send it.
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param createInboxDraftOptions The draft content.
      * @return The ID of the draft.
      * @throws ResendException If an error occurs while creating the draft.
@@ -98,7 +98,7 @@ public class InboxDrafts extends BaseService {
      * key with a different body, or while the first request is still running, returns a 409. A failed request is
      * not stored, so you can retry it with the same key.</p>
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param createInboxDraftOptions The draft content.
      * @param requestOptions The options with additional headers.
      * @return The ID of the draft.
@@ -112,7 +112,7 @@ public class InboxDrafts extends BaseService {
     /**
      * Retrieves a single draft.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param draftId The draft ID.
      * @return The draft.
      * @throws ResendException If an error occurs while retrieving the draft.
@@ -127,7 +127,7 @@ public class InboxDrafts extends BaseService {
      * Sending {@code attachments} replaces every attachment on the draft, and an empty list removes them all. The body part you omit from that request becomes
      * {@code null}. A draft that was already sent, or that changed during the request, returns a 409.
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param draftId                 The draft ID.
      * @param updateInboxDraftOptions The fields to update.
      * @return The ID of the updated draft. Use {@link #get(String, String)} to read its content.
@@ -141,7 +141,7 @@ public class InboxDrafts extends BaseService {
     /**
      * Discards an unsent draft. A draft that was already sent, or that changed during the request, returns a 409.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param draftId The draft ID.
      * @return The RemoveInboxDraftResponseSuccess with the details of the removed draft.
      * @throws ResendException If an error occurs while removing the draft.
@@ -152,11 +152,12 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Sends a draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts
-     * a new thread. The draft must have at least one {@code to} recipient, a non-empty {@code subject}, and
-     * {@code html} or {@code text}, or the request returns a 422.
+     * a new thread. The draft must have at least one {@code to} recipient and {@code html} or {@code text}, or the
+     * request returns a 422. A draft that starts a new thread also needs a non-empty {@code subject}. A reply draft
+     * can be sent with an empty subject.
      * A draft that was already sent returns a 409.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param draftId The draft ID.
      * @return The ID of the sent email.
      * @throws ResendException If an error occurs while sending the draft.
@@ -167,8 +168,9 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Sends a draft from the inbox address. A reply draft is sent in its thread. A draft without a thread starts
-     * a new thread. The draft must have at least one {@code to} recipient, a non-empty {@code subject}, and
-     * {@code html} or {@code text}, or the request returns a 422.
+     * a new thread. The draft must have at least one {@code to} recipient and {@code html} or {@code text}, or the
+     * request returns a 422. A draft that starts a new thread also needs a non-empty {@code subject}. A reply draft
+     * can be sent with an empty subject.
      * A draft that was already sent returns a 409.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
@@ -176,7 +178,7 @@ public class InboxDrafts extends BaseService {
      * key with a different body, or while the first request is still running, returns a 409. A failed request is
      * not stored, so you can retry it with the same key.</p>
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param draftId The draft ID.
      * @param requestOptions The options with additional headers.
      * @return The ID of the sent email.
@@ -188,11 +190,12 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Sends a draft from the inbox address with custom headers. A reply draft is sent in its thread. A draft
-     * without a thread starts a new thread. The draft must have at least one {@code to} recipient, a non-empty
-     * {@code subject}, and {@code html} or {@code text}, or the request returns a 422.
+     * without a thread starts a new thread. The draft must have at least one {@code to} recipient and {@code html}
+     * or {@code text}, or the request returns a 422. A draft that starts a new thread also needs a non-empty
+     * {@code subject}. A reply draft can be sent with an empty subject.
      * A draft that was already sent returns a 409.
      *
-     * @param inboxId               The inbox ID. An email address is not accepted.
+     * @param inboxId               The inbox ID or the inbox email address.
      * @param draftId               The draft ID.
      * @param sendInboxDraftOptions The custom headers to add to the email.
      * @return The ID of the sent email.
@@ -205,8 +208,9 @@ public class InboxDrafts extends BaseService {
 
     /**
      * Sends a draft from the inbox address with custom headers. A reply draft is sent in its thread. A draft
-     * without a thread starts a new thread. The draft must have at least one {@code to} recipient, a non-empty
-     * {@code subject}, and {@code html} or {@code text}, or the request returns a 422.
+     * without a thread starts a new thread. The draft must have at least one {@code to} recipient and {@code html}
+     * or {@code text}, or the request returns a 422. A draft that starts a new thread also needs a non-empty
+     * {@code subject}. A reply draft can be sent with an empty subject.
      * A draft that was already sent returns a 409.
      *
      * <p>Set an idempotency key in {@code requestOptions} so the draft is sent only once. A retry with the same key
@@ -214,7 +218,7 @@ public class InboxDrafts extends BaseService {
      * key with a different body, or while the first request is still running, returns a 409. A failed request is
      * not stored, so you can retry it with the same key.</p>
      *
-     * @param inboxId               The inbox ID. An email address is not accepted.
+     * @param inboxId               The inbox ID or the inbox email address.
      * @param draftId               The draft ID.
      * @param sendInboxDraftOptions The custom headers to add to the email.
      * @param requestOptions The options with additional headers.

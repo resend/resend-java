@@ -42,7 +42,7 @@ public class InboxThreadEmails extends BaseService {
     /**
      * Retrieves the messages of a thread, oldest first.
      *
-     * @param inboxId  The inbox ID. An email address is not accepted.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @return A ListInboxThreadEmailsResponseSuccess containing the messages.
      * @throws ResendException If an error occurs while retrieving the messages.
@@ -57,7 +57,7 @@ public class InboxThreadEmails extends BaseService {
      * to get the previous, older page. You cannot combine {@code after} and {@code before}. A cursor that is not
      * a message of the thread returns a 404.
      *
-     * @param inboxId  The inbox ID. An email address is not accepted.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @param params   The params used to paginate the list.
      * @return A ListInboxThreadEmailsResponseSuccess containing the messages.
@@ -71,7 +71,7 @@ public class InboxThreadEmails extends BaseService {
     /**
      * Retrieves a single message of a thread.
      *
-     * @param inboxId  The inbox ID. An email address is not accepted.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @param emailId  The email ID, as returned in {@code data[].id} by the list thread emails endpoint.
      * @return The message.
@@ -89,7 +89,7 @@ public class InboxThreadEmails extends BaseService {
      * to that message's {@code to} recipients. The reply threads under the message through the
      * {@code In-Reply-To} and {@code References} headers.
      *
-     * @param inboxId                      The inbox ID. An email address is not accepted.
+     * @param inboxId                      The inbox ID or the inbox email address.
      * @param threadId                     The thread ID.
      * @param emailId                      The email ID of the message to reply to.
      * @param replyInboxThreadEmailOptions The reply content.
@@ -114,7 +114,7 @@ public class InboxThreadEmails extends BaseService {
      * key with a different body, or while the first request is still running, returns a 409. A failed request is
      * not stored, so you can retry it with the same key.</p>
      *
-     * @param inboxId                      The inbox ID. An email address is not accepted.
+     * @param inboxId                      The inbox ID or the inbox email address.
      * @param threadId                     The thread ID.
      * @param emailId                      The email ID of the message to reply to.
      * @param replyInboxThreadEmailOptions The reply content.
@@ -135,7 +135,7 @@ public class InboxThreadEmails extends BaseService {
      * when they exceed 10 files or 25 MB of {@code content} in total. An original attachment that was sent from
      * a URL ({@code path}) cannot be forwarded, and the request returns a 422.
      *
-     * @param inboxId                        The inbox ID. An email address is not accepted.
+     * @param inboxId                        The inbox ID or the inbox email address.
      * @param threadId                       The thread ID.
      * @param emailId                        The email ID of the message to forward.
      * @param forwardInboxThreadEmailOptions The forward recipients and content.
@@ -160,7 +160,7 @@ public class InboxThreadEmails extends BaseService {
      * key with a different body, or while the first request is still running, returns a 409. A failed request is
      * not stored, so you can retry it with the same key.</p>
      *
-     * @param inboxId                        The inbox ID. An email address is not accepted.
+     * @param inboxId                        The inbox ID or the inbox email address.
      * @param threadId                       The thread ID.
      * @param emailId                        The email ID of the message to forward.
      * @param forwardInboxThreadEmailOptions The forward recipients and content.

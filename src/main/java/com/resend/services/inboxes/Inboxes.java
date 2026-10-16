@@ -134,7 +134,7 @@ public class Inboxes extends BaseService {
      * Updates the internal name of an inbox or the name recipients see when mail is sent from it.
      * At least one of {@code name} or {@code from_name} is required.
      *
-     * @param inboxId            The inbox ID. An email address is not accepted.
+     * @param inboxId            The inbox ID or the inbox email address.
      * @param updateInboxOptions The fields to update.
      * @return The ID of the updated inbox.
      * @throws ResendException If an error occurs while updating the inbox.
@@ -147,7 +147,7 @@ public class Inboxes extends BaseService {
     /**
      * Removes an inbox. An inbox that does not exist or was already removed returns a 404.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return The RemoveInboxResponseSuccess with the details of the removed inbox.
      * @throws ResendException If an error occurs while removing the inbox.
      */

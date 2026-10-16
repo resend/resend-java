@@ -56,7 +56,7 @@ public class InboxThreads extends BaseService {
      * Retrieves the threads in an inbox, most recently active first.
      * To find threads by text, sender, recipient, attachment, or date, use {@link #search(String, SearchInboxThreadsParams)}.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return A ListInboxThreadsResponseSuccess containing the threads.
      * @throws ResendException If an error occurs while retrieving the threads.
      */
@@ -70,7 +70,7 @@ public class InboxThreads extends BaseService {
      * A cursor thread that is not in the selected folders returns a 404.
      * To find threads by text, sender, recipient, attachment, or date, use {@link #search(String, SearchInboxThreadsParams)}.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param params  The params used to filter and paginate the list.
      * @return A ListInboxThreadsResponseSuccess containing the threads.
      * @throws ResendException If an error occurs while retrieving the threads.
@@ -83,7 +83,7 @@ public class InboxThreads extends BaseService {
     /**
      * Searches the threads of an inbox, newest activity first.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return A SearchInboxThreadsResponseSuccess containing the matching threads.
      * @throws ResendException If an error occurs while searching the threads.
      */
@@ -98,7 +98,7 @@ public class InboxThreads extends BaseService {
      * search covers the 10,000 with the newest matching email. When any email filter is set, the matching email
      * must itself be in one of {@code folders}.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param params  The search filters and pagination.
      * @return A SearchInboxThreadsResponseSuccess containing the matching threads.
      * @throws ResendException If an error occurs while searching the threads.
@@ -111,7 +111,7 @@ public class InboxThreads extends BaseService {
     /**
      * Retrieves the summary of a thread. The emails in the thread are listed with {@link InboxThreadEmails#list(String, String)}.
      *
-     * @param inboxId  The inbox ID. An email address is not accepted.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @return The thread summary.
      * @throws ResendException If an error occurs while retrieving the thread.
@@ -125,7 +125,7 @@ public class InboxThreads extends BaseService {
      * Moving a thread out of {@code trash} restores it and clears its deletion deadline.
      * To change the labels of a thread, use {@link #addLabels}, {@link #setLabels} or {@link #removeLabel}.
      *
-     * @param inboxId                  The inbox ID. An email address is not accepted.
+     * @param inboxId                  The inbox ID or the inbox email address.
      * @param threadId                 The thread ID.
      * @param updateInboxThreadOptions The changes to apply.
      * @return The updated thread summary.
@@ -141,7 +141,7 @@ public class InboxThreads extends BaseService {
      * To restore the thread, update its folder to {@code inbox}, {@code archive}, or {@code spam},
      * which also clears the deletion deadline.
      *
-     * @param inboxId  The inbox ID. An email address is not accepted.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @return The RemoveInboxThreadResponseSuccess with the details of the removed thread.
      * @throws ResendException If an error occurs while removing the thread.
@@ -153,7 +153,7 @@ public class InboxThreads extends BaseService {
     /**
      * Adds labels to a thread. Labels already on the thread stay on it. If any label ID is not found, nothing changes.
      *
-     * @param inboxId                     The inbox ID.
+     * @param inboxId                     The inbox ID or the inbox email address.
      * @param threadId                    The thread ID.
      * @param addInboxThreadLabelsOptions The IDs of the labels to add.
      * @return Every label on the thread after the change.
@@ -168,7 +168,7 @@ public class InboxThreads extends BaseService {
      * Sets the labels of a thread in one atomic change. Labels on the thread that are not listed are taken off,
      * and the labels themselves are kept. An empty list takes every label off the thread.
      *
-     * @param inboxId                     The inbox ID.
+     * @param inboxId                     The inbox ID or the inbox email address.
      * @param threadId                    The thread ID.
      * @param setInboxThreadLabelsOptions The IDs of the labels the thread should carry.
      * @return Every label on the thread after the change.
@@ -183,7 +183,7 @@ public class InboxThreads extends BaseService {
      * Removes a label from a thread. The label itself is kept, and stays on every other thread that carries it.
      * To delete the label everywhere, use {@link InboxLabels#remove(String, String)}.
      *
-     * @param inboxId  The inbox ID.
+     * @param inboxId  The inbox ID or the inbox email address.
      * @param threadId The thread ID.
      * @param labelId  The label ID.
      * @return Every label on the thread after the change.

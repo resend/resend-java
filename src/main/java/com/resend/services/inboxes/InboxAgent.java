@@ -37,7 +37,7 @@ public class InboxAgent extends BaseService {
      * Retrieves the agent settings of an inbox. An inbox without a configured agent returns empty settings:
      * {@code instructions} and {@code tone} are null and {@code actions} is an empty list.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return The agent settings of the inbox.
      * @throws ResendException If an error occurs while retrieving the agent settings.
      */
@@ -49,7 +49,7 @@ public class InboxAgent extends BaseService {
      * Updates the agent settings of an inbox. The agent is created when the inbox has none.
      * Omitted fields keep their current value.
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param updateInboxAgentOptions The settings to update.
      * @return The ID of the inbox agent.
      * @throws ResendException If an error occurs while updating the agent settings.

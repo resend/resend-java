@@ -39,7 +39,7 @@ public class InboxLabels extends BaseService {
     /**
      * Retrieves every label on an inbox, oldest first. The list is not paginated.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @return A ListInboxLabelsResponseSuccess containing the labels.
      * @throws ResendException If an error occurs while retrieving the labels.
      */
@@ -51,7 +51,7 @@ public class InboxLabels extends BaseService {
      * Creates a label on an inbox. An inbox can have at most 100 labels. Label names are unique per inbox,
      * compared without case. A duplicate name or a full inbox returns a 422.
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param createInboxLabelOptions The label details.
      * @return The ID of the created label.
      * @throws ResendException If an error occurs while creating the label.
@@ -65,7 +65,7 @@ public class InboxLabels extends BaseService {
      * Renames or recolors a label. Omitted fields keep their current value. A new name must not match another
      * label on the inbox, compared without case, or the request returns a 422.
      *
-     * @param inboxId                 The inbox ID. An email address is not accepted.
+     * @param inboxId                 The inbox ID or the inbox email address.
      * @param labelId                 The label ID.
      * @param updateInboxLabelOptions The fields to update.
      * @return The ID of the updated label.
@@ -79,7 +79,7 @@ public class InboxLabels extends BaseService {
     /**
      * Deletes a label and removes it from every thread that carries it.
      *
-     * @param inboxId The inbox ID. An email address is not accepted.
+     * @param inboxId The inbox ID or the inbox email address.
      * @param labelId The label ID.
      * @return The RemoveInboxLabelResponseSuccess with the details of the removed label.
      * @throws ResendException If an error occurs while removing the label.

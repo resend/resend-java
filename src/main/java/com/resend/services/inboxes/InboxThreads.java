@@ -1,6 +1,7 @@
 package com.resend.services.inboxes;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -77,7 +78,7 @@ public class InboxThreads extends BaseService {
      */
     public ListInboxThreadsResponseSuccess list(String inboxId, ListInboxThreadsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        return execute("/inboxes/" + inboxId + "/threads" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListInboxThreadsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListInboxThreadsResponseSuccess.class);
     }
 
     /**
@@ -105,7 +106,7 @@ public class InboxThreads extends BaseService {
      */
     public SearchInboxThreadsResponseSuccess search(String inboxId, SearchInboxThreadsParams params) throws ResendException {
         String query = params == null ? "" : params.toQueryString();
-        return execute("/inboxes/" + inboxId + "/threads/search" + query, HttpMethod.GET, null, MediaType.get("application/json"), SearchInboxThreadsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/search" + query, HttpMethod.GET, null, MediaType.get("application/json"), SearchInboxThreadsResponseSuccess.class);
     }
 
     /**
@@ -117,7 +118,7 @@ public class InboxThreads extends BaseService {
      * @throws ResendException If an error occurs while retrieving the thread.
      */
     public GetInboxThreadResponseSuccess get(String inboxId, String threadId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId, HttpMethod.GET, null, MediaType.get("application/json"), GetInboxThreadResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId), HttpMethod.GET, null, MediaType.get("application/json"), GetInboxThreadResponseSuccess.class);
     }
 
     /**
@@ -133,7 +134,7 @@ public class InboxThreads extends BaseService {
      */
     public UpdateInboxThreadResponseSuccess update(String inboxId, String threadId, UpdateInboxThreadOptions updateInboxThreadOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateInboxThreadOptions);
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxThreadResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxThreadResponseSuccess.class);
     }
 
     /**
@@ -147,7 +148,7 @@ public class InboxThreads extends BaseService {
      * @throws ResendException If an error occurs while removing the thread.
      */
     public RemoveInboxThreadResponseSuccess remove(String inboxId, String threadId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId), HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadResponseSuccess.class);
     }
 
     /**
@@ -161,7 +162,7 @@ public class InboxThreads extends BaseService {
      */
     public AddInboxThreadLabelsResponseSuccess addLabels(String inboxId, String threadId, AddInboxThreadLabelsOptions addInboxThreadLabelsOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(addInboxThreadLabelsOptions);
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels", HttpMethod.POST, payload, MediaType.get("application/json"), AddInboxThreadLabelsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/labels", HttpMethod.POST, payload, MediaType.get("application/json"), AddInboxThreadLabelsResponseSuccess.class);
     }
 
     /**
@@ -176,7 +177,7 @@ public class InboxThreads extends BaseService {
      */
     public SetInboxThreadLabelsResponseSuccess setLabels(String inboxId, String threadId, SetInboxThreadLabelsOptions setInboxThreadLabelsOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(setInboxThreadLabelsOptions);
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels", HttpMethod.PUT, payload, MediaType.get("application/json"), SetInboxThreadLabelsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/labels", HttpMethod.PUT, payload, MediaType.get("application/json"), SetInboxThreadLabelsResponseSuccess.class);
     }
 
     /**
@@ -190,6 +191,6 @@ public class InboxThreads extends BaseService {
      * @throws ResendException If an error occurs while removing the label.
      */
     public RemoveInboxThreadLabelResponseSuccess removeLabel(String inboxId, String threadId, String labelId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels/" + labelId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadLabelResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/labels/" + URLHelper.encodePathSegment(labelId), HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadLabelResponseSuccess.class);
     }
 }

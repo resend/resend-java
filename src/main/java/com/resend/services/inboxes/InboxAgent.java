@@ -1,6 +1,7 @@
 package com.resend.services.inboxes;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -42,7 +43,7 @@ public class InboxAgent extends BaseService {
      * @throws ResendException If an error occurs while retrieving the agent settings.
      */
     public GetInboxAgentResponseSuccess get(String inboxId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/agent", HttpMethod.GET, null, MediaType.get("application/json"), GetInboxAgentResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/agent", HttpMethod.GET, null, MediaType.get("application/json"), GetInboxAgentResponseSuccess.class);
     }
 
     /**
@@ -56,6 +57,6 @@ public class InboxAgent extends BaseService {
      */
     public UpdateInboxAgentResponseSuccess update(String inboxId, UpdateInboxAgentOptions updateInboxAgentOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateInboxAgentOptions);
-        return execute("/inboxes/" + inboxId + "/agent", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxAgentResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/agent", HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxAgentResponseSuccess.class);
     }
 }

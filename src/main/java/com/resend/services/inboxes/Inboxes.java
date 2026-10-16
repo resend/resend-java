@@ -15,9 +15,6 @@ import com.resend.services.inboxes.model.UpdateInboxOptions;
 import com.resend.services.inboxes.model.UpdateInboxResponseSuccess;
 import okhttp3.MediaType;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Represents the Resend Inboxes module.
@@ -127,7 +124,7 @@ public class Inboxes extends BaseService {
      * @throws ResendException If an error occurs while retrieving the inbox.
      */
     public GetInboxResponseSuccess get(String inboxIdOrEmail) throws ResendException {
-        return execute("/inboxes/" + encodePathSegment(inboxIdOrEmail), HttpMethod.GET, null, MediaType.get("application/json"), GetInboxResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxIdOrEmail), HttpMethod.GET, null, MediaType.get("application/json"), GetInboxResponseSuccess.class);
     }
 
     /**
@@ -141,7 +138,7 @@ public class Inboxes extends BaseService {
      */
     public UpdateInboxResponseSuccess update(String inboxId, UpdateInboxOptions updateInboxOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateInboxOptions);
-        return execute("/inboxes/" + inboxId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxResponseSuccess.class);
     }
 
     /**
@@ -152,14 +149,6 @@ public class Inboxes extends BaseService {
      * @throws ResendException If an error occurs while removing the inbox.
      */
     public RemoveInboxResponseSuccess remove(String inboxId) throws ResendException {
-        return execute("/inboxes/" + inboxId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxResponseSuccess.class);
-    }
-
-    private static String encodePathSegment(String value) {
-        try {
-            return URLEncoder.encode(value, StandardCharsets.UTF_8.name()).replace("+", "%20");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId), HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxResponseSuccess.class);
     }
 }

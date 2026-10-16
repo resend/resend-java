@@ -64,7 +64,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the messages.
      */
     public ListInboxThreadEmailsResponseSuccess list(String inboxId, String threadId, ListParams params) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails" + URLHelper.parse(params);
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails" + URLHelper.parse(params);
         return execute(path, HttpMethod.GET, null, MediaType.get("application/json"), ListInboxThreadEmailsResponseSuccess.class);
     }
 
@@ -78,7 +78,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while retrieving the message.
      */
     public GetInboxThreadEmailResponseSuccess get(String inboxId, String threadId, String emailId) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId;
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails/" + URLHelper.encodePathSegment(emailId);
         return execute(path, HttpMethod.GET, null, MediaType.get("application/json"), GetInboxThreadEmailResponseSuccess.class);
     }
 
@@ -97,7 +97,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while sending the reply.
      */
     public ReplyInboxThreadEmailResponseSuccess reply(String inboxId, String threadId, String emailId, ReplyInboxThreadEmailOptions replyInboxThreadEmailOptions) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/reply";
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails/" + URLHelper.encodePathSegment(emailId) + "/reply";
         String payload = super.resendMapper.writeValue(replyInboxThreadEmailOptions);
         return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), ReplyInboxThreadEmailResponseSuccess.class);
     }
@@ -123,7 +123,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while sending the reply.
      */
     public ReplyInboxThreadEmailResponseSuccess reply(String inboxId, String threadId, String emailId, ReplyInboxThreadEmailOptions replyInboxThreadEmailOptions, RequestOptions requestOptions) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/reply";
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails/" + URLHelper.encodePathSegment(emailId) + "/reply";
         String payload = super.resendMapper.writeValue(replyInboxThreadEmailOptions);
         return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, ReplyInboxThreadEmailResponseSuccess.class);
     }
@@ -143,7 +143,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while sending the forward.
      */
     public ForwardInboxThreadEmailResponseSuccess forward(String inboxId, String threadId, String emailId, ForwardInboxThreadEmailOptions forwardInboxThreadEmailOptions) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/forward";
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails/" + URLHelper.encodePathSegment(emailId) + "/forward";
         String payload = super.resendMapper.writeValue(forwardInboxThreadEmailOptions);
         return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), ForwardInboxThreadEmailResponseSuccess.class);
     }
@@ -169,7 +169,7 @@ public class InboxThreadEmails extends BaseService {
      * @throws ResendException If an error occurs while sending the forward.
      */
     public ForwardInboxThreadEmailResponseSuccess forward(String inboxId, String threadId, String emailId, ForwardInboxThreadEmailOptions forwardInboxThreadEmailOptions, RequestOptions requestOptions) throws ResendException {
-        String path = "/inboxes/" + inboxId + "/threads/" + threadId + "/emails/" + emailId + "/forward";
+        String path = "/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/threads/" + URLHelper.encodePathSegment(threadId) + "/emails/" + URLHelper.encodePathSegment(emailId) + "/forward";
         String payload = super.resendMapper.writeValue(forwardInboxThreadEmailOptions);
         return execute(path, HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, ForwardInboxThreadEmailResponseSuccess.class);
     }

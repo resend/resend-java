@@ -64,7 +64,7 @@ public class InboxDrafts extends BaseService {
      * @throws ResendException If an error occurs while retrieving the drafts.
      */
     public ListInboxDraftsResponseSuccess list(String inboxId, ListParams params) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/drafts" + URLHelper.parse(params), HttpMethod.GET, null, MediaType.get("application/json"), ListInboxDraftsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts" + URLHelper.parse(params), HttpMethod.GET, null, MediaType.get("application/json"), ListInboxDraftsResponseSuccess.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class InboxDrafts extends BaseService {
      */
     public CreateInboxDraftResponseSuccess create(String inboxId, CreateInboxDraftOptions createInboxDraftOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createInboxDraftOptions);
-        return execute("/inboxes/" + inboxId + "/drafts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts", HttpMethod.POST, payload, MediaType.get("application/json"), CreateInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -106,7 +106,7 @@ public class InboxDrafts extends BaseService {
      */
     public CreateInboxDraftResponseSuccess create(String inboxId, CreateInboxDraftOptions createInboxDraftOptions, RequestOptions requestOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createInboxDraftOptions);
-        return execute("/inboxes/" + inboxId + "/drafts", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, CreateInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -118,7 +118,7 @@ public class InboxDrafts extends BaseService {
      * @throws ResendException If an error occurs while retrieving the draft.
      */
     public GetInboxDraftResponseSuccess get(String inboxId, String draftId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId, HttpMethod.GET, null, MediaType.get("application/json"), GetInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId), HttpMethod.GET, null, MediaType.get("application/json"), GetInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -135,7 +135,7 @@ public class InboxDrafts extends BaseService {
      */
     public UpdateInboxDraftResponseSuccess update(String inboxId, String draftId, UpdateInboxDraftOptions updateInboxDraftOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateInboxDraftOptions);
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -147,7 +147,7 @@ public class InboxDrafts extends BaseService {
      * @throws ResendException If an error occurs while removing the draft.
      */
     public RemoveInboxDraftResponseSuccess remove(String inboxId, String draftId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId), HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -163,7 +163,7 @@ public class InboxDrafts extends BaseService {
      * @throws ResendException If an error occurs while sending the draft.
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, "", MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId) + "/send", HttpMethod.POST, "", MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -185,7 +185,7 @@ public class InboxDrafts extends BaseService {
      * @throws ResendException If an error occurs while sending the draft.
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId, RequestOptions requestOptions) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId) + "/send", HttpMethod.POST, "", MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -203,7 +203,7 @@ public class InboxDrafts extends BaseService {
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId, SendInboxDraftOptions sendInboxDraftOptions) throws ResendException {
         String payload = sendInboxDraftOptions == null ? "" : super.resendMapper.writeValue(sendInboxDraftOptions);
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId) + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), SendInboxDraftResponseSuccess.class);
     }
 
     /**
@@ -227,6 +227,6 @@ public class InboxDrafts extends BaseService {
      */
     public SendInboxDraftResponseSuccess send(String inboxId, String draftId, SendInboxDraftOptions sendInboxDraftOptions, RequestOptions requestOptions) throws ResendException {
         String payload = sendInboxDraftOptions == null ? "" : super.resendMapper.writeValue(sendInboxDraftOptions);
-        return execute("/inboxes/" + inboxId + "/drafts/" + draftId + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/drafts/" + URLHelper.encodePathSegment(draftId) + "/send", HttpMethod.POST, payload, MediaType.get("application/json"), requestOptions, SendInboxDraftResponseSuccess.class);
     }
 }

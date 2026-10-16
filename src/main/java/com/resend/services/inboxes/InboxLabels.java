@@ -1,6 +1,7 @@
 package com.resend.services.inboxes;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.helper.URLHelper;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
@@ -44,7 +45,7 @@ public class InboxLabels extends BaseService {
      * @throws ResendException If an error occurs while retrieving the labels.
      */
     public ListInboxLabelsResponseSuccess list(String inboxId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/labels", HttpMethod.GET, null, MediaType.get("application/json"), ListInboxLabelsResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/labels", HttpMethod.GET, null, MediaType.get("application/json"), ListInboxLabelsResponseSuccess.class);
     }
 
     /**
@@ -58,7 +59,7 @@ public class InboxLabels extends BaseService {
      */
     public CreateInboxLabelResponseSuccess create(String inboxId, CreateInboxLabelOptions createInboxLabelOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(createInboxLabelOptions);
-        return execute("/inboxes/" + inboxId + "/labels", HttpMethod.POST, payload, MediaType.get("application/json"), CreateInboxLabelResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/labels", HttpMethod.POST, payload, MediaType.get("application/json"), CreateInboxLabelResponseSuccess.class);
     }
 
     /**
@@ -73,7 +74,7 @@ public class InboxLabels extends BaseService {
      */
     public UpdateInboxLabelResponseSuccess update(String inboxId, String labelId, UpdateInboxLabelOptions updateInboxLabelOptions) throws ResendException {
         String payload = super.resendMapper.writeValue(updateInboxLabelOptions);
-        return execute("/inboxes/" + inboxId + "/labels/" + labelId, HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxLabelResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/labels/" + URLHelper.encodePathSegment(labelId), HttpMethod.PATCH, payload, MediaType.get("application/json"), UpdateInboxLabelResponseSuccess.class);
     }
 
     /**
@@ -85,6 +86,6 @@ public class InboxLabels extends BaseService {
      * @throws ResendException If an error occurs while removing the label.
      */
     public RemoveInboxLabelResponseSuccess remove(String inboxId, String labelId) throws ResendException {
-        return execute("/inboxes/" + inboxId + "/labels/" + labelId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxLabelResponseSuccess.class);
+        return execute("/inboxes/" + URLHelper.encodePathSegment(inboxId) + "/labels/" + URLHelper.encodePathSegment(labelId), HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxLabelResponseSuccess.class);
     }
 }

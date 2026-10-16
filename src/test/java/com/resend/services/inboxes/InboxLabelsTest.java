@@ -98,4 +98,17 @@ public class InboxLabelsTest {
         assertEquals(LABEL_ID, response.getId());
         assertTrue(response.getDeleted());
     }
+
+    @Test
+    public void testListLabels_EncodesEmailAddressAsOneSegment() throws ResendException {
+        when(httpClient.perform(eq("/inboxes/a%2Fb%3Fc%40acme.com/labels"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"list\",\"data\":[]}", true));
+
+        assertTrue(labels.list("a/b?c@acme.com").getData().isEmpty());
+    }
+
+    @Test
+    public void testRemoveLabel_RejectsDotSegment() {
+        assertThrows(IllegalArgumentException.class, () -> labels.remove(INBOX_ID, ".."));
+    }
 }

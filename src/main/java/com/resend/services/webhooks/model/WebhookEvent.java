@@ -47,7 +47,35 @@ public enum WebhookEvent {
     /** Triggered when a topic is updated. */
     TOPIC_UPDATED("topic.updated"),
     /** Triggered when a topic is deleted. */
-    TOPIC_DELETED("topic.deleted");
+    TOPIC_DELETED("topic.deleted"),
+    /** Triggered when an inbox is created. */
+    INBOX_CREATED("inbox.created"),
+    /** Triggered when the settings of an inbox change. */
+    INBOX_UPDATED("inbox.updated"),
+    /** Triggered when an inbox is deleted. */
+    INBOX_DELETED("inbox.deleted"),
+    /** Triggered when the first email of a thread lands in an inbox. */
+    INBOX_THREAD_CREATED("inbox.thread.created"),
+    /** Triggered when an inbound email is added to a thread. */
+    INBOX_EMAIL_RECEIVED("inbox.email.received"),
+    /** Triggered when an outbound email is accepted for delivery and added to a thread. */
+    INBOX_EMAIL_SENT("inbox.email.sent"),
+    /** Triggered when a thread moves between folders. */
+    INBOX_THREAD_FOLDER_UPDATED("inbox.thread.folder.updated"),
+    /** Triggered when a thread is assigned or reassigned. */
+    INBOX_THREAD_ASSIGNED("inbox.thread.assigned"),
+    /** Triggered when a thread is unassigned. */
+    INBOX_THREAD_UNASSIGNED("inbox.thread.unassigned"),
+    /** Triggered when a label is applied to or removed from a thread. */
+    INBOX_THREAD_LABELS_UPDATED("inbox.thread.labels.updated"),
+    /** Triggered when a draft is created. */
+    INBOX_DRAFT_CREATED("inbox.draft.created"),
+    /** Triggered when a draft is edited. */
+    INBOX_DRAFT_UPDATED("inbox.draft.updated"),
+    /** Triggered when a draft is sent. */
+    INBOX_DRAFT_SENT("inbox.draft.sent"),
+    /** Triggered when a draft is discarded. */
+    INBOX_DRAFT_DELETED("inbox.draft.deleted");
 
     private final String value;
 

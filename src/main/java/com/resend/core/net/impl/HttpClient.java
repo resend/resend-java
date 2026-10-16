@@ -11,6 +11,7 @@ import okhttp3.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The built-in {@link IHttpClient}, backed by OkHttp.
@@ -112,20 +113,7 @@ public class HttpClient implements IHttpClient<String> {
     @Override
     public AbstractHttpResponse<String> perform(final String path, final String apiKey, final HttpMethod method, final String payload, MediaType mediaType) {
 
-        RequestBody requestBody = null;
-        if(payload != null) {
-            requestBody = RequestBody.create(payload, mediaType);
-        }
-
-        Request request = new Request.Builder()
-                .url(baseUrl + path)
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
-                .addHeader("Authorization", "Bearer " + apiKey)
-                .method(method.name(), requestBody)
-                .build();
-
-        return execute(request);
+        return execute(buildRequest(path, apiKey, method, toRequestBody(payload, mediaType), null, null), null);
     }
 
     /**
@@ -148,28 +136,7 @@ public class HttpClient implements IHttpClient<String> {
             final MediaType mediaType,
             final Map<String,String> additionalHeaders) {
 
-        RequestBody requestBody = null;
-        if(payload != null) {
-            requestBody = RequestBody.create(payload, mediaType);
-        }
-
-        Request.Builder requestBuilder = new Request.Builder()
-                .url(baseUrl + path)
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
-                .addHeader("Authorization", "Bearer " + apiKey)
-                .method(method.name(), requestBody);
-
-
-        if (additionalHeaders != null) {
-            for (Map.Entry<String,String> h : additionalHeaders.entrySet()) {
-                requestBuilder.addHeader(h.getKey(), h.getValue());
-            }
-        }
-
-        Request request = requestBuilder.build();
-
-        return execute(request);
+        return execute(buildRequest(path, apiKey, method, toRequestBody(payload, mediaType), additionalHeaders, null), null);
     }
 
     /**
@@ -191,32 +158,7 @@ public class HttpClient implements IHttpClient<String> {
             final MediaType mediaType,
             final RequestOptions requestOptions) {
 
-        RequestBody requestBody = null;
-        if(payload != null) {
-            requestBody = RequestBody.create(payload, mediaType);
-        }
-
-        Request.Builder requestBuilder = new Request.Builder()
-                .url(baseUrl + path)
-                .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", USER_AGENT)
-                .addHeader("Authorization", "Bearer " + apiKey)
-                .method(method.name(), requestBody);
-
-        if (requestOptions != null) {
-            if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
-                requestBuilder.addHeader("Idempotency-Key", requestOptions.getIdempotencyKey());
-            }
-            if (requestOptions.getAdditionalHeaders() != null && !requestOptions.getAdditionalHeaders().isEmpty()) {
-                for (Map.Entry<String, String> entry : requestOptions.getAdditionalHeaders().entrySet()) {
-                    requestBuilder.addHeader(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-
-        Request request = requestBuilder.build();
-
-        return execute(request);
+        return execute(buildRequest(path, apiKey, method, toRequestBody(payload, mediaType), null, requestOptions), requestOptions);
     }
 
     /**
@@ -332,12 +274,33 @@ public class HttpClient implements IHttpClient<String> {
             }
         }
 
+        return execute(buildRequest(path, apiKey, method, bodyBuilder.build(), null, requestOptions), requestOptions);
+    }
+
+    private static RequestBody toRequestBody(final String payload, final MediaType mediaType) {
+        return payload == null ? null : RequestBody.create(payload, mediaType);
+    }
+
+    private Request buildRequest(
+            final String path,
+            final String apiKey,
+            final HttpMethod method,
+            final RequestBody body,
+            final Map<String, String> additionalHeaders,
+            final RequestOptions requestOptions) {
+
         Request.Builder requestBuilder = new Request.Builder()
                 .url(baseUrl + path)
                 .addHeader("Accept", "application/json")
                 .addHeader("User-Agent", USER_AGENT)
                 .addHeader("Authorization", "Bearer " + apiKey)
-                .method(method.name(), bodyBuilder.build());
+                .method(method.name(), body);
+
+        if (additionalHeaders != null) {
+            for (Map.Entry<String, String> entry : additionalHeaders.entrySet()) {
+                requestBuilder.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
 
         if (requestOptions != null) {
             if (requestOptions.getIdempotencyKey() != null && !requestOptions.getIdempotencyKey().isEmpty()) {
@@ -350,11 +313,15 @@ public class HttpClient implements IHttpClient<String> {
             }
         }
 
-        return execute(requestBuilder.build());
+        return requestBuilder.build();
     }
 
-    private AbstractHttpResponse<String> execute(final Request request) {
-        try (Response response = httpClient.newCall(request).execute()) {
+    private AbstractHttpResponse<String> execute(final Request request, final RequestOptions requestOptions) {
+        Call call = httpClient.newCall(request);
+        if (requestOptions != null && requestOptions.getTimeout() != null) {
+            call.timeout().timeout(requestOptions.getTimeout().toNanos(), TimeUnit.NANOSECONDS);
+        }
+        try (Response response = call.execute()) {
             return new AbstractHttpResponse<>(response.code(), response.body().string(), response.isSuccessful());
         } catch (IOException e) {
             throw new RuntimeException(e);

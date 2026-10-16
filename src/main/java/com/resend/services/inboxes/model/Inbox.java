@@ -40,6 +40,9 @@ public class Inbox {
     @JsonProperty("created_at")
     private String createdAt;
 
+    @JsonProperty("updated_at")
+    private String updatedAt;
+
     /**
      * Default constructor
      */
@@ -61,8 +64,9 @@ public class Inbox {
      * @param drafts           The number of unsent drafts.
      * @param lastReceived     The ISO 8601 timestamp of the newest received email in the Inbox folder. {@code null} when the folder has no received email.
      * @param createdAt        The ISO 8601 timestamp when the inbox was created.
+     * @param updatedAt        The ISO 8601 timestamp when the inbox was updated.
      */
-    public Inbox(String object, String id, String name, String emailAddress, String domainId, String receivingAddress, String fromName, Integer unread, Integer drafts, String lastReceived, String createdAt) {
+    public Inbox(String object, String id, String name, String emailAddress, String domainId, String receivingAddress, String fromName, Integer unread, Integer drafts, String lastReceived, String createdAt, String updatedAt) {
         this.object = object;
         this.id = id;
         this.name = name;
@@ -74,6 +78,7 @@ public class Inbox {
         this.drafts = drafts;
         this.lastReceived = lastReceived;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     /**
@@ -173,5 +178,14 @@ public class Inbox {
      */
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    /**
+     * Get the ISO 8601 timestamp when the inbox was updated.
+     *
+     * @return The ISO 8601 timestamp when the inbox was updated.
+     */
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 }

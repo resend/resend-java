@@ -25,7 +25,7 @@ public class InboxesTest {
             "\"name\":\"Customer Support\",\"email_address\":\"support@acme.com\"," +
             "\"domain_id\":\"d91cd9bd-1176-453e-8fc1-35364d380206\",\"receiving_address\":null," +
             "\"from_name\":\"Ada from Support\",\"unread\":3,\"drafts\":2," +
-            "\"last_received\":\"2026-08-05T14:03:11.229Z\",\"created_at\":\"2026-08-01T09:12:44.512Z\"}";
+            "\"last_received\":\"2026-08-05T14:03:11.229Z\",\"created_at\":\"2026-08-01T09:12:44.512Z\",\"updated_at\":\"2026-08-03T16:20:05.004Z\"}";
 
     @Mock
     private IHttpClient httpClient;
@@ -65,7 +65,7 @@ public class InboxesTest {
     public void testListInboxes_Success() throws ResendException {
         String json = "{\"object\":\"list\",\"has_more\":false,\"data\":[{\"id\":\"" + INBOX_ID + "\"," +
                 "\"name\":null,\"email_address\":\"support@acme.com\",\"from_name\":null,\"unread\":3," +
-                "\"last_received\":null}]}";
+                "\"last_received\":null,\"created_at\":\"2026-07-20T11:00:00.000Z\",\"updated_at\":\"2026-07-20T11:00:00.318Z\"}]}";
         when(httpClient.perform(eq("/inboxes?limit=10&after=" + INBOX_ID), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, json, true));
 
@@ -80,6 +80,8 @@ public class InboxesTest {
         assertEquals("support@acme.com", item.getEmailAddress());
         assertEquals(3, (int) item.getUnread());
         assertNull(item.getLastReceived());
+        assertEquals("2026-07-20T11:00:00.000Z", item.getCreatedAt());
+        assertEquals("2026-07-20T11:00:00.318Z", item.getUpdatedAt());
     }
 
     @Test
@@ -107,6 +109,7 @@ public class InboxesTest {
         assertEquals(2, (int) response.getDrafts());
         assertEquals("2026-08-05T14:03:11.229Z", response.getLastReceived());
         assertEquals("2026-08-01T09:12:44.512Z", response.getCreatedAt());
+        assertEquals("2026-08-03T16:20:05.004Z", response.getUpdatedAt());
     }
 
     @Test

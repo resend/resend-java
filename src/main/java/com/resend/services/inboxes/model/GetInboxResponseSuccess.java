@@ -27,8 +27,9 @@ public class GetInboxResponseSuccess extends Inbox {
      * @param drafts           The number of unsent drafts.
      * @param lastReceived     The ISO 8601 timestamp of the newest received email in the Inbox folder. {@code null} when the folder has no received email.
      * @param createdAt        The ISO 8601 timestamp when the inbox was created.
+     * @param updatedAt        The ISO 8601 timestamp when the inbox was updated.
      */
-    public GetInboxResponseSuccess(String object, String id, String name, String emailAddress, String domainId, String receivingAddress, String fromName, Integer unread, Integer drafts, String lastReceived, String createdAt) {
-        super(object, id, name, emailAddress, domainId, receivingAddress, fromName, unread, drafts, lastReceived, createdAt);
+    public GetInboxResponseSuccess(String object, String id, String name, String emailAddress, String domainId, String receivingAddress, String fromName, Integer unread, Integer drafts, String lastReceived, String createdAt, String updatedAt) {
+        super(object, id, name, emailAddress, domainId, receivingAddress, fromName, unread, drafts, lastReceived, createdAt, updatedAt);
     }
 }

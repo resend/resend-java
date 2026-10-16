@@ -25,6 +25,12 @@ public class InboxListItem {
     @JsonProperty("last_received")
     private String lastReceived;
 
+    @JsonProperty("created_at")
+    private String createdAt;
+
+    @JsonProperty("updated_at")
+    private String updatedAt;
+
     /**
      * Default constructor
      */
@@ -41,14 +47,18 @@ public class InboxListItem {
      * @param fromName     The name recipients see when mail is sent from this inbox. {@code null} when not set.
      * @param unread       The number of unread threads in the Inbox folder.
      * @param lastReceived The ISO 8601 timestamp of the newest received email in the Inbox folder. {@code null} when the folder has no received email.
+     * @param createdAt    The ISO 8601 timestamp when the inbox was created.
+     * @param updatedAt    The ISO 8601 timestamp when the inbox was updated.
      */
-    public InboxListItem(String id, String name, String emailAddress, String fromName, Integer unread, String lastReceived) {
+    public InboxListItem(String id, String name, String emailAddress, String fromName, Integer unread, String lastReceived, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
         this.fromName = fromName;
         this.unread = unread;
         this.lastReceived = lastReceived;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     /**
@@ -103,5 +113,23 @@ public class InboxListItem {
      */
     public String getLastReceived() {
         return lastReceived;
+    }
+
+    /**
+     * Get the ISO 8601 timestamp when the inbox was created.
+     *
+     * @return The ISO 8601 timestamp when the inbox was created.
+     */
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Get the ISO 8601 timestamp when the inbox was updated.
+     *
+     * @return The ISO 8601 timestamp when the inbox was updated.
+     */
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 }

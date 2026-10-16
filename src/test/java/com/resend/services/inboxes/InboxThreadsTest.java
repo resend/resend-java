@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.resend.services.util.InboxesUtil.*;
@@ -210,5 +211,10 @@ public class InboxThreadsTest {
         assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().build());
         assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().labels(Collections.<String>emptyList()).build());
         assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().build());
+        assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().labels(LABEL_ID, " ").build());
+        assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().labels(Arrays.asList(LABEL_ID, null)).build());
+        assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().labels("").build());
+        assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().labels(Arrays.asList((String) null)).build());
+        assertNotNull(SetInboxThreadLabelsOptions.builder().labels(Collections.<String>emptyList()).build());
     }
 }

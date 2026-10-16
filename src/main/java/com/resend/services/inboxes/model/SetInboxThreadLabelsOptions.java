@@ -74,13 +74,25 @@ public class SetInboxThreadLabelsOptions {
          * Build a new SetInboxThreadLabelsOptions object.
          *
          * @return A new SetInboxThreadLabelsOptions object.
-         * @throws IllegalArgumentException if {@code labels} is null.
+         * @throws IllegalArgumentException if {@code labels} is null or contains a null or blank ID.
          */
         public SetInboxThreadLabelsOptions build() {
             if (labels == null) {
                 throw new IllegalArgumentException("labels must not be null");
             }
+            if (hasBlankId(labels)) {
+                throw new IllegalArgumentException("labels must not contain a null or blank label ID");
+            }
             return new SetInboxThreadLabelsOptions(this);
+        }
+
+        private static boolean hasBlankId(List<String> labels) {
+            for (String label : labels) {
+                if (label == null || label.trim().isEmpty()) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -18,8 +18,8 @@ public class InboxAgent {
     @JsonProperty("tone")
     private String tone;
 
-    @JsonProperty("enabled_actions")
-    private List<String> enabledActions;
+    @JsonProperty("actions")
+    private List<String> actions;
 
     /**
      * Default constructor
@@ -34,13 +34,13 @@ public class InboxAgent {
      * @param object         The object type. Always {@code inbox_agent}.
      * @param instructions   The instructions the agent follows when it handles the threads of the inbox. Null when no instructions are set.
      * @param tone           The tone the agent writes in. One of the presets {@code concise_professional}, {@code concise_casual}, {@code expanded_professional}, or {@code expanded_casual}, or custom text in the owner's own words, such as {@code friendly and concise}. Older dashboard values such as {@code Concise · Casual} are custom text. Null when no tone is set.
-     * @param enabledActions The actions the agent can take. Empty when no actions are enabled.
+     * @param actions The actions the agent can take. Empty when no actions are enabled.
      */
-    public InboxAgent(String object, String instructions, String tone, List<String> enabledActions) {
+    public InboxAgent(String object, String instructions, String tone, List<String> actions) {
         this.object = object;
         this.instructions = instructions;
         this.tone = tone;
-        this.enabledActions = enabledActions;
+        this.actions = actions;
     }
 
     /**
@@ -75,7 +75,7 @@ public class InboxAgent {
      *
      * @return The actions the agent can take. Empty when no actions are enabled.
      */
-    public List<String> getEnabledActions() {
-        return enabledActions;
+    public List<String> getActions() {
+        return actions;
     }
 }

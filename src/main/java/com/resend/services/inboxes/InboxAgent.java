@@ -35,7 +35,7 @@ public class InboxAgent extends BaseService {
 
     /**
      * Retrieves the agent settings of an inbox. An inbox without a configured agent returns empty settings:
-     * {@code instructions} and {@code tone} are null and {@code enabled_actions} is an empty list.
+     * {@code instructions} and {@code tone} are null and {@code actions} is an empty list.
      *
      * @param inboxId The inbox ID. An email address is not accepted.
      * @return The agent settings of the inbox.

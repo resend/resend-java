@@ -40,7 +40,7 @@ public class InboxAgentTest {
     @Test
     public void testGetAgent_Success() throws ResendException {
         String json = "{\"object\":\"inbox_agent\",\"instructions\":null,\"tone\":\"friendly and concise\"," +
-                "\"enabled_actions\":[\"draft_reply\",\"add_labels\"]}";
+                "\"actions\":[\"draft_reply\",\"add_labels\"]}";
         when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, json, true));
 
@@ -49,17 +49,17 @@ public class InboxAgentTest {
         assertEquals("inbox_agent", response.getObject());
         assertNull(response.getInstructions());
         assertEquals("friendly and concise", response.getTone());
-        assertEquals(Arrays.asList("draft_reply", "add_labels"), response.getEnabledActions());
+        assertEquals(Arrays.asList("draft_reply", "add_labels"), response.getActions());
     }
 
     @Test
     public void testUpdateAgent_SendsOnlySetFields() throws ResendException {
         UpdateInboxAgentOptions options = UpdateInboxAgentOptions.builder()
                 .tone("friendly and concise")
-                .enabledActions(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ADD_LABELS)
+                .actions(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ADD_LABELS)
                 .build();
         when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.PATCH),
-                eq("{\"tone\":\"friendly and concise\",\"enabled_actions\":[\"draft_reply\",\"add_labels\"]}"), any(MediaType.class)))
+                eq("{\"tone\":\"friendly and concise\",\"actions\":[\"draft_reply\",\"add_labels\"]}"), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
 
         UpdateInboxAgentResponseSuccess response = agent.update(INBOX_ID, options);
@@ -72,20 +72,32 @@ public class InboxAgentTest {
     public void testUpdateAgent_SendsNullToClear() throws ResendException {
         UpdateInboxAgentOptions options = UpdateInboxAgentOptions.builder()
                 .instructions(null)
-                .enabledActions(Collections.<InboxAgentAction>emptyList())
+                .actions(Collections.<InboxAgentAction>emptyList())
                 .build();
         when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.PATCH),
-                eq("{\"instructions\":null,\"enabled_actions\":[]}"), any(MediaType.class)))
+                eq("{\"instructions\":null,\"actions\":[]}"), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
 
         assertNotNull(agent.update(INBOX_ID, options));
         assertNull(options.getInstructions());
-        assertTrue(options.getEnabledActions().isEmpty());
+        assertTrue(options.getActions().isEmpty());
     }
 
     @Test
     public void testUpdateAgentBuilder_RequiresAField() {
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxAgentOptions.builder().build());
+    }
+
+    @Test
+    public void testUpdateAgent_SendsArchiveAndMoveToTrash() throws ResendException {
+        UpdateInboxAgentOptions options = UpdateInboxAgentOptions.builder()
+                .actions(InboxAgentAction.ARCHIVE, InboxAgentAction.MOVE_TO_TRASH)
+                .build();
+        when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.PATCH),
+                eq("{\"actions\":[\"archive\",\"move_to_trash\"]}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
+
+        assertNotNull(agent.update(INBOX_ID, options));
     }
 
     @Test

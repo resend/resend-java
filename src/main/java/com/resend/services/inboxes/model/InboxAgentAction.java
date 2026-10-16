@@ -18,9 +18,9 @@ public enum InboxAgentAction {
     /** The agent marks threads as spam. */
     MARK_AS_SPAM("mark_as_spam"),
     /** The agent archives threads. */
-    ARCHIVE_THREAD("archive_thread"),
-    /** The agent deletes threads. */
-    DELETE_THREAD("delete_thread");
+    ARCHIVE("archive"),
+    /** The agent moves threads to trash. */
+    MOVE_TO_TRASH("move_to_trash");
 
     private final String value;
 

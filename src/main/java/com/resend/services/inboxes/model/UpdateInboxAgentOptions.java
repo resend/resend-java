@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * Represents a request to update the agent settings of an inbox.
- * At least one of {@code instructions}, {@code tone}, or {@code enabled_actions} must be provided.
+ * At least one of {@code instructions}, {@code tone}, or {@code actions} must be provided.
  * Omitted fields keep their current value.
  */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
@@ -52,11 +52,11 @@ public class UpdateInboxAgentOptions {
     /**
      * Get the actions the agent can take.
      *
-     * @return The enabled actions, or null when they are not set.
+     * @return The actions, or null when they are not set.
      */
     @SuppressWarnings("unchecked")
-    public List<InboxAgentAction> getEnabledActions() {
-        return (List<InboxAgentAction>) fields.get("enabled_actions");
+    public List<InboxAgentAction> getActions() {
+        return (List<InboxAgentAction>) fields.get("actions");
     }
 
     /**
@@ -111,11 +111,11 @@ public class UpdateInboxAgentOptions {
         /**
          * Set the actions the agent can take. Replaces the whole set. Duplicates are removed. Pass no actions to disable all actions.
          *
-         * @param enabledActions The enabled actions.
+         * @param actions The actions.
          * @return The builder instance.
          */
-        public Builder enabledActions(InboxAgentAction... enabledActions) {
-            fields.put("enabled_actions", new ArrayList<>(Arrays.asList(enabledActions)));
+        public Builder actions(InboxAgentAction... actions) {
+            fields.put("actions", new ArrayList<>(Arrays.asList(actions)));
             return this;
         }
 
@@ -123,14 +123,14 @@ public class UpdateInboxAgentOptions {
          * Set the actions the agent can take. Replaces the whole set. Duplicates are removed. Pass an empty list to disable all actions.
          * Pass null to leave the actions unchanged.
          *
-         * @param enabledActions The enabled actions.
+         * @param actions The actions.
          * @return The builder instance.
          */
-        public Builder enabledActions(List<InboxAgentAction> enabledActions) {
-            if (enabledActions == null) {
-                fields.remove("enabled_actions");
+        public Builder actions(List<InboxAgentAction> actions) {
+            if (actions == null) {
+                fields.remove("actions");
             } else {
-                fields.put("enabled_actions", new ArrayList<>(enabledActions));
+                fields.put("actions", new ArrayList<>(actions));
             }
             return this;
         }
@@ -143,7 +143,7 @@ public class UpdateInboxAgentOptions {
          */
         public UpdateInboxAgentOptions build() {
             if (fields.isEmpty()) {
-                throw new IllegalArgumentException("At least one of instructions, tone or enabled_actions must be provided");
+                throw new IllegalArgumentException("At least one of instructions, tone or actions must be provided");
             }
             return new UpdateInboxAgentOptions(this);
         }

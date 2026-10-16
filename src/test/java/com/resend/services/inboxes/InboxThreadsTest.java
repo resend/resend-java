@@ -168,4 +168,52 @@ public class InboxThreadsTest {
         assertEquals(InboxFolder.TRASH, InboxFolder.fromValue("trash"));
         assertThrows(IllegalArgumentException.class, () -> MoveInboxThreadFolder.fromValue("sent"));
     }
+
+    @Test
+    public void testAddLabels() throws ResendException {
+        AddInboxThreadLabelsOptions options = AddInboxThreadLabelsOptions.builder().labels(LABEL_ID, OTHER_LABEL_ID).build();
+        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID + "/labels"), anyString(), eq(HttpMethod.POST),
+                eq("{\"labels\":[\"" + LABEL_ID + "\",\"" + OTHER_LABEL_ID + "\"]}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"list\",\"data\":[" +
+                        "{\"id\":\"" + LABEL_ID + "\",\"name\":\"Urgent\",\"color\":\"#E93D82\"}," +
+                        "{\"id\":\"" + OTHER_LABEL_ID + "\",\"name\":\"Billing\",\"color\":\"#00A2C7\"}]}", true));
+
+        AddInboxThreadLabelsResponseSuccess response = threads.addLabels(INBOX_ID, THREAD_ID, options);
+
+        assertEquals("list", response.getObject());
+        assertEquals(2, response.getData().size());
+        assertEquals("Billing", response.getData().get(1).getName());
+    }
+
+    @Test
+    public void testSetLabels_EmptyListClearsLabels() throws ResendException {
+        SetInboxThreadLabelsOptions options = SetInboxThreadLabelsOptions.builder().labels(Collections.<String>emptyList()).build();
+        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID + "/labels"), anyString(), eq(HttpMethod.PUT),
+                eq("{\"labels\":[]}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"list\",\"data\":[]}", true));
+
+        SetInboxThreadLabelsResponseSuccess response = threads.setLabels(INBOX_ID, THREAD_ID, options);
+
+        assertTrue(response.getData().isEmpty());
+    }
+
+    @Test
+    public void testRemoveLabel() throws ResendException {
+        when(httpClient.perform(eq(THREADS_PATH + "/" + THREAD_ID + "/labels/" + LABEL_ID), anyString(), eq(HttpMethod.DELETE),
+                isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, "{\"object\":\"list\",\"data\":[" +
+                        "{\"id\":\"" + OTHER_LABEL_ID + "\",\"name\":\"Billing\",\"color\":\"#00A2C7\"}]}", true));
+
+        RemoveInboxThreadLabelResponseSuccess response = threads.removeLabel(INBOX_ID, THREAD_ID, LABEL_ID);
+
+        assertEquals(1, response.getData().size());
+        assertEquals(OTHER_LABEL_ID, response.getData().get(0).getId());
+    }
+
+    @Test
+    public void testThreadLabelsBuilders_Validate() {
+        assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().build());
+        assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().labels(Collections.<String>emptyList()).build());
+        assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().build());
+    }
 }

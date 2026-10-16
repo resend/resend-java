@@ -4,12 +4,17 @@ import com.resend.core.exception.ResendException;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.core.service.BaseService;
+import com.resend.services.inboxes.model.AddInboxThreadLabelsOptions;
+import com.resend.services.inboxes.model.AddInboxThreadLabelsResponseSuccess;
 import com.resend.services.inboxes.model.GetInboxThreadResponseSuccess;
 import com.resend.services.inboxes.model.ListInboxThreadsParams;
 import com.resend.services.inboxes.model.ListInboxThreadsResponseSuccess;
+import com.resend.services.inboxes.model.RemoveInboxThreadLabelResponseSuccess;
 import com.resend.services.inboxes.model.RemoveInboxThreadResponseSuccess;
 import com.resend.services.inboxes.model.SearchInboxThreadsParams;
 import com.resend.services.inboxes.model.SearchInboxThreadsResponseSuccess;
+import com.resend.services.inboxes.model.SetInboxThreadLabelsOptions;
+import com.resend.services.inboxes.model.SetInboxThreadLabelsResponseSuccess;
 import com.resend.services.inboxes.model.UpdateInboxThreadOptions;
 import com.resend.services.inboxes.model.UpdateInboxThreadResponseSuccess;
 import okhttp3.MediaType;
@@ -146,5 +151,48 @@ public class InboxThreads extends BaseService {
      */
     public RemoveInboxThreadResponseSuccess remove(String inboxId, String threadId) throws ResendException {
         return execute("/inboxes/" + inboxId + "/threads/" + threadId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadResponseSuccess.class);
+    }
+
+    /**
+     * Adds labels to a thread. Labels already on the thread stay on it. If any label ID is not found, nothing changes.
+     *
+     * @param inboxId                     The inbox ID.
+     * @param threadId                    The thread ID.
+     * @param addInboxThreadLabelsOptions The IDs of the labels to add.
+     * @return Every label on the thread after the change.
+     * @throws ResendException If an error occurs while adding the labels.
+     */
+    public AddInboxThreadLabelsResponseSuccess addLabels(String inboxId, String threadId, AddInboxThreadLabelsOptions addInboxThreadLabelsOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(addInboxThreadLabelsOptions);
+        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels", HttpMethod.POST, payload, MediaType.get("application/json"), AddInboxThreadLabelsResponseSuccess.class);
+    }
+
+    /**
+     * Sets the labels of a thread in one atomic change. Labels on the thread that are not listed are taken off,
+     * and the labels themselves are kept. An empty list takes every label off the thread.
+     *
+     * @param inboxId                     The inbox ID.
+     * @param threadId                    The thread ID.
+     * @param setInboxThreadLabelsOptions The IDs of the labels the thread should carry.
+     * @return Every label on the thread after the change.
+     * @throws ResendException If an error occurs while setting the labels.
+     */
+    public SetInboxThreadLabelsResponseSuccess setLabels(String inboxId, String threadId, SetInboxThreadLabelsOptions setInboxThreadLabelsOptions) throws ResendException {
+        String payload = super.resendMapper.writeValue(setInboxThreadLabelsOptions);
+        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels", HttpMethod.PUT, payload, MediaType.get("application/json"), SetInboxThreadLabelsResponseSuccess.class);
+    }
+
+    /**
+     * Removes a label from a thread. The label itself is kept, and stays on every other thread that carries it.
+     * To delete the label everywhere, use {@link InboxLabels#remove(String, String)}.
+     *
+     * @param inboxId  The inbox ID.
+     * @param threadId The thread ID.
+     * @param labelId  The label ID.
+     * @return Every label on the thread after the change.
+     * @throws ResendException If an error occurs while removing the label.
+     */
+    public RemoveInboxThreadLabelResponseSuccess removeLabel(String inboxId, String threadId, String labelId) throws ResendException {
+        return execute("/inboxes/" + inboxId + "/threads/" + threadId + "/labels/" + labelId, HttpMethod.DELETE, null, MediaType.get("application/json"), RemoveInboxThreadLabelResponseSuccess.class);
     }
 }

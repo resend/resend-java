@@ -214,4 +214,12 @@ public class InboxThreadsTest {
         assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().labels(Arrays.asList((String) null)).build());
         assertNotNull(SetInboxThreadLabelsOptions.builder().labels(Collections.<String>emptyList()).build());
     }
+
+    @Test
+    public void testThreadLabelsBuilders_EnforceMaxCount() {
+        assertNotNull(AddInboxThreadLabelsOptions.builder().labels(Collections.nCopies(10, LABEL_ID)).build());
+        assertThrows(IllegalArgumentException.class, () -> AddInboxThreadLabelsOptions.builder().labels(Collections.nCopies(11, LABEL_ID)).build());
+        assertNotNull(SetInboxThreadLabelsOptions.builder().labels(Collections.nCopies(100, LABEL_ID)).build());
+        assertThrows(IllegalArgumentException.class, () -> SetInboxThreadLabelsOptions.builder().labels(Collections.nCopies(101, LABEL_ID)).build());
+    }
 }

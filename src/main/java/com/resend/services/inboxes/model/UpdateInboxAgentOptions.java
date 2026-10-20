@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,8 @@ public class UpdateInboxAgentOptions {
      *
      * @return The tone, or null when it is not set or is cleared.
      */
-    public String getTone() {
-        return (String) fields.get("tone");
+    public InboxAgentTone getTone() {
+        return (InboxAgentTone) fields.get("tone");
     }
 
     /**
@@ -101,7 +102,7 @@ public class UpdateInboxAgentOptions {
          * @param tone The tone, or null to clear it.
          * @return The builder instance.
          */
-        public Builder tone(String tone) {
+        public Builder tone(InboxAgentTone tone) {
             fields.put("tone", tone);
             return this;
         }
@@ -113,7 +114,7 @@ public class UpdateInboxAgentOptions {
          * @return The builder instance.
          */
         public Builder actions(InboxAgentAction... actions) {
-            fields.put("actions", new ArrayList<>(Arrays.asList(actions)));
+            fields.put("actions", new ArrayList<>(new LinkedHashSet<>(Arrays.asList(actions))));
             return this;
         }
 
@@ -128,7 +129,7 @@ public class UpdateInboxAgentOptions {
             if (actions == null) {
                 fields.remove("actions");
             } else {
-                fields.put("actions", new ArrayList<>(actions));
+                fields.put("actions", new ArrayList<>(new LinkedHashSet<>(actions)));
             }
             return this;
         }

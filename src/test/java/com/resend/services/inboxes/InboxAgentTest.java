@@ -48,7 +48,7 @@ public class InboxAgentTest {
 
         assertEquals("inbox_agent", response.getObject());
         assertNull(response.getInstructions());
-        assertEquals("concise_casual", response.getTone());
+        assertEquals(InboxAgentTone.CONCISE_CASUAL, response.getTone());
         assertEquals(Arrays.asList(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ADD_LABELS), response.getActions());
     }
 
@@ -73,7 +73,7 @@ public class InboxAgentTest {
     @Test
     public void testUpdateAgent_SendsOnlySetFields() throws ResendException {
         UpdateInboxAgentOptions options = UpdateInboxAgentOptions.builder()
-                .tone("concise_casual")
+                .tone(InboxAgentTone.CONCISE_CASUAL)
                 .actions(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ADD_LABELS)
                 .build();
         when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.PATCH),
@@ -119,8 +119,27 @@ public class InboxAgentTest {
     }
 
     @Test
+    public void testUpdateAgentBuilder_RemovesDuplicateActions() {
+        UpdateInboxAgentOptions fromVarargs = UpdateInboxAgentOptions.builder()
+                .actions(InboxAgentAction.ARCHIVE, InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ARCHIVE)
+                .build();
+        UpdateInboxAgentOptions fromList = UpdateInboxAgentOptions.builder()
+                .actions(Arrays.asList(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ARCHIVE))
+                .build();
+
+        assertEquals(Arrays.asList(InboxAgentAction.ARCHIVE, InboxAgentAction.DRAFT_REPLY), fromVarargs.getActions());
+        assertEquals(Arrays.asList(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ARCHIVE), fromList.getActions());
+    }
+
+    @Test
     public void testAgentAction_UnknownValue_Throws() {
         assertEquals(InboxAgentAction.MARK_AS_SPAM, InboxAgentAction.fromValue("mark_as_spam"));
         assertThrows(IllegalArgumentException.class, () -> InboxAgentAction.fromValue("send_email"));
+    }
+
+    @Test
+    public void testAgentTone_UnknownValue_Throws() {
+        assertEquals(InboxAgentTone.EXPANDED_PROFESSIONAL, InboxAgentTone.fromValue("expanded_professional"));
+        assertThrows(IllegalArgumentException.class, () -> InboxAgentTone.fromValue("friendly"));
     }
 }

@@ -40,6 +40,7 @@ public class AddInboxThreadLabelsOptions {
      * Builder class for constructing AddInboxThreadLabelsOptions objects.
      */
     public static class Builder {
+        private static final int MAX_LABELS = 10;
         private List<String> labels;
 
         /**
@@ -74,11 +75,14 @@ public class AddInboxThreadLabelsOptions {
          * Build a new AddInboxThreadLabelsOptions object.
          *
          * @return A new AddInboxThreadLabelsOptions object.
-         * @throws IllegalArgumentException if {@code labels} is null or empty, or contains a null or blank ID.
+         * @throws IllegalArgumentException if {@code labels} is null or empty, has more than 10 IDs, or contains a null or blank ID.
          */
         public AddInboxThreadLabelsOptions build() {
             if (labels == null || labels.isEmpty()) {
                 throw new IllegalArgumentException("labels must contain at least one label ID");
+            }
+            if (labels.size() > MAX_LABELS) {
+                throw new IllegalArgumentException("labels must not contain more than " + MAX_LABELS + " label IDs");
             }
             if (hasBlankId(labels)) {
                 throw new IllegalArgumentException("labels must not contain a null or blank label ID");

@@ -49,7 +49,25 @@ public class InboxAgentTest {
         assertEquals("inbox_agent", response.getObject());
         assertNull(response.getInstructions());
         assertEquals("concise_casual", response.getTone());
-        assertEquals(Arrays.asList("draft_reply", "add_labels"), response.getActions());
+        assertEquals(Arrays.asList(InboxAgentAction.DRAFT_REPLY, InboxAgentAction.ADD_LABELS), response.getActions());
+    }
+
+    @Test
+    public void testUpdateAgent_AcceptsTheActionsReadFromGet() throws ResendException {
+        String json = "{\"object\":\"inbox_agent\",\"instructions\":null,\"tone\":null," +
+                "\"actions\":[\"archive\",\"forward_thread\"]}";
+        when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, json, true));
+        when(httpClient.perform(eq(AGENT_PATH), anyString(), eq(HttpMethod.PATCH),
+                eq("{\"actions\":[\"archive\",\"forward_thread\"]}"), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
+
+        GetInboxAgentResponseSuccess current = agent.get(INBOX_ID);
+        UpdateInboxAgentOptions options = UpdateInboxAgentOptions.builder()
+                .actions(current.getActions())
+                .build();
+
+        assertNotNull(agent.update(INBOX_ID, options));
     }
 
     @Test

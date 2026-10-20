@@ -23,7 +23,7 @@ public class GetInboxAgentResponseSuccess extends InboxAgent {
      * @param tone           The tone the agent writes in. One of {@code concise_professional}, {@code concise_casual}, {@code expanded_professional}, or {@code expanded_casual}. Null when no tone is set.
      * @param actions The actions the agent can take. Empty when no actions are enabled.
      */
-    public GetInboxAgentResponseSuccess(String object, String instructions, String tone, List<String> actions) {
+    public GetInboxAgentResponseSuccess(String object, String instructions, String tone, List<InboxAgentAction> actions) {
         super(object, instructions, tone, actions);
     }
 }

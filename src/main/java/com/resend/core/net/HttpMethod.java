@@ -23,4 +23,9 @@ public enum HttpMethod {
      * HTTP PATCH method.
      */
     PATCH,
+
+    /**
+     * HTTP PUT method.
+     */
+    PUT,
 }

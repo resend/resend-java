@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * URL Helper for handling query params.
+ * URL Helper for handling path segments and query params.
  */
 public class URLHelper {
 
@@ -73,6 +73,22 @@ public class URLHelper {
                 .collect(Collectors.joining("&"));
 
         return "?" + query;
+    }
+
+    /**
+     * Encodes a value for use as a single path segment, such as an ID or an email address.
+     * Characters that would change the path, like {@code /}, {@code ?}, {@code #} and {@code %}, are percent-encoded.
+     *
+     * @param value The path segment value.
+     * @return The encoded path segment.
+     * @throws IllegalArgumentException If the value is null, empty, {@code .} or {@code ..}, which cannot be sent as a
+     *                                  single segment.
+     */
+    public static String encodePathSegment(String value) {
+        if (value == null || value.isEmpty() || value.equals(".") || value.equals("..")) {
+            throw new IllegalArgumentException("A path segment must not be null, empty, \".\" or \"..\"");
+        }
+        return encode(value).replace("+", "%20");
     }
 
     private static String encode(String value) {

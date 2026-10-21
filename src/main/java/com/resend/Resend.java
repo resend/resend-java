@@ -11,6 +11,7 @@ import com.resend.services.contacts.Contacts;
 import com.resend.services.contactproperties.ContactProperties;
 import com.resend.services.domains.Domains;
 import com.resend.services.emails.Emails;
+import com.resend.services.inboxes.Inboxes;
 import com.resend.services.segments.Segments;
 import com.resend.services.suppressions.Suppressions;
 import com.resend.services.webhooks.Webhooks;
@@ -246,6 +247,15 @@ public class Resend {
      */
     public Usage usage() {
         return new Usage(apiKey, httpClient);
+    }
+
+    /**
+     * Returns an Inboxes object that can be used to interact with the Inboxes service.
+     *
+     * @return An Inboxes object.
+     */
+    public Inboxes inboxes() {
+        return new Inboxes(apiKey, httpClient);
     }
 
     /**

@@ -17,11 +17,19 @@ final class DraftAttachments {
             if (attachment == null) {
                 throw new IllegalArgumentException("attachments must not contain null");
             }
-            if (isEmpty(attachment.getContent()) || isEmpty(attachment.getFileName()) || isEmpty(attachment.getContentType())) {
-                throw new IllegalArgumentException("Each draft attachment needs content, filename and content_type");
+            if (isEmpty(attachment.getFileName())) {
+                throw new IllegalArgumentException("Each draft attachment needs a filename");
             }
-            if (attachment.getPath() != null || attachment.getContentId() != null) {
-                throw new IllegalArgumentException("A draft attachment cannot have a path or content_id");
+            boolean hasContent = !isEmpty(attachment.getContent());
+            boolean hasPath = !isEmpty(attachment.getPath());
+            if (hasContent == hasPath) {
+                throw new IllegalArgumentException("Each draft attachment needs either content or path, not both");
+            }
+            if (hasContent && isEmpty(attachment.getContentType())) {
+                throw new IllegalArgumentException("A draft attachment with content needs a content_type");
+            }
+            if (attachment.getContentId() != null) {
+                throw new IllegalArgumentException("A draft attachment cannot have a content_id");
             }
         }
     }

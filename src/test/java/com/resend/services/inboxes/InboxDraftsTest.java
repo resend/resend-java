@@ -126,9 +126,9 @@ public class InboxDraftsTest {
     @Test
     public void testCreateDraft_WithPathAttachment() throws ResendException {
         CreateInboxDraftOptions options = CreateInboxDraftOptions.builder()
-                .addAttachment(Attachment.builder().fileName("invoice.pdf").path("https://resend.com/static/sample/invoice.pdf").build())
+                .addAttachment(Attachment.builder().fileName("invoice.pdf").path("https://example.com/invoice.pdf").build())
                 .build();
-        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://resend.com/static/sample/invoice.pdf\"}]}";
+        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://example.com/invoice.pdf\"}]}";
         when(httpClient.perform(eq(DRAFTS_PATH), anyString(), eq(HttpMethod.POST), eq(payload), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(201, "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\"}", true));
 
@@ -138,9 +138,9 @@ public class InboxDraftsTest {
     @Test
     public void testUpdateDraft_WithPathAttachment() throws ResendException {
         UpdateInboxDraftOptions options = UpdateInboxDraftOptions.builder()
-                .attachments(Attachment.builder().fileName("invoice.pdf").path("https://resend.com/static/sample/invoice.pdf").contentType("application/pdf").build())
+                .attachments(Attachment.builder().fileName("invoice.pdf").path("https://example.com/invoice.pdf").contentType("application/pdf").build())
                 .build();
-        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://resend.com/static/sample/invoice.pdf\",\"content_type\":\"application/pdf\"}]}";
+        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://example.com/invoice.pdf\",\"content_type\":\"application/pdf\"}]}";
         when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH), eq(payload), any(MediaType.class)))
                 .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
 

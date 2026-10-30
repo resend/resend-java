@@ -20,10 +20,16 @@ final class DraftAttachments {
             if (isEmpty(attachment.getFileName())) {
                 throw new IllegalArgumentException("Each draft attachment needs a filename");
             }
-            boolean hasContent = !isEmpty(attachment.getContent());
-            boolean hasPath = !isEmpty(attachment.getPath());
+            boolean hasContent = attachment.getContent() != null;
+            boolean hasPath = attachment.getPath() != null;
             if (hasContent == hasPath) {
                 throw new IllegalArgumentException("Each draft attachment needs either content or path, not both");
+            }
+            if (hasContent && isEmpty(attachment.getContent())) {
+                throw new IllegalArgumentException("A draft attachment's content cannot be empty");
+            }
+            if (hasPath && isEmpty(attachment.getPath())) {
+                throw new IllegalArgumentException("A draft attachment's path cannot be empty");
             }
             if (hasContent && isEmpty(attachment.getContentType())) {
                 throw new IllegalArgumentException("A draft attachment with content needs a content_type");

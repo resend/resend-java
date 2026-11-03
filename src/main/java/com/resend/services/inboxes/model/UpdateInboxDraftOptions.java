@@ -224,9 +224,11 @@ public class UpdateInboxDraftOptions {
 
         /**
          * Set the files to store on the draft. Replaces every attachment on the draft. Pass no files to remove
-         * them all. Each one needs {@code content}, {@code filename} and {@code content_type}. A {@code path} or
-         * {@code content_id} is not accepted. The files on a draft can total at most 25 MB. An empty file or a
-         * blocked file type returns a 422.
+         * them all. Each one needs a {@code filename} and either {@code content} with a {@code content_type}, or a
+         * {@code path} URL that is downloaded when the request is made. With a {@code path}, {@code content_type}
+         * defaults to the type of the downloaded file. A {@code content_id} is not accepted. The files on a draft,
+         * downloaded ones included, can total at most 25 MB. An empty file, a blocked file type, or a {@code path}
+         * that cannot be downloaded returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.
@@ -238,9 +240,11 @@ public class UpdateInboxDraftOptions {
 
         /**
          * Set the files to store on the draft. Replaces every attachment on the draft. Pass an empty list to
-         * remove them all. Pass null to remove them all as well. Each one needs {@code content},
-         * {@code filename} and {@code content_type}. A {@code path} or {@code content_id} is not accepted.
-         * The files on a draft can total at most 25 MB. An empty file or a blocked file type returns a 422.
+         * remove them all. Pass null to remove them all as well. Each one needs a {@code filename} and either
+         * {@code content} with a {@code content_type}, or a {@code path} URL that is downloaded when the request is
+         * made. With a {@code path}, {@code content_type} defaults to the type of the downloaded file. A
+         * {@code content_id} is not accepted. The files on a draft, downloaded ones included, can total at most
+         * 25 MB. An empty file, a blocked file type, or a {@code path} that cannot be downloaded returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.
@@ -254,8 +258,9 @@ public class UpdateInboxDraftOptions {
          * Build a new UpdateInboxDraftOptions object.
          *
          * @return A new UpdateInboxDraftOptions object.
-         * @throws IllegalArgumentException if no field is set, or an attachment lacks {@code content},
-         *                                  {@code filename} or {@code content_type} or has a {@code path} or {@code content_id}.
+         * @throws IllegalArgumentException if no field is set, or an attachment lacks a {@code filename},
+         *                                  has neither or both of {@code content} and {@code path}, has {@code content}
+         *                                  without {@code content_type}, or has a {@code content_id}.
          */
         public UpdateInboxDraftOptions build() {
             if (fields.isEmpty()) {

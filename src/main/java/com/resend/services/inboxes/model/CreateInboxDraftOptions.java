@@ -303,9 +303,11 @@ public class CreateInboxDraftOptions {
         }
 
         /**
-         * Set the files to store on the draft. Each one needs {@code content}, {@code filename} and
-         * {@code content_type}. A {@code path} or {@code content_id} is not accepted. The files on a draft can total
-         * at most 25 MB. An empty file or a blocked file type returns a 422.
+         * Set the files to store on the draft. Each one needs a {@code filename} and either {@code content}
+         * with a {@code content_type}, or a {@code path} URL that is downloaded when the request is made. With a
+         * {@code path}, {@code content_type} defaults to the type of the downloaded file. A {@code content_id} is not
+         * accepted. The files on a draft, downloaded ones included, can total at most 25 MB. An empty file, a blocked
+         * file type, or a {@code path} that cannot be downloaded returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.
@@ -316,9 +318,11 @@ public class CreateInboxDraftOptions {
         }
 
         /**
-         * Set the files to store on the draft. Each one needs {@code content}, {@code filename} and
-         * {@code content_type}. A {@code path} or {@code content_id} is not accepted. The files on a draft can total
-         * at most 25 MB. An empty file or a blocked file type returns a 422.
+         * Set the files to store on the draft. Each one needs a {@code filename} and either {@code content}
+         * with a {@code content_type}, or a {@code path} URL that is downloaded when the request is made. With a
+         * {@code path}, {@code content_type} defaults to the type of the downloaded file. A {@code content_id} is not
+         * accepted. The files on a draft, downloaded ones included, can total at most 25 MB. An empty file, a blocked
+         * file type, or a {@code path} that cannot be downloaded returns a 422.
          *
          * @param attachments The files to store on the draft.
          * @return The builder instance.
@@ -368,7 +372,7 @@ public class CreateInboxDraftOptions {
          * Build a new CreateInboxDraftOptions object.
          *
          * @return A new CreateInboxDraftOptions object.
-         * @throws IllegalArgumentException if every content field is empty, an attachment lacks {@code content}, {@code filename} or {@code content_type} or has a {@code path} or {@code content_id}, or only one of {@code thread_id} and {@code reply_to_email_id} is set.
+         * @throws IllegalArgumentException if every content field is empty, an attachment lacks a {@code filename}, has neither or both of {@code content} and {@code path}, has {@code content} without {@code content_type}, or has a {@code content_id}, or only one of {@code thread_id} and {@code reply_to_email_id} is set.
          */
         public CreateInboxDraftOptions build() {
             if (isEmpty(to) && isEmpty(cc) && isEmpty(bcc) && isBlank(subject) && isBlank(text) && isBlank(html)

@@ -124,14 +124,48 @@ public class InboxDraftsTest {
     }
 
     @Test
+    public void testCreateDraft_WithPathAttachment() throws ResendException {
+        CreateInboxDraftOptions options = CreateInboxDraftOptions.builder()
+                .addAttachment(Attachment.builder().fileName("invoice.pdf").path("https://example.com/invoice.pdf").build())
+                .build();
+        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://example.com/invoice.pdf\"}]}";
+        when(httpClient.perform(eq(DRAFTS_PATH), anyString(), eq(HttpMethod.POST), eq(payload), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(201, "{\"object\":\"inbox_draft\",\"id\":\"" + DRAFT_ID + "\"}", true));
+
+        assertEquals(DRAFT_ID, drafts.create(INBOX_ID, options).getId());
+    }
+
+    @Test
+    public void testUpdateDraft_WithPathAttachment() throws ResendException {
+        UpdateInboxDraftOptions options = UpdateInboxDraftOptions.builder()
+                .attachments(Attachment.builder().fileName("invoice.pdf").path("https://example.com/invoice.pdf").contentType("application/pdf").build())
+                .build();
+        String payload = "{\"attachments\":[{\"filename\":\"invoice.pdf\",\"path\":\"https://example.com/invoice.pdf\",\"content_type\":\"application/pdf\"}]}";
+        when(httpClient.perform(eq(DRAFTS_PATH + "/" + DRAFT_ID), anyString(), eq(HttpMethod.PATCH), eq(payload), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true));
+
+        assertNotNull(drafts.update(INBOX_ID, DRAFT_ID, options));
+    }
+
+    @Test
     public void testDraftAttachmentBuilder_Validation() {
-        Attachment withPath = Attachment.builder().fileName("a.txt").path("https://example.com/a.txt").contentType("text/plain").build();
+        Attachment noSource = Attachment.builder().fileName("a.txt").contentType("text/plain").build();
+        Attachment bothSources = Attachment.builder().fileName("a.txt").content("YQ==").path("https://example.com/a.txt").contentType("text/plain").build();
+        Attachment pathNoName = Attachment.builder().path("https://example.com/a.txt").build();
+        Attachment withContentId = Attachment.builder().fileName("a.png").content("YQ==").contentType("image/png").contentId("logo").build();
         Attachment noType = Attachment.builder().fileName("a.txt").content("YQ==").build();
-        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(withPath).build());
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(noSource).build());
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(bothSources).build());
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(pathNoName).build());
+        assertThrows(IllegalArgumentException.class, () -> UpdateInboxDraftOptions.builder().attachments(withContentId).build());
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(noType).build());
         assertThrows(IllegalArgumentException.class, () -> UpdateInboxDraftOptions.builder().attachments(noType).build());
         Attachment blankName = Attachment.builder().fileName(" ").content("YQ==").contentType("text/plain").build();
         assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(blankName).build());
+        Attachment blankContentWithPath = Attachment.builder().fileName("a.txt").content("").path("https://example.com/a.txt").build();
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(blankContentWithPath).build());
+        Attachment blankPath = Attachment.builder().fileName("a.txt").path(" ").build();
+        assertThrows(IllegalArgumentException.class, () -> CreateInboxDraftOptions.builder().attachments(blankPath).build());
     }
 
     @Test

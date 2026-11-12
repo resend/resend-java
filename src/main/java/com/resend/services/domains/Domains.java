@@ -112,6 +112,15 @@ public final class Domains extends BaseService {
     }
 
     /**
+     * Returns a DomainForge object that can be used to interact with the Domain Forge service.
+     *
+     * @return A DomainForge object.
+     */
+    public DomainForge forge() {
+        return new DomainForge(apiKey, this.httpClient);
+    }
+
+    /**
      * Deletes a domain based on the provided domain ID and returns a RemoveDomainResponse.
      *
      * @param domainId The unique identifier of the domain to delete.

@@ -132,4 +132,16 @@ public class DomainsUtil {
         );
     }
 
+    public static final EnableForgeOptions enableForgeRequest() {
+        return EnableForgeOptions.builder()
+                .returnPath("send")
+                .build();
+    }
+
+    public static final UpdateForgeOptions updateForgeRequest() {
+        return UpdateForgeOptions.builder()
+                .returnPath("outbound")
+                .build();
+    }
+
 }

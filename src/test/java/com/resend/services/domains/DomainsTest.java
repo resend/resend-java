@@ -134,6 +134,40 @@ public class DomainsTest {
     }
 
     @Test
+    public void testVerifyDomainWithForgeScope_SendsScopeBody() throws Exception {
+        VerifyDomainOptions request = VerifyDomainOptions.builder()
+                .scope(java.util.Collections.singletonList(VerifyDomainScope.FORGE))
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, VERIFY_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        VerifyDomainResponse response = domains.verify(DOMAIN_ID, request);
+
+        assertNotNull(response);
+        assertEquals(DOMAIN_ID, response.getId());
+
+        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertEquals(java.util.Collections.singletonList("forge"), body.get("scope"));
+    }
+
+    @Test
+    public void testVerifyDomainWithoutScope_SendsEmptyBody() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, VERIFY_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), eq(""), isNull()))
+                .thenReturn(httpResponse);
+
+        VerifyDomainResponse response = domains.verify(DOMAIN_ID, VerifyDomainOptions.builder().build());
+
+        assertNotNull(response);
+        assertEquals(DOMAIN_ID, response.getId());
+    }
+
+    @Test
     public void testVerifyDomain_ApiError_ThrowsResendException() throws ResendException {
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
                 "{\"name\":\"validation_error\",\"message\":\"Domain already verified\"}", false);
@@ -307,6 +341,46 @@ public class DomainsTest {
         verify(httpClient).perform(eq("/domains"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
         Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
         assertFalse(body.containsKey("capabilities"));
+    }
+
+    @Test
+    public void testUpdateDomainForgeReturnPath_SendsField() throws Exception {
+        UpdateDomainOptions request = UpdateDomainOptions.builder()
+                .id(DOMAIN_ID)
+                .forgeReturnPath("outbound")
+                .clickTracking(true)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.update(request);
+
+        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertEquals("outbound", body.get("forge_return_path"));
+        assertEquals(true, body.get("click_tracking"));
+    }
+
+    @Test
+    public void testUpdateDomainWithoutForgeReturnPath_OmitsField() throws Exception {
+        UpdateDomainOptions request = UpdateDomainOptions.builder()
+                .id(DOMAIN_ID)
+                .clickTracking(true)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        domains.update(request);
+
+        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertFalse(body.containsKey("forge_return_path"));
     }
 
     @Test

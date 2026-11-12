@@ -138,10 +138,4 @@ public class DomainsUtil {
                 .build();
     }
 
-    public static final UpdateForgeOptions updateForgeRequest() {
-        return UpdateForgeOptions.builder()
-                .returnPath("outbound")
-                .build();
-    }
-
 }

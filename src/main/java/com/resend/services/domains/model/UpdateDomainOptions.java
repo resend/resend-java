@@ -23,6 +23,9 @@ public class UpdateDomainOptions {
     @JsonProperty("tracking_subdomain")
     private final String trackingSubdomain;
 
+    @JsonProperty("forge_return_path")
+    private final String forgeReturnPath;
+
     /**
      * Constructs a UpdateDomainOptions object using the provided builder.
      *
@@ -34,6 +37,7 @@ public class UpdateDomainOptions {
         this.openTracking = builder.openTracking;
         this.tls = builder.tls;
         this.trackingSubdomain = builder.trackingSubdomain;
+        this.forgeReturnPath = builder.forgeReturnPath;
     }
 
     /**
@@ -82,6 +86,15 @@ public class UpdateDomainOptions {
     }
 
     /**
+     * Get the host the domain's Forge return path should move to.
+     *
+     * @return The Forge return path.
+     */
+    public String getForgeReturnPath() {
+        return forgeReturnPath;
+    }
+
+    /**
      * Create a new builder instance for constructing UpdateDomainOptions objects.
      *
      * @return A new builder instance.
@@ -105,6 +118,7 @@ public class UpdateDomainOptions {
         private Boolean openTracking;
         private Tls tls;
         private String trackingSubdomain;
+        private String forgeReturnPath;
 
         /**
          * Set the id of the domain.
@@ -158,6 +172,21 @@ public class UpdateDomainOptions {
          */
         public Builder trackingSubdomain(String trackingSubdomain) {
             this.trackingSubdomain = trackingSubdomain;
+            return this;
+        }
+
+        /**
+         * Move the domain's Forge return path to another host. Only possible while
+         * the Forge record is still verifying. Moving the path does not start
+         * verification: fetch the new record with {@code Domains.get}, add it to your
+         * DNS, then call {@code Domains.verify} with a scope of
+         * {@code VerifyDomainScope.FORGE}.
+         *
+         * @param forgeReturnPath The host to move the Forge return path to.
+         * @return The builder instance.
+         */
+        public Builder forgeReturnPath(String forgeReturnPath) {
+            this.forgeReturnPath = forgeReturnPath;
             return this;
         }
 

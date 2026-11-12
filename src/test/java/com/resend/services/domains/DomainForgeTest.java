@@ -7,8 +7,6 @@ import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
 import com.resend.services.domains.model.Domain;
 import com.resend.services.domains.model.EnableForgeOptions;
-import com.resend.services.domains.model.UpdateForgeOptions;
-import com.resend.services.domains.model.VerifyForgeResponse;
 import com.resend.services.util.DomainsUtil;
 import okhttp3.MediaType;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,9 +40,6 @@ public class DomainForgeTest {
             "\"open_tracking\":false," +
             "\"click_tracking\":false" +
             "}";
-
-    private static final String VERIFY_FORGE_RESPONSE_JSON =
-            "{\"object\":\"domain\",\"id\":\"" + DOMAIN_ID + "\"}";
 
     @Mock
     private IHttpClient httpClient;
@@ -110,56 +105,5 @@ public class DomainForgeTest {
 
         ResendException ex = assertThrows(ResendException.class, () -> domainForge.enable(DOMAIN_ID));
         assertEquals(422, (int) ex.getStatusCode());
-    }
-
-    @Test
-    public void testUpdateForge_Success() throws Exception {
-        UpdateForgeOptions request = DomainsUtil.updateForgeRequest();
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, FORGE_DOMAIN_RESPONSE_JSON, true);
-        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
-
-        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/forge"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
-                .thenReturn(httpResponse);
-
-        Domain response = domainForge.update(DOMAIN_ID, request);
-
-        assertNotNull(response);
-        assertEquals(DOMAIN_ID, response.getId());
-
-        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID + "/forge"), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
-        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
-        assertEquals("outbound", body.get("return_path"));
-    }
-
-    @Test
-    public void testUpdateForge_NullOptions_ThrowsResendException() {
-        assertThrows(ResendException.class, () -> domainForge.update(DOMAIN_ID, null));
-    }
-
-    @Test
-    public void testUpdateForge_ApiError_ThrowsResendException() throws ResendException {
-        UpdateForgeOptions request = DomainsUtil.updateForgeRequest();
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
-                "{\"name\":\"return_path_unavailable\",\"message\":\"The return path can no longer be changed\"}", false);
-
-        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/forge"), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
-                .thenReturn(httpResponse);
-
-        ResendException ex = assertThrows(ResendException.class, () -> domainForge.update(DOMAIN_ID, request));
-        assertEquals(422, (int) ex.getStatusCode());
-    }
-
-    @Test
-    public void testVerifyForge_Success() throws ResendException {
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, VERIFY_FORGE_RESPONSE_JSON, true);
-
-        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/forge/verify"), anyString(), eq(HttpMethod.POST), eq(""), isNull()))
-                .thenReturn(httpResponse);
-
-        VerifyForgeResponse response = domainForge.verify(DOMAIN_ID);
-
-        assertNotNull(response);
-        assertEquals(DOMAIN_ID, response.getId());
-        assertEquals("domain", response.getObject());
     }
 }

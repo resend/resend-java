@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EnableForgeOptions {
 
-    @JsonProperty("return_path")
-    private final String returnPath;
+    @JsonProperty("custom_return_path")
+    private final String customReturnPath;
 
     /**
      * Constructs an EnableForgeOptions object using the provided builder.
@@ -18,16 +18,16 @@ public class EnableForgeOptions {
      * @param builder The builder to construct the EnableForgeOptions from.
      */
     public EnableForgeOptions(Builder builder) {
-        this.returnPath = builder.returnPath;
+        this.customReturnPath = builder.customReturnPath;
     }
 
     /**
-     * Get the subdomain used as the return path.
+     * Get the customReturnPath used for Forge.
      *
-     * @return The return path.
+     * @return The customReturnPath.
      */
-    public String getReturnPath() {
-        return returnPath;
+    public String getCustomReturnPath() {
+        return customReturnPath;
     }
 
     /**
@@ -50,16 +50,17 @@ public class EnableForgeOptions {
         public Builder() {
         }
 
-        private String returnPath;
+        private String customReturnPath;
 
         /**
-         * Set the subdomain used as the return path.
+         * Set the customReturnPath used for Forge. Optional: when omitted, a free
+         * label is picked. It is set once and cannot be changed afterwards.
          *
-         * @param returnPath The return path.
+         * @param customReturnPath The customReturnPath.
          * @return The builder instance.
          */
-        public Builder returnPath(String returnPath) {
-            this.returnPath = returnPath;
+        public Builder customReturnPath(String customReturnPath) {
+            this.customReturnPath = customReturnPath;
             return this;
         }
 

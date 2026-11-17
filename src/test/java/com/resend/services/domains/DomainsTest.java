@@ -344,46 +344,6 @@ public class DomainsTest {
     }
 
     @Test
-    public void testUpdateDomainForgeReturnPath_SendsField() throws Exception {
-        UpdateDomainOptions request = UpdateDomainOptions.builder()
-                .id(DOMAIN_ID)
-                .forgeReturnPath("outbound")
-                .clickTracking(true)
-                .build();
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
-        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
-
-        when(httpClient.perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
-                .thenReturn(httpResponse);
-
-        domains.update(request);
-
-        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
-        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
-        assertEquals("outbound", body.get("forge_return_path"));
-        assertEquals(true, body.get("click_tracking"));
-    }
-
-    @Test
-    public void testUpdateDomainWithoutForgeReturnPath_OmitsField() throws Exception {
-        UpdateDomainOptions request = UpdateDomainOptions.builder()
-                .id(DOMAIN_ID)
-                .clickTracking(true)
-                .build();
-        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, UPDATE_RESPONSE_JSON, true);
-        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
-
-        when(httpClient.perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), anyString(), any(MediaType.class)))
-                .thenReturn(httpResponse);
-
-        domains.update(request);
-
-        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID), anyString(), eq(HttpMethod.PATCH), payload.capture(), any(MediaType.class));
-        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
-        assertFalse(body.containsKey("forge_return_path"));
-    }
-
-    @Test
     public void testUpdateDomainTls_SendsLowercaseValue() throws Exception {
         UpdateDomainOptions request = UpdateDomainOptions.builder()
                 .id(DOMAIN_ID)

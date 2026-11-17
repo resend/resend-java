@@ -69,11 +69,11 @@ public class DomainForgeTest {
 
         verify(httpClient).perform(eq("/domains/" + DOMAIN_ID + "/forge"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
         Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
-        assertEquals("send", body.get("return_path"));
+        assertEquals("send", body.get("custom_return_path"));
     }
 
     @Test
-    public void testEnableForge_WithoutReturnPath_SendsEmptyBody() throws Exception {
+    public void testEnableForge_WithoutCustomReturnPath_SendsEmptyBody() throws Exception {
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, FORGE_DOMAIN_RESPONSE_JSON, true);
         ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
 

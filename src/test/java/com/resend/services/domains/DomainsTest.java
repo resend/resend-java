@@ -134,6 +134,40 @@ public class DomainsTest {
     }
 
     @Test
+    public void testVerifyDomainWithForgeScope_SendsScopeBody() throws Exception {
+        VerifyDomainOptions request = VerifyDomainOptions.builder()
+                .scope(java.util.Collections.singletonList(VerifyDomainScope.FORGE))
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, VERIFY_RESPONSE_JSON, true);
+        ArgumentCaptor<String> payload = ArgumentCaptor.forClass(String.class);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), anyString(), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        VerifyDomainResponse response = domains.verify(DOMAIN_ID, request);
+
+        assertNotNull(response);
+        assertEquals(DOMAIN_ID, response.getId());
+
+        verify(httpClient).perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), payload.capture(), any(MediaType.class));
+        Map<String, Object> body = new ObjectMapper().readValue(payload.getValue(), Map.class);
+        assertEquals(java.util.Collections.singletonList("forge"), body.get("scope"));
+    }
+
+    @Test
+    public void testVerifyDomainWithoutScope_SendsEmptyBody() throws ResendException {
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, VERIFY_RESPONSE_JSON, true);
+
+        when(httpClient.perform(eq("/domains/" + DOMAIN_ID + "/verify"), anyString(), eq(HttpMethod.POST), eq(""), isNull()))
+                .thenReturn(httpResponse);
+
+        VerifyDomainResponse response = domains.verify(DOMAIN_ID, VerifyDomainOptions.builder().build());
+
+        assertNotNull(response);
+        assertEquals(DOMAIN_ID, response.getId());
+    }
+
+    @Test
     public void testVerifyDomain_ApiError_ThrowsResendException() throws ResendException {
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,
                 "{\"name\":\"validation_error\",\"message\":\"Domain already verified\"}", false);

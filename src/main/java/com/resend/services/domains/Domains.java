@@ -69,6 +69,23 @@ public final class Domains extends BaseService {
     }
 
     /**
+     * Verifies a domain with the provided options and returns a VerifyDomainResponse.
+     * Pass a scope of {@code VerifyDomainScope.FORGE} to re-check only the Forge record.
+     *
+     * @param domainId            The unique identifier of the domain to verify.
+     * @param verifyDomainOptions The request object containing the verification options.
+     * @return A VerifyDomainResponse representing the result of the domain verification operation.
+     * @throws ResendException If an error occurs during the domain verification process.
+     */
+    public VerifyDomainResponse verify(String domainId, VerifyDomainOptions verifyDomainOptions) throws ResendException {
+        if (verifyDomainOptions == null || verifyDomainOptions.getScope() == null) {
+            return verify(domainId);
+        }
+        String payload = super.resendMapper.writeValue(verifyDomainOptions);
+        return execute("/domains/" + domainId + "/verify", HttpMethod.POST, payload, MediaType.get("application/json"), VerifyDomainResponse.class);
+    }
+
+    /**
      * Retrieves a list of domains and returns a ListDomainsResponse.
      *
      * @return A ListDomainsResponse containing the list of domains.
@@ -109,6 +126,15 @@ public final class Domains extends BaseService {
      */
     public DomainClaims claims() {
         return new DomainClaims(apiKey, this.httpClient);
+    }
+
+    /**
+     * Returns a DomainForge object that can be used to interact with the Domain Forge service.
+     *
+     * @return A DomainForge object.
+     */
+    public DomainForge forge() {
+        return new DomainForge(apiKey, this.httpClient);
     }
 
     /**

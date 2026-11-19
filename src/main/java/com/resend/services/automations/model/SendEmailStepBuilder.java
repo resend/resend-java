@@ -92,6 +92,16 @@ public class SendEmailStepBuilder extends AbstractStepBuilder<SendEmailStepBuild
         return addConfig("reply_to", replyTo);
     }
 
+    /**
+     * Sets the topic ID. Contacts opted out of this topic are skipped.
+     *
+     * @param topicId The topic ID.
+     * @return The builder instance.
+     */
+    public SendEmailStepBuilder topicId(String topicId) {
+        return addConfig("topic_id", topicId);
+    }
+
     @Override
     public AutomationStep build() {
         if (templateId != null) {

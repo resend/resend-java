@@ -88,6 +88,29 @@ public class AutomationsTest {
     }
 
     @Test
+    public void testCreateAutomation_WithTopicId_SendsTopicId() throws ResendException {
+        AutomationStep emailStep = AutomationStep.sendEmail("email_1")
+                .template("tmpl_123")
+                .topicId("b6d24b8e-af0b-4c3c-be0c-359bbd97381e")
+                .build();
+        CreateAutomationOptions createOptions = CreateAutomationOptions.builder()
+                .name("Welcome Automation")
+                .steps(emailStep)
+                .build();
+        AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, CREATE_AUTOMATION_JSON, true);
+
+        when(httpClient.perform(eq("/automations"), anyString(), eq(HttpMethod.POST),
+                contains("\"topic_id\":\"b6d24b8e-af0b-4c3c-be0c-359bbd97381e\""), any(MediaType.class)))
+                .thenReturn(httpResponse);
+
+        CreateAutomationResponseSuccess response = automations.create(createOptions);
+
+        assertEquals("b6d24b8e-af0b-4c3c-be0c-359bbd97381e", emailStep.getConfig().get("topic_id"));
+        assertNotNull(response);
+        assertEquals(AUTOMATION_ID, response.getId());
+    }
+
+    @Test
     public void testCreateAutomation_ApiError_ThrowsResendException() throws ResendException {
         CreateAutomationOptions createOptions = AutomationsUtil.createAutomationRequest();
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(422,

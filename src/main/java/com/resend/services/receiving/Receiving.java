@@ -67,6 +67,18 @@ public final class Receiving extends BaseService {
     }
 
     /**
+     * Retrieves a paginated list of received emails, filtered by recipient and date.
+     *
+     * @param params The filters and pagination.
+     * @return A ListReceivedEmailsResponse containing the matching received emails.
+     * @throws ResendException If an error occurs during the retrieval process.
+     */
+    public ListReceivedEmailsResponse list(ListReceivedEmailsParams params) throws ResendException {
+        String query = params == null ? "" : params.toQueryString();
+        return execute("/emails/receiving" + query, HttpMethod.GET, null, MediaType.get("application/json"), ListReceivedEmailsResponse.class);
+    }
+
+    /**
      * Retrieves a single attachment from a received email.
      *
      * @param emailId The unique identifier of the received email.

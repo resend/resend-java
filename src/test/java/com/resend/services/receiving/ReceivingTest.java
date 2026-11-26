@@ -133,6 +133,46 @@ public class ReceivingTest {
     }
 
     @Test
+    public void testListReceivedEmails_WithFilters() throws ResendException {
+        ListReceivedEmailsParams params = ListReceivedEmailsParams.builder()
+                .to("support@acme.com", "billing@acme.com")
+                .startDate("2026-11-01")
+                .endDate("2026-11-15T12:00:00Z")
+                .limit(25)
+                .after(EMAIL_ID)
+                .build();
+        String path = "/emails/receiving?limit=25&after=" + EMAIL_ID +
+                "&to=support%40acme.com%2Cbilling%40acme.com&start_date=2026-11-01&end_date=2026-11-15T12%3A00%3A00Z";
+        when(httpClient.perform(eq(path), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, LIST_EMAILS_JSON, true));
+
+        ListReceivedEmailsResponse result = receiving.list(params);
+
+        assertEquals(1, result.getData().size());
+    }
+
+    @Test
+    public void testListReceivedEmails_OmitsUnsetFilters() throws ResendException {
+        ListReceivedEmailsParams params = ListReceivedEmailsParams.builder()
+                .to("support@acme.com")
+                .build();
+        when(httpClient.perform(eq("/emails/receiving?to=support%40acme.com"), anyString(), eq(HttpMethod.GET), isNull(), any(MediaType.class)))
+                .thenReturn(new AbstractHttpResponse<>(200, LIST_EMAILS_JSON, true));
+
+        ListReceivedEmailsResponse result = receiving.list(params);
+
+        assertEquals(1, result.getData().size());
+    }
+
+    @Test
+    public void testListReceivedEmails_RejectsAfterAndBefore() {
+        assertThrows(IllegalArgumentException.class, () -> ListReceivedEmailsParams.builder()
+                .after(EMAIL_ID)
+                .before(EMAIL_ID)
+                .build());
+    }
+
+    @Test
     public void testGetAttachment_Success() throws ResendException {
         AbstractHttpResponse<String> httpResponse = new AbstractHttpResponse<>(200, GET_ATTACHMENT_JSON, true);
 

@@ -10,6 +10,8 @@ public enum WebhookEvent {
     EMAIL_SENT("email.sent"),
     /** Triggered when an email is delivered. */
     EMAIL_DELIVERED("email.delivered"),
+    /** Triggered when an email is scheduled to be sent. */
+    EMAIL_SCHEDULED("email.scheduled"),
     /** Triggered when an email delivery is delayed. */
     EMAIL_DELIVERY_DELAYED("email.delivery_delayed"),
     /** Triggered when an email complaint is received. */
@@ -24,6 +26,8 @@ public enum WebhookEvent {
     EMAIL_RECEIVED("email.received"),
     /** Triggered when an email fails to send. */
     EMAIL_FAILED("email.failed"),
+    /** Triggered when an email is not sent because the recipient is suppressed. */
+    EMAIL_SUPPRESSED("email.suppressed"),
     /** Triggered when a contact is created. */
     CONTACT_CREATED("contact.created"),
     /** Triggered when a contact is updated. */

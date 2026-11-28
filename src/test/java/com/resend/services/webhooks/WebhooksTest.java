@@ -1,6 +1,7 @@
 package com.resend.services.webhooks;
 
 import com.resend.core.exception.ResendException;
+import com.resend.core.mapper.ResendMapper;
 import com.resend.core.net.AbstractHttpResponse;
 import com.resend.core.net.HttpMethod;
 import com.resend.core.net.IHttpClient;
@@ -104,6 +105,18 @@ public class WebhooksTest {
 
         ResendException ex = assertThrows(ResendException.class, () -> webhooks.create(request));
         assertEquals(422, (int) ex.getStatusCode());
+    }
+
+    @Test
+    public void testWebhookEvents_ScheduledAndSuppressed_AreSerialized() {
+        CreateWebhookOptions request = CreateWebhookOptions.builder()
+                .endpoint("https://webhook.example.com/handler")
+                .events(WebhookEvent.EMAIL_SCHEDULED, WebhookEvent.EMAIL_SUPPRESSED)
+                .build();
+
+        String json = new ResendMapper().writeValue(request);
+
+        assertTrue(json.contains("\"events\":[\"email.scheduled\",\"email.suppressed\"]"), json);
     }
 
     @Test
